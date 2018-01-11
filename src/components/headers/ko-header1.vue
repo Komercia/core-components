@@ -9,12 +9,12 @@
       </div>
       <img :src="`http://komercia.co/logos/${logo.logo}`" alt="logo" class="logo-top-menu">
       <div class="login-cart_top-menu container-icons">
-        <a href="#" class="icon-top-menu"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-        <a href="#" class="icon-top-menu"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-        <a href="#" class="icon-top-menu"><i class="fa fa-bars icon-menu" aria-hidden="true"></i></a>
+        <a href="#" class="icon-top-menu"><i class="fa fa-user-circle-o icon-right" aria-hidden="true"></i></a>
+        <a href="#" class="icon-top-menu"><i class="fa fa-shopping-cart icon-right" aria-hidden="true"></i></a>
+        <a href="#" @click="showMenu" class="icon-top-menu"><i class="fa fa-bars icon-menu" aria-hidden="true"></i></a>
       </div>
     </div>
-    <nav class="main-menu">
+    <nav v-show="show" class="main-menu">
       <ul class="main-menu-list">
         <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a class="main-menu-link" href="#">{{item.name}}</a></li>
       </ul>
@@ -41,8 +41,11 @@ export default {
       },
     },
   },
+  
   data() {
     return {
+      show: false,
+      windowsWidth: 0,
       routes: [
         {
           name: 'Inicio',
@@ -63,6 +66,21 @@ export default {
       ],
     };
   },
+  methods: {
+    showMenu: function () {
+      this.show = !this.show
+    },
+    getWindowsWidth(event) {
+      this.windowsWidth = document.documentElement.clientWidth;
+      if (this.windowsWidth > 800) {
+        this.show = true
+      }
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.getWindowsWidth);
+    this.getWindowsWidth()
+  }
 };
 </script>
 
