@@ -1,39 +1,43 @@
 <template>
   <div>
-    <div class="top-menu">
+    <div v-if='info.logo' class="top-menu">
       <div class="social-networks_top-menu container-icons">
-        <a href="#" class="icon-top-menu icon-social-networks"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-        <a href="#" class="icon-top-menu icon-social-networks"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        <a href="#" class="icon-top-menu icon-social-networks"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        <a href="#" class="icon-top-menu icon-social-networks"><i class="fa fa-youtube-play" aria-hidden="true"></i></a>
+      <a v-show="info.red_instagram" :href="info.red_instagram"><i class="icon-top-menu icon-instagrem"></i></a>
+      <a v-show="info.red_twitter" :href="info.red_twitter" ><i class="icon-top-menu icon-twitter" ></i></a>
+      <a v-show="info.red_facebook" :href="info.red_facebook" ><i class="icon-top-menu icon-facebook-square" ></i></a>
+      <a v-show="info.red_youtube" :href="info.red_youtube" ><i class="icon-top-menu icon-youtube"></i></a>
+        <!-- <a v-show="info.red_youtube" :href="info.red_youtube" class="icon-top-menu icon-social-networks"><i class="fa fa-youtube-play" aria-hidden="true"></i></a> -->
       </div>
-      <img :src="`http://komercia.co/logos/${logo.logo}`" alt="logo" class="logo-top-menu">
+      <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo" class="logo-top-menu">
       <div class="login-cart_top-menu container-icons">
-        <a href="#" class="icon-top-menu"><i class="fa fa-user-circle-o icon-right" aria-hidden="true"></i></a>
-        <a href="#" class="icon-top-menu"><i class="fa fa-shopping-cart icon-right" aria-hidden="true"></i></a>
-        <a href="#" @click="showMenu" class="icon-top-menu"><i class="fa fa-bars icon-menu" aria-hidden="true"></i></a>
+        <a href="#" ><i class="icon-top-menu icon-user"></i></a>
+        <a href="#" ><i class="icon-top-menu icon-shopping-cart"></i></a>
+        <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
     </div>
-    <nav v-show="show" class="main-menu">
-      <ul class="main-menu-list">
-        <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a class="main-menu-link" href="#">{{item.name}}</a></li>
-      </ul>
-    </nav>
-    <!-- CONTENIDO DE PRUEBA -->
-    <h1>CONTENIDO DE PRUEBA</h1>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio possimus dolore quibusdam. Laudantium corrupti officia nobis id sapiente eaque. Quisquam consequuntur possimus ratione aspernatur ab ducimus sint consequatur voluptate odio.</p>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio possimus dolore quibusdam. Laudantium corrupti officia nobis id sapiente eaque. Quisquam consequuntur possimus ratione aspernatur ab ducimus sint consequatur voluptate odio.</p>
+    <transition name="slide-fade">
+      <nav v-show="show" class="main-menu">
+        <div class="top-menu">
+          <a @click="toggleMenu" class="icon-top-menu icon-top-menu-close"><i class="icon-cancel icon-menu" aria-hidden="true"></i></a>
+        </div>
+        <ul class="main-menu-list">
+          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a class="main-menu-link" href="#">{{item.name}}</a></li>
+        </ul>
+      </nav>
+    </transition>
 
   </div>
 </template>
 
 <script>
+import Hammer from 'hammerjs';
+
 export default {
   name: 'koHeader1',
   props: {
     logo: {
       type: Object,
-      default: () => {
+      default() {
         return {
           id: 1,
           logo: '163nir1958.png',
@@ -41,7 +45,7 @@ export default {
       },
     },
   },
-  
+
   data() {
     return {
       show: false,
@@ -67,23 +71,40 @@ export default {
     };
   },
   methods: {
-    showMenu: function () {
-      this.show = !this.show
+    toggleMenu() {
+      this.show = !this.show;
     },
-    getWindowsWidth(event) {
+    showMenu() {
+      this.show = false;
+    },
+    hideMenu() {
+      this.show = true;
+    },
+    getWindowsWidth() {
       this.windowsWidth = document.documentElement.clientWidth;
       if (this.windowsWidth > 800) {
-        this.show = true
+        this.show = true;
       }
-    }
+    },
   },
   mounted() {
     window.addEventListener('resize', this.getWindowsWidth);
-    this.getWindowsWidth()
-  }
+    this.getWindowsWidth();
+  },
+  computed: {
+    info() {
+      return this.$store.state.tienda;
+    },
+  },
+  created() {
+    const $body = document.body;
+    const hammertime = new Hammer($body);
+    hammertime.on('swipeleft', this.hideMenu);
+    hammertime.on('swiperight', this.showMenu);
+  },
 };
 </script>
 
 <style>
-  @import '../../assets/css/main.css'
+
 </style>

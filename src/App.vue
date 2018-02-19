@@ -1,67 +1,38 @@
 <template>
   <div id="app">
-    <ko-header1/>
+    <ko-header1 />
+    <ko-slider1 />
+    <ko-separator1 />
+    <ko-grid1 />
+    <ko-newsletter1 />
+    <ko-footer1 />
   </div>
 </template>
 
 <script>
 import koHeader1 from './components/headers/ko-header1';
+import koSlider1 from './components/sliders/ko-slider1';
+import koSeparator1 from './components/separators/ko-separator1';
+import koGrid1 from './components/grids/ko-grid1';
+import koNewsletter1 from './components/newsletters/ko-newsletter1';
+import koFooter1 from './components/footers/ko-footer1';
 
 export default {
   name: 'app',
   components: {
     koHeader1,
+    koSlider1,
+    koSeparator1,
+    koGrid1,
+    koNewsletter1,
+    koFooter1,
   },
+  created() {
+    this.$store.commit('GET_DATA')
+  }
 };
 </script>
 
 <style>
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-a {
-  text-decoration: none;
-  color: initial;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
+@import './assets/css/main.css';
 </style>

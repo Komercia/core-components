@@ -1,0 +1,17 @@
+.swiper-container {
+    max-width: 1200px;
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.banner {
+  width: 100%;
+}
+@media screen and (max-width: 800px) {
+  .swiper-container {
+      width: 100%;
+      height: auto;
+      margin: 0;
+  }
+}
