@@ -1,6 +1,6 @@
 .grid {
   margin: 0 auto;
-  padding-top: 60px;
+  padding: 20px 0;
   max-width: 1200px;
   width: 100%;
   display: grid;
