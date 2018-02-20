@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  name: 'koSeparator1',
   data() {
     return {
       separator: {

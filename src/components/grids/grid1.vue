@@ -6,10 +6,10 @@
     </div>
 </template>
 <script>
-import KoProductCard from '../_productCard/ko-product-card';
+import KoProductCard from '../_productCard/product-card';
 
 export default {
-  name: "ko-grid1",
+  name: "koGrid1",
   components: {KoProductCard},
   data() {
     return {
