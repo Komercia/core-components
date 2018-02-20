@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
   },
   mutations: {
-    GET_DATA(state) {
+    GET_DATA (state) {
       axios.get(`${state.urlHttp}/api/front/tienda/349`).then(response => {
         state.banners = response.data.data.banners;
         state.productos = response.data.data.productos;
