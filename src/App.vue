@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import koHeader1 from './components/headers/ko-header1';
-import koSlider1 from './components/sliders/ko-slider1';
-import koSeparator1 from './components/separators/ko-separator1';
-import koGrid1 from './components/grids/ko-grid1';
-import koNewsletter1 from './components/newsletters/ko-newsletter1';
-import koFooter1 from './components/footers/ko-footer1';
+import koHeader1 from './components/headers/header1';
+import koSlider1 from './components/sliders/slider1';
+import koSeparator1 from './components/separators/separator1';
+import koGrid1 from './components/grids/grid1';
+import koNewsletter1 from './components/newsletters/newsletter1';
+import koFooter1 from './components/footers/footer1';
 
 export default {
   name: 'app',
