@@ -21,6 +21,12 @@ export default new Vuex.Store({
       garantia: '',
       datos: '',
     },
+    styleData: {
+      backgroundMain: { backgroundColor: 'red'},
+      backgroundSecondary: { backgroundColor: 'blue'},
+      colorMain: { color: 'black'},
+      colorSecondary: { color: 'white'}
+    }
   },
   mutations: {
     GET_DATA (state) {

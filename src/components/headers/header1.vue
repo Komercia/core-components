@@ -16,7 +16,7 @@
       </div>
     </div>
     <transition name="slide-fade">
-      <nav v-show="show" class="main-menu">
+      <nav v-show="show" class="main-menu" :style="style.backgroundMain">
         <div class="top-menu">
           <a @click="toggleMenu" class="icon-top-menu icon-top-menu-close"><i class="icon-cancel icon-menu" aria-hidden="true"></i></a>
         </div>
@@ -95,6 +95,9 @@ export default {
     info() {
       return this.$store.state.tienda;
     },
+    style () {
+      return this.$store.state.styleData
+    }
   },
   created() {
     const $body = document.body;
