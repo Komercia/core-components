@@ -5,7 +5,7 @@
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.categoria}}</div>
       <div class="price">{{data.precio | currency}}</div>
-      <button class="btn-product" type="button" name="button">Ir al Producto</button>
+      <button class="btn-product" type="button" name="button"><router-link :to="`/productos/${data.slug}`">Ir al Producto</router-link></button>
     </div>
   </div>
 </template>
@@ -28,6 +28,7 @@ export default {
       if (value) {
         return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
+      return '';
     }
   },
 };
@@ -47,12 +48,16 @@ export default {
   padding-top: 20px;
 }
 .btn-product {
+  display: flex;
   margin-top: 15px;
-  background-color: #000;
-  color: #fff;
+  background-color: var(--button_color);
+  color: var(--button_text_color);
   border: 0;
-  padding: 10px 30px;
   cursor: pointer;
+  padding: 0;
+}
+.btn-product a{
+  padding: 10px 30px;
 }
 .name-product {
   text-align: center;
