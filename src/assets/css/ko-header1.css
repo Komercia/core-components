@@ -1,4 +1,4 @@
-body {
+/*body {
   font-family: Helvetica, Arial, sans-serif;
 }
 h1 {
@@ -105,10 +105,8 @@ h1 {
   .icon-menu-show {
     padding-left: 20px;
     font-size: 24px;
-    /* padding-bottom: 10px; */
     z-index: 9999;
     display: block !important;
-    /* position: absolute; */
   }
   .icon-top-menu-close {
     display: flex;
@@ -119,7 +117,6 @@ h1 {
   .main-menu > .top-menu {
     display: flex;
     justify-content: flex-end;
-    /* width: 100%; */
   }
   .login-cart_top-menu {
     padding-right: 20px;
@@ -156,4 +153,4 @@ h1 {
   .main-menu {
     z-index: 100;
   }
- }
+ }*/

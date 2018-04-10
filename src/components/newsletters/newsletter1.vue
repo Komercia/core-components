@@ -60,8 +60,8 @@ export default {
   line-height: 1.2;
 }
 .btn-subscribe {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--button_color);
+  color: var(--button_text_color);
   border: 0;
   padding: 10px 30px;
   cursor: pointer;
