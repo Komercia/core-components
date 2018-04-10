@@ -29,8 +29,8 @@ export default {
           route: '/politicas',
         },
         {
-          name: 'Catalogo',
-          route: '/catalogo',
+          name: 'Productos',
+          route: '/productos',
         },
       ]
     }
@@ -45,5 +45,7 @@ export default {
 </script>
 
 <style>
-
+  .footer{
+    background-color: var(--main_color);
+  }
 </style>
