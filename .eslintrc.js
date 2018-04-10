@@ -22,6 +22,7 @@ module.exports = {
   },
   // add your custom rules here
   rules: {
+    "no-shadow": [2, {"builtinGlobals": true, "hoist": "functions", "allow": ['response']}],
     // don't require .vue extension when importing
     'import/extensions': [
       'error',
