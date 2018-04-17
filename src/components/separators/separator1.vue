@@ -1,21 +1,14 @@
 <template>
   <div class="container-separator">
-    <h2 class="title-separator">{{separator.title}}</h2>
-    <p class="subtitle-separator">{{separator.subtitle}}</p>
+    <h2 class="title-separator" v-show="setting.title">{{ setting.title }}</h2>
+    <p class="subtitle-separator" v-show="setting.description">{{ setting.description }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'koSeparator1',
-  data() {
-    return {
-      separator: {
-        title: 'Nuevos Productos',
-        subtitle: 'Fill your wardrobe with cutting edge finds',
-      },
-    }
-  },
+  props: ['setting'],
   computed: {
     info() {
       return this.$store.state.tienda;
@@ -24,6 +17,20 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.container-separator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60px;
+  padding: 40px 0;
+}
+.title-separator {
+  font-weight: bold;
+  font-size: 20px;
+}
+.subtitle-separator {
+  padding-top: 8px;
+  color: grey;
+}
 </style>
