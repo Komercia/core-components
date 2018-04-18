@@ -13,7 +13,11 @@ export default new Vuex.Store({
   state: {
     urlHttp: '',
     openOrder: false,
-    envios: {},
+    envios: {
+      valores: {
+        envio_metodo: 'gratis'
+      }
+    },
     tienda: {},
     userData: {
       id: 270,
@@ -23,7 +27,32 @@ export default new Vuex.Store({
     },
     banners: [],
     productos: [],
-    productsData: [],
+    productsData: [
+      {
+        placeholder: true,
+        foto: 'placeholder1.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },
+      {
+        placeholder: true,
+        foto: 'placeholder2.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },
+      {
+        placeholder: true,
+        foto: 'placeholder3.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },
+      {
+        placeholder: true,
+        foto: 'placeholder4.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+      },
+    ],
     menuComponent: false,
     productsCart: cart,
     categorias: [],
@@ -40,10 +69,12 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA (state) {
-      axios.get(`${state.urlHttp}/api/front/tienda/431`).then(response => {
+      axios.get(`${state.urlHttp}/api/front/tienda/163`).then(response => {
         state.banners = response.data.data.banners;
-        state.productos = response.data.data.productos;
-        state.productsData = response.data.data.productos;
+        if(response.data.data.productos.length){
+          state.productos = response.data.data.productos;
+          state.productsData = response.data.data.productos;
+        }
         state.categorias = response.data.data.categorias;
         state.subcategorias = response.data.data.subcategorias;
         state.geolocalizacion = response.data.data.geolocalizacion;
