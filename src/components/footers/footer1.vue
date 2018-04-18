@@ -46,6 +46,7 @@ export default {
 
 <style>
   .footer{
+    flex: none;
     background-color: var(--main_color);
   }
 </style>
