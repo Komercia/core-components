@@ -93,10 +93,10 @@
 
 <script>
 import axios from 'axios';
-import AngleLeft from '@/Icons/AngleLeft'
-import IconText from '@/Icons/Text'
-import AlignJustify from '@/Icons/AlignJustify'
-import IconLinks from '@/Icons/Links'
+import AngleLeft from '../../Icons/AngleLeft.vue'
+import IconText from '../../Icons/Text.vue'
+import AlignJustify from '../../Icons/AlignJustify.vue'
+import IconLinks from '../../Icons/Links.vue'
 
 export default {
   name: 'koSliderSetting1',
