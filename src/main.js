@@ -8,7 +8,9 @@ import axios from 'axios';
 import 'element-ui/lib/theme-chalk/index.css';
 import elementUI from 'element-ui';
 import firebase from 'firebase';
+import VuePaginate from 'vue-paginate'
 
+Vue.use(VuePaginate)
 Vue.config.productionTip = false;
 
 Vue.use(elementUI);
