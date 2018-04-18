@@ -1,6 +1,6 @@
 <template>
   <div class="container-product">
-    <img :src="setProduct(data.foto)" class="img-grid-item">
+    <img :src="foto" class="img-grid-item">
     <div class="grid-item-description">
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.categoria}}</div>
@@ -9,6 +9,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "",
@@ -18,9 +19,13 @@ export default {
 
     };
   },
-  methods: {
-    setProduct(product) {
-      return `${this.$urlHttp}/productos/${product}`;
+  computed: {
+    foto() {
+      if(this.data.placeholder) {
+        return require(`../../assets/${this.data.foto}`);
+      }else {
+        return `${this.$urlHttp}/productos/${this.data.foto}`;
+      }
     }
   },
   filters: {
@@ -35,10 +40,13 @@ export default {
 </script>
 
 <style >
+.container-product{
+  display: grid;
+  justify-content: center;
+}
 .img-grid-item {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 300px;
+  max-height: 300px;
   box-shadow: 0 0 5px #eee;
 }
 .grid-item-description {
@@ -51,13 +59,13 @@ export default {
   display: flex;
   margin-top: 15px;
   background-color: var(--button_color);
-  color: var(--button_text_color);
   border: 0;
   cursor: pointer;
   padding: 0;
 }
 .btn-product a{
   padding: 10px 30px;
+  color: var(--button_text_color);
 }
 .name-product {
   text-align: center;
