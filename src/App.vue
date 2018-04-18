@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <ko-slider-2/>
+    <cart-1 />
+    <product-list-1 />
   </div>
 </template>
 
 <script>
 import koChat from './components/chat/chat';
+import ProductList1 from './components/product_lists/product_list1';
 import koContact1 from './components/contacts/contact1';
 import koOrder from './components/_order/order1';
 import koHeader1 from './components/headers/header1';
@@ -24,6 +26,7 @@ export default {
   name: 'app',
   components: {
     koContact1,
+    ProductList1,
     koChat,
     koOrder,
     koHeader1,
@@ -40,6 +43,20 @@ export default {
   },
   created() {
     this.$store.commit('GET_DATA')
+  },
+  data() {
+    return {
+      settingBanner: {
+        banners: [
+          {
+            position: 'center',
+          },
+          {
+            position: 'center',
+          }
+        ]
+      }
+    }
   }
 };
 </script>
@@ -48,9 +65,9 @@ export default {
 @import './assets/css/main.css';
 :root {
   --main_color: #00acc1;
-  --text_color: #fff;
+  --text_color: #383838;
   --button_color: #00acc1;
-  --button_text_color: #fff;
+  --button_text_color: #FFF;
   --background_color: #FFF;
 }
 #app{
