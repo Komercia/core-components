@@ -1,7 +1,7 @@
 <template>
   <carousel :perPage="1" :paginationEnabled="false" :autoplay="true" :loop="true" :autoplayTimeout="4000">
     <slide v-for="banner in bannersData">
-      <div class="left slide_content">
+      <div :class="`${banner.position} slide_content`">
         <img :src="setBanner(banner.ruta_banner)" class="slide_photo" :alt="banner.ruta_banner">
         <div class="slide_texts">
           <h1 v-show="banner.titulo">{{ banner.titulo }}</h1>
@@ -17,6 +17,7 @@
 import { Carousel, Slide } from 'vue-carousel';
 
 export default {
+  name: 'koSlider2',
   components: {
     Carousel,
     Slide
