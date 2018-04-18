@@ -4,7 +4,7 @@
       <ul class="products_list">
         <li v-for="(product, index) in products" class="products_item">
           <img
-            :src="setFoto(product.foto)"
+            :src="setFoto(product)"
             class="products_item_photo"
             :alt="product.nombre">
           <div class="products_item_info">
@@ -35,16 +35,16 @@
       <div class="cart_summary_body">
         <span>
           <p>Subtotal:</p>
-          <p>$200.000</p>
+          <p>{{ totalCart | currency }}</p>
         </span>
         <span>
           <p>Envio:</p>
-          <p>$5.200</p>
+          <p>{{ shipping | currency }}</p>
         </span>
         <hr>
         <span>
           <p>Total:</p>
-          <p>{{ totalCart | currency }}</p>
+          <p>{{ (totalCart + shipping) | currency }}</p>
         </span>
         <button
           class="cart-action"
@@ -63,18 +63,38 @@ export default {
   mounted(){
     this.products = this.$store.state.productsCart;
   },
-  data(){
-    return {
-      products: [],
-    }
-  },
   computed: {
+    products(){
+      return this.$store.state.productsCart || [];
+    },
     totalCart(){
       return this.$store.state.totalCart;
     },
     orderComponent(){
       return this.$store.state.orderComponent;
-    }
+    },
+    shipping() {
+      let shipping = this.$store.state.envios.valores;
+      switch (shipping.envio_metodo) {
+        case 'gratis':
+          return 0
+        break;
+        case 'tarifa_plana':
+          return this.formatInt(shipping.valor)
+        break;
+        case 'precio':
+          let result = shipping.rangos.filter(rango => {
+            if(this.totalCart >= this.formatInt(rango.inicial) && this.totalCart <= this.formatInt(rango.final)) {
+              return rango;
+            }
+          })[0]
+          return this.formatInt(result.precio);
+        break;
+        default:
+
+      }
+    },
+
   },
   methods: {
     addQuantity(product, index){
@@ -91,13 +111,22 @@ export default {
         this.$store.commit('UPDATE_CONTENTCART');
       }
     },
-    setFoto(f) {
-      return `${this.$urlHttp}/mini/${f}`;
+    setFoto(product) {
+      if(product.placeholder) {
+        return require(`../../assets/${product.foto}`);
+      }else {
+        return `${this.$urlHttp}/mini/${product.foto}`;
+      }
     },
     deleteItemCart(i){
       this.$store.state.productsCart.splice(i, 1);
       this.$store.commit('UPDATE_CONTENTCART');
       // this.$store.commit('removeProductsPurchased');
+    },
+    formatInt(n) {
+      n = n.replace("$","").replace(/\./g,"")
+      n = parseInt(n)
+      return n
     },
     backPage(e) {
       if(e.target.id == 'order' || e.target.id == 'closeOrder'){
@@ -140,7 +169,8 @@ export default {
     width: 100%;
     display: grid;
     grid-auto-flow: row;
-    grid-template-columns: auto auto;
+    grid-template-columns: 400px auto;
+    grid-column-gap: 15px;
     justify-content: center;
     align-items: start;
     padding: 100px 0;
@@ -149,9 +179,9 @@ export default {
     position: sticky;
     top: 100px;
     background-color: #FFF;
-    margin-left: 15px;
   }
   .cart_products{
+    width: 100%;
     /*height: 300px;
     overflow: auto;*/
   }
@@ -174,9 +204,10 @@ export default {
     grid-row-gap: 15px;
   }
   .products_item{
-    width: 400px;
+    width: 100%;
     display: flex;
     padding: 15px;
+    box-sizing: border-box;
     background-color: #FFF;
     border: 1px solid rgba(0,0,0,.0975);
   }
@@ -264,5 +295,13 @@ export default {
     background-color: var(--button_color);
     color: var(--button_text_color);
     cursor: pointer;
+  }
+  @media (max-width: 780px){
+    .cart {
+      grid-auto-flow: column;
+      grid-template-columns: auto;
+      grid-template-rows: repeat(2, auto);
+      grid-row-gap: 15px;
+    }
   }
 </style>
