@@ -18,7 +18,7 @@
         </div>
         <template v-if="userData.id">
           <el-popover
-            ref="popover1"
+            ref="popover3"
             placement="bottom"
             trigger="click">
             <ul class="user_options_list">
@@ -32,7 +32,7 @@
               <li class="user_options_item" @click="logout"><i class="material-icons">exit_to_app</i>Cerrar session</li>
             </ul>
           </el-popover>
-          <figure class="user_photo" v-popover:popover1>
+          <figure class="user_photo" v-popover:popover3>
             <img :src="`https://api.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
           </figure>
         </template>
@@ -40,15 +40,17 @@
     </nav>
     <i class="material-icons icon_menu" v-on:click="openMenuComponent">menu</i>
     <Sidebar/>
+    <koOrder1 />
   </header>
 </template>
 
 <script>
   import Sidebar from '../sidebars/sidebar1.vue';
+  import koOrder1 from '../_order/order1.vue'
 
 	export default {
     name: 'koHeader3',
-    components: { Sidebar },
+    components: { Sidebar, koOrder1 },
 		data(){
 			return {
 			}

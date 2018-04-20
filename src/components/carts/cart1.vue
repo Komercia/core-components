@@ -12,7 +12,7 @@
             <p>{{ product.precio | currency }}</p>
             <span class="item_info_quantity">
               <p>Cantidad:</p>
-              <input type="number" v-model="product.cantidad">
+              <input type="number" v-model="product.cantidad" @input="show">
             </span>
             <span>
               <p class="item_info_">Variante:</p>
@@ -94,9 +94,12 @@ export default {
 
       }
     },
-
   },
   methods: {
+    show() {
+      this.$store.commit('UPDATE_CONTENTCART');
+      this.$store.commit('CALCULATE_TOTALCART');
+    },
     addQuantity(product, index){
       if(product.limitQuantity > product.cantidad){
         product.cantidad += 1;

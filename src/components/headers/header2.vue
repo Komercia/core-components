@@ -1,14 +1,34 @@
 <template>
   <div>
+    <koOrder1 />
     <div v-if='info.logo' class="top-menu">
       <div class="logo-top-menu">
         <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
       </div>
       <ul class="main-menu-list">
-        <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a class="main-menu-link" href="#">{{item.name}}</a></li>
+        <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>
       </ul>
       <div class="login-cart_top-menu container-icons">
-        <a href="#" ><i class="icon-top-menu icon-user"></i></a>
+        <div class="user" v-popover:popover2>
+          <i class="icon-top-menu icon-user"></i>
+          <el-popover
+            ref="popover2"
+            placement="bottom"
+            trigger="click">
+            <ul class="user_options_list">
+              <li class="user_options_item">
+                <figure class="user_photo">
+                  <img :src="`https://api.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
+                </figure>
+                <div class="">
+                  <strong>Hola {{ userData.nombre }}</strong><p>{{ userData.email }}</p>
+                </div>
+              </li>
+              <li class="user_options_item"><i class="material-icons">assignment</i><a href="https://perfil.komercia.co/compras">Mis Compras</a></li>
+              <li class="user_options_item" @click="logout"><i class="material-icons">exit_to_app</i>Cerrar session</li>
+            </ul>
+          </el-popover>
+        </div>
         <a @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i></a>
         <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
@@ -28,9 +48,11 @@
 
 <script>
 import Hammer from 'hammerjs';
+import koOrder1 from '../_order/order1.vue'
 
 export default {
   name: 'koHeader2',
+  components: { koOrder1 },
   data() {
     return {
       show: false,
@@ -55,6 +77,17 @@ export default {
       ],
     };
   },
+  computed: {
+    userData() {
+      return this.$store.state.userData
+    },
+    info() {
+      return this.$store.state.tienda;
+    },
+    style () {
+      return this.$store.state.styleData
+    }
+  },
   methods: {
     toggleMenu() {
       this.show = !this.show;
@@ -73,19 +106,14 @@ export default {
     },
     openOrder() {
       this.$store.state.openOrder = true;
+    },
+    logout() {
+      this.$store.commit('LOGOUT');
     }
   },
   mounted() {
     window.addEventListener('resize', this.getWindowsWidth);
     this.getWindowsWidth();
-  },
-  computed: {
-    info() {
-      return this.$store.state.tienda;
-    },
-    style () {
-      return this.$store.state.styleData
-    }
   },
   created() {
     const $body = document.body;
@@ -162,6 +190,54 @@ export default {
 .main-menu-link {
   color: #fefefe;
 }
+
+.user{
+  cursor: pointer;
+  outline: none;
+}
+.user_photo{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  margin-right: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.user_photo img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.user_options_item{
+  display: flex;
+  padding: 10px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #DBDBDB;
+}
+.user_options_item:hover{
+  background-color: #EEE;
+}
+.user_options_item *{
+  color: #39393b !important;
+}
+.user_options_item:first-child{
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+  align-items: center;
+  text-align: left;
+  cursor: initial;
+}
+.user_options_item:first-child:hover{
+  background-color: #FFF;
+}
+.user_options_item:last-child{
+  border-bottom: 0px;
+}
+.user_options_item i{
+  margin-right: 5px;
+  font-size: 20px;
+}
+
 @media screen and (max-width: 800px) {
   .main-menu-list {
     width: 100%;

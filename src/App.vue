@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <cart-1 />
-    <product-list-1 />
+    <koHeader1 />
+    <koHeader2 />
+    <koHeader3 />
   </div>
 </template>
 

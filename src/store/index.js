@@ -22,7 +22,7 @@ export default new Vuex.Store({
     userData: {
       id: 270,
       email: 'pumar-10@hotmail.com',
-      foto: 'user.jpg',
+      foto: 'user.jpeg',
       nombre: 'Alejandro Fierro'
     },
     banners: [],
