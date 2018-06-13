@@ -88,7 +88,6 @@ export default {
 <style scoped>
   .contacto{
     width: 100%;
-    min-height: calc(100vh - 306px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,9 +101,10 @@ export default {
   }
   .contacto_content{
     width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: auto auto;
+    justify-items: center;
     margin: 20px 0;
   }
   .maps{
@@ -131,8 +131,8 @@ export default {
     width: 96%;
     bottom: 10px;
     background-color: #FFF;
+    box-sizing: border-box;
     padding: 0px 16px;
-    border-radius: 12px;
     border-width: 1px;
     border-style: solid;
     border-color: var(--main_color);
@@ -144,6 +144,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
     padding-left: 10px;
     background-color: #FFF;
     border-radius: 8px;
@@ -171,7 +172,6 @@ export default {
     border-style: none;
     padding: 10px 40px;
     margin: 0 10px 10px 0px;
-    border-radius: 15px;
     outline: none;
     cursor: pointer;
     background-color: var(--button_color);
@@ -210,12 +210,13 @@ export default {
     opacity: 1;
     transform: translateY(20px);
   }
-  @media(max-width: 920px){
+  @media(max-width: 1260px){
     .contacto_content{
-      flex-direction: column;
+      grid-auto-flow: column;
+      grid-template: auto auto / 1fr;
+      grid-row-gap: 20px;
     }
-    .maps{
-      margin-bottom: 10px;
-    }
+  }
+  @media(max-width: 920px){
   }
 </style>
