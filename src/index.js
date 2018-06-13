@@ -6,15 +6,14 @@ import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Contact1 from './components/contacts/contact1'
 import Slider1 from './components/sliders/slider1'
-import Slider2 from './components/sliders/slider2'
+import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
 import Grid from './components/grids/grid1'
 import ProductList1 from './components/product_lists/product_list1'
 import Newsletter from './components/newsletters/newsletter1'
-import Footer from './components/footers/footer1'
-
-import SliderSetting1 from './settings/sliders/slider1'
-import SeparatorSetting1 from './settings/separators/separator1'
+import Footer1 from './components/footers/footer1'
+import Footer2 from './components/footers/footer2'
+import Order1 from './components/_order/order1'
 
 const components = [
   Chat,
@@ -25,14 +24,14 @@ const components = [
   Product1,
   Contact1,
   Slider1,
-  Slider2,
+  Slider11,
   Separator,
   Grid,
   ProductList1,
   Newsletter,
-  Footer,
-  SliderSetting1,
-  SeparatorSetting1
+  Footer1,
+  Footer2,
+  Order1
 ]
 
 const modules = {}
