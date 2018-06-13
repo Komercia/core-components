@@ -3,15 +3,15 @@
     <ko-order-1 />
     <div v-if='info.logo' class="top-menu">
       <div class="social-networks_top-menu container-icons">
-      <a v-show="info.red_instagram" :href="info.red_instagram"><i class="icon-top-menu icon-instagrem"></i></a>
-      <a v-show="info.red_twitter" :href="info.red_twitter" ><i class="icon-top-menu icon-twitter" ></i></a>
-      <a v-show="info.red_facebook" :href="info.red_facebook" ><i class="icon-top-menu icon-facebook-square" ></i></a>
-      <a v-show="info.red_youtube" :href="info.red_youtube" ><i class="icon-top-menu icon-youtube"></i></a>
+        <a v-show="info.red_instagram" :href="info.red_instagram" target="_blank"><i class="icon-top-menu icon-instagrem"></i></a>
+        <a v-show="info.red_twitter" :href="info.red_twitter" target="_blank"><i class="icon-top-menu icon-twitter" ></i></a>
+        <a v-show="info.red_facebook" :href="info.red_facebook" target="_blank"><i class="icon-top-menu icon-facebook-square" ></i></a>
+        <a v-show="info.red_youtube" :href="info.red_youtube" target="_blank"><i class="icon-top-menu icon-youtube"></i></a>
         <!-- <a v-show="info.red_youtube" :href="info.red_youtube" class="icon-top-menu icon-social-networks"><i class="fa fa-youtube-play" aria-hidden="true"></i></a> -->
       </div>
-      <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo" class="logo-top-menu">
+      <router-link to="/" class="logo-top-menu"><img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo"></router-link>
       <div class="login-cart_top-menu container-icons">
-        <div class="user" v-popover:popover1>
+        <div class="user" v-popover:popover1 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>
           <el-popover
             ref="popover1"
@@ -31,7 +31,8 @@
             </ul>
           </el-popover>
         </div>
-        <div @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i></div>
+        <a :href="`http://login.komercia.co/auth?from=${storeData.subdominio}&path=${$route.path}`" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a>
+        <div class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></div>
         <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
     </div>
@@ -92,6 +93,12 @@ export default {
     };
   },
   computed: {
+    storeData() {
+      return this.$store.state.tienda;
+    },
+    productsCart(){
+      return this.$store.state.productsCart.length;
+    },
     userData() {
       return this.$store.state.userData
     },
@@ -185,8 +192,17 @@ h1 {
   padding: 0 30px;
 }
 .logo-top-menu {
-  max-height: 90%;
+  max-height: 90px;
   max-width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.logo-top-menu img{
+  width: 100%;
+  height: 90px;
+  object-fit: contain;
 }
 .icon-top-menu {
   padding: 0 5px;
@@ -198,6 +214,23 @@ h1 {
   display: flex;
   flex: 1;
 }
+.cart_top-icon {
+  position: relative;
+  cursor: pointer;
+}
+.cart_top-icon span{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: red;
+  color: #FFF;
+}
 .social-networks_top-menu {
   padding-left: 20px;
 }
@@ -206,6 +239,7 @@ h1 {
 }
 .login-cart_top-menu {
   justify-content: flex-end;
+  padding-right: 10px;
 }
 .icon-top-menu-close {
   display: none;

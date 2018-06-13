@@ -9,7 +9,7 @@
         <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>
       </ul>
       <div class="login-cart_top-menu container-icons">
-        <div class="user" v-popover:popover2>
+        <div class="user" v-popover:popover2 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>
           <el-popover
             ref="popover2"
@@ -29,7 +29,8 @@
             </ul>
           </el-popover>
         </div>
-        <a @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i></a>
+        <a :href="`http://login.komercia.co/auth?from=${storeData.subdominio}&path=${$route.path}`" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a>
+        <a class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></a>
         <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
     </div>
@@ -78,6 +79,9 @@ export default {
     };
   },
   computed: {
+    storeData() {
+      return this.$store.state.tienda;
+    },
     userData() {
       return this.$store.state.userData
     },
@@ -86,7 +90,10 @@ export default {
     },
     style () {
       return this.$store.state.styleData
-    }
+    },
+    productsCart() {
+      return this.$store.state.productsCart.length;
+    },
   },
   methods: {
     toggleMenu() {
@@ -145,6 +152,7 @@ export default {
   display: none;
 }
 .main-menu-list {
+  height: 100%;
   display: flex;
   align-items: center;
 }
@@ -164,6 +172,8 @@ export default {
 .logo-top-menu {
   max-height: 90%;
   max-width: 250px;
+  display: flex;
+  align-items: center;
 }
 .icon-top-menu {
   padding: 0 5px;
@@ -174,6 +184,23 @@ export default {
   height: 40px;
   display: flex;
   flex: 1;
+}
+.cart_top-icon {
+  position: relative;
+  cursor: pointer;
+}
+.cart_top-icon span{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: red;
+  color: #FFF;
 }
 .social-networks_top-menu {
   padding-left: 20px;
@@ -188,6 +215,9 @@ export default {
   display: none;
 }
 .main-menu-link {
+  height: 100%;
+  display: flex;
+  align-items: center;
   color: #fefefe;
 }
 
@@ -341,6 +371,7 @@ export default {
   .logo-top-menu img{
     max-width: 200px;
     max-height: 80px;
+    object-fit: contain;
   }
   .login-cart_top-menu.container-icons{
     align-items: center;
@@ -367,6 +398,7 @@ export default {
     }
     .logo-top-menu img{
       width: 150px;
+      object-fit: contain;
     }
   }
 </style>
