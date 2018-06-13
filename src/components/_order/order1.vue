@@ -247,13 +247,13 @@ export default {
 		width: 80%;
     height: 40px;
 		border-style: none;
-		background: #FF7175;
+		background: var(--button_color);
     display: inline-block;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     padding: 0 20px;
-    color: #fff;
+    color: var(--button_text_color);
     font-size: 12px;
     letter-spacing: 1px;
     cursor: pointer;
