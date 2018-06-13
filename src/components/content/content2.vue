@@ -33,7 +33,7 @@ export default {
   name: 'koContent2',
   props: {
     setting: {
-      type: Object,
+      type: Array,
       default: function () {
         return [{
           photo: 'https://images.pexels.com/photos/910329/pexels-photo-910329.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
