@@ -1,16 +1,19 @@
 <template>
-  <div class="container-product">
-    <img :src="foto" class="img-grid-item">
+  <router-link :to="`/productos/${data.slug}`" class="container-product">
+    <ImageCloudinary
+      :src="data.foto_cloudinary"
+      class="img-grid-item"/>
     <div class="grid-item-description">
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.categoria}}</div>
       <div class="price">{{data.precio | currency}}</div>
-      <button class="btn-product" type="button" name="button"><router-link :to="`/productos/${data.slug}`">Ir al Producto</router-link></button>
+      <button class="btn-product" type="button" name="button"><a>Ir al Producto</a></button>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
+
 export default {
   name: "",
   props: ['data'],
@@ -41,11 +44,15 @@ export default {
 
 <style >
 .container-product{
+  height: 100%;
   display: grid;
   justify-content: center;
+  align-items: end;
 }
 .img-grid-item {
   max-width: 300px;
+  width: 100%;
+  object-fit: contain;
   max-height: 300px;
   box-shadow: 0 0 5px #eee;
 }
@@ -69,17 +76,18 @@ export default {
 }
 .name-product {
   text-align: center;
-  color: rgb(51, 53, 61);
+  color: var(--text_color);
   text-transform: uppercase;
   font-size: 14px;
   font-weight: bold;
 }
 .category {
-  color: rgb(153, 153, 153);
+  color: var(--text_color);
   padding: 3px 0;
   font-size: 14px;
 }
 .price {
   font-weight: bold;
+  color: var(--text_color);
 }
 </style>
