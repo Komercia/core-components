@@ -20,7 +20,7 @@ export default new Vuex.Store({
     },
     tienda: {},
     userData: {
-      id: 270,
+      id: 0,
       email: 'pumar-10@hotmail.com',
       foto: 'user.jpeg',
       nombre: 'Alejandro Fierro'
@@ -69,7 +69,7 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA (state) {
-      axios.get(`${state.urlHttp}/api/front/tienda/163`).then(response => {
+      axios.get(`${state.urlHttp}/api/front/tienda/490`).then(response => {
         state.banners = response.data.data.banners;
         if(response.data.data.productos.length){
           state.productos = response.data.data.productos;
