@@ -9,15 +9,15 @@
             :alt="product.nombre">
           <div class="products_item_info">
             <h3 class="item_info_name">{{ product.nombre }}</h3>
-            <p>{{ product.precio | currency }}</p>
+            <p class="item_info_price">{{ product.precio | currency }}</p>
             <span class="item_info_quantity">
               <p>Cantidad:</p>
               <input type="number" v-model="product.cantidad" @input="show">
             </span>
             <span>
-              <p class="item_info_">Variante:</p>
-              <ul v-for="item in product.combinacion">
-                <p>{{ item }}</p>
+              <p class="item_info_variant">Variante:</p>
+              <ul class="item_info_combinations">
+                <p v-for="item in product.combinacion">{{ item }}</p>
               </ul>
             </span>
           </div>
@@ -60,9 +60,6 @@
 
 export default {
   name: 'koCart1',
-  mounted(){
-    this.products = this.$store.state.productsCart;
-  },
   computed: {
     products(){
       return this.$store.state.productsCart || [];
@@ -80,15 +77,15 @@ export default {
           return 0
         break;
         case 'tarifa_plana':
-          return this.formatInt(shipping.valor)
+          return shipping.valor
         break;
         case 'precio':
           let result = shipping.rangos.filter(rango => {
-            if(this.totalCart >= this.formatInt(rango.inicial) && this.totalCart <= this.formatInt(rango.final)) {
+            if(this.totalCart >= rango.inicial && this.totalCart <= rango.final) {
               return rango;
             }
           })[0]
-          return this.formatInt(result.precio);
+          return result.precio;
         break;
         default:
 
@@ -118,18 +115,12 @@ export default {
       if(product.placeholder) {
         return require(`../../assets/${product.foto}`);
       }else {
-        return `${this.$urlHttp}/mini/${product.foto}`;
+        return product.foto_cloudinary;
       }
     },
     deleteItemCart(i){
       this.$store.state.productsCart.splice(i, 1);
       this.$store.commit('UPDATE_CONTENTCART');
-      // this.$store.commit('removeProductsPurchased');
-    },
-    formatInt(n) {
-      n = n.replace("$","").replace(/\./g,"")
-      n = parseInt(n)
-      return n
     },
     backPage(e) {
       if(e.target.id == 'order' || e.target.id == 'closeOrder'){
@@ -140,7 +131,7 @@ export default {
       let json = {
         products: this.$store.state.productsCart,
         tienda: {
-          id: this.$store.state.id,
+          id: this.$store.state.tienda.id_tienda,
           nombre: this.$store.state.tienda.nombre,
           logo: this.$store.state.tienda.logo,
           location: this.$store.state.tienda.dominio || `http://${this.$store.state.tienda.subdominio}.komercia.co/`
@@ -230,10 +221,15 @@ export default {
   }
   .item_info_name{
     font-weight: 600;
+    color: var(--text_color);
+  }
+  .item_info_price{
+    color: var(--text_color);
   }
   .item_info_quantity{
     display: flex;
     align-items: center;
+    color: var(--text_color);
   }
   .item_info_quantity input{
     width: 40px;
@@ -243,15 +239,27 @@ export default {
   .item_info_quantity input[type='number'] {
     -moz-appearance:textfield;
   }
-
   .item_info_quantity input::-webkit-outer-spin-button,
   .item_info_quantity input::-webkit-inner-spin-button {
       -webkit-appearance: none;
+  }
+  .item_info_variant{
+    color: var(--text_color);
+  }
+  .item_info_combinations{
+    display: flex;
+  }
+  .item_info_combinations p{
+    padding: 5px;
+    margin: 0 5px;
+    background-color: var(--main_color);
+    color: #FFF;
   }
   .products_item_right{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    color: var(--text_color);
   }
   .products_item_right .delete{
     text-decoration: underline;
@@ -259,6 +267,7 @@ export default {
     text-align: right;
     font-weight: 600;
     cursor: pointer;
+    color: var(--text_color);
   }
   .cart_summary{
     border: 1px solid rgba(0,0,0,.0975);
@@ -272,11 +281,13 @@ export default {
   }
   .cart_summary header h2{
     font-weight: 600;
+    color: var(--text_color);
   }
   .cart_summary_body{
     display: grid;
     justify-content: center;
     padding: 10px 40px;
+    color: var(--text_color);
   }
   .cart_summary_body hr{
     width: 100%;
@@ -290,6 +301,7 @@ export default {
   }
   .cart_summary_body > span p:nth-child(2){
     font-weight: 600;
+    color: var(--text_color);
   }
   .cart-action{
     margin: 15px 0;
