@@ -9,8 +9,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import elementUI from 'element-ui';
 import firebase from 'firebase';
 import VuePaginate from 'vue-paginate'
+import ImageCloudinary from 'image-cloudinary'
 
 Vue.use(VuePaginate)
+Vue.use(ImageCloudinary)
 Vue.config.productionTip = false;
 
 Vue.use(elementUI);
