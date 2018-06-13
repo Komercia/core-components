@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       description: {
-        description1:'Get 10% off your first order Subscribe to our newsletter',
+        description1:'Suscribete a nuestro newsletter para obtener información',
       },
       email: null,
     };
@@ -56,7 +56,7 @@ export default {
   width: 100%;
 }
 .newsletter-description {
-  color: gray;
+  color: var(--text_color);
   line-height: 1.2;
 }
 .btn-subscribe {
