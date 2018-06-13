@@ -2,7 +2,7 @@
   <swiper :options="swiperOption">
     <!-- slides -->
     <swiper-slide><img class="photo" :src="setPhoto(photo)"></swiper-slide>
-    <swiper-slide v-for="photo in photos" :key="photo.id"><img class="photo" :src="setPhoto(photo.foto)"></swiper-slide>
+    <swiper-slide v-for="photo in photos" :key="photo.id"><img class="photo" :src="setPhoto(photo.foto_cloudinary)"></swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
   </swiper>
@@ -29,7 +29,11 @@ export default {
         },
         methods: {
           setPhoto(photo){
-            return `${this.$urlHttp}/tumb/${photo}`;
+            if(photo === 'placeholder1.svg'){
+              return require(`../../assets/${photo}`);
+            }else{
+              return photo;
+            }
           }
         }
       }
