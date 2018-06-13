@@ -45,8 +45,10 @@ export default {
   name: 'KoChat',
   created() {
     window.onload = () => {
-      this.loadMessages()
-      this.loading = true;
+      setTimeout(() => {
+        this.loadMessages()
+        this.loading = true;
+      }, 3000)
     }
   },
   data () {
@@ -112,6 +114,20 @@ export default {
         message: this.message
       }
       firebase.database().ref(`chats/${this.key}/messages`).push(chat)
+
+      let pendingRef = firebase.database().ref(`/chats/${this.key}/pending_messages_store`);
+      pendingRef.transaction(function(pending) {
+        if (pending != null) {
+          return pending + 1;
+        } else {
+          return 1
+        }
+      })
+
+      let update = {}
+      update[`/chats/${this.key}/pending_messages_customer`] = 0
+      update[`/chats/${this.key}/messages_update_last`] = Date.now()
+      firebase.database().ref().update(update)
     },
     newChat() {
       const chat = {
@@ -122,6 +138,8 @@ export default {
         },
         customer_id: this.userData.id,
         messages_update_last: Date.now(),
+        pending_messages_store: 1,
+        pending_messages_customer: 0,
         messages: {
           '0': {
             from: 'customer',
