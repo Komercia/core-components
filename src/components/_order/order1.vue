@@ -1,6 +1,6 @@
 <template>
 	<transition name="fade">
-	  <div class="order" v-show="openOrder">
+	  <div class="order" @click="closeOrder" v-show="openOrder">
 	    <div class="order_content">
 	      <div class="order_header">
 					<h3>Tu Orden</h3>
@@ -10,26 +10,29 @@
 					<ul class="order_products_list">
 						<li class="order_products_list_item" v-for="(product, index) in productsCart">
 							<div class="photo">
-								<img :src="product.foto">
+								<img :src="product.foto_cloudinary">
 							</div>
 							<div class="name">
 								<p>{{ product.nombre | capitalize }}</p>
-								<p>{{ product.unidades }} und</p>
+								<p class="item_info_price">{{ product.precio | currency }}</p>
+								<p>{{ product.cantidad }} und</p>
 							</div>
 							<div>
-								<p>{{ (product.precio * product.unidades) | currency }}</p>
+								<p>{{ (product.precio * product.cantidad) | currency }}</p>
 							</div>
-							<i class="material-icons delete" v-on:click="deleteProduct(product.id, index)">clear</i>
+							<i class="material-icons delete" v-on:click="deleteItemCart(index)">clear</i>
 						</li>
 					</ul>
 				</div>
 				<div class="order_total">
 					<span class="order_total_domicile">
 						<p>Costo domicilio</p>
-						<p>{{ totalCart <= 50000 ? '$10.000' : '$0'}}</p></span>
-					<span class="order_total_net"><p>Total a pagar</p><p>{{ totalCart | currency }}</p></span>
+						<p>{{ shipping | currency }}</p></span>
+					<span class="order_total_net"><p>Total a pagar</p><p>{{ (totalCart + shipping) | currency }}</p></span>
 				</div>
-				<button class="p_button">Finalizar compra</button>
+				<button class="p_button" @click="GoPayments">Finalizar compra</button>
+				<br>
+				<button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
 	    </div>
 	  </div>
 	</transition>
@@ -37,6 +40,7 @@
 
 <script>
 export default {
+	name: 'koOrder1',
 	computed: {
 		openOrder() {
 			return this.$store.state.openOrder;
@@ -47,10 +51,57 @@ export default {
 		productsCart(){
 			return this.$store.state.productsCart;
 		},
+		shipping() {
+      let shipping = this.$store.state.envios.valores;
+      switch (shipping.envio_metodo) {
+        case 'gratis':
+          return 0
+        break;
+        case 'tarifa_plana':
+          return shipping.valor
+        break;
+        case 'precio':
+          let result = shipping.rangos.filter(rango => {
+            if(this.totalCart >= rango.inicial && this.totalCart <= rango.final) {
+              return rango;
+            }
+          })[0]
+          return result.precio;
+        break;
+        default:
+
+      }
+    }
 	},
 	methods: {
-		closeOrder() {
-			this.$store.state.openOrder = false;
+		deleteItemCart(i){
+      this.$store.state.productsCart.splice(i, 1);
+      this.$store.commit('UPDATE_CONTENTCART');
+    },
+		closeOrder(event) {
+			const element = event.target.className
+			if (element === 'order' || element === 'order_header_close' || element === 'continue_shopping') {
+				this.$store.state.openOrder = false;
+			}
+		},
+		GoPayments () {
+			let json = {
+				products: this.$store.state.productsCart,
+				tienda: {
+					id: this.$store.state.tienda.id_tienda,
+					nombre: this.$store.state.tienda.nombre,
+					logo: this.$store.state.tienda.logo,
+					location: this.$store.state.tienda.dominio || `http://${this.$store.state.tienda.subdominio}.komercia.co/`
+				},
+				tipo: 0,
+				total: this.$store.state.totalCart,
+				estado: 0,
+				direccion_entrega: 1
+			}
+			json = JSON.stringify(json)
+			if(this.$store.state.productsCart.length != 0){
+				location.href = `https://checkout.komercia.co/?params=${json}`;
+			}
 		}
 	},
 	filters: {
@@ -110,6 +161,8 @@ export default {
 		padding: 5px 12px;
 		border-radius: 3px;
 		border: 1px solid #333;
+		cursor: pointer;
+		outline: none;
 	}
 	.order_products_list{
 		height: 380px;
@@ -204,6 +257,27 @@ export default {
     font-size: 12px;
     letter-spacing: 1px;
     cursor: pointer;
+		outline: none;
+		transition: .3s;
+	}
+	.continue_shopping{
+		width: 80%;
+		height: 30px;
+		border-style: none;
+		background-color: transparent;
+		-webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 0 20px;
+		border: 1px solid black;
+		font-size: 12px;
+    letter-spacing: 1px;
+    cursor: pointer;
+		outline: none;
+		transition: .3s;
+	}
+	.p_button:hover, .continue_shopping:hover{
+		transform: scale(.95);
 	}
 	.fade-enter-active, .fade-leave-active {
 		transition: opacity .3s;
