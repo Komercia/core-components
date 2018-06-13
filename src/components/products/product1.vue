@@ -5,17 +5,25 @@
         <div class="section">
           <div class="photos">
             <div class="photos_selected">
-              <img :src="setMiniPhoto(data.detalle.foto)" v-on:mouseover="selectedPhoto(data.detalle.foto)">
-              <img :src="setMiniPhoto(foto.foto)" v-on:mouseover="selectedPhoto(foto.foto)" v-for="foto in data.fotos">
+              <img :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover="selectedPhoto(data.detalle.foto_cloudinary)">
+              <img :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos">
               <img v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
             </div>
             <div class="photo_main">
-              <zoomed v-show="!existYoutube" :photo="selectPhotoUrl"></zoomed>
+              <zoomed
+                v-if="data.detalle.foto !== 'placeholder1.svg'"
+                v-show="!existYoutube"
+                :photo="selectPhotoUrl">
+              </zoomed>
+              <img
+                :src="selectPhotoUrl"
+                v-else
+                class="photo_main_placeholder">
               <iframe v-show="existYoutube" width="400" height="250" :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`" frameborder="0" allowfullscreen></iframe>
             </div>
           </div>
           <div class="photos responsive">
-            <product-slide :photos="data.fotos" :photo="data.detalle.foto"></product-slide>
+            <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
           </div>
           <div class="content">
             <h2 class="content_name">{{data.detalle.nombre}}</h2>
@@ -148,16 +156,13 @@
       productsData() {
         return this.$store.state.productsData;
       },
-      getDescription(){
-        setTimeout(() => document.querySelector('.content_desc > div').textContent, 1000)
-      },
       existPayments(){
       const mediospago = this.$store.state.mediospago;
       if(mediospago.consignacion || mediospago.convenir || mediospago.payco || mediospago.tienda || mediospago.efecty){
         return true;
       }
         return false;
-      
+
     },
       modalPayment(){
         return this.$store.state.togglePayment;
@@ -180,30 +185,51 @@
         if(product.length) {
           return product[0].id
         }
-        return 2844
+        return 0
       },
       getDataProduct() {
-        axios.get(`${this.$urlHttp}/api/front/producto/${this.searchIdForSlug()}`).then((response) => {
-          this.selectedPhoto(response.data.detalle.foto);
-          this.videoYoutube(response.data.info.video);
-          this.data = response.data;
-          this.salesData = {
-            precio: this.data.detalle.precio,
-            unidades: this.data.info.inventario,
-            sku: this.data.info.sku,
-          };
-          this.maxQuantityValue = this.data.info.inventario;
-          for(const [index, productCart] of this.$store.state.productsCart.entries()){
-            if(this.data.detalle.id == productCart.id){
-              this.productIndexCart = index;
-              this.productCart = productCart;
-              this.maxQuantityValue = (this.data.info.inventario - productCart.cantidad);
+        if(this.searchIdForSlug()) {
+          axios.get(`${this.$urlHttp}/api/front/producto/${this.searchIdForSlug()}`).then((response) => {
+            this.selectedPhoto(response.data.detalle.foto_cloudinary);
+            this.videoYoutube(response.data.info.video);
+            this.data = response.data;
+            this.salesData = {
+              precio: this.data.detalle.precio,
+              unidades: this.data.info.inventario,
+              sku: this.data.info.sku,
+            };
+            this.maxQuantityValue = this.data.info.inventario;
+            for(const [index, productCart] of this.$store.state.productsCart.entries()){
+              if(this.data.detalle.id == productCart.id){
+                this.productIndexCart = index;
+                this.productCart = productCart;
+                this.maxQuantityValue = (this.data.info.inventario - productCart.cantidad);
+              }
             }
+            if(this.salesData.unidades == 0 || this.maxQuantityValue <= 0){
+              this.spent = true;
+            }
+          })
+        }else {
+          this.selectedPhoto(this.productsData[0].foto_cloudinary);
+          // this.videoYoutube(this.productsData[0].foto);
+          this.data.detalle = {
+            foto_cloudinary: this.productsData[0].foto_cloudinary,
+            nombre: this.productsData[0].nombre,
+            precio: this.productsData[0].precio,
           }
-          if(this.salesData.unidades == 0 || this.maxQuantityValue <= 0){
-            this.spent = true;
+          this.data.info = {
+            marca: '',
+            descripcion: ''
           }
-        })
+          this.maxQuantityValue = 0;
+          this.salesData = {
+            precio: 29998,
+            unidades: 0,
+            sku: '4a00',
+          };
+          this.spent = true;
+        }
       },
       togglePayment(){
         this.$store.state.togglePayment = !this.$store.state.togglePayment;
@@ -256,15 +282,18 @@
 				}
 			},
       setMiniPhoto(photo){
-        if(photo){
-          return `${this.$urlHttp}/mini/${photo}`;
+        if(photo === 'placeholder1.svg'){
+          return require(`../../assets/${photo}`);
         }
+        return photo;
       },
       selectedPhoto(photo){
-        if(photo){
-          this.selectPhotoUrl = `${this.$urlHttp}/productos/${photo}`;
-          this.existYoutube = false;
+        if(photo === 'placeholder1.svg'){
+          this.selectPhotoUrl = require(`../../assets/${photo}`);
+        }else {
+          this.selectPhotoUrl = photo;
         }
+        this.existYoutube = false;
       },
       videoYoutube(video){
         if(video){
@@ -280,7 +309,7 @@
           id: this.data.detalle.id,
           precio: this.salesData.precio,
           cantidad: this.data.cantidad,
-          foto: this.data.detalle.foto,
+          foto_cloudinary: this.data.detalle.foto_cloudinary,
           nombre: this.data.detalle.nombre,
           combinacion: this.salesData.combinacion,
         }
@@ -298,6 +327,7 @@
         }
         this.$store.commit('UPDATE_CONTENTCART');
         this.$router.push('/productos');
+        this.$store.state.openOrder = true;
         this.$store.state.orderComponent = true;
       },
       evalStock (mq, qv) {
@@ -319,6 +349,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
     margin: 0 auto;
     padding: 30px;
   }
@@ -327,6 +358,7 @@
     justify-content: space-between;
   }
   .photos{
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -357,19 +389,22 @@
     max-width: 450px;
     max-height: 400px;
     height: 100%;
-    margin-right: 10px;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 10px;
+  }
+  .photo_main_placeholder{
+    width: 450px;
   }
   .content{
     width: 350px;
     min-height: 400px;
     display: flex;
     flex-direction: column;
-    background-color: #f1f1f1;
+    box-sizing: border-box;
     padding: 15px;
-    border-radius: 10px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   }
   i.close{
@@ -379,7 +414,7 @@
   }
   .content_name{
     font-weight: normal;
-    color: #333;
+    color: var(--text_color);
     margin: 7px 0;
   }
   .content_buy{
@@ -398,9 +433,11 @@
   .content_buy_price h3{
     font-weight: normal;
     font-size: 40px;
+    color: var(--text_color);
   }
   .content_buy_price p{
     margin-bottom: 8px;
+    color: var(--text_color);
   }
   .content_buy_action{
     width: 100%;
@@ -416,7 +453,6 @@
     align-items: center;
     color: #FFF;
     border-style: none;
-    border-radius: 12px;
     background-color: var(--main_color);
     font-size: 13px;
     cursor: pointer;
@@ -520,7 +556,6 @@
     justify-content: space-between;
     align-items: center;
     background-color: #f1f1f1;
-    border-radius: 10px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
     margin: 10px 0;
     padding: 0 25px;
@@ -536,19 +571,19 @@
   }
   .features_item_info h3{
     font-size: 16px;
-    color: #333;
+    color: var(--text_color);
   }
   .features_item_info p{
     font-size: 14px;
     margin: 8px 0;
-    color: #333;
+    color: var(--text_color);
   }
   .features_item_info button{
     border-style: none;
     background-color: transparent;
     font-size: 12px;
     font-weight: bold;
-    color: var(--color_secundario);
+    color: var(--main_color);
     cursor: pointer;
     outline: none;
   }
