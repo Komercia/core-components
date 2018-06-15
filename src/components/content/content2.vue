@@ -71,6 +71,7 @@ export default {
   width: 100%;
   text-align: justify;
   line-height: 22px;
+  font-size: 15px;
 }
 .item .button{
   font-weight: bold;
