@@ -10,10 +10,12 @@ import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
 import Grid from './components/grids/grid1'
 import ProductList1 from './components/product_lists/product_list1'
+import ProductList2 from './components/product_lists/product_list2'
 import Newsletter from './components/newsletters/newsletter1'
 import Footer1 from './components/footers/footer1'
 import Footer2 from './components/footers/footer2'
 import Order1 from './components/_order/order1'
+import ProductList2 from './components/product_lists/product_list2'
 
 const components = [
   Chat,
@@ -31,7 +33,8 @@ const components = [
   Newsletter,
   Footer1,
   Footer2,
-  Order1
+  Order1,
+  ProductList2
 ]
 
 const modules = {}

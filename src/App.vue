@@ -1,24 +1,28 @@
-<template>
+  <template>
   <div id="app">
-    <koChat />
-    <cart1 />
-    <koContact1 />
-    <koFooter1 />
-    <koFooter2 />
-    <koGrid1 />
-    <koHeader1 />
-    <koHeader2 />
-    <koHeader3 />
-    <koNewsletter1 />
-    <ProductList1 />
-    <koProduct1 />
-    <koSeparator1 />
-    <koSlider1 />
-    <Slider11 />
+    <!-- <koChat /> -->
+    <!-- <cart1 /> -->
+    <!-- <koContact1 /> -->
+    <!-- <koFooter1 /> -->
+    <!-- <koFooter2 /> -->
+    <!-- <koGrid1 /> -->
+    <!-- <koHeader1 /> -->
+    <!-- <koHeader2 /> -->
+    <!-- <koHeader3 /> -->
+    <!-- <koNewsletter1 /> -->
+    <!-- <ProductList1 /> -->
+    <ProductList2/>
+    <!-- <koProduct1 /> -->
+    <!-- <koSeparator1 /> -->
+    <!-- <koSlider1 /> -->
+    <!-- <Slider11 /> -->
+    <!-- <koSlider2/> -->
+    <!-- <koContent2/> -->
   </div>
 </template>
 
 <script>
+import koContent2 from './components/content/content2';
 import koChat from './components/chat/chat';
 import koOrder1 from './components/_order/order1';
 
@@ -39,13 +43,15 @@ import koHeader3 from './components/headers/header3';
 import koNewsletter1 from './components/newsletters/newsletter1';
 
 import ProductList1 from './components/product_lists/product_list1';
+import ProductList2 from './components/product_lists/product_list2';
 
 import koProduct1 from './components/products/product1';
 
 import koSeparator1 from './components/separators/separator1';
 
 import koSlider1 from './components/sliders/slider1';
-import Slider11 from './components/sliders/slider1-1'
+import Slider11 from './components/sliders/slider1-1';
+import koSlider2 from './components/sliders/slider2';
 
 export default {
   name: 'app',
@@ -62,10 +68,14 @@ export default {
     koHeader3,
     koNewsletter1,
     ProductList1,
+    ProductList2,
     koProduct1,
     koSeparator1,
     koSlider1,
     Slider11,
+    koSlider2,
+    koContent2,
+
   },
   created() {
     this.$store.commit('GET_DATA')

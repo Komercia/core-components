@@ -24,13 +24,14 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
-    "element-ui": "^2.2.2",
+    "element-ui": "^2.4.2",
     "firebase": "^4.11.0",
     "hammerjs": "^2.0.8",
     "image-cloudinary": "^1.0.8",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "3.1.0",
     "vue-carousel": "^0.6.11",
+    "vue-fuse": "^1.5.2",
     "vue-paginate": "^3.6.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
