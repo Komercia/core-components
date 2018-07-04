@@ -11,7 +11,7 @@ import elementUI from 'element-ui';
 import firebase from 'firebase';
 import VuePaginate from 'vue-paginate';
 import ImageCloudinary from 'image-cloudinary';
-import VueFuse from 'vue-fuse';;
+import VueFuse from 'vue-fuse';
 
 Vue.use(VueFuse)
 Vue.use(VuePaginate)
