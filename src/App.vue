@@ -1,20 +1,20 @@
 <template>
   <div id="app">
     <koChat />
-    <cart1 />
-    <koContact1 />
-    <koFooter1 />
-    <koFooter2 />
-    <koGrid1 />
+    <!-- <cart1 /> -->
+    <!-- <koContact1 /> -->
+    <!-- <koFooter1 />
+    <koFooter2 /> -->
+    <!-- <koGrid1 /> -->
     <koHeader1 />
-    <koHeader2 />
-    <koHeader3 />
+    <!-- <koHeader2 /> -->
+    <!-- <koHeader3 /> -->
     <koNewsletter1 />
-    <ProductList1 />
-    <koProduct1 />
-    <koSeparator1 />
-    <koSlider1 />
-    <Slider11 />
+    <!-- <ProductList1 /> -->
+    <!-- <koProduct1 /> -->
+    <!-- <koSeparator1 /> -->
+    <!-- <koSlider1 /> -->
+    <!-- <Slider11 /> -->
   </div>
 </template>
 
