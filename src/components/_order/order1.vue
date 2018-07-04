@@ -135,12 +135,17 @@ export default {
   .order_content{
 		position: absolute;
 		right: 0px;
-		width: 400px;
+		max-width: 400px;
+		width: 100%;
 		height: 100vh;
 		background-color: #FFF;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		flex: none;
+		overflow: auto;
+		box-sizing: border-box;
+		padding-bottom: 10px;
 		animation: dispatch .2s linear 1;
   }
 	@keyframes dispatch {
@@ -154,8 +159,10 @@ export default {
 	.order_header{
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		border-bottom: 1px solid #e5edef;
 		padding: 10px 10%;
+		flex: none;
 	}
 	.order_header_close{
 		padding: 5px 12px;
@@ -163,6 +170,7 @@ export default {
 		border: 1px solid #333;
 		cursor: pointer;
 		outline: none;
+		flex: none;
 	}
 	.order_products_list{
 		height: 380px;
@@ -258,6 +266,7 @@ export default {
     letter-spacing: 1px;
     cursor: pointer;
 		outline: none;
+		flex: none;
 		transition: .3s;
 	}
 	.continue_shopping{
@@ -274,6 +283,7 @@ export default {
     letter-spacing: 1px;
     cursor: pointer;
 		outline: none;
+		flex: none;
 		transition: .3s;
 	}
 	.p_button:hover, .continue_shopping:hover{
