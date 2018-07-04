@@ -5,6 +5,7 @@ import Header3 from './components/headers/header3'
 import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Contact1 from './components/contacts/contact1'
+import Content1 from './components/contents/content1'
 import Slider1 from './components/sliders/slider1'
 import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
@@ -23,6 +24,7 @@ const components = [
   Cart1,
   Product1,
   Contact1,
+  Content1,
   Slider1,
   Slider11,
   Separator,
