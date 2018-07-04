@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header1">
     <ko-order-1 />
     <div v-if='info.logo' class="top-menu">
       <div class="social-networks_top-menu container-icons">
@@ -42,7 +42,7 @@
           <a @click="toggleMenu" class="icon-top-menu icon-top-menu-close"><i class="icon-cancel icon-menu" aria-hidden="true"></i></a>
         </div>
         <ul class="main-menu-list">
-          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link class="main-menu-link" :to="item.route">{{item.name}}</router-link></li>
+          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a class="main-menu-link" @click="redirectTo(item.route)">{{item.name}}</a></li>
         </ul>
       </nav>
     </transition>
@@ -110,6 +110,13 @@ export default {
     }
   },
   methods: {
+    redirectTo(route) {
+      this.$router.push(route)
+      this.windowsWidth = document.documentElement.clientWidth;
+      if (this.windowsWidth < 800) {
+        this.hideMenu()
+      }
+    },
     toggleMenu() {
       this.show = !this.show;
     },
@@ -117,10 +124,10 @@ export default {
       this.$store.state.openOrder = true;
     },
     showMenu() {
-      this.show = false;
+      this.show = true;
     },
     hideMenu() {
-      this.show = true;
+      this.show = false;
     },
     getWindowsWidth() {
       this.windowsWidth = document.documentElement.clientWidth;
@@ -146,6 +153,12 @@ export default {
 </script>
 
 <style scoped>
+.header1{
+  position: sticky;
+  top: 0;
+  background-color: var(--background_color);
+  z-index: 99999999;
+}
 h1 {
   font-size: 30px;
   font-weight: 700;
@@ -181,6 +194,7 @@ h1 {
   font-size: 16px;
   text-transform: uppercase;
   font-weight: bold;
+  cursor: pointer;
 }
 .main-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -220,7 +234,7 @@ h1 {
 }
 .cart_top-icon span{
   position: absolute;
-  top: -6px;
+  top: 0px;
   right: -6px;
   width: 18px;
   height: 18px;
@@ -240,6 +254,10 @@ h1 {
 .login-cart_top-menu {
   justify-content: flex-end;
   padding-right: 10px;
+}
+.login-cart_top-menu a, .login-cart_top-menu div{
+  display: flex;
+  align-items: center;
 }
 .icon-top-menu-close {
   display: none;
@@ -330,15 +348,16 @@ h1 {
     padding-left: 20px;
     font-size: 24px;
     /* padding-bottom: 10px; */
-    z-index: 9999;
     display: block !important;
     /* position: absolute; */
+    cursor: pointer;
   }
   .icon-top-menu-close {
     display: flex;
     z-index: 9999;
     margin-right: 20px;
     font-size: 40px;
+    cursor: pointer;
   }
   .main-menu > .top-menu {
     display: flex;
@@ -361,7 +380,7 @@ h1 {
     transform: translateX(100%);
   }
   .logo-top-menu {
-    height: 50px;
+    height: 100%;
   }
  }
 
@@ -373,6 +392,11 @@ h1 {
     width: 70px;
     height: auto;
     padding-left: 20px;
+  }
+  .logo-top-menu img{
+    width: 100%;
+    height: 50px;
+    object-fit: contain;
   }
   .top-menu {
     height: 70px;

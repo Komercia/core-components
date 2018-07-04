@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header2">
     <koOrder1 />
     <div v-if='info.logo' class="top-menu">
       <div class="logo-top-menu">
@@ -40,7 +40,7 @@
           <a @click="toggleMenu" class="icon-top-menu icon-top-menu-close"><i class="icon-cancel icon-menu" aria-hidden="true"></i></a>
         </div>
         <ul class="main-menu-list">
-          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>
+          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a @click="redirectTo(item.route)" class="main-menu-link">{{item.name}}</a></li>
         </ul>
       </nav>
     </transition>
@@ -96,14 +96,18 @@ export default {
     },
   },
   methods: {
+    redirectTo(route) {
+      this.$router.push(route)
+      this.hideMenu()
+    },
     toggleMenu() {
       this.show = !this.show;
     },
     showMenu() {
-      this.show = false;
+      this.show = true;
     },
     hideMenu() {
-      this.show = true;
+      this.show = false;
     },
     getWindowsWidth() {
       this.windowsWidth = document.documentElement.clientWidth;
@@ -119,8 +123,8 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('resize', this.getWindowsWidth);
-    this.getWindowsWidth();
+    // window.addEventListener('resize', this.getWindowsWidth);
+    // this.getWindowsWidth();
   },
   created() {
     const $body = document.body;
@@ -132,7 +136,12 @@ export default {
 </script>
 
 <style scoped>
-
+.header2{
+  position: sticky;
+  top: 0;
+  background-color: var(--background_color);
+  z-index: 999999;
+}
 .top-menu {
   height: 100px;
   max-width: 1200px;
@@ -164,6 +173,7 @@ export default {
   font-size: 16px;
   text-transform: uppercase;
   font-weight: bold;
+  cursor: pointer;
 }
 .main-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -272,7 +282,6 @@ export default {
   .main-menu-list {
     width: 100%;
     flex-direction: column;
-    padding-top: 100px;
   }
   .main-menu-link {
     color:  rgb(206, 206, 206);
@@ -370,7 +379,7 @@ export default {
   }
   .logo-top-menu img{
     max-width: 200px;
-    max-height: 80px;
+    height: 63px;
     object-fit: contain;
   }
   .login-cart_top-menu.container-icons{
@@ -397,7 +406,6 @@ export default {
       padding-left: 0px;
     }
     .logo-top-menu img{
-      width: 150px;
       object-fit: contain;
     }
   }
