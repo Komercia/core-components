@@ -33,7 +33,7 @@ export default {
   name: 'koContent1',
   props: {
     setting: {
-      type: Object,
+      type: Array,
       default: function () {
         return {
           name: '',
@@ -74,6 +74,7 @@ export default {
   width: 100%;
   text-align: justify;
   line-height: 22px;
+  font-size: 15px;
 }
 .item .button{
   font-weight: bold;
