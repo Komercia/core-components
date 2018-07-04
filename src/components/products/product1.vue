@@ -48,7 +48,6 @@
                 <button v-if="spent" class="spent">Producto agotado<i class="material-icons">add_shopping_cart</i></button>
                 <button v-else v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
               </div>
-              <p class="quantity_available" v-if="evalStock(maxQuantityValue, quantityValue)">Cantidad de unidades disponibles {{ maxQuantityValue - quantityValue }}</p>
             </div>
           </div>
         </div>
