@@ -56,8 +56,6 @@ export default {
         Sendsubcategory(value){
           this.selectSubcategory=value
           this.$emit("SelectionSubcategory",this.selectSubcategory)
-          console.log(this.selectSubcategory);
-          console.log(value);
         }
       },
   computed:{
