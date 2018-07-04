@@ -15,7 +15,6 @@ import Newsletter from './components/newsletters/newsletter1'
 import Footer1 from './components/footers/footer1'
 import Footer2 from './components/footers/footer2'
 import Order1 from './components/_order/order1'
-import ProductList2 from './components/product_lists/product_list2'
 
 const components = [
   Chat,
