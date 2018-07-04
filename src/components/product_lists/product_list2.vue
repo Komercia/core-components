@@ -132,7 +132,6 @@ watch:{
   methods:{
     Activeselect(){
       this.active=!this.active
-      console.log(this.active);
     },
     Allcategories(){
       this.products=this.$store.state.productsData;
