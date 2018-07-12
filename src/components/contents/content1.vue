@@ -33,7 +33,7 @@ export default {
   name: 'koContent1',
   props: {
     setting: {
-      type: Array,
+      type: Object,
       default: function () {
         return {
           name: '',
