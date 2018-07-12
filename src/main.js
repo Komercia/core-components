@@ -6,7 +6,8 @@ import App from './App';
 import router from './router';
 import store from './store';
 import axios from 'axios';
-import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/es'
+import '../static/index.css'
 import elementUI from 'element-ui';
 import firebase from 'firebase';
 import VuePaginate from 'vue-paginate';
@@ -19,7 +20,7 @@ Vue.use(Vuex)
 Vue.use(ImageCloudinary)
 Vue.config.productionTip = false;
 
-Vue.use(elementUI);
+Vue.use(elementUI, { locale });
 
 Vue.prototype.$urlHttp = 'https://api.komercia.co';
 store.state.urlHttp = Vue.prototype.$urlHttp;
