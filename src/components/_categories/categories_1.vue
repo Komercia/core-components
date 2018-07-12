@@ -1,16 +1,20 @@
 <template lang="html">
  <div class="container">
     <div class="normal">
-      <ul  class="Cate" v-for="category in categories" >
-        <span>{{category.nombre_categoria_producto}}</span>
-        <div class="content">
-        <li class="SubCate"
-          v-for="subcategory in subcategories"
-          v-if="category.id===subcategory.categoria"
-          @click="Sendsubcategory(subcategory.id)">
-        <span>{{subcategory.nombre_subcategoria}}</span>
+      <ul class="categories_list">
+        <li
+          class="categories_item"
+          v-for="category in categories">
+          <p @click="sendCategory(category.nombre_categoria_producto)">{{category.nombre_categoria_producto}}</p>
+          <ul class="content">
+            <li class="subcategories_item"
+              v-for="subcategory in subcategories"
+              v-if="category.id===subcategory.categoria"
+              @click="Sendsubcategory(subcategory.id)">
+              <span>{{subcategory.nombre_subcategoria}}</span>
+            </li>
+          </ul>
         </li>
-        </div>
       </ul>
     </div>
     <div class="responsive">
@@ -18,7 +22,7 @@
           <el-option
           v-for="category in categories"
           :label="category.nombre_categoria_producto"
-          :value="category.id">
+          :value="category.nombre_categoria_producto">
           </el-option>
       </el-select>
       <el-select v-model="valuesub"  clearable placeholder="Seleccione una subcategoria" v-if="value !== ''">
@@ -41,12 +45,15 @@ export default {
   data() {
     return {
       selectSubcategory:'',
-        value: '',
-        valuesub: ''
+      value: '',
+      valuesub: ''
     }
   },
   watch:{
-    valuesub:function (value) {
+    value (value) {
+      this.sendCategory(value)
+    },
+    valuesub (value) {
       this.Sendsubcategory(value)
     }
   },
@@ -55,7 +62,10 @@ export default {
         handleClose(key, keyPath) {},
         Sendsubcategory(value){
           this.selectSubcategory=value
-          this.$emit("SelectionSubcategory",this.selectSubcategory)
+          this.$emit("selectionSubcategory",this.selectSubcategory)
+        },
+        sendCategory(value){
+          this.$emit("selectionCategory", value)
         }
       },
   computed:{
@@ -72,9 +82,10 @@ export default {
 
 <style scoped>
 .container{
-
+  width: 100%;
 }
 .normal{
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin:0;
@@ -82,18 +93,25 @@ export default {
 .responsive{
   display: none;
 }
-.normal .Cate{
-  width: 165px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  margin: 5px;
-  border:solid 1px #b2b4b7;
-  border-radius: 5px;
+.categories_item{
+  width: 100%;
+  box-sizing: border-box;
   position: relative;
-  margin-right: 0;
+  cursor: pointer;
 }
-.normal .SubCate{
+.categories_item ~ .categories_item {
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+.categories_item > p{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 15px;
+  color: #555555;
+  font-size: 15px;
+}
+.normal .subcategories_item{
   border-radius: 5px;
+  z-index: 9999999999;
 }
 .normal .content {
     display: none;
@@ -103,10 +121,10 @@ export default {
     z-index: 1;
     border-radius: 5px;
     top: 0;
-
+    z-index: 99999999999;
 
 }
-.Cate:hover{
+.categories_item:hover{
   background-color: #d0d0d0;
 }
 .content li {
@@ -120,12 +138,12 @@ export default {
 .content li:hover{
   background-color: #d0d0d0;
 }
-.Cate:hover .content {
+.categories_item:hover .content {
     display: block;
     cursor: pointer;
-    transform: translate(180px);
+    transform: translate(230px);
 }
-@media screen and (max-width:800px) {
+@media screen and (max-width:840px) {
   .normal{
     display: none;
   }
@@ -134,7 +152,6 @@ export default {
     flex-direction: column;
     margin:5px;
   }
-
-  }
+}
 
 </style>
