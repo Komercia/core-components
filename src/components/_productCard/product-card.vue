@@ -45,23 +45,28 @@ export default {
 
 <style >
 .container-product{
+  width: 100%;
   height: 100%;
   display: grid;
-  justify-content: center;
+  /*justify-content: center;*/
   align-items: end;
 }
 .img-grid-item {
   max-width: 250px;
   width: 100%;
   max-height: 250px;
-  height: 100%;
+  height: 250px;
+  display: grid;
+  justify-items: center;
+  justify-self: center;
+  align-items: center;
   box-shadow: 0 0 5px #eee;
   overflow: hidden;
 }
 .img-grid-item img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
 }
 .grid-item-description {
   display: flex;
