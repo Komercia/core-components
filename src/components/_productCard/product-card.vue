@@ -1,8 +1,9 @@
 <template>
   <router-link :to="`/productos/${data.slug}`" class="container-product">
-    <ImageCloudinary
-      :src="data.foto_cloudinary"
-      class="img-grid-item"/>
+    <div class="img-grid-item">
+      <ImageCloudinary
+      :src="data.foto_cloudinary"/>
+    </div>
     <div class="grid-item-description">
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.categoria}}</div>
@@ -34,11 +35,11 @@ export default {
   filters: {
     currency(value) {
       if (value) {
-        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
       return '';
     }
-  },
+  }
 };
 </script>
 
@@ -50,11 +51,17 @@ export default {
   align-items: end;
 }
 .img-grid-item {
-  max-width: 300px;
+  max-width: 250px;
   width: 100%;
-  object-fit: contain;
-  max-height: 300px;
+  max-height: 250px;
+  height: 100%;
   box-shadow: 0 0 5px #eee;
+  overflow: hidden;
+}
+.img-grid-item img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .grid-item-description {
   display: flex;
@@ -89,5 +96,11 @@ export default {
 .price {
   font-weight: bold;
   color: var(--text_color);
+}
+@media (max-width: 425px) {
+  .img-grid-item{
+    max-width: 150px;
+    max-height: 150px;
+  }
 }
 </style>
