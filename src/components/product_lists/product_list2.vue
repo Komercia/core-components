@@ -13,7 +13,7 @@
         <el-slider
           v-model="price"
           range
-          step="50"
+          :step="50"
           :max="range.max">
         </el-slider>
         <div class="price_range_label">
@@ -31,7 +31,7 @@
             <el-pagination
               background
               layout="prev, pager, next"
-              :total="sizePagination"
+              :total="products.length"
               :current-page.sync="currentPage">
             </el-pagination>
          </div>
