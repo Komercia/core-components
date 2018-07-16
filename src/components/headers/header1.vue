@@ -155,7 +155,7 @@ export default {
 <style scoped>
 .header1{
   background-color: var(--background_color);
-  z-index: 99999999;
+  z-index: 999;
 }
 h1 {
   font-size: 30px;
