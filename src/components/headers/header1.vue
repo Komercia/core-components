@@ -154,8 +154,6 @@ export default {
 
 <style scoped>
 .header1{
-  position: sticky;
-  top: 0;
   background-color: var(--background_color);
   z-index: 99999999;
 }
