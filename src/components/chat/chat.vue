@@ -177,7 +177,7 @@ export default {
     right: 0px;
     width: 0;
     height: 0;
-    z-index: 3;
+    z-index: 99999999;
   }
   .komercia_chat *{
     padding: 0;
