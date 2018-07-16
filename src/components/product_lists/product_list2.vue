@@ -27,7 +27,7 @@
           <div class="products_list">
             <ko-product-card v-for="product in filterProduct" :key="product.id" :data="product" />
           </div>
-          <div class="product_pagination">
+          <div class="product_pagination" v-if="products.length > 12">
             <el-pagination
               background
               layout="prev, pager, next"
@@ -217,6 +217,7 @@ export default {
 .product_pagination{
   display: grid;
   justify-content: center;
+  margin: 30px 0;
 }
 @media screen and (max-width: 840px) {
   .product_list{

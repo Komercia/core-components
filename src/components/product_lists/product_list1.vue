@@ -9,6 +9,7 @@
       <ko-product-card v-for="product in paginated('products')" :key="product.id" :data="product" />
     </paginate>
     <paginate-links
+      v-if="products.length > 13"
       for="products"
       :show-step-links="true"
       :limit="5">
