@@ -47,7 +47,7 @@ import koSearcher from '../_components/searcher'
 export default {
   name: 'koProductList2',
   components: { KoProductCard, koCategories, koSearcher },
-  created() {
+  mounted () {
     this.products = this.$store.state.productsData
   },
   data() {
@@ -177,7 +177,7 @@ export default {
   border: 1px solid rgba(0,0,0,0.1);
   border-radius: 4px;
   position: sticky;
-  top: 20px;
+  top: 120px;
 }
 .filter_column .lateral {
   display: grid;
