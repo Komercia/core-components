@@ -69,11 +69,11 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA (state) {
-      axios.get(`${state.urlHttp}/api/front/tienda/490`).then(response => {
+      axios.get(`${state.urlHttp}/api/front/tienda/364`).then(response => {
         state.banners = response.data.data.banners;
         if(response.data.data.productos.length){
-          state.productos = response.data.data.productos;
-          state.productsData = response.data.data.productos;
+          state.productos = response.data.data.productos.sort((a, b) => a.nombre > b.nombre);
+          state.productsData = response.data.data.productos.sort((a, b) => a.nombre > b.nombre);
         }
         state.categorias = response.data.data.categorias;
         state.subcategorias = response.data.data.subcategorias;
