@@ -140,7 +140,7 @@ export default {
   position: sticky;
   top: 0;
   background-color: var(--background_color);
-  z-index: 999999;
+  z-index: 99;
 }
 .top-menu {
   height: 100px;
