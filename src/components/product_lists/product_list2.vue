@@ -21,6 +21,16 @@
           <p>Precio: <strong>{{ price[0] | currency }}</strong> - <strong>{{ price[1] | currency }}</strong></p>
         </div>
       </div>
+      <el-select v-model="HigherOrLower">
+        <el-option
+        label="Mayor precio"
+        value="higher">
+        </el-option>
+        <el-option
+        label="Menor precio"
+        value="lower">
+        </el-option>
+      </el-select>
     </div>
     <div class="products">
       <div class="product_list_wrapper" v-if="products.length">
@@ -60,6 +70,7 @@ export default {
         max: 0,
       },
       currentPage: 1,
+      HigherOrLower: '',
       options: {
         shouldSort: true,
         threshold: 0.6,
@@ -74,18 +85,26 @@ export default {
   watch: {
     '$store.state.productsData': function(value) {
       this.products = value
+      let maxTMP = 0
       value.forEach((product) => {
-        if (this.range.max < product.precio) {
+        if (maxTMP <= product.precio) {
           this.price[1] = product.precio
           this.range.max = product.precio
+          maxTMP = product.precio
         }
-        this.range.max = product.precio
       })
     },
     currentPage() {
       setTimeout(() => {
         window.scrollTo(0, 0)
       }, 250)
+    },
+    HigherOrLower(value) {
+      if (value === 'higher') {
+        this.products = this.Fullproducts.sort((a, b) => b.precio - a.precio)
+      } else {
+        this.products = this.Fullproducts.sort((a, b) => a.precio - b.precio)
+      }
     }
   },
   computed: {
@@ -178,6 +197,11 @@ export default {
   border-radius: 4px;
   position: sticky;
   top: 120px;
+}
+.filter_column .el-select{
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
 }
 .filter_column .lateral {
   display: grid;
