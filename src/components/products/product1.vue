@@ -88,6 +88,7 @@
     name: 'koProduct1',
     components: { zoomed, productSlide, koModal, koRadioGroup },
     created() {
+      this.$store.state.beforeCombination = []
       if (this.$store.state.productsData.length) {
         this.getDataProduct()
       }
@@ -106,6 +107,7 @@
         maxQuantityValue: 1,
         quantityValue: 1,
         productIndexCart: null,
+        warranty: '',
         productCart: {},
         salesData: null,
         spent: false,
