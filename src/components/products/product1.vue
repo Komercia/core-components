@@ -38,15 +38,19 @@
                 <label>{{ variant.nombre }}:</label><ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
               </div>
             </div>
-            <div class="content_buy">
-              <div class="quantity" v-show="!spent">
-                <button class="quantity_remove" v-on:click="removeQuantity()"><i class="material-icons">remove</i></button>
-                <p class="quantity_value"> {{ quantityValue }}</p>
-                <button class="quantity_add" v-on:click="addQuantity()"><i class="material-icons">add</i></button>
-              </div>
-              <div class="content_buy_action">
-                <button v-if="spent" class="spent">Producto agotado<i class="material-icons">add_shopping_cart</i></button>
-                <button v-else v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
+            <div :class="{content_buy: true, disabled: !salesData.estado}">
+              <button type="button" name="button">No esta disponible</button>
+              <div>
+                <div class="quantity" v-show="!spent">
+                  <button class="quantity_remove" v-on:click="removeQuantity()"><i class="material-icons">remove</i></button>
+                  <p class="quantity_value"> {{ quantityValue }}</p>
+                  <button class="quantity_add" v-on:click="addQuantity()"><i class="material-icons">add</i></button>
+                  <!-- <p class="quantity_available" v-if="evalStock(maxQuantityValue, quantityValue)">{{ maxQuantityValue - quantityValue }} disponibles</p> -->
+                </div>
+                <div class="content_buy_action">
+                  <button v-if="spent" class="spent">Producto agotado<i class="material-icons">add_shopping_cart</i></button>
+                  <button v-else v-on:click="addShoppingCart">Agregar<i class="material-icons">add_shopping_cart</i></button>
+                </div>
               </div>
             </div>
           </div>
@@ -158,13 +162,12 @@
         return this.$store.state.productsData;
       },
       existPayments(){
-      const mediospago = this.$store.state.mediospago;
-      if(mediospago.consignacion || mediospago.convenir || mediospago.payco || mediospago.tienda || mediospago.efecty){
-        return true;
-      }
+        const mediospago = this.$store.state.mediospago;
+        if(mediospago.consignacion || mediospago.convenir || mediospago.payco || mediospago.tienda || mediospago.efecty){
+          return true;
+        }
         return false;
-
-    },
+      },
       modalPayment(){
         return this.$store.state.togglePayment;
       },
@@ -186,7 +189,7 @@
         if(product.length) {
           return product[0].id
         }
-        return 0
+        return 3549
       },
       getDataProduct() {
         if(this.searchIdForSlug()) {
@@ -198,6 +201,7 @@
               precio: this.data.detalle.precio,
               unidades: this.data.info.inventario,
               sku: this.data.info.sku,
+              estado: true,
             };
             this.maxQuantityValue = this.data.info.inventario;
             for(const [index, productCart] of this.$store.state.productsCart.entries()){
@@ -425,6 +429,34 @@
     justify-content: space-between;
     align-items: center;
     margin: 7px 0;
+  }
+  .content_buy > button{
+    display: none;
+  }
+  .content_buy > div{
+    width: 100%;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 7px 0;
+  }
+  .content_buy.disabled > button{
+    position: absolute;
+    display: flex;
+    background-color: #FFF;
+    padding: 13px 40px;
+    border-style: none;
+    border-radius: 2px;
+    outline: none;
+    box-shadow: 0 15px 35px rgba(0,0,0,.1), 0 3px 10px rgba(0,0,0,.07);
+    z-index: 2;
+  }
+  .content_buy.disabled > div{
+    pointer-events: none;
+    filter: blur(5px);
+    opacity: 0.2;
   }
   .content_buy_price{
     display: flex;
