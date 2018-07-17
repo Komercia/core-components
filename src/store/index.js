@@ -58,6 +58,7 @@ export default new Vuex.Store({
     categorias: [],
     subcategorias: [],
     geolocalizacion: null,
+    togglePayment: false,
     mediospago: {
       epayco: false,
     },
