@@ -79,6 +79,7 @@ export default {
       justify-content: space-between;
       padding: 15px 50px;
       border-bottom: 1px solid #EEE;
+      box-sizing: border-box;
     }
     #closeModal{
       cursor: pointer;
