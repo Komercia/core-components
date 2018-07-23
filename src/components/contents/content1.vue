@@ -95,6 +95,7 @@ export default {
   overflow: hidden;
 }
 .item_image img{
+  max-height: 500px;
   height: 100%;
   object-fit: cover;
   width: 100%;

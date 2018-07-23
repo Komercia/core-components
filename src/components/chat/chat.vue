@@ -234,7 +234,7 @@ export default {
   .komercia_chat_header_info{
     width: calc(100% - 90px);
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
   .komercia_chat_header_info svg{
     display: none;
