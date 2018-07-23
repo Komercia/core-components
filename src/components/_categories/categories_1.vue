@@ -15,6 +15,10 @@
             </li>
           </ul>
         </li>
+        <li
+          class="categories_item">
+          <p @click="clear">Todos los productos</p>
+        </li>
       </ul>
     </div>
     <div class="responsive">
@@ -58,16 +62,17 @@ export default {
     }
   },
   methods: {
-        handleOpen(key, keyPath) {},
-        handleClose(key, keyPath) {},
-        Sendsubcategory(value){
-          this.selectSubcategory=value
-          this.$emit("selectionSubcategory",this.selectSubcategory)
-        },
-        sendCategory(value){
-          this.$emit("selectionCategory", value)
-        }
-      },
+    Sendsubcategory(value){
+      this.selectSubcategory = value
+      this.$emit("selectionSubcategory",this.selectSubcategory)
+    },
+    sendCategory(value){
+      this.$emit("selectionCategory", value)
+    },
+    clear () {
+      this.$emit("clear")
+    }
+  },
   computed:{
       categories(){
         return this.$store.state.categorias;
@@ -108,6 +113,7 @@ export default {
   padding: 15px;
   color: #555555;
   font-size: 15px;
+  text-align: start;
 }
 .normal .subcategories_item{
   border-radius: 5px;
