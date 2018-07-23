@@ -1,7 +1,7 @@
 <template>
   <div class="contacto">
     <div class="contacto_content">
-      <div class="maps">
+      <div class="maps" v-show="geolocalizacion.length">
         <div id="map"></div>
       </div>
       <div class="contact">
