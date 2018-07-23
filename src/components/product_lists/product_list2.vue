@@ -5,7 +5,8 @@
       <div class="lateral">
         <koCategories
           @selectionSubcategory="selectedSubCategory"
-          @selectionCategory="selectedCategory"/>
+          @selectionCategory="selectedCategory"
+          @clear="Allcategories"/>
       </div>
       <div class="price_range" v-if="range.max">
         <h4>Filtro por precio</h4>
@@ -17,7 +18,6 @@
           :max="range.max">
         </el-slider>
         <div class="price_range_label">
-          <button class="btn-filter" @click="filterRange">Filtrar</button>
           <p>Precio: <strong>{{ price[0] | currency }}</strong> - <strong>{{ price[1] | currency }}</strong></p>
         </div>
       </div>
@@ -58,11 +58,20 @@ export default {
   name: 'koProductList2',
   components: { KoProductCard, koCategories, koSearcher },
   mounted () {
-    this.products = this.$store.state.productsData
+    if (this.$store.state.productsData) {
+      this.products = this.$store.state.productsData
+      let maxTMP = 0
+      this.products.forEach((product) => {
+        if (maxTMP <= product.precio) {
+          this.price[1] = product.precio
+          this.range.max = parseInt(product.precio)
+          maxTMP = product.precio
+        }
+      })
+    }
   },
   data() {
     return {
-      paginate: ['products'],
       products: [],
       active: false,
       price: [0, 1000000],
@@ -83,13 +92,13 @@ export default {
     }
   },
   watch: {
-    '$store.state.productsData': function(value) {
+    Fullproducts (value) {
       this.products = value
       let maxTMP = 0
       value.forEach((product) => {
         if (maxTMP <= product.precio) {
           this.price[1] = product.precio
-          this.range.max = product.precio
+          this.range.max = parseInt(product.precio)
           maxTMP = product.precio
         }
       })
@@ -105,6 +114,9 @@ export default {
       } else {
         this.products = this.Fullproducts.sort((a, b) => a.precio - b.precio)
       }
+    },
+    price() {
+      this.filterRange()
     }
   },
   computed: {
@@ -154,7 +166,7 @@ export default {
       this.active = !this.active
       this.currentPage = 1
     },
-    filterRange (value) {
+    filterRange () {
       this.products = this.Fullproducts.filter(producto => {
         if (
           producto.precio >= this.price[0] &&
@@ -224,14 +236,6 @@ export default {
   grid-auto-flow: column;
   justify-content: space-between;
   align-items: center;
-}
-.btn-filter{
-  outline: none;
-  border-style: none;
-  background-color: var(--button_color);
-  color: var(--button_text_color);
-  padding: 5px 15px;
-  cursor: pointer;
 }
 .products .products_list {
   display: grid;
