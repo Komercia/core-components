@@ -44,13 +44,11 @@ export default {
     max-width: 100%;
     overflow: hidden;
     height: 350px;
-    background-color: #FFF;
   }
   .swiper-slide {
       height: 100%;
       text-align: center;
       font-size: 18px;
-      background: #fff;
       /* Center slide text vertically */
       display: -webkit-box;
       display: -ms-flexbox;
