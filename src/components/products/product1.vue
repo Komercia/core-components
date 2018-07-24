@@ -193,7 +193,7 @@
       },
       getDataProduct() {
         if(this.searchIdForSlug()) {
-          axios.get(`${this.$urlHttp}/api/front/producto/${this.searchIdForSlug()}`).then((response) => {
+          axios.get(`https://templates.komercia.co/api/producto/${this.searchIdForSlug()}`).then((response) => {
             this.selectedPhoto(response.data.detalle.foto_cloudinary);
             this.videoYoutube(response.data.info.video);
             this.data = response.data;
