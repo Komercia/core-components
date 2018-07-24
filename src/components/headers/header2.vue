@@ -125,13 +125,7 @@ export default {
   mounted() {
     // window.addEventListener('resize', this.getWindowsWidth);
     // this.getWindowsWidth();
-  },
-  created() {
-    const $body = document.body;
-    const hammertime = new Hammer($body);
-    hammertime.on('swipeleft', this.hideMenu);
-    hammertime.on('swiperight', this.showMenu);
-  },
+  }
 };
 </script>
 
