@@ -373,6 +373,7 @@ export default {
   }
   .logo-top-menu img{
     max-width: 200px;
+    width: 100%;
     height: 63px;
     object-fit: contain;
   }
