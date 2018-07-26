@@ -160,7 +160,7 @@ export default {
   align-items: center;
 }
 .main-menu-item {
-  padding: 0 30px;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -168,6 +168,7 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
+  padding: 0 30px;
 }
 .main-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -221,6 +222,7 @@ export default {
 .main-menu-link {
   height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   color: #fefefe;
 }
