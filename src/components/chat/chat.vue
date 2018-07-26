@@ -5,12 +5,10 @@
         <template v-if="storeData.logo">
           <img class="komercia_chat_header_logo" :src="`https://api.komercia.co/logos/${storeData.logo}`">
         </template>
-        <div class="komercia_chat_header_info">
-          <svg @click="openChat" fill="#FFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-              <path d="M0 0h24v24H0z" fill="none"/>
-          </svg>
-        </div>
+        <svg @click="openChat" fill="#FFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
       </div>
       <template v-if="userData.id">
         <div class="komercia_chat_messages" id="KomerciaMessages">
@@ -221,9 +219,11 @@ export default {
     height: 70px;
     padding: 0 15px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     color: #FFF;
     box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+    box-sizing: border-box;
     z-index: 2;
   }
   .komercia_chat_header_logo{
@@ -232,7 +232,7 @@ export default {
     padding: 0 10px;
   }
   .komercia_chat_header_info{
-    width: calc(100% - 90px);
+    flex: 1;
     display: flex;
     justify-content: flex-end;
   }
