@@ -57,7 +57,9 @@ export default new Vuex.Store({
     productsCart: cart,
     categorias: [],
     subcategorias: [],
-    geolocalizacion: null,
+    geolocalizacion: [],
+    togglePayment: false,
+    beforeCombination: [],
     mediospago: {
       epayco: false,
     },
@@ -69,11 +71,15 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA (state) {
-      axios.get(`${state.urlHttp}/api/front/tienda/490`).then(response => {
+      axios.get(`${state.urlHttp}/api/front/tienda/349`).then(response => {
         state.banners = response.data.data.banners;
         if(response.data.data.productos.length){
-          state.productos = response.data.data.productos;
-          state.productsData = response.data.data.productos;
+          state.productos = response.data.data.productos.sort((a, b) => a.nombre > b.nombre);
+          state.productsData = response.data.data.productos.sort((a, b) => {
+            if(a.nombre < b.nombre) return -1;
+            if(a.nombre > b.nombre) return 1;
+            return 0;
+          });
         }
         state.categorias = response.data.data.categorias;
         state.subcategorias = response.data.data.subcategorias;

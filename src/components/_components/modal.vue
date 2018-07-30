@@ -61,7 +61,7 @@ export default {
       justify-content: center;
       align-items: center;
       background-color: rgba(0,0,0,0.5);
-      z-index: 2;
+      z-index: 100;
     }
     .modal *{
       color: #333;
@@ -79,6 +79,7 @@ export default {
       justify-content: space-between;
       padding: 15px 50px;
       border-bottom: 1px solid #EEE;
+      box-sizing: border-box;
     }
     #closeModal{
       cursor: pointer;

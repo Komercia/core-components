@@ -65,9 +65,10 @@ export default {
       -webkit-align-items: center;
       align-items: center;
   }
-  .photos .responsive .swiper-slide .photo{
+  .swiper-slide .photo{
     max-width: 100%;
     max-height: 100%;
+    object-fit: contain;
     margin: 0 auto;
   }
   .photos .responsive .swiper-slide.swiper-slide-next .photo{

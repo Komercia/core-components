@@ -290,6 +290,9 @@ footer{
   .footer_info{
     width: 100%;
   }
+  .footer_content_social{
+    width: 100%;
+  }
   .footer_actions{
     width: 100%;
     flex-direction: column;
