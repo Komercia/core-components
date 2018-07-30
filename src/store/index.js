@@ -71,7 +71,7 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA (state) {
-      axios.get(`${state.urlHttp}/api/front/tienda/349`).then(response => {
+      axios.get(`https://templates.komercia.co/api/tienda/240`).then(response => {
         state.banners = response.data.data.banners;
         if(response.data.data.productos.length){
           state.productos = response.data.data.productos.sort((a, b) => a.nombre > b.nombre);
@@ -80,6 +80,16 @@ export default new Vuex.Store({
             if(a.nombre > b.nombre) return 1;
             return 0;
           });
+          state.productsData.map((product) => {
+          if (product.variantes.length) {
+            product.combinaciones = JSON.parse(product.variantes[0].combinaciones[0].combinaciones)
+            if (product.combinaciones.length) {
+              const arrPrices = product.combinaciones.map(combinacion => combinacion.precio)
+              product.precio = Math.min(...arrPrices)
+            }
+            product.variantes = product.variantes[0].variantes
+          }
+        })
         }
         state.categorias = response.data.data.categorias;
         state.subcategorias = response.data.data.subcategorias;
