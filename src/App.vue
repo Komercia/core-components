@@ -1,45 +1,28 @@
   <template>
   <div id="app">
-<<<<<<< HEAD
-    <koChat />
-    <!-- <cart1 /> -->
-    <!-- <koContact1 /> -->
-    <!-- <koFooter1 />
-    <koFooter2 /> -->
-    <!-- <koGrid1 /> -->
-    <koHeader1 />
-    <!-- <koHeader2 /> -->
-    <!-- <koHeader3 /> -->
-    <koNewsletter1 />
-    <!-- <ProductList1 /> -->
-=======
     <!-- <koChat /> -->
     <!-- <cart1 /> -->
+    <!-- <koHeader1 /> -->
+    <!-- <koHeader2 /> -->
     <!-- <koContact1 /> -->
     <!-- <koFooter1 /> -->
     <!-- <koFooter2 /> -->
     <!-- <koGrid1 /> -->
-    <!-- <koHeader1 /> -->
-    <!-- <koHeader2 /> -->
     <!-- <koHeader3 /> -->
     <!-- <koNewsletter1 /> -->
-    <!-- <ProductList1 /> -->
-    <ProductList2/>
->>>>>>> 8d72ee903bb2114dabd2c3d1606d7204ba7dec4f
+    <!-- <koContent1/> -->
+    <!-- <ProductList1/> -->
+    <!-- <ProductList2/> -->
     <!-- <koProduct1 /> -->
     <!-- <koSeparator1 /> -->
     <!-- <koSlider1 /> -->
     <!-- <Slider11 /> -->
-<<<<<<< HEAD
-=======
     <!-- <koSlider2/> -->
-    <!-- <koContent2/> -->
->>>>>>> 8d72ee903bb2114dabd2c3d1606d7204ba7dec4f
   </div>
 </template>
 
 <script>
-import koContent2 from './components/content/content2';
+import koContent1 from './components/contents/content1';
 import koChat from './components/chat/chat';
 import koOrder1 from './components/_order/order1';
 
@@ -91,7 +74,7 @@ export default {
     koSlider1,
     Slider11,
     koSlider2,
-    koContent2,
+    koContent1
 
   },
   created() {
@@ -129,7 +112,11 @@ export default {
   --button_text_color: #FFF;
   --background_color: #FFF;
 }
+
 #app{
   background-color: var(--background_color);
+}
+.el-slider__button-wrapper{
+  z-index: 98 !important;
 }
 </style>
