@@ -1,8 +1,8 @@
 <template>
   <div class="header2">
     <koOrder1 />
-    <div v-if='info.logo' class="top-menu">
-      <div class="logo-top-menu">
+    <div class="top-menu">
+      <div v-if='info.logo' class="logo-top-menu">
         <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
       </div>
       <ul class="main-menu-list">
@@ -87,9 +87,6 @@ export default {
     },
     info() {
       return this.$store.state.tienda;
-    },
-    style () {
-      return this.$store.state.styleData
     },
     productsCart() {
       return this.$store.state.productsCart.length;
