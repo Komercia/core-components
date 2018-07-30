@@ -1,7 +1,11 @@
 <template>
   <swiper :options="swiperOption">
     <!-- slides -->
-    <swiper-slide><img class="photo" :src="setPhoto(photo)"></swiper-slide>
+    <swiper-slide>
+      <image-cloudinary
+      class="photo"
+      :src="setPhoto(photo)"/>
+    </swiper-slide>
     <swiper-slide v-for="photo in photos" :key="photo.id"><img class="photo" :src="setPhoto(photo.foto_cloudinary)"></swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
