@@ -135,4 +135,10 @@ export default {
 .main-header .el-input__icon {
   line-height: 0;
 }
+.el-popover {
+  border-radius: 0 !important;
+}
+.popper__arrow {
+  display: none !important;
+}
 </style>

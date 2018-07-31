@@ -1,12 +1,12 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import axios from 'axios';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import axios from 'axios'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-let cart = [];
+let cart = []
 if (localStorage.getItem('ShoppingCart')) {
-  cart = JSON.parse(localStorage.getItem('ShoppingCart'));
+  cart = JSON.parse(localStorage.getItem('ShoppingCart'))
 }
 
 export default new Vuex.Store({
@@ -21,9 +21,9 @@ export default new Vuex.Store({
     tienda: {},
     userData: {
       id: 0,
-      email: 'pumar-10@hotmail.com',
-      foto: 'user.jpeg',
-      nombre: 'Alejandro Fierro'
+      email: '',
+      foto: '',
+      nombre: ''
     },
     banners: [],
     productos: [],
@@ -32,26 +32,26 @@ export default new Vuex.Store({
         placeholder: true,
         foto: 'placeholder1.svg',
         nombre: 'Nombre del producto',
-        precio: '14999',
+        precio: '14999'
       },
       {
         placeholder: true,
         foto: 'placeholder2.svg',
         nombre: 'Nombre del producto',
-        precio: '14999',
+        precio: '14999'
       },
       {
         placeholder: true,
         foto: 'placeholder3.svg',
         nombre: 'Nombre del producto',
-        precio: '14999',
+        precio: '14999'
       },
       {
         placeholder: true,
         foto: 'placeholder4.svg',
         nombre: 'Nombre del producto',
-        precio: '14999',
-      },
+        precio: '14999'
+      }
     ],
     menuComponent: false,
     productsCart: cart,
@@ -61,60 +61,62 @@ export default new Vuex.Store({
     togglePayment: false,
     beforeCombination: [],
     mediospago: {
-      epayco: false,
+      epayco: false
     },
     politicas: {
       garantia: '',
-      datos: '',
+      datos: ''
     },
-    totalCart: 0,
+    totalCart: 0
   },
   mutations: {
-    GET_DATA (state) {
+    GET_DATA(state) {
       axios.get(`${state.urlHttp}/api/front/tienda/349`).then(response => {
-        state.banners = response.data.data.banners;
-        if(response.data.data.productos.length){
-          state.productos = response.data.data.productos.sort((a, b) => a.nombre > b.nombre);
+        state.banners = response.data.data.banners
+        if (response.data.data.productos.length) {
+          state.productos = response.data.data.productos.sort(
+            (a, b) => a.nombre > b.nombre
+          )
           state.productsData = response.data.data.productos.sort((a, b) => {
-            if(a.nombre < b.nombre) return -1;
-            if(a.nombre > b.nombre) return 1;
-            return 0;
-          });
+            if (a.nombre < b.nombre) return -1
+            if (a.nombre > b.nombre) return 1
+            return 0
+          })
         }
-        state.categorias = response.data.data.categorias;
-        state.subcategorias = response.data.data.subcategorias;
-        state.geolocalizacion = response.data.data.geolocalizacion;
+        state.categorias = response.data.data.categorias
+        state.subcategorias = response.data.data.subcategorias
+        state.geolocalizacion = response.data.data.geolocalizacion
         state.mediospago = response.data.data.medios_pago || {
-          epayco: false,
-        };
+          epayco: false
+        }
         state.politicas = response.data.data.politicas || {
           garantia: '',
-          datos: '',
-        };
-        state.tienda = response.data.data.tienda;
-        state.envios = response.data.data.medios_envio;
+          datos: ''
+        }
+        state.tienda = response.data.data.tienda
+        state.envios = response.data.data.medios_envio
         state.envios.valores = JSON.parse(
           response.data.data.medios_envio.valores
-        );
-      });
+        )
+      })
     },
     UPDATE_CONTENTCART(state) {
-      state.totalCart = 0;
-      localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart));
+      state.totalCart = 0
+      localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart))
       for (const product of state.productsCart) {
-        state.totalCart += (product.precio * product.cantidad);
+        state.totalCart += product.precio * product.cantidad
       }
     },
     REMOVE_PRODUCTSPURCHASED(state, id) {
       if (document.getElementById(id)) {
-        document.getElementById(id).classList.remove('bought');
+        document.getElementById(id).classList.remove('bought')
       }
     },
     CALCULATE_TOTALCART(state) {
-      state.totalCart = 0;
+      state.totalCart = 0
       for (const product of state.productsCart) {
-        state.totalCart += (product.precio * product.cantidad);
+        state.totalCart += product.precio * product.cantidad
       }
-    },
-  },
-});
+    }
+  }
+})

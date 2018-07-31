@@ -1,17 +1,45 @@
 <template>
-  <header class="main-header">
-    <div class="top-menu">
+  <div class="main-header">
+    <div class="main-top-menu">
       <div class="icons-left">
-        <i class="icon-user-circle"></i>
-        <i class="icon-shopping-basket">
-          <p class="num-products">10</p>
+
+        <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData">
+          <div class="container-data-user">
+            <div class="img-user" slot="reference">
+              <img :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+            </div>
+            <div class="data-user">
+              <p class="name-user">{{userData.nombre}}</p>
+              <p class="email-user">{{userData.email}}</p>
+              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
+            </div>
+          </div>
+          <div class="prueba" slot="reference">
+            <img class="img-usuario" :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+          </div>
+        </el-popover>
+
+        <el-popover placement="bottom-end" width="280" trigger="hover" v-else>
+          <ul>
+            <li class="pop-item">
+              <a class="pop-item-link" :href="`https://login.komercia.co/?from=store&path=${$route.path}&params={'tienda':${storeData.id_tienda},logo:${storeData.logo}}`">Iniciar Sesión</a>
+            </li>
+            <li class="pop-item">
+              <a class="pop-item-link" :href="`https://login.komercia.co/registrar-cliente/?from=store&path=${$route.path}`">Registrar</a>
+            </li>
+          </ul>
+          <i class="icon-user-circle" slot="reference"></i>
+        </el-popover>
+
+        <i @click="openOrder" class="icon-shopping-basket">
+          <em class="num-products">{{ productsCart }}</em>
         </i>
       </div>
       <div class="icons-right">
-        <i @click="getShowIcon" v-if="!showIcon" class="icon-close"></i>
-        <i @click="getShowIcon" v-if="showIcon" class="icon-search"></i>
+        <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
+        <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>
         <transition name="custom-classes-transition" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-          <el-input v-if="!showIcon" class="search-top" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
+          <el-input v-if="showIcon" class="search-top" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
           </el-input>
         </transition>
       </div>
@@ -29,21 +57,59 @@
         </ul>
       </nav>
       <div class="icons">
-        <i @click="getShowIcon" v-if="!showIcon" class="icon-close"></i>
-        <i @click="getShowIcon" v-if="showIcon" class="icon-search"></i>
-        <i class="icon-user-circle"></i>
-        <i class="icon-shopping-basket">
-          <p class="num-products">10</p>
+        <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
+        <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>
+
+        <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData">
+          <div class="container-data-user">
+            <div class="img-user" slot="reference">
+              <img :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+            </div>
+            <div class="data-user">
+              <p class="name-user">{{userData.nombre}}</p>
+              <p class="email-user">{{userData.email}}</p>
+              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
+            </div>
+          </div>
+          <div class="prueba" slot="reference">
+            <img class="img-usuario" :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+          </div>
+        </el-popover>
+
+        <el-popover placement="bottom-end" width="250" trigger="hover" v-else>
+          <ul>
+            <li class="pop-item">
+              <a class="pop-item-link" :href="`https://login.komercia.co/?from=store&path=${$route.path}&params={'tienda':${storeData.id_tienda},logo:${storeData.logo}}`">Iniciar Sesión</a>
+            </li>
+            <li class="pop-item">
+              <a class="pop-item-link" :href="`https://login.komercia.co/registrar-cliente/?from=store&path=${$route.path}`">Registrar</a>
+            </li>
+          </ul>
+          <i class="icon-user-circle" slot="reference"></i>
+        </el-popover>
+        <i @click="openOrder" class="icon-shopping-basket">
+          <em class="num-products">{{ productsCart }}</em>
         </i>
         <transition name="custom-classes-transition" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-          <el-input v-if="!showIcon" class="search" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
+          <el-input v-if="showIcon" class="search" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
           </el-input>
         </transition>
       </div>
-      <i class="icon-menu"></i>
+      <i @click="toggleMenu" class="icon-menu"></i>
     </div>
-    <div class="line line-main-menu"></div>
-  </header>
+    <transition name="slide-fade">
+      <nav v-show="show" class="main-menu">
+        <ul class="main-menu-list">
+          <li @click="toggleMenu" class="main-menu-item item-close">
+            <i class="icon-close"></i>
+          </li>
+          <li v-for='(item, index) in routes' :key='index' class="main-menu-item">
+            <a @click="redirectTo(item.route)" class="main-menu-link">{{item.name}}</a>
+          </li>
+        </ul>
+      </nav>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -52,6 +118,9 @@ export default {
   data() {
     return {
       showIcon: false,
+      visible2: false,
+      show: false,
+      windowsWidth: 0,
       routes: [
         {
           name: 'Inicio',
@@ -94,8 +163,24 @@ export default {
     }
   },
   methods: {
+    redirectTo(route) {
+      this.$router.push(route)
+      this.hideMenu()
+    },
+    hideMenu() {
+      this.show = false
+    },
     getShowIcon() {
       this.showIcon = !this.showIcon
+    },
+    logout() {
+      this.$store.commit('LOGOUT')
+    },
+    openOrder() {
+      this.$store.state.openOrder = true
+    },
+    toggleMenu() {
+      this.show = !this.show
     }
   }
 }
@@ -167,7 +252,7 @@ export default {
   left: -132%;
   margin-top: 5px;
 }
-.top-menu {
+.main-top-menu {
   height: 40px;
   width: 100%;
   display: flex;
@@ -175,6 +260,7 @@ export default {
   align-items: center;
   box-sizing: border-box;
   padding: 0 20px;
+  display: none;
 }
 .icons-left > i {
   padding-right: 25px;
@@ -184,9 +270,6 @@ export default {
 .icons-right > i {
   font-size: 18px;
   cursor: pointer;
-}
-.top-menu {
-  display: none;
 }
 .icon-menu {
   display: none;
@@ -203,9 +286,76 @@ export default {
   bottom: 0;
   right: 10px;
 }
+.pop-item-link {
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.pop-item {
+  margin: 20px;
+}
+.prueba {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  padding-right: 20px;
+}
+.img-usuario {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 0;
+}
+.container-data-user {
+  display: grid;
+  grid-auto-flow: column;
+  box-sizing: border-box;
+  padding: 10px 10px 10px 5px;
+}
+.img-user {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  align-self: center;
+}
+.img-user img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.name-user {
+  font-weight: 600;
+}
+.btn-logout {
+  margin-top: 10px;
+}
+.data-user {
+  display: grid;
+}
+.main-menu > .top-menu {
+  display: none;
+}
+button.el-button.btn-logout.el-button--info.is-plain {
+  border-radius: 0 !important;
+}
+.el-button--info.is-plain:hover {
+  background: #333;
+  border-color: #333;
+  color: #fff;
+}
 @media (max-width: 990px) {
-  .top-menu {
+  .main-top-menu {
     display: flex;
+  }
+  .main-top-menu i {
+    padding-right: 20px;
+  }
+  .main-top-menu i:hover {
+    color: #f49a86;
   }
   .header-navigation {
     display: none;
@@ -236,8 +386,55 @@ export default {
     right: 19px;
     top: 50px;
   }
-  .top-menu .num-products {
+  .main-top-menu .num-products {
     right: 15px;
+  }
+  .slide-fade-enter-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    transform: translateX(-100%);
+  }
+  .main-menu {
+    background: rgb(255, 255, 255);
+    width: 320px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    border-right: 1px solid rgb(207, 207, 207);
+  }
+  .main-menu-list {
+    width: 320px;
+    height: auto;
+    display: grid;
+    padding: 23px 20px;
+    box-sizing: border-box;
+  }
+  .main-menu-item {
+    padding: 10px 0;
+    height: auto;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .main-menu-link {
+    height: 100%;
+    color: #000;
+    width: 100%;
+    font-size: 16px;
+  }
+  .item-close {
+    justify-self: flex-end;
+  }
+  .img-user {
+    width: 70px;
+    height: 70px;
   }
 }
 </style>
