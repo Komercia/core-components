@@ -9,6 +9,12 @@
     <koHeader4 />
     <!-- <koHeader2 /> -->
     <!-- <koHeader3 /> -->
+
+    <koSlider3 />
+    <ko-grid-categorias />
+    <!-- <koSlider1 /> -->
+    <!-- <koSlider2/> -->
+    <!-- <Slider11 /> -->
     <koNewsletter1 />
     <!-- <ProductList1 /> -->
 
@@ -26,9 +32,7 @@
     <ProductList2/>
     <!-- <koProduct1 /> -->
     <!-- <koSeparator1 /> -->
-    <!-- <koSlider1 /> -->
-    <!-- <Slider11 /> -->
-    <koSlider2/>
+
     <!-- <koContent2/> -->
   </div>
 </template>
@@ -46,6 +50,7 @@ import koFooter1 from './components/footers/footer1'
 import koFooter2 from './components/footers/footer2'
 
 import koGrid1 from './components/grids/grid1'
+import koGridCategorias from './components/grids/grid-categorias-home'
 
 import koHeader1 from './components/headers/header1'
 import koHeader2 from './components/headers/header2'
@@ -62,6 +67,7 @@ import koProduct1 from './components/products/product1'
 import koSeparator1 from './components/separators/separator1'
 
 import koSlider1 from './components/sliders/slider1'
+import koSlider3 from './components/sliders/slider3'
 import Slider11 from './components/sliders/slider1-1'
 import koSlider2 from './components/sliders/slider2'
 
@@ -85,9 +91,11 @@ export default {
     koProduct1,
     koSeparator1,
     koSlider1,
+    koSlider3,
     Slider11,
     koSlider2,
-    koContent2
+    koContent2,
+    koGridCategorias
   },
   created() {
     this.$store.commit('GET_DATA')
