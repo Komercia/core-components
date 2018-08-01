@@ -6,7 +6,7 @@ import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Contact1 from './components/contacts/contact1'
 import Content1 from './components/contents/content1'
-import Video from './components/_components/video.vue'
+import Video1 from './components/_components/video1.vue'
 import Slider1 from './components/sliders/slider1'
 import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
@@ -37,7 +37,7 @@ const components = [
   Footer2,
   Order1,
   ProductList2,
-  Video
+  Video1
 ]
 
 const modules = {}
