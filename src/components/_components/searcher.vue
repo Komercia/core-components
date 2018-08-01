@@ -1,7 +1,7 @@
 <template>
   <div  class="searcher">
     <el-input placeholder="Buscar producto" v-model="search" class="input-with-select" @keydown.enter.prevent="sendSearch">
-      <el-button slot="append" icon="el-icon-search"button @click="sendSearch" > </el-button>
+      <el-button slot="append" icon="el-icon-search"></el-button>
     </el-input>
   </div>
 </template>
@@ -14,9 +14,9 @@ export default {
       search:'',
     }
   },
-  methods:{
-    sendSearch(){
-      this.$emit("searcher",this.search)
+  watch:{
+    search(value) {
+      this.$emit("searcher", value)
     },
   },
 }

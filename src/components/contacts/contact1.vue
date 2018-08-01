@@ -1,7 +1,7 @@
 <template>
   <div class="contacto">
     <div class="contacto_content">
-      <div class="maps">
+      <div class="maps" v-show="geolocalizacion.length">
         <div id="map"></div>
       </div>
       <div class="contact">
@@ -54,7 +54,7 @@ export default {
         comentario: this.comment,
         tienda: this.$store.state.id,
       }
-      axios.post(`${this.$urlHttp}/api/front/mensaje-contacto`, json).then((response) =>{
+      axios.post(`https://templates.komercia.co/api/mensaje-contacto`, json).then((response) =>{
         this.nombre = '';
         this.email = '';
         this.numberphone = '';
@@ -101,10 +101,9 @@ export default {
   }
   .contacto_content{
     width: 100%;
-    display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: auto auto;
-    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin: 20px 0;
   }
   .maps{
@@ -117,7 +116,7 @@ export default {
     justify-content: center;
     align-items: center;
     z-index: 1;
-    margin: 0 10px;
+    margin: 0 20px 20px 0;
   }
   #map {
     max-width: 480px;

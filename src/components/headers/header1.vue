@@ -142,20 +142,14 @@ export default {
   mounted() {
     window.addEventListener('resize', this.getWindowsWidth);
     this.getWindowsWidth();
-  },
-  created() {
-    // const $body = document.body;
-    // const hammertime = new Hammer($body);
-    // hammertime.on('swipeleft', this.hideMenu);
-    // hammertime.on('swiperight', this.showMenu);
-  },
+  }
 };
 </script>
 
 <style scoped>
 .header1{
   background-color: var(--background_color);
-  z-index: 99999999;
+  z-index: 999;
 }
 h1 {
   font-size: 30px;

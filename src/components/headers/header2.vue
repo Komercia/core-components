@@ -1,8 +1,8 @@
 <template>
   <div class="header2">
     <koOrder1 />
-    <div v-if='info.logo' class="top-menu">
-      <div class="logo-top-menu">
+    <div class="top-menu">
+      <div v-if='info.logo' class="logo-top-menu">
         <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
       </div>
       <ul class="main-menu-list">
@@ -88,9 +88,6 @@ export default {
     info() {
       return this.$store.state.tienda;
     },
-    style () {
-      return this.$store.state.styleData
-    },
     productsCart() {
       return this.$store.state.productsCart.length;
     },
@@ -125,13 +122,7 @@ export default {
   mounted() {
     // window.addEventListener('resize', this.getWindowsWidth);
     // this.getWindowsWidth();
-  },
-  created() {
-    const $body = document.body;
-    const hammertime = new Hammer($body);
-    hammertime.on('swipeleft', this.hideMenu);
-    hammertime.on('swiperight', this.showMenu);
-  },
+  }
 };
 </script>
 
@@ -140,7 +131,7 @@ export default {
   position: sticky;
   top: 0;
   background-color: var(--background_color);
-  z-index: 999999;
+  z-index: 99;
 }
 .top-menu {
   height: 100px;
@@ -166,7 +157,7 @@ export default {
   align-items: center;
 }
 .main-menu-item {
-  padding: 0 30px;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -174,6 +165,7 @@ export default {
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
+  padding: 0 30px;
 }
 .main-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
@@ -227,6 +219,7 @@ export default {
 .main-menu-link {
   height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   color: #fefefe;
 }
@@ -379,6 +372,7 @@ export default {
   }
   .logo-top-menu img{
     max-width: 200px;
+    width: 100%;
     height: 63px;
     object-fit: contain;
   }

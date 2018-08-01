@@ -31,7 +31,7 @@ export default {
         correo: this.email,
         tienda: this.$store.state.id,
       };
-      axios.post(`${this.$urlHttp}/api/front/suscriptores`, json);
+      axios.post(`https://templates.komercia.co/api/suscriptores`, json);
     }
   }
 }

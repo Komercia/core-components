@@ -1,12 +1,12 @@
 <template>
   <router-link :to="`/productos/${data.slug}`" class="container-product">
     <div class="img-grid-item">
-      <ImageCloudinary
+      <image-cloudinary
       :src="data.foto_cloudinary"/>
     </div>
     <div class="grid-item-description">
       <div class="name-product">{{data.nombre}}</div>
-      <div class="category">{{data.categoria}}</div>
+      <div class="category">{{data.marca}}</div>
       <div class="price">{{data.precio | currency}}</div>
       <button class="btn-product" type="button" name="button"><a>Ir al Producto</a></button>
     </div>

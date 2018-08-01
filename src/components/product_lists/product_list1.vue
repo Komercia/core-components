@@ -49,7 +49,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-auto-rows: auto;
-    grid-gap: 100px;
+    grid-gap: 50px;
     margin: 0 auto;
     padding: 20px 0;
   }
@@ -81,5 +81,17 @@ export default {
     font-weight: bold;
     font-size: 30px;
     /*border-radius: 50%;*/
+  }
+  @media (max-width: 560px) {
+    .product_list1 .product_list {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-gap: 25px;
+    }
+  }
+  @media (max-width: 420px) {
+    .product_list1 .product_list {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-gap: 0px;
+    }
   }
 </style>
