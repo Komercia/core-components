@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  name:'koVideo1',
   data() {
     return {
       url:'',
