@@ -18,6 +18,7 @@ export default new Vuex.Store({
         envio_metodo: "gratis"
       }
     },
+    idtienda: 1,
     tienda: {},
     userData: {
       id: 0,
@@ -71,48 +72,50 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA(state) {
-      axios.get(`https://templates.komercia.co/api/tienda/1`).then(response => {
-        state.banners = response.data.data.banners;
-        if (response.data.data.productos.length) {
-          state.productos = response.data.data.productos.sort(
-            (a, b) => a.nombre > b.nombre
-          );
-          state.productsData = response.data.data.productos.sort((a, b) => {
-            if (a.nombre < b.nombre) return -1;
-            if (a.nombre > b.nombre) return 1;
-            return 0;
-          });
-          state.productsData.map(product => {
-            if (product.variantes.length) {
-              product.combinaciones = JSON.parse(
-                product.variantes[0].combinaciones[0].combinaciones
-              );
-              if (product.combinaciones.length) {
-                const arrPrices = product.combinaciones.map(
-                  combinacion => combinacion.precio
+      axios
+        .get(`https://templates.komercia.co/api/tienda/${idtienda}`)
+        .then(response => {
+          state.banners = response.data.data.banners;
+          if (response.data.data.productos.length) {
+            state.productos = response.data.data.productos.sort(
+              (a, b) => a.nombre > b.nombre
+            );
+            state.productsData = response.data.data.productos.sort((a, b) => {
+              if (a.nombre < b.nombre) return -1;
+              if (a.nombre > b.nombre) return 1;
+              return 0;
+            });
+            state.productsData.map(product => {
+              if (product.variantes.length) {
+                product.combinaciones = JSON.parse(
+                  product.variantes[0].combinaciones[0].combinaciones
                 );
-                product.precio = Math.min(...arrPrices);
+                if (product.combinaciones.length) {
+                  const arrPrices = product.combinaciones.map(
+                    combinacion => combinacion.precio
+                  );
+                  product.precio = Math.min(...arrPrices);
+                }
+                product.variantes = product.variantes[0].variantes;
               }
-              product.variantes = product.variantes[0].variantes;
-            }
-          });
-        }
-        state.categorias = response.data.data.categorias;
-        state.subcategorias = response.data.data.subcategorias;
-        state.geolocalizacion = response.data.data.geolocalizacion;
-        state.mediospago = response.data.data.medios_pago || {
-          epayco: false
-        };
-        state.politicas = response.data.data.politicas || {
-          garantia: "",
-          datos: ""
-        };
-        state.tienda = response.data.data.tienda;
-        state.envios = response.data.data.medios_envio;
-        state.envios.valores = JSON.parse(
-          response.data.data.medios_envio.valores
-        );
-      });
+            });
+          }
+          state.categorias = response.data.data.categorias;
+          state.subcategorias = response.data.data.subcategorias;
+          state.geolocalizacion = response.data.data.geolocalizacion;
+          state.mediospago = response.data.data.medios_pago || {
+            epayco: false
+          };
+          state.politicas = response.data.data.politicas || {
+            garantia: "",
+            datos: ""
+          };
+          state.tienda = response.data.data.tienda;
+          state.envios = response.data.data.medios_envio;
+          state.envios.valores = JSON.parse(
+            response.data.data.medios_envio.valores
+          );
+        });
     },
     UPDATE_CONTENTCART(state) {
       state.totalCart = 0;
