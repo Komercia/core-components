@@ -189,7 +189,7 @@
         if(product.length) {
           return product[0].id
         }
-        return 3549
+        return 1
       },
       getDataProduct() {
         if(this.searchIdForSlug()) {

@@ -44,7 +44,8 @@ export default {
   props: {
     setting: {
       type: Array,
-      default: function() {
+
+      default() {
         return [
           {
             photo:
@@ -52,7 +53,7 @@ export default {
             title: 'ALL FREE',
             fontsize: 25,
             redirect_url: '',
-            button_text: 'CLICK NOW'
+            button_text: 'NOW'
           },
           {
             photo:
@@ -81,19 +82,21 @@ export default {
   }
 }
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
   margin: 0 auto;
   display: grid;
   grid-template: 6fr 2fr / repeat(3, 1fr);
   grid-template-areas:
+
     'header  header header'
     'left midlane right';
   font-weight: bold;
   max-width: 1366px;
   max-height: 80vh;
   /* word-break: break-all; */
+
+
   word-wrap: break-word;
   hyphens: auto;
 }
@@ -203,10 +206,17 @@ export default {
     max-height: 750px;
     grid-template: 1fr 1fr 1fr 1fr / 4fr;
     grid-template-areas:
+<<<<<<< HEAD
       'header'
       'left'
       'midlane'
       'right';
+=======
+      "header"
+      "left"
+      "midlane"
+      "right";
+>>>>>>> 71048005b796623f742ad1821bb14fdea5716666
     grid-gap: 10px;
   }
   .header {

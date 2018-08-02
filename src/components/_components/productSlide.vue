@@ -1,7 +1,11 @@
 <template>
   <swiper :options="swiperOption">
     <!-- slides -->
-    <swiper-slide><img class="photo" :src="setPhoto(photo)"></swiper-slide>
+    <swiper-slide>
+      <image-cloudinary
+      class="photo"
+      :src="setPhoto(photo)"/>
+    </swiper-slide>
     <swiper-slide v-for="photo in photos" :key="photo.id"><img class="photo" :src="setPhoto(photo.foto_cloudinary)"></swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
@@ -44,13 +48,11 @@ export default {
     max-width: 100%;
     overflow: hidden;
     height: 350px;
-    background-color: #FFF;
   }
   .swiper-slide {
       height: 100%;
       text-align: center;
       font-size: 18px;
-      background: #fff;
       /* Center slide text vertically */
       display: -webkit-box;
       display: -ms-flexbox;
