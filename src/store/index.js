@@ -23,7 +23,7 @@ export default new Vuex.Store({
         envio_metodo: "gratis"
       }
     },
-    idtienda: 1,
+    idTienda: 290,
     tienda: {},
     userData: {
       id: 0,
@@ -80,7 +80,7 @@ export default new Vuex.Store({
   mutations: {
     GET_DATA(state) {
       axios
-        .get(`https://templates.komercia.co/api/tienda/${idtienda}`)
+        .get(`https://templates.komercia.co/api/tienda/${state.idTienda}`)
         .then(response => {
           state.banners = response.data.data.banners;
           if (response.data.data.productos.length) {
@@ -123,6 +123,9 @@ export default new Vuex.Store({
             response.data.data.medios_envio.valores
           );
         });
+    },
+    UPDATE_ID_TIENDA(state, newValue) {
+      state.idTienda = newValue;
     },
     UPDATE_CONTENTCART(state) {
       state.totalCart = 0;

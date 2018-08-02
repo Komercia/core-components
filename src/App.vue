@@ -9,6 +9,13 @@
         <div :is="selectComponent + 'Settings' " />
       </div>
 
+      <div class="select_stores">
+        <el-select v-model="id_store" placeholder="Select" v-on:change="updateIdStore">
+          <el-option v-for="item in stores" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
+
       <div class="container_responsive_icons ">
         <img src="./assets/compu.png" width="50px ">
         <img src="./assets/tablet.png" width="50px ">
@@ -17,28 +24,38 @@
     </div>
 
     <div class="container_components ">
-      <div class="title " style="margin-bottom: 10px ">
+      <div class="title hidden_menu_components" style="margin-bottom: 10px ">
         <a v-on:click="hiddenSettings" class="hidden_settings_button">
           <el-button type="primary" icon="el-icon-menu" circle></el-button>
           Mostrar Settings
         </a>
-        <h1>Componente Principal
-          <el-select v-model="selectComponent" placeholder="Select Component " style="margin-left:10px ">
-            <el-option v-for="item in components " :key="item " :label="item " :value="item "></el-option>
-          </el-select>
-        </h1>
 
         <h1>Arriba
           <i class="el-icon-upload2" />
-          <el-select v-model="selectComponentAbove " placeholder="Select Component " style="margin-left:10px ">
-            <el-option v-for="item2 in components " :key="item2 " :label="item2 " :value="item2 "></el-option>
+          <el-select v-model="selectComponentAbove" placeholder="Select Component " style="margin-left:10px ">
+            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+              <el-option v-for="item in group.options" :key="item.value" :label="item.value" :value="item.value">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </h1>
+
+        <h1>Componente Principal
+          <el-select v-model="selectComponent" placeholder="Select Component " style="margin-left:10px ">
+            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+              <el-option v-for="item in group.options" :key="item.value" :label="item.value" :value="item.value">
+              </el-option>
+            </el-option-group>
           </el-select>
         </h1>
 
         <h1>Abajo
           <i class="el-icon-download" />
-          <el-select v-model="selectComponentDown " placeholder="Select Component " style="margin-left:10px ">
-            <el-option v-for="item in components " :key="item " :label="item " :value="item "></el-option>
+          <el-select v-model="selectComponentDown" placeholder="Select Component " style="margin-left:10px ">
+            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+              <el-option v-for="item in group.options" :key="item.value" :label="item.value" :value="item.value">
+              </el-option>
+            </el-option-group>
           </el-select>
         </h1>
       </div>
@@ -50,7 +67,6 @@
       </div>
 
     </div>
-
   </div>
 </template>
 
@@ -64,42 +80,116 @@ export default {
   },
   data() {
     return {
-      selectComponent: "koSlider2",
+      id_store: 1,
+      selectComponent: "koHeader1",
       showSettingsButton: true,
       selectComponentAbove: "",
       selectComponentDown: "",
-      options3: [
+      stores: [
+        { value: 1, label: "Topalxe" },
+        { value: 290, label: "Prontodental" }
+      ],
+      components: [
         {
-          label: "Popular cities",
+          label: "Headers",
           options: [
             {
-              value: "Shanghai",
-              label: "Shanghai"
+              value: "koHeader1"
             },
             {
-              value: "Beijing",
-              label: "Beijing"
+              value: "koHeader2"
+            },
+            {
+              value: "koHeader3"
             }
           ]
         },
         {
-          label: "City name",
+          label: "Banners",
           options: [
             {
-              value: "Chengdu",
-              label: "Chengdu"
+              value: "koSlider1"
             },
             {
-              value: "Shenzhen",
-              label: "Shenzhen"
+              value: "Slider11"
             },
             {
-              value: "Guangzhou",
-              label: "Guangzhou"
+              value: "koSlider2"
+            }
+          ]
+        },
+        {
+          label: "Products",
+          options: [
+            {
+              value: "koGrid1"
             },
             {
-              value: "Dalian",
-              label: "Dalian"
+              value: "ProductList1"
+            },
+            {
+              value: "ProductList2"
+            },
+            {
+              value: "koProduct1"
+            }
+          ]
+        },
+        {
+          label: "Content",
+          options: [
+            {
+              value: "koNewsletter1"
+            },
+            {
+              value: "koContent1"
+            }
+          ]
+        },
+        {
+          label: "Multimedia",
+          options: [{ value: "koVideo1 - Muy pronto" }]
+        },
+        {
+          label: "Separators",
+          options: [
+            {
+              value: "koSeparator1"
+            }
+          ]
+        },
+        {
+          label: "Checkout",
+          options: [
+            {
+              value: "cart1"
+            }
+          ]
+        },
+        {
+          label: "Separators",
+          options: [
+            {
+              value: "koSeparator1"
+            }
+          ]
+        },
+        {
+          label: "Contact",
+          options: [
+            {
+              value: "koContact1"
+            }
+          ]
+        },
+        {
+          label: "Footers",
+          options: [
+            {
+              value: "koFooter1"
+            },
+            {
+              value: "koFooter2"
             }
           ]
         }
@@ -116,6 +206,19 @@ export default {
       this.showSettingsButton == true
         ? (this.showSettingsButton = false)
         : (this.showSettingsButton = true);
+    },
+    updateIdStore() {
+      this.idTienda = this.id_store;
+    }
+  },
+  computed: {
+    idTienda: {
+      get() {
+        return this.$store.state.idTienda;
+      },
+      set(newValue) {
+        this.$store.commit("UPDATE_ID_TIENDA", newValue);
+      }
     }
   }
 };
@@ -138,7 +241,6 @@ export default {
   --button_text_color: #fff;
   --background_color: #fff;
 }
-
 #app {
   background-color: var(--background_color);
 }
@@ -219,5 +321,10 @@ export default {
 }
 .hidden {
   display: none;
+}
+@media (max-width: 700px) {
+  .hidden_menu_components {
+    display: none;
+  }
 }
 </style>
