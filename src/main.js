@@ -9,6 +9,7 @@ import axios from 'axios'
 import locale from 'element-ui/lib/locale/lang/es'
 import '../static/index.css'
 import elementUI from 'element-ui'
+import VueMq from 'vue-mq'
 import firebase from 'firebase'
 import VuePaginate from 'vue-paginate'
 import ImageCloudinary from 'image-cloudinary'
@@ -21,6 +22,15 @@ Vue.use(ImageCloudinary)
 Vue.config.productionTip = false
 
 Vue.use(elementUI, { locale })
+
+Vue.use(VueMq, {
+  breakpoints: {
+    // default breakpoints - customize this
+    sm: 450,
+    md: 1250,
+    lg: Infinity
+  }
+})
 
 Vue.prototype.$urlHttp = 'https://api.komercia.co'
 store.state.urlHttp = Vue.prototype.$urlHttp

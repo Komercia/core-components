@@ -71,7 +71,7 @@ export default new Vuex.Store({
   },
   mutations: {
     GET_DATA(state) {
-      axios.get(`${state.urlHttp}/api/front/tienda/349`).then(response => {
+      axios.get(`${state.urlHttp}/api/front/tienda/226`).then(response => {
         state.banners = response.data.data.banners
         if (response.data.data.productos.length) {
           state.productos = response.data.data.productos.sort(
