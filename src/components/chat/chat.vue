@@ -70,7 +70,7 @@ export default {
   methods: {
     loadMessages () {
       const id = this.storeData.id_tienda;
-      firebase.database().ref('chats/').orderByChild('store_id').equalTo(id).on('value', snapshot => {
+      this.$firebase.database().ref('chats/').orderByChild('store_id').equalTo(id).on('value', snapshot => {
         if (snapshot.val()) {
           const chatsTMP = []
           snapshot.forEach((childSnapshot) => {
@@ -84,7 +84,7 @@ export default {
           }
         }
         if (this.key) {
-          const chatsMessages = firebase.database().ref(`chats/${this.key}/messages`)
+          const chatsMessages = this.$firebase.database().ref(`chats/${this.key}/messages`)
           chatsMessages.on('value', snapshot => {
             this.messages = Object.values(snapshot.val())
           })
@@ -110,9 +110,9 @@ export default {
         created: new Date(),
         message: this.message
       }
-      firebase.database().ref(`chats/${this.key}/messages`).push(chat)
+      this.$firebase.database().ref(`chats/${this.key}/messages`).push(chat)
 
-      let pendingRef = firebase.database().ref(`/chats/${this.key}/pending_messages_store`);
+      let pendingRef = this.$firebase.database().ref(`/chats/${this.key}/pending_messages_store`);
       pendingRef.transaction(function(pending) {
         if (pending != null) {
           return pending + 1;
@@ -124,7 +124,7 @@ export default {
       let update = {}
       update[`/chats/${this.key}/pending_messages_customer`] = 0
       update[`/chats/${this.key}/messages_update_last`] = Date.now()
-      firebase.database().ref().update(update)
+      this.$firebase.database().ref().update(update)
     },
     newChat() {
       const chat = {
@@ -151,7 +151,7 @@ export default {
         },
         store_id: this.storeData.id_tienda
       }
-      firebase.database().ref(`chats/`).push(chat)
+      this.$firebase.database().ref(`chats/`).push(chat)
       this.noChat = false
     },
     scrollDown () {

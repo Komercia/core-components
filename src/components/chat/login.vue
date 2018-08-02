@@ -64,7 +64,7 @@ export default {
   methods: {
     getUIDWithFacebook() {
       let provider = new firebase.auth.FacebookAuthProvider()
-      firebase
+      this.$firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
