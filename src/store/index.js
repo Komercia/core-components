@@ -1,6 +1,11 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
+import firebase from '../utils/connect_firebase'
+
+const firestore = firebase.firestore();
+const settings = {/* your settings... */ timestampsInSnapshots: true};
+firestore.settings(settings);
 
 Vue.use(Vuex);
 
@@ -61,6 +66,7 @@ export default new Vuex.Store({
     geolocalizacion: [],
     togglePayment: false,
     beforeCombination: [],
+    settingData: null,
     mediospago: {
       epayco: false
     },
@@ -68,7 +74,8 @@ export default new Vuex.Store({
       garantia: "",
       datos: ""
     },
-    totalCart: 0
+    totalCart: 0,
+    components: null
   },
   mutations: {
     GET_DATA(state) {
@@ -134,6 +141,16 @@ export default new Vuex.Store({
       for (const product of state.productsCart) {
         state.totalCart += product.precio * product.cantidad;
       }
+    }
+  },
+  actions: {
+    GET_COMPONENTS({state}) {
+      firestore.collection("components").get().then((querySnapshot) => {
+        state.components = {}
+        querySnapshot.forEach((doc) => {
+          state.components[doc.id] = Object.values(doc.data())
+        })
+      })
     }
   }
 });
