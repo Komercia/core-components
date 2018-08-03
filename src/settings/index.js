@@ -1,11 +1,11 @@
 import SliderSetting1 from './slider1'
-// import SliderSetting1_1 from './sliders/slider1-1'
+import SliderSetting1_1 from './slider1-1'
 import SeparatorSetting1 from './separator1'
 import ContentSetting1 from './content1'
 
 const components = [
   SliderSetting1,
-  // SliderSetting1_1,
+  SliderSetting1_1,
   SeparatorSetting1,
   ContentSetting1
 ]
