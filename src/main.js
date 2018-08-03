@@ -16,6 +16,7 @@ import Components from './index'
 import Settings from './settings'
 import IconBase from './Icons/IconBase'
 import firebase from './utils/connect_firebase'
+import KomerciaCropper from 'komercia-cropper'
 
 Vue.prototype.$firebase = firebase;
 
@@ -26,6 +27,7 @@ Vue.use(VueFuse)
 Vue.use(VuePaginate)
 Vue.use(Vuex)
 Vue.use(ImageCloudinary)
+Vue.use(KomerciaCropper)
 Vue.config.productionTip = false;
 
 Vue.use(elementUI, { locale });
