@@ -1,6 +1,6 @@
-import Vue from "vue";
-import Vuex from "vuex";
-import axios from "axios";
+import Vue from "vue"
+import Vuex from "vuex"
+import axios from "axios"
 import firebase from '../utils/connect_firebase'
 
 const firestore = firebase.firestore();
@@ -75,7 +75,8 @@ export default new Vuex.Store({
       datos: ""
     },
     totalCart: 0,
-    components: null
+    components: null,
+    settingData: null
   },
   mutations: {
     GET_DATA(state) {
@@ -124,9 +125,6 @@ export default new Vuex.Store({
           );
         });
     },
-    UPDATE_ID_TIENDA(state, newValue) {
-      state.idTienda = newValue;
-    },
     UPDATE_CONTENTCART(state) {
       state.totalCart = 0;
       localStorage.setItem("ShoppingCart", JSON.stringify(state.productsCart));
@@ -144,15 +142,25 @@ export default new Vuex.Store({
       for (const product of state.productsCart) {
         state.totalCart += product.precio * product.cantidad;
       }
+    },
+    SET_SETTING (state, setting) {
+      state.settingData = setting
     }
   },
   actions: {
+    UPDATE_ID_TIENDA({state, commit}, newValue) {
+      state.idTienda = newValue
+      commit('GET_DATA')
+    },
     GET_COMPONENTS({state}) {
-      firestore.collection("components").get().then((querySnapshot) => {
-        state.components = {}
+      firestore.collection("components_testing").get().then((querySnapshot) => {
+        const components = {}
         querySnapshot.forEach((doc) => {
-          state.components[doc.id] = Object.values(doc.data())
+          components[doc.id] = { label: '', options: [] }
+          components[doc.id].label = doc.id
+          components[doc.id].options = Object.values(doc.data())
         })
+        state.components = components
       })
     }
   }
