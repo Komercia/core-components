@@ -1,84 +1,75 @@
 <template>
-  <section class="sectionBar">
-    <header class="sectionBar_header">
-      <span class="angle-left" @click="closeSetting">
-        <icon-base icon-name="angle-left"><angle-left /></icon-base>
-      </span>
-      <p v-if="settingData">{{ settingData.label }}</p>
-      <span></span>
-    </header>
-    <div class="form_list">
-      <section class="settingBanner" v-for="(banner, index) in settingData.data">
-        <div class="banner_photo">
-          <img
-          :src="banner.foto_cloudinary"
-          :alt="banner.titulo">
-          <label :for="`banner${index}`" class="upload_hover">
-            <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>
-            <p>Subir banner</p>
-          </label>
-        </div>
-        <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)">
-        <div class="input-area">
-          <el-input placeholder="Titulo" v-model="banner.titulo">
-            <template slot="prepend">
-              <icon-base icon-name="text"><icon-text /></icon-base>
-            </template>
-          </el-input>
-        </div>
-        <div class="input-area">
-          <el-input placeholder="Descripción" v-model="banner.descripcion">
-            <template slot="prepend"><icon-base icon-name="align-justify"><align-justify /></icon-base></template>
-          </el-input>
-        </div>
-        <div class="input-area">
-          <el-input placeholder="Url de redirección" v-model="banner.redireccion">
-            <template slot="prepend">
-              <icon-base icon-name="links"><icon-links /></icon-base>
-            </template>
-          </el-input>
-        </div>
-        <div class="input-area">
-          <el-select placeholder="Posición del contenido" v-model="banner.posicion">
-            <el-option
-              v-for="position in positions"
-              :label="position.label"
-              :value="position.value"
-              :key="position.value">
-            </el-option>
-          </el-select>
-        </div>
-        <div class="settingBanner_actions">
-          <el-button @click="updateBanner(banner)">Guardar</el-button>
-          <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(index, banner)">Eliminar</el-button>
-        </div>
-      </section>
-      <section class="settingBanner" v-if="settingData.data.length < 3">
-        <div class="upload-area">
-          <label for="uploadBanner" class="upload">
-            <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>Subir imagen
-          </label>
-          <!-- <button class="banner_unplash" @click="openUnplash">
-            Explora imágenes gratis
-          </button> -->
-          <input type="file" id="uploadBanner" v-on:change="uploadBanner">
-        </div>
-      </section>
-    </div>
-  </section>
+  <div class="form_list">
+    <section class="settingBanner" v-for="(banner, index) in settingData.data">
+      <div class="banner_photo">
+        <img
+        :src="banner.foto_cloudinary"
+        :alt="banner.titulo">
+        <label :for="`banner${index}`" class="upload_hover">
+          <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>
+          <p>Subir banner</p>
+        </label>
+      </div>
+      <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)">
+      <div class="input-area">
+        <el-input placeholder="Titulo" v-model="banner.titulo">
+          <template slot="prepend">
+            <icon-base icon-name="text"><icon-text /></icon-base>
+          </template>
+        </el-input>
+      </div>
+      <div class="input-area">
+        <el-input placeholder="Descripción" v-model="banner.descripcion">
+          <template slot="prepend"><icon-base icon-name="align-justify"><align-justify /></icon-base></template>
+        </el-input>
+      </div>
+      <div class="input-area">
+        <el-input placeholder="Url de redirección" v-model="banner.redireccion">
+          <template slot="prepend">
+            <icon-base icon-name="links"><icon-links /></icon-base>
+          </template>
+        </el-input>
+      </div>
+      <div class="input-area">
+        <el-select placeholder="Posición del contenido" v-model="banner.posicion">
+          <el-option
+            v-for="position in positions"
+            :label="position.label"
+            :value="position.value"
+            :key="position.value">
+          </el-option>
+        </el-select>
+      </div>
+      <div class="settingBanner_actions">
+        <el-button @click="updateBanner(banner)">Guardar</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(index, banner)">Eliminar</el-button>
+      </div>
+    </section>
+    <section class="settingBanner" v-if="settingData.data.length < 3">
+      <div class="upload-area">
+        <label for="uploadBanner" class="upload">
+          <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>Subir imagen
+        </label>
+        <!-- <button class="banner_unplash" @click="openUnplash">
+          Explora imágenes gratis
+        </button> -->
+        <input type="file" id="uploadBanner" v-on:change="uploadBanner">
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import axios from 'axios';
-import AngleLeft from '../../Icons/AngleLeft.vue'
-import IconText from '../../Icons/Text.vue'
-import AlignJustify from '../../Icons/AlignJustify.vue'
-import IconLinks from '../../Icons/Links.vue'
-import CloudUp from '../../Icons/CloudUp.vue'
+import AngleLeft from '../Icons/AngleLeft.vue'
+import IconText from '../Icons/Text.vue'
+import AlignJustify from '../Icons/AlignJustify.vue'
+import IconLinks from '../Icons/Links.vue'
+import CloudUp from '../Icons/CloudUp.vue'
 
 export default {
-  name: 'koSliderSetting1-1',
+  name: 'koSlider1-1Setting',
   components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp },
   data() {
     return {

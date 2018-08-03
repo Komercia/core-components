@@ -1,12 +1,4 @@
 <template>
-  <section class="sectionBar">
-    <header class="sectionBar_header">
-      <span class="angle-left" @click="closeSetting">
-        <icon-base icon-name="angle-left"><angle-left /></icon-base>
-      </span>
-      <p v-if="setting">{{ setting.label }}</p>
-      <span></span>
-    </header>
     <div class="setting_list">
       <div class="item_setting" v-for="n in 2">
       <div  class="upload-area">
@@ -50,20 +42,19 @@
         </el-input>
       </div>
     </div>
-    </div>
-  </section>
+  </div>
 </template>
 
 <script>
 import axios from 'axios';
-import AngleLeft from '../../Icons/AngleLeft.vue'
-import IconText from '../../Icons/Text.vue'
-import AlignJustify from '../../Icons/AlignJustify.vue'
-import IconLinks from '../../Icons/Links.vue'
-import CloudUp from '../../Icons/CloudUp.vue'
+import AngleLeft from '../Icons/AngleLeft.vue'
+import IconText from '../Icons/Text.vue'
+import AlignJustify from '../Icons/AlignJustify.vue'
+import IconLinks from '../Icons/Links.vue'
+import CloudUp from '../Icons/CloudUp.vue'
 
 export default {
-  name: 'koContentSetting1',
+  name: 'koContent1Setting',
   components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp },
   data () {
    return {
@@ -78,21 +69,31 @@ export default {
   },
   methods: {
     uploadPhoto(event, position){
-      let params = new FormData();
-      params.append('file', event.target.files[0]);
-      params.append('upload_preset','qciyydun');
+      this.$cropper.upload({
+        type: 'Imagen',
+        ratio: 1,
+        file: event.target.files[0],
+        desc: 'Puedes subir cualquier tipo de imagen'
+      }).then((response) => {
+        let params = new FormData();
+        params.append('file', response);
+        params.append('upload_preset','qciyydun');
 
-      let config = {
-        headers:
+        let config = {
+          headers:
           {
             'content-type': 'multipart/form-data'
           }
-      }
-      axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/upload', params, config)
-      .then( (response) => {
-        this.setting.data[position].photo = response.data.secure_url;
+        }
+        axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/upload', params, config)
+        .then( (response) => {
+          this.setting.data[position].photo = response.data.secure_url;
+          this.$cropper.complete()
+        })
+        .catch(function (error) {
+          this.$cropper.complete()
+        });
       })
-      .catch(function (error) {});
     },
     closeSetting() {
       this.$store.state.settingData = null;
@@ -136,7 +137,6 @@ export default {
   cursor: pointer;
 }
 .setting_list{
-  height: calc(100% - 50px - 108px - 20px);
   overflow: auto;
 }
 .item_setting{

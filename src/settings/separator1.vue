@@ -31,16 +31,11 @@ import AlignJustify from "../Icons/AlignJustify.vue";
 import IconLinks from "../Icons/Links.vue";
 
 export default {
-  name: "koSeparator1Settings",
+  name: "koSeparator1Setting",
   components: { AngleLeft, IconText, AlignJustify, IconLinks },
   computed: {
     settingData() {
-      return {
-        label: '',
-        title: '',
-        description: ''
-      }
-      // return this.$store.state.settingData;
+      return this.$store.state.settingData;
     }
   },
   methods: {

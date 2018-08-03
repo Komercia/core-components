@@ -96,7 +96,7 @@
 
 <script>
 export default {
-  name: "koSlider2Settings"
+  name: "koSlider2Setting"
 };
 </script>
 
@@ -107,4 +107,3 @@ export default {
   margin: 10px 0;
 }
 </style>
-
