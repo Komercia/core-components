@@ -6,7 +6,7 @@
       </div>
 
       <div class="component_setting">
-        <div :is="selectComponent + 'Settings' " />
+        <div v-if="settingData" :is="settingData.name" />
       </div>
 
       <div class="select_stores">
@@ -34,7 +34,7 @@
           <i class="el-icon-upload2" />
           <el-select v-model="selectComponentAbove" placeholder="Select Component " style="margin-left:10px ">
             <el-option-group v-for="group in components " :key="group.label" :label="group.label">
-              <el-option v-for="item in group.options" :key="item.value" :label="item.value" :value="item.value">
+              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
               </el-option>
             </el-option-group>
           </el-select>
@@ -43,7 +43,7 @@
         <h1>Componente Principal
           <el-select v-model="selectComponent" placeholder="Select Component " style="margin-left:10px ">
             <el-option-group v-for="group in components " :key="group.label" :label="group.label">
-              <el-option v-for="item in group.options" :key="item.value" :label="item.value" :value="item.value">
+              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
               </el-option>
             </el-option-group>
           </el-select>
@@ -53,7 +53,7 @@
           <i class="el-icon-download" />
           <el-select v-model="selectComponentDown" placeholder="Select Component " style="margin-left:10px ">
             <el-option-group v-for="group in components " :key="group.label" :label="group.label">
-              <el-option v-for="item in group.options" :key="item.value" :label="item.value" :value="item.value">
+              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
               </el-option>
             </el-option-group>
           </el-select>
@@ -62,7 +62,7 @@
 
       <div class="component_principal">
         <div :is="selectComponentAbove" />
-        <div :is="selectComponent" />
+        <div :is="selectComponent" :setting="settingData"/>
         <div :is="selectComponentDown" />
       </div>
 
@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 
 export default {
   name: "app",
@@ -82,123 +83,39 @@ export default {
     return {
       id_store: 1,
       selectComponent: "koHeader1",
-      showSettingsButton: true,
+      selectSetting: null,
+      showSettingsButton: false,
       selectComponentAbove: "",
       selectComponentDown: "",
       stores: [
         { value: 1, label: "Topalxe" },
         { value: 290, label: "Prontodental" }
-      ],
-      components: [
-        {
-          label: "Headers",
-          options: [
-            {
-              value: "koHeader1"
-            },
-            {
-              value: "koHeader2"
-            },
-            {
-              value: "koHeader3"
-            }
-          ]
-        },
-        {
-          label: "Banners",
-          options: [
-            {
-              value: "koSlider1"
-            },
-            {
-              value: "Slider11"
-            },
-            {
-              value: "koSlider2"
-            }
-          ]
-        },
-        {
-          label: "Products",
-          options: [
-            {
-              value: "koGrid1"
-            },
-            {
-              value: "ProductList1"
-            },
-            {
-              value: "ProductList2"
-            },
-            {
-              value: "koProduct1"
-            }
-          ]
-        },
-        {
-          label: "Content",
-          options: [
-            {
-              value: "koNewsletter1"
-            },
-            {
-              value: "koContent1"
-            }
-          ]
-        },
-        {
-          label: "Multimedia",
-          options: [{ value: "koVideo1 - Muy pronto" }]
-        },
-        {
-          label: "Separators",
-          options: [
-            {
-              value: "koSeparator1"
-            }
-          ]
-        },
-        {
-          label: "Checkout",
-          options: [
-            {
-              value: "cart1"
-            }
-          ]
-        },
-        {
-          label: "Separators",
-          options: [
-            {
-              value: "koSeparator1"
-            }
-          ]
-        },
-        {
-          label: "Contact",
-          options: [
-            {
-              value: "koContact1"
-            }
-          ]
-        },
-        {
-          label: "Footers",
-          options: [
-            {
-              value: "koFooter1"
-            },
-            {
-              value: "koFooter2"
-            }
-          ]
-        }
       ]
     };
   },
   computed: {
-    components () {
-      return this.$store.state.components
+    ...mapState(['components', 'settingData']),
+    idTienda: {
+      get() {
+        return this.$store.state.idTienda;
+      },
+      set(newValue) {
+        this.$store.dispatch("UPDATE_ID_TIENDA", newValue);
+      }
+    }
+  },
+  watch: {
+    selectComponent (value) {
+      for (let component of Object.values(this.components)) {
+        if (component.options.length) {
+          for (let option of component.options) {
+            if (value === option.name) {
+              const setting = option.setting || null
+              this.$store.commit('SET_SETTING', setting)
+            }
+          }
+        }
+      }
     }
   },
   methods: {
@@ -209,16 +126,6 @@ export default {
     },
     updateIdStore() {
       this.idTienda = this.id_store;
-    }
-  },
-  computed: {
-    idTienda: {
-      get() {
-        return this.$store.state.idTienda;
-      },
-      set(newValue) {
-        this.$store.commit("UPDATE_ID_TIENDA", newValue);
-      }
     }
   }
 };
@@ -258,7 +165,7 @@ export default {
   display: grid;
   width: 450px;
   height: 100%;
-  padding: 0 20px;
+  padding-right: 20px;
   background-color: #e8ecef;
 }
 .component_setting {
