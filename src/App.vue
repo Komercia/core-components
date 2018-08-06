@@ -6,12 +6,11 @@
 </template>
 
 <script>
-
 export default {
-  name: "app",
+  name: 'app',
   created() {
     this.$store.dispatch('GET_COMPONENTS')
-    this.$store.commit("GET_DATA");
+    this.$store.commit('GET_DATA')
   }
 }
 </script>
@@ -98,7 +97,6 @@ export default {
   width: 100%;
 }
 .title {
-  display: flex;
   width: 100%;
   height: 60px;
   margin-top: 0px;
@@ -113,6 +111,15 @@ export default {
 }
 .hidden {
   display: none;
+}
+footer .el-input__inner {
+  background-color: transparent !important;
+  border-radius: 2px;
+  border-color: rgba(255, 255, 255, 0.459);
+  color: rgba(255, 255, 255, 0.459);
+}
+footer .el-input__inner:focus {
+  border-color: #ffffff;
 }
 @media (max-width: 700px) {
   .hidden_menu_components {

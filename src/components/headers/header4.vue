@@ -195,6 +195,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--background_color);
 }
 .navigation-list {
   display: flex;
