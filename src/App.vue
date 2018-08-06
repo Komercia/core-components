@@ -1,4 +1,5 @@
   <template>
+
   <div id="app" class="container">
     <div :class="{container_settings: true, hidden: showSettingsButton}">
       <div class="title">
@@ -91,7 +92,7 @@ export default {
         { value: 1, label: "Topalxe" },
         { value: 290, label: "Prontodental" }
       ]
-    };
+    }
   },
   computed: {
     ...mapState(['components', 'settingData']),
@@ -128,17 +129,17 @@ export default {
       this.idTienda = this.id_store;
     }
   }
-};
+}
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
-@import "./assets/css/main.css";
-@import "./styles/material.css";
-@import "./styles/flat.css";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import './assets/css/main.css';
+@import './styles/material.css';
+@import './styles/flat.css';
 
 * {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 :root {
