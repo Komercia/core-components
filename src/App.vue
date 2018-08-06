@@ -1,132 +1,16 @@
   <template>
   <div id="app" class="container">
-    <div :class="{container_settings: true, hidden: showSettingsButton}">
-      <div class="title">
-        <h1>Settings</h1>
-      </div>
-
-      <div class="component_setting">
-        <div v-if="settingData" :is="settingData.name" />
-      </div>
-
-      <div class="select_stores">
-        <el-select v-model="id_store" placeholder="Select" v-on:change="updateIdStore">
-          <el-option v-for="item in stores" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
-      </div>
-
-      <div class="container_responsive_icons ">
-        <img src="./assets/compu.png" width="50px ">
-        <img src="./assets/tablet.png" width="50px ">
-        <img src="./assets/phone.png" width="50px ">
-      </div>
-    </div>
-
-    <div class="container_components ">
-      <div class="title hidden_menu_components" style="margin-bottom: 10px ">
-        <a v-on:click="hiddenSettings" class="hidden_settings_button">
-          <el-button type="primary" icon="el-icon-menu" circle></el-button>
-          Mostrar Settings
-        </a>
-
-        <h1>Arriba
-          <i class="el-icon-upload2" />
-          <el-select v-model="selectComponentAbove" placeholder="Select Component " style="margin-left:10px ">
-            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
-              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
-              </el-option>
-            </el-option-group>
-          </el-select>
-        </h1>
-
-        <h1>Componente Principal
-          <el-select v-model="selectComponent" placeholder="Select Component " style="margin-left:10px ">
-            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
-              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
-              </el-option>
-            </el-option-group>
-          </el-select>
-        </h1>
-
-        <h1>Abajo
-          <i class="el-icon-download" />
-          <el-select v-model="selectComponentDown" placeholder="Select Component " style="margin-left:10px ">
-            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
-              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
-              </el-option>
-            </el-option-group>
-          </el-select>
-        </h1>
-      </div>
-
-      <div class="component_principal">
-        <div :is="selectComponentAbove" />
-        <div :is="selectComponent" :setting="settingData"/>
-        <div :is="selectComponentDown" />
-      </div>
-
-    </div>
+    <router-view />
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 
 export default {
   name: "app",
   created() {
     this.$store.dispatch('GET_COMPONENTS')
     this.$store.commit("GET_DATA");
-  },
-  data() {
-    return {
-      id_store: 1,
-      selectComponent: "koHeader1",
-      selectSetting: null,
-      showSettingsButton: false,
-      selectComponentAbove: "",
-      selectComponentDown: "",
-      stores: [
-        { value: 1, label: "Topalxe" },
-        { value: 290, label: "Prontodental" }
-      ]
-    };
-  },
-  computed: {
-    ...mapState(['components', 'settingData']),
-    idTienda: {
-      get() {
-        return this.$store.state.idTienda;
-      },
-      set(newValue) {
-        this.$store.dispatch("UPDATE_ID_TIENDA", newValue);
-      }
-    }
-  },
-  watch: {
-    selectComponent (value) {
-      for (let component of Object.values(this.components)) {
-        if (component.options.length) {
-          for (let option of component.options) {
-            if (value === option.name) {
-              const setting = option.setting || null
-              this.$store.commit('SET_SETTING', setting)
-            }
-          }
-        }
-      }
-    }
-  },
-  methods: {
-    hiddenSettings() {
-      this.showSettingsButton == true
-        ? (this.showSettingsButton = false)
-        : (this.showSettingsButton = true);
-    },
-    updateIdStore() {
-      this.idTienda = this.id_store;
-    }
   }
 };
 </script>
