@@ -1,33 +1,31 @@
 <template>
   <router-link :to="`/productos/${data.slug}`" class="container-product">
     <div class="img-grid-item">
-      <image-cloudinary
-      :src="data.foto_cloudinary"/>
+      <image-cloudinary :src="data.foto_cloudinary" />
     </div>
     <div class="grid-item-description">
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.marca}}</div>
       <div class="price">{{data.precio | currency}}</div>
-      <button class="btn-product" type="button" name="button"><a>Ir al Producto</a></button>
+      <button class="btn-product" type="button" name="button">
+        <a>Ir al Producto</a>
+      </button>
     </div>
   </router-link>
 </template>
 
 <script>
-
 export default {
   name: "",
-  props: ['data'],
+  props: ["data"],
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
     foto() {
-      if(this.data.placeholder) {
+      if (this.data.placeholder) {
         return require(`../../assets/${this.data.foto}`);
-      }else {
+      } else {
         return `${this.$urlHttp}/productos/${this.data.foto}`;
       }
     }
@@ -37,14 +35,14 @@ export default {
       if (value) {
         return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
-      return '';
+      return "";
     }
   }
 };
 </script>
 
 <style >
-.container-product{
+.container-product {
   width: 100%;
   height: 100%;
   display: grid;
@@ -63,7 +61,7 @@ export default {
   box-shadow: 0 0 5px #eee;
   overflow: hidden;
 }
-.img-grid-item img{
+.img-grid-item img {
   width: 90%;
   height: 90%;
   object-fit: contain;
@@ -82,7 +80,7 @@ export default {
   cursor: pointer;
   padding: 0;
 }
-.btn-product a{
+.btn-product a {
   padding: 10px 30px;
   color: var(--button_text_color);
 }
@@ -103,7 +101,7 @@ export default {
   color: var(--text_color);
 }
 @media (max-width: 425px) {
-  .img-grid-item{
+  .img-grid-item {
     max-width: 150px;
     max-height: 150px;
   }

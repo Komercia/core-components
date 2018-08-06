@@ -40,7 +40,7 @@ export default {
           data: [{
             photo: 'https://images.pexels.com/photos/910329/pexels-photo-910329.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
             title: 'SUMMER',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
             redirect_url: '',
             button_text: 'SHOP NOW'
           },

@@ -7,7 +7,14 @@
       </div>
 
       <div class="component_setting">
-        <div :is="selectComponent + 'Settings' " />
+        <div v-if="settingData" :is="settingData.name" />
+      </div>
+
+      <div class="select_stores">
+        <el-select v-model="id_store" placeholder="Select" v-on:change="updateIdStore">
+          <el-option v-for="item in stores" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
       </div>
 
       <div class="container_responsive_icons ">
@@ -18,36 +25,46 @@
     </div>
 
     <div class="container_components ">
-      <div class="title " style="margin-bottom: 10px ">
+      <div class="title hidden_menu_components" style="margin-bottom: 10px ">
         <a v-on:click="hiddenSettings" class="hidden_settings_button">
           <el-button type="primary" icon="el-icon-menu" circle></el-button>
           Mostrar Settings
         </a>
-        <h1>Componente Principal
-          <el-select v-model="selectComponent" placeholder="Select Component " style="margin-left:10px ">
-            <el-option v-for="item in components " :key="item " :label="item " :value="item "></el-option>
-          </el-select>
-        </h1>
 
         <h1>Arriba
           <i class="el-icon-upload2" />
-          <el-select v-model="selectComponentAbove " placeholder="Select Component " style="margin-left:10px ">
-            <el-option v-for="item2 in components " :key="item2 " :label="item2 " :value="item2 "></el-option>
+          <el-select v-model="selectComponentAbove" placeholder="Select Component " style="margin-left:10px ">
+            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </h1>
+
+        <h1>Componente Principal
+          <el-select v-model="selectComponent" placeholder="Select Component " style="margin-left:10px ">
+            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
+              </el-option>
+            </el-option-group>
           </el-select>
         </h1>
 
         <h1>Abajo
           <i class="el-icon-download" />
-          <el-select v-model="selectComponentDown " placeholder="Select Component " style="margin-left:10px ">
-            <el-option v-for="item in components " :key="item " :label="item " :value="item "></el-option>
+          <el-select v-model="selectComponentDown" placeholder="Select Component " style="margin-left:10px ">
+            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+              <el-option v-for="item in group.options" :key="item.name" :label="item.label" :value="item.name">
+              </el-option>
+            </el-option-group>
           </el-select>
         </h1>
       </div>
 
       <div class="component_principal">
-        <div :is=selectComponentAbove />
-        <div :is=selectComponent />
-        <div :is=selectComponentDown />
+        <div :is="selectComponentAbove" />
+        <div :is="selectComponent" :setting="settingData"/>
+        <div :is="selectComponentDown" />
       </div>
 
     </div>
@@ -55,143 +72,61 @@
 </template>
 
 <script>
-import koContent1 from './components/contents/content1'
-import koChat from './components/chat/chat'
-import koOrder1 from './components/_order/order1'
-
-import cart1 from './components/carts/cart1.vue'
-
-import koContact1 from './components/contacts/contact1'
-
-import koFooter1 from './components/footers/footer1'
-import koFooter2 from './components/footers/footer2'
-
-import koGrid1 from './components/grids/grid1'
-
-import koHeader1 from './components/headers/header1'
-import koHeader2 from './components/headers/header2'
-import koHeader3 from './components/headers/header3'
-import koHeader4 from './components/headers/header4'
-
-import koNewsletter1 from './components/newsletters/newsletter1'
-
-import ProductList1 from './components/product_lists/product_list1'
-import ProductList2 from './components/product_lists/product_list2'
-
-import koProduct1 from './components/products/product1'
-
-import koSeparator1 from './components/separators/separator1'
-
-import koSlider1 from './components/sliders/slider1'
-import Slider11 from './components/sliders/slider1-1'
-import koSlider2 from './components/sliders/slider2'
-import koSlider3 from './components/sliders/slider3'
-
-// Settings components /////
-
-import koSlider2Settings from './settings/slider2'
+import { mapState } from 'vuex'
 
 export default {
-  name: 'app',
-  components: {
-    koChat,
-    koOrder1,
-    cart1,
-    koContact1,
-    koFooter1,
-    koFooter2,
-    koGrid1,
-    koHeader1,
-    koHeader2,
-    koHeader3,
-    koHeader4,
-    koNewsletter1,
-    ProductList1,
-    ProductList2,
-    koProduct1,
-    koSeparator1,
-    koSlider1,
-    koSlider3,
-    Slider11,
-    koSlider2,
-    koContent1,
-    //Settings////////////
-    koSlider2Settings
-  },
+  name: "app",
   created() {
-    this.$store.commit('GET_DATA')
+    this.$store.dispatch('GET_COMPONENTS')
+    this.$store.commit("GET_DATA");
   },
   data() {
     return {
-      selectComponent: 'koSlider2',
-      showSettingsButton: true,
-      selectComponentAbove: '',
-      selectComponentDown: '',
-      components: [
-        'koChat',
-        'koOrder1',
-        'cart1',
-        'koContact1',
-        'koFooter1',
-        'koFooter2',
-        'koGrid1',
-        'koHeader1',
-        'koHeader2',
-        'koHeader3',
-        'koHeader4',
-        'koNewsletter1',
-        'ProductList1',
-        'ProductList2',
-        'koProduct1',
-        'koSeparator1',
-        'koSlider1',
-        'Slider11',
-        'koSlider2',
-        'koContent1'
-      ],
-      options3: [
-        {
-          label: 'Popular cities',
-          options: [
-            {
-              value: 'Shanghai',
-              label: 'Shanghai'
-            },
-            {
-              value: 'Beijing',
-              label: 'Beijing'
-            }
-          ]
-        },
-        {
-          label: 'City name',
-          options: [
-            {
-              value: 'Chengdu',
-              label: 'Chengdu'
-            },
-            {
-              value: 'Shenzhen',
-              label: 'Shenzhen'
-            },
-            {
-              value: 'Guangzhou',
-              label: 'Guangzhou'
-            },
-            {
-              value: 'Dalian',
-              label: 'Dalian'
-            }
-          ]
-        }
+      id_store: 1,
+      selectComponent: "koHeader1",
+      selectSetting: null,
+      showSettingsButton: false,
+      selectComponentAbove: "",
+      selectComponentDown: "",
+      stores: [
+        { value: 1, label: "Topalxe" },
+        { value: 290, label: "Prontodental" }
       ]
+    }
+  },
+  computed: {
+    ...mapState(['components', 'settingData']),
+    idTienda: {
+      get() {
+        return this.$store.state.idTienda;
+      },
+      set(newValue) {
+        this.$store.dispatch("UPDATE_ID_TIENDA", newValue);
+      }
+    }
+  },
+  watch: {
+    selectComponent (value) {
+      for (let component of Object.values(this.components)) {
+        if (component.options.length) {
+          for (let option of component.options) {
+            if (value === option.name) {
+              const setting = option.setting || null
+              this.$store.commit('SET_SETTING', setting)
+            }
+          }
+        }
+      }
     }
   },
   methods: {
     hiddenSettings() {
       this.showSettingsButton == true
         ? (this.showSettingsButton = false)
-        : (this.showSettingsButton = true)
+        : (this.showSettingsButton = true);
+    },
+    updateIdStore() {
+      this.idTienda = this.id_store;
     }
   }
 }
@@ -214,7 +149,6 @@ export default {
   --button_text_color: #fff;
   --background_color: #fff;
 }
-
 #app {
   background-color: var(--background_color);
 }
@@ -232,7 +166,7 @@ export default {
   display: grid;
   width: 450px;
   height: 100%;
-  padding: 0 20px;
+  padding-right: 20px;
   background-color: #e8ecef;
 }
 .component_setting {
@@ -295,5 +229,10 @@ export default {
 }
 .hidden {
   display: none;
+}
+@media (max-width: 700px) {
+  .hidden_menu_components {
+    display: none;
+  }
 }
 </style>

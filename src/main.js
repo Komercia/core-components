@@ -8,18 +8,27 @@ import store from './store'
 import axios from 'axios'
 import locale from 'element-ui/lib/locale/lang/es'
 import '../static/index.css'
-import elementUI from 'element-ui'
-import VueMq from 'vue-mq'
-import firebase from 'firebase'
-import VuePaginate from 'vue-paginate'
-import ImageCloudinary from 'image-cloudinary'
-import VueFuse from 'vue-fuse'
+import elementUI from 'element-ui';
+import VuePaginate from 'vue-paginate';
+import ImageCloudinary from 'image-cloudinary';
+import VueFuse from 'vue-fuse';
+import Components from './index'
+import Settings from './settings'
+import IconBase from './Icons/IconBase'
+import firebase from './utils/connect_firebase'
+import KomerciaCropper from 'komercia-cropper'
 
+Vue.prototype.$firebase = firebase;
+
+Vue.component('icon-base', IconBase)
+Vue.use(Components)
+Vue.use(Settings)
 Vue.use(VueFuse)
 Vue.use(VuePaginate)
 Vue.use(Vuex)
 Vue.use(ImageCloudinary)
-Vue.config.productionTip = false
+Vue.use(KomerciaCropper)
+Vue.config.productionTip = false;
 
 Vue.use(elementUI, { locale })
 Vue.use(VueMq, {
@@ -34,19 +43,8 @@ Vue.use(VueMq, {
 Vue.prototype.$urlHttp = 'https://api.komercia.co'
 store.state.urlHttp = Vue.prototype.$urlHttp
 
-const config = {
-  apiKey: 'AIzaSyCCQZKHS6vcparUI-0pLJDWJmU8YKzVszY',
-  authDomain: 'komercia-2c50b.firebaseapp.com',
-  databaseURL: 'https://komercia-2c50b.firebaseio.com',
-  projectId: 'komercia-2c50b',
-  storageBucket: 'komercia-2c50b.appspot.com',
-  messagingSenderId: '1098181302565'
-}
-firebase.initializeApp(config)
-window.firebase = firebase
-
-const getCookie = cname => {
-  const name = `${cname}=`
+const getCookie = (cname) => {
+  const name = `${cname  }=`
   const decodedCookie = decodeURIComponent(document.cookie)
   const ca = decodedCookie.split(';')
   for (let i = 0; i < ca.length; i++) {
