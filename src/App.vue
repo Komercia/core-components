@@ -1,4 +1,5 @@
   <template>
+
   <div id="app" class="container">
     <router-view />
   </div>
@@ -12,17 +13,17 @@ export default {
     this.$store.dispatch('GET_COMPONENTS')
     this.$store.commit("GET_DATA");
   }
-};
+}
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
-@import "./assets/css/main.css";
-@import "./styles/material.css";
-@import "./styles/flat.css";
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import './assets/css/main.css';
+@import './styles/material.css';
+@import './styles/flat.css';
 
 * {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 :root {

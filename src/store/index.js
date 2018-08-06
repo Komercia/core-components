@@ -7,56 +7,57 @@ const firestore = firebase.firestore();
 const settings = {/* your settings... */ timestampsInSnapshots: true};
 firestore.settings(settings);
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
-let cart = [];
-if (localStorage.getItem("ShoppingCart")) {
-  cart = JSON.parse(localStorage.getItem("ShoppingCart"));
+let cart = []
+if (localStorage.getItem('ShoppingCart')) {
+  cart = JSON.parse(localStorage.getItem('ShoppingCart'))
 }
 
 export default new Vuex.Store({
   state: {
-    urlHttp: "",
+    urlHttp: '',
     openOrder: false,
     envios: {
       valores: {
-        envio_metodo: "gratis"
+        envio_metodo: 'gratis'
       }
     },
     idTienda: 290,
     tienda: {},
     userData: {
       id: 0,
-      email: "pumar-10@hotmail.com",
-      foto: "user.jpeg",
-      nombre: "Alejandro Fierro"
+
+      email: '',
+      foto: '',
+      nombre: ''
     },
     banners: [],
     productos: [],
     productsData: [
       {
         placeholder: true,
-        foto: "placeholder1.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder1.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999'
       },
       {
         placeholder: true,
-        foto: "placeholder2.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder2.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999'
       },
       {
         placeholder: true,
-        foto: "placeholder3.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder3.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999'
       },
       {
         placeholder: true,
-        foto: "placeholder4.svg",
-        nombre: "Nombre del producto",
-        precio: "14999"
+        foto: 'placeholder4.svg',
+        nombre: 'Nombre del producto',
+        precio: '14999'
       }
     ],
     menuComponent: false,
@@ -71,8 +72,8 @@ export default new Vuex.Store({
       epayco: false
     },
     politicas: {
-      garantia: "",
-      datos: ""
+      garantia: '',
+      datos: ''
     },
     totalCart: 0,
     components: null,
@@ -126,21 +127,21 @@ export default new Vuex.Store({
         });
     },
     UPDATE_CONTENTCART(state) {
-      state.totalCart = 0;
-      localStorage.setItem("ShoppingCart", JSON.stringify(state.productsCart));
+      state.totalCart = 0
+      localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart))
       for (const product of state.productsCart) {
-        state.totalCart += product.precio * product.cantidad;
+        state.totalCart += product.precio * product.cantidad
       }
     },
     REMOVE_PRODUCTSPURCHASED(state, id) {
       if (document.getElementById(id)) {
-        document.getElementById(id).classList.remove("bought");
+        document.getElementById(id).classList.remove('bought')
       }
     },
     CALCULATE_TOTALCART(state) {
-      state.totalCart = 0;
+      state.totalCart = 0
       for (const product of state.productsCart) {
-        state.totalCart += product.precio * product.cantidad;
+        state.totalCart += product.precio * product.cantidad
       }
     },
     SET_SETTING (state, setting) {
@@ -164,4 +165,4 @@ export default new Vuex.Store({
       })
     }
   }
-});
+})

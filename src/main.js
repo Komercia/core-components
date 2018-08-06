@@ -1,11 +1,11 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue';
-import Vuex from 'vuex';
-import App from './App';
-import router from './router';
-import store from './store';
-import axios from 'axios';
+import Vue from 'vue'
+import Vuex from 'vuex'
+import App from './App'
+import router from './router'
+import store from './store'
+import axios from 'axios'
 import locale from 'element-ui/lib/locale/lang/es'
 import '../static/index.css'
 import elementUI from 'element-ui';
@@ -30,10 +30,18 @@ Vue.use(ImageCloudinary)
 Vue.use(KomerciaCropper)
 Vue.config.productionTip = false;
 
-Vue.use(elementUI, { locale });
+Vue.use(elementUI, { locale })
+Vue.use(VueMq, {
+  breakpoints: {
+    // default breakpoints - customize this
+    sm: 450,
+    md: 1250,
+    lg: Infinity
+  }
+})
 
-Vue.prototype.$urlHttp = 'https://api.komercia.co';
-store.state.urlHttp = Vue.prototype.$urlHttp;
+Vue.prototype.$urlHttp = 'https://api.komercia.co'
+store.state.urlHttp = Vue.prototype.$urlHttp
 
 const getCookie = (cname) => {
   const name = `${cname  }=`
@@ -45,24 +53,24 @@ const getCookie = (cname) => {
       c = c.substring(1)
     }
     if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
+      return c.substring(name.length, c.length)
     }
   }
-  return '';
-};
+  return '16agNLhBNkZUbmbco6pnY0RvKh3YvGWbcw11YrVM'
+}
 
-const authData = getCookie('authData');
+const authData = getCookie('authData')
 if (authData) {
   const config = {
     headers: {
       'content-type': 'application/json',
       Authorization: `Bearer ${authData}`,
-      'Access-Control-Allow-Origin': '*',
-    },
-  };
-  axios.get('https://api.komercia.co/api/user/data', config).then((response) => {
-    store.state.userData = response.data.usuario;
-  });
+      'Access-Control-Allow-Origin': '*'
+    }
+  }
+  axios.get('https://api.komercia.co/api/user/data', config).then(response => {
+    store.state.userData = response.data.usuario
+  })
 }
 
 /* eslint-disable no-new */
@@ -71,5 +79,5 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App },
-});
+  components: { App }
+})
