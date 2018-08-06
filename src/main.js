@@ -22,7 +22,6 @@ Vue.use(ImageCloudinary)
 Vue.config.productionTip = false
 
 Vue.use(elementUI, { locale })
-
 Vue.use(VueMq, {
   breakpoints: {
     // default breakpoints - customize this

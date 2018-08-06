@@ -1,41 +1,5 @@
   <template>
-<<<<<<< HEAD
-  <div id="app">
-    <koChat />
-    <!-- <cart1 /> -->
-    <!-- <koContact1 /> -->
-    <!-- <koFooter1 />
-    <koFooter2 /> -->
-    <!-- <koGrid1 /> -->
-    <koHeader4 />
-    <!-- <koHeader2 /> -->
-    <!-- <koHeader3 /> -->
 
-    <koSlider3 />
-    <ko-grid-categorias />
-    <!-- <koSlider1 /> -->
-    <!-- <koSlider2/> -->
-    <!-- <Slider11 /> -->
-    <koNewsletter1 />
-    <!-- <ProductList1 /> -->
-
-    <!-- <koChat /> -->
-    <!-- <cart1 /> -->
-    <!-- <koContact1 /> -->
-    <!-- <koFooter1 /> -->
-    <!-- <koFooter2 /> -->
-    <!-- <koGrid1 /> -->
-    <!-- <koHeader1 /> -->
-    <!-- <koHeader2 /> -->
-    <!-- <koHeader3 /> -->
-    <!-- <koNewsletter1 /> -->
-    <!-- <ProductList1 /> -->
-    <ProductList2/>
-    <!-- <koProduct1 /> -->
-    <!-- <koSeparator1 /> -->
-
-    <!-- <koContent2/> -->
-=======
   <div id="app" class="container">
     <div :class="{container_settings: true, hidden: showSettingsButton}">
       <div class="title">
@@ -87,14 +51,11 @@
       </div>
 
     </div>
-
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-import koContent2 from './components/contents/content1'
+import koContent1 from './components/contents/content1'
 import koChat from './components/chat/chat'
 import koOrder1 from './components/_order/order1'
 
@@ -106,7 +67,6 @@ import koFooter1 from './components/footers/footer1'
 import koFooter2 from './components/footers/footer2'
 
 import koGrid1 from './components/grids/grid1'
-import koGridCategorias from './components/grids/grid-categorias-home'
 
 import koHeader1 from './components/headers/header1'
 import koHeader2 from './components/headers/header2'
@@ -123,47 +83,16 @@ import koProduct1 from './components/products/product1'
 import koSeparator1 from './components/separators/separator1'
 
 import koSlider1 from './components/sliders/slider1'
-import koSlider3 from './components/sliders/slider3'
 import Slider11 from './components/sliders/slider1-1'
 import koSlider2 from './components/sliders/slider2'
-=======
-import koContent1 from "./components/contents/content1";
-import koChat from "./components/chat/chat";
-import koOrder1 from "./components/_order/order1";
-
-import cart1 from "./components/carts/cart1.vue";
-
-import koContact1 from "./components/contacts/contact1";
-
-import koFooter1 from "./components/footers/footer1";
-import koFooter2 from "./components/footers/footer2";
-
-import koGrid1 from "./components/grids/grid1";
-
-import koHeader1 from "./components/headers/header1";
-import koHeader2 from "./components/headers/header2";
-import koHeader3 from "./components/headers/header3";
-
-import koNewsletter1 from "./components/newsletters/newsletter1";
-
-import ProductList1 from "./components/product_lists/product_list1";
-import ProductList2 from "./components/product_lists/product_list2";
-
-import koProduct1 from "./components/products/product1";
-
-import koSeparator1 from "./components/separators/separator1";
-
-import koSlider1 from "./components/sliders/slider1";
-import Slider11 from "./components/sliders/slider1-1";
-import koSlider2 from "./components/sliders/slider2";
+import koSlider3 from './components/sliders/slider3'
 
 // Settings components /////
 
-import koSlider2Settings from "./settings/slider2";
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
+import koSlider2Settings from './settings/slider2'
 
 export default {
-  name: "app",
+  name: 'app',
   components: {
     koChat,
     koOrder1,
@@ -185,123 +114,97 @@ export default {
     koSlider3,
     Slider11,
     koSlider2,
-<<<<<<< HEAD
-    koContent2,
-    koGridCategorias
-=======
     koContent1,
     //Settings////////////
     koSlider2Settings
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
   },
   created() {
-    this.$store.commit("GET_DATA");
+    this.$store.commit('GET_DATA')
   },
   data() {
     return {
-<<<<<<< HEAD
-      settingBanner: {
-        banners: [
-          {
-            position: 'center'
-          },
-          {
-            position: 'center'
-          }
-        ]
-      }
-=======
-      selectComponent: "koSlider2",
+      selectComponent: 'koSlider2',
       showSettingsButton: true,
-      selectComponentAbove: "",
-      selectComponentDown: "",
+      selectComponentAbove: '',
+      selectComponentDown: '',
       components: [
-        "koChat",
-        "koOrder1",
-        "cart1",
-        "koContact1",
-        "koFooter1",
-        "koFooter2",
-        "koGrid1",
-        "koHeader1",
-        "koHeader2",
-        "koHeader3",
-        "koNewsletter1",
-        "ProductList1",
-        "ProductList2",
-        "koProduct1",
-        "koSeparator1",
-        "koSlider1",
-        "Slider11",
-        "koSlider2",
-        "koContent1"
+        'koChat',
+        'koOrder1',
+        'cart1',
+        'koContact1',
+        'koFooter1',
+        'koFooter2',
+        'koGrid1',
+        'koHeader1',
+        'koHeader2',
+        'koHeader3',
+        'koHeader4',
+        'koNewsletter1',
+        'ProductList1',
+        'ProductList2',
+        'koProduct1',
+        'koSeparator1',
+        'koSlider1',
+        'Slider11',
+        'koSlider2',
+        'koContent1'
       ],
       options3: [
         {
-          label: "Popular cities",
+          label: 'Popular cities',
           options: [
             {
-              value: "Shanghai",
-              label: "Shanghai"
+              value: 'Shanghai',
+              label: 'Shanghai'
             },
             {
-              value: "Beijing",
-              label: "Beijing"
+              value: 'Beijing',
+              label: 'Beijing'
             }
           ]
         },
         {
-          label: "City name",
+          label: 'City name',
           options: [
             {
-              value: "Chengdu",
-              label: "Chengdu"
+              value: 'Chengdu',
+              label: 'Chengdu'
             },
             {
-              value: "Shenzhen",
-              label: "Shenzhen"
+              value: 'Shenzhen',
+              label: 'Shenzhen'
             },
             {
-              value: "Guangzhou",
-              label: "Guangzhou"
+              value: 'Guangzhou',
+              label: 'Guangzhou'
             },
             {
-              value: "Dalian",
-              label: "Dalian"
+              value: 'Dalian',
+              label: 'Dalian'
             }
           ]
         }
       ]
-    };
+    }
   },
   methods: {
     hiddenSettings() {
       this.showSettingsButton == true
         ? (this.showSettingsButton = false)
-        : (this.showSettingsButton = true);
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
+        : (this.showSettingsButton = true)
     }
   }
 }
 </script>
 
 <style>
-<<<<<<< HEAD
-/* @import url('https://fonts.googleapis.com/css?family=Open+Sans'); */
-@import url('../static/animate.css');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import './assets/css/main.css';
+@import './styles/material.css';
+@import './styles/flat.css';
 
 * {
-  font-family: 'Poppins', sans-serif;
-=======
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
-@import "./assets/css/main.css";
-@import "./styles/material.css";
-@import "./styles/flat.css";
-
-* {
-  font-family: "Open Sans", sans-serif;
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
+  font-family: 'Open Sans', sans-serif;
 }
 
 :root {
@@ -311,23 +214,6 @@ export default {
   --button_text_color: #fff;
   --background_color: #fff;
 }
-<<<<<<< HEAD
-#app {
-  background-color: var(--background_color);
-}
-.main-header .el-input__inner {
-  border-radius: 0;
-  height: 35px;
-}
-.main-header .el-input__icon {
-  line-height: 0;
-}
-.el-popover {
-  border-radius: 0 !important;
-}
-.popper__arrow {
-  display: none !important;
-=======
 
 #app {
   background-color: var(--background_color);
@@ -409,6 +295,5 @@ export default {
 }
 .hidden {
   display: none;
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
 }
 </style>

@@ -88,14 +88,12 @@ export default {
   display: grid;
   grid-template: 6fr 2fr / repeat(3, 1fr);
   grid-template-areas:
-
     'header  header header'
     'left midlane right';
   font-weight: bold;
   max-width: 1366px;
   max-height: 80vh;
   /* word-break: break-all; */
-
 
   word-wrap: break-word;
   hyphens: auto;
@@ -206,17 +204,10 @@ export default {
     max-height: 750px;
     grid-template: 1fr 1fr 1fr 1fr / 4fr;
     grid-template-areas:
-<<<<<<< HEAD
       'header'
       'left'
       'midlane'
       'right';
-=======
-      "header"
-      "left"
-      "midlane"
-      "right";
->>>>>>> 71048005b796623f742ad1821bb14fdea5716666
     grid-gap: 10px;
   }
   .header {
