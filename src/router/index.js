@@ -1,10 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-const Products = () => import('@/Views/Products');
-const Home = () => import('@/Views/Home');
-const Product = () => import('@/Views/Product');
-const Order = () => import('@/Views/Order');
+const Testing = () => import('@/Views/Testing');
+const Stage = () => import('@/Views/Stage');
 
 Vue.use(Router);
 
@@ -19,23 +17,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home,
+      name: 'Stage',
+      component: Stage,
     },
     {
-      path: '/productos',
-      name: 'Products',
-      component: Products,
-    },
-    {
-      path: '/productos/:slug',
-      name: 'Product',
-      component: Product,
-    },
-    {
-      path: '/pedido',
-      name: 'Order',
-      component: Order,
+      path: '/testing',
+      name: 'Testing',
+      component: Testing,
     },
     {
       path: '*',
