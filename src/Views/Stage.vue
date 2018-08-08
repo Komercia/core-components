@@ -135,9 +135,10 @@ height: 100vh;
 background-color: #e8ecef;
 }
 .container_settings {
-display: grid;
 width: 450px;
 height: 100%;
+display: grid;
+align-content: flex-start;
 padding-right: 20px;
 background-color: #e8ecef;
 }
