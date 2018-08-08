@@ -1,5 +1,6 @@
 <template>
   <div class="main-header">
+    <ko-order1/>
     <div class="main-top-menu">
       <div class="icons-left">
 
@@ -35,14 +36,15 @@
           <em class="num-products">{{ productsCart }}</em>
         </i>
       </div>
-      <div class="icons-right">
+      <!-- *********************** Buscador **************************** -->
+      <!-- <div class="icons-right">
         <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
         <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>
         <transition name="custom-classes-transition" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
           <el-input v-if="showIcon" class="search-top" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
           </el-input>
         </transition>
-      </div>
+      </div> -->
     </div>
     <div class="line"></div>
     <div class="container">
@@ -57,8 +59,10 @@
         </ul>
       </nav>
       <div class="icons">
-        <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
-        <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>
+
+        <!-- *********************************Iconos del buscador ******************************** -->
+        <!-- <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
+        <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i> -->
 
         <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData">
           <div class="container-data-user">
@@ -90,10 +94,11 @@
         <i @click="openOrder" class="icon-shopping-basket">
           <em class="num-products">{{ productsCart }}</em>
         </i>
-        <transition name="custom-classes-transition" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
+        <!-- *****************************Input Buscador ********************************** -->
+        <!-- <transition name="custom-classes-transition" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
           <el-input v-if="showIcon" class="search" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
           </el-input>
-        </transition>
+        </transition> -->
       </div>
       <i @click="toggleMenu" class="icon-menu"></i>
     </div>
@@ -113,8 +118,10 @@
 </template>
 
 <script>
+import koOrder1 from '../_order/order1.vue'
 export default {
   name: 'koHeader4',
+  components: { koOrder1 },
   data() {
     return {
       showIcon: false,
