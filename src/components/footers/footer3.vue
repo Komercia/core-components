@@ -74,6 +74,10 @@
               <i slot="suffix" class="el-input__icon icon-paper-plane-2"></i>
             </el-input>
           </li>
+          <li>
+            <p>Copyright © 2018 by komercia. All Rights Reserved. </p>
+            <a class="link-komercia" href="http://komercia.co">Powered by Komercia</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -126,6 +130,7 @@ export default {
 </script>
 
 <style scoped>
+@import 'https://unpkg.com/komercia-fuentes@1.0.0/styles.css';
 footer {
   width: 100%;
   background-color: #111;
@@ -251,5 +256,10 @@ i {
 }
 .input-footer {
   margin-top: 20px;
+}
+.link-komercia {
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  line-height: 2;
 }
 </style>
