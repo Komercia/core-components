@@ -47,14 +47,14 @@
 
 <script>
 import axios from 'axios';
-import AngleLeft from '../Icons/AngleLeft.vue'
-import IconText from '../Icons/Text.vue'
-import AlignJustify from '../Icons/AlignJustify.vue'
-import IconLinks from '../Icons/Links.vue'
-import CloudUp from '../Icons/CloudUp.vue'
+import AngleLeft from '../../Icons/AngleLeft.vue'
+import IconText from '../../Icons/Text.vue'
+import AlignJustify from '../../Icons/AlignJustify.vue'
+import IconLinks from '../../Icons/Links.vue'
+import CloudUp from '../../Icons/CloudUp.vue'
 
 export default {
-  name: 'koContent1Setting',
+  name: 'koContentSetting1',
   components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp },
   data () {
    return {
