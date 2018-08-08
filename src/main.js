@@ -31,14 +31,6 @@ Vue.use(KomerciaCropper)
 Vue.config.productionTip = false;
 
 Vue.use(elementUI, { locale })
-Vue.use(VueMq, {
-  breakpoints: {
-    // default breakpoints - customize this
-    sm: 450,
-    md: 1250,
-    lg: Infinity
-  }
-})
 
 Vue.prototype.$urlHttp = 'https://api.komercia.co'
 store.state.urlHttp = Vue.prototype.$urlHttp
