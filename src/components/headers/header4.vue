@@ -4,7 +4,7 @@
     <div class="main-top-menu">
       <div class="icons-left">
 
-        <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData">
+        <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData.id">
           <div class="container-data-user">
             <div class="img-user" slot="reference">
               <img :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
@@ -64,7 +64,7 @@
         <!-- <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
         <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i> -->
 
-        <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData">
+        <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData.id">
           <div class="container-data-user">
             <div class="img-user" slot="reference">
               <img :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
