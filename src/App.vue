@@ -6,12 +6,11 @@
 </template>
 
 <script>
-
 export default {
-  name: "app",
+  name: 'app',
   created() {
     this.$store.dispatch('GET_COMPONENTS')
-    this.$store.commit("GET_DATA");
+    this.$store.commit('GET_DATA')
   }
 }
 </script>
