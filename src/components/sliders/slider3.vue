@@ -50,6 +50,7 @@ export default {
   max-width: 1800px;
   width: 100%;
   max-height: 700px;
+  height: 50vw;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -57,9 +58,10 @@ export default {
   grid-auto-flow: column;
   grid-gap: 10px;
   overflow: hidden;
+  background-color: var(--background_color);
 }
 .left {
-  /* height: 100%; */
+  height: 50vw;
   width: 100%;
   overflow: hidden;
 }

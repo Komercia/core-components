@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'gridCategorias',
+  name: 'koGrid2',
   data() {
     return {
       select: ''
@@ -68,7 +68,7 @@ export default {
   margin-top: 100px;
 }
 nav {
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
   margin: 0 auto;
 }
@@ -124,17 +124,19 @@ nav {
   /* height: 20%; */
 }
 .img-product {
-  /* flex: 1; */
+  flex: 1;
   width: 100%;
-  height: 80%;
+  max-height: 300px;
   cursor: pointer;
   border: 1px solid transparent;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
   /* background-color: #333; */
 }
 .img-product > img {
   width: 100%;
-  height: 100%;
+  max-height: 300px;
   object-fit: contain;
 }
 .name-product {
@@ -208,6 +210,12 @@ s {
     grid-gap: 10px;
     padding: 0 10px;
   }
+  .img-product {
+    max-height: 250px;
+  }
+  .img-product > img {
+    max-height: 250px;
+  }
 }
 @media (max-width: 450px) {
   .tab {
@@ -220,6 +228,12 @@ s {
   .price {
     font-size: 9px;
     /* margin-bottom: 0; */
+  }
+  .img-product {
+    max-height: 200px;
+  }
+  .img-product > img {
+    max-height: 200px;
   }
 }
 @media (max-width: 350px) {

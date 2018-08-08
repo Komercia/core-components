@@ -1,0 +1,255 @@
+<template>
+  <footer>
+    <div class="footer">
+      <div class="col col1">
+        <ul>
+          <li>
+            <p class="title">Contacto</p>
+          </li>
+          <li class="item-col1">
+            <p>
+              <span>Dirección:</span> {{info[0].direccion}}
+            </p>
+          </li>
+          <li class="item-col1">
+            <p>
+              <span>Teléfonos:</span> {{storeData.telefono}}
+            </p>
+          </li>
+          <li class="item-col1">
+            <p>
+              <span>Email:</span> {{storeData.email_tienda}}
+            </p>
+          </li>
+          <li class="item-col1">
+            <p>
+              <span>Horario:</span> {{info[0].horario}}
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="col col3">
+        <ul class="list-footer">
+          <li>
+            <p class="title">Tienda</p>
+          </li>
+          <li v-for='(item, index) in routes' :key='index' class="navigation-item">
+            <router-link :to="item.route" class="navigation-link">{{item.name}}</router-link>
+          </li>
+        </ul>
+      </div>
+      <div class="col col4">
+        <ul class="list-footer">
+          <li>
+            <p class="title">Siguenos</p>
+          </li>
+          <li v-show="storeData.red_facebook !== ''">
+            <i class="icon-facebook-official" />
+            <a :href="storeData.red_facebook" target="_blank">Facebook</a>
+          </li>
+          <li v-show="storeData.red_instagram !== ''">
+            <i class="icon-instagram" />
+            <a :href="storeData.red_instagram" target="_blank">Instagram</a>
+          </li>
+          <li v-show="storeData.red_twitter !== ''">
+            <i class="icon-twitter" />
+            <a :href="storeData.red_twitter" target="_blank">Twitter</a>
+          </li>
+          <li v-show="storeData.red_youtube !== ''">
+            <i class="icon-youtube" />
+            <a :href="storeData.red_youtube" target="_blank">Youtube</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col col5">
+        <ul class="list-footer">
+          <li>
+            <p class="title">Suscríbete</p>
+          </li>
+          <li>
+            <p>Suscríbete para recibir información sobre promociones y nuevos productos</p>
+          </li>
+          <li>
+            <el-input class="input-footer" placeholder="Escribe tu email" v-model="input22">
+              <i slot="suffix" class="el-input__icon icon-paper-plane-2"></i>
+            </el-input>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="footer-footer">
+      <p>&copy; copyright 2018 -
+        <span>Hecho con
+          <i class="heart"></i> en Colombia</span>
+      </p>
+    </div> -->
+  </footer>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      routes: [
+        {
+          name: 'Inicio',
+          route: '/'
+        },
+        {
+          name: 'Productos',
+          route: '/productos'
+        },
+        {
+          name: 'Carrito',
+          route: '/pedido'
+        },
+        {
+          name: 'Nosotros',
+          route: '/pedido'
+        },
+        {
+          name: 'Contacto',
+          route: '/contacto'
+        }
+      ]
+    }
+  },
+  computed: {
+    info() {
+      return this.$store.state.geolocalizacion
+    },
+    storeData() {
+      return this.$store.state.tienda
+    }
+  }
+}
+</script>
+
+<style scoped>
+footer {
+  width: 100%;
+  background-color: #111;
+  height: auto;
+  margin-top: 60px;
+}
+.footer {
+  display: flex;
+  max-width: 1600px;
+  height: auto;
+  padding: 40px 0;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  background-color: transparent;
+}
+.logo {
+  width: 80px;
+  padding-bottom: 20px;
+  position: absolute;
+  top: -33px;
+}
+.col {
+  flex: 1;
+  box-sizing: border-box;
+  padding: 20px;
+}
+.col3,
+.col4 {
+  flex: 0.6;
+}
+.col1,
+.col5 {
+  flex: 1.2;
+}
+.col5 {
+  padding-left: 50px;
+}
+.col5 p {
+  line-height: 1.5;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+li {
+  list-style: none;
+  padding-top: 14px;
+  color: rgba(255, 255, 255, 0.459);
+}
+li a {
+  text-decoration: none;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.459);
+  cursor: pointer;
+}
+li a:hover {
+  color: #1e90ff;
+}
+p > span {
+  font-weight: 600;
+}
+i {
+  vertical-align: middle;
+}
+.data:last-child {
+  padding-bottom: 50px;
+}
+.item-col1 p {
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  line-height: 1.5;
+}
+.container-header {
+  max-width: 100%;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+}
+.icon-left {
+  width: 18px;
+  vertical-align: middle;
+  margin-right: 5px;
+  fill: rgb(49, 49, 49);
+}
+
+.footer-footer {
+  color: rgba(0, 0, 0, 0.404);
+  height: 80px;
+  text-align: center;
+  font-size: 14px;
+  background-color: gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.footer-footer > p > span {
+  color: rgba(0, 0, 0, 0.404);
+  font-weight: 400;
+}
+.politicas {
+  display: none;
+}
+.informacion {
+  display: none;
+}
+.heart {
+  fill: #f14b5a;
+  width: 12px;
+}
+.title {
+  font-weight: 600;
+  margin-bottom: 0;
+  background-color: transparent;
+  color: #fff;
+  text-align: left;
+  height: 40px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.icon-paper-plane-2 {
+  padding-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.input-footer {
+  margin-top: 20px;
+}
+</style>
