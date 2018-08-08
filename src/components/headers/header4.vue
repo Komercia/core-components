@@ -194,6 +194,8 @@ export default {
 </script>
 
 <style scoped>
+@import '../../../static/camilo.css';
+
 .container {
   max-width: 1600px;
   width: 100%;
