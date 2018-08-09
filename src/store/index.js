@@ -1,11 +1,11 @@
-import Vue from "vue"
-import Vuex from "vuex"
-import axios from "axios"
+import Vue from 'vue'
+import Vuex from 'vuex'
+import axios from 'axios'
 import firebase from '../utils/connect_firebase'
 
-const firestore = firebase.firestore();
-const settings = {/* your settings... */ timestampsInSnapshots: true};
-firestore.settings(settings);
+const firestore = firebase.firestore()
+const settings = { /* your settings... */ timestampsInSnapshots: true }
+firestore.settings(settings)
 
 Vue.use(Vuex)
 
@@ -23,7 +23,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 290,
+    idTienda: 364,
     tienda: {},
     userData: {
       id: 0,
@@ -84,47 +84,47 @@ export default new Vuex.Store({
       axios
         .get(`https://templates.komercia.co/api/tienda/${state.idTienda}`)
         .then(response => {
-          state.banners = response.data.data.banners;
+          state.banners = response.data.data.banners
           if (response.data.data.productos.length) {
             state.productos = response.data.data.productos.sort(
               (a, b) => a.nombre > b.nombre
-            );
+            )
             state.productsData = response.data.data.productos.sort((a, b) => {
-              if (a.nombre < b.nombre) return -1;
-              if (a.nombre > b.nombre) return 1;
-              return 0;
-            });
+              if (a.nombre < b.nombre) return -1
+              if (a.nombre > b.nombre) return 1
+              return 0
+            })
             state.productsData.map(product => {
               if (product.variantes.length) {
                 product.combinaciones = JSON.parse(
                   product.variantes[0].combinaciones[0].combinaciones
-                );
+                )
                 if (product.combinaciones.length) {
                   const arrPrices = product.combinaciones.map(
                     combinacion => combinacion.precio
-                  );
-                  product.precio = Math.min(...arrPrices);
+                  )
+                  product.precio = Math.min(...arrPrices)
                 }
-                product.variantes = product.variantes[0].variantes;
+                product.variantes = product.variantes[0].variantes
               }
-            });
+            })
           }
-          state.categorias = response.data.data.categorias;
-          state.subcategorias = response.data.data.subcategorias;
-          state.geolocalizacion = response.data.data.geolocalizacion;
+          state.categorias = response.data.data.categorias
+          state.subcategorias = response.data.data.subcategorias
+          state.geolocalizacion = response.data.data.geolocalizacion
           state.mediospago = response.data.data.medios_pago || {
             epayco: false
-          };
+          }
           state.politicas = response.data.data.politicas || {
-            garantia: "",
-            datos: ""
-          };
-          state.tienda = response.data.data.tienda;
-          state.envios = response.data.data.medios_envio;
+            garantia: '',
+            datos: ''
+          }
+          state.tienda = response.data.data.tienda
+          state.envios = response.data.data.medios_envio
           state.envios.valores = JSON.parse(
             response.data.data.medios_envio.valores
-          );
-        });
+          )
+        })
     },
     UPDATE_CONTENTCART(state) {
       state.totalCart = 0
@@ -144,25 +144,28 @@ export default new Vuex.Store({
         state.totalCart += product.precio * product.cantidad
       }
     },
-    SET_SETTING (state, setting) {
+    SET_SETTING(state, setting) {
       state.settingData = setting
     }
   },
   actions: {
-    UPDATE_ID_TIENDA({state, commit}, newValue) {
+    UPDATE_ID_TIENDA({ state, commit }, newValue) {
       state.idTienda = newValue
       commit('GET_DATA')
     },
-    GET_COMPONENTS({state}) {
-      firestore.collection("components_testing").get().then((querySnapshot) => {
-        const components = {}
-        querySnapshot.forEach((doc) => {
-          components[doc.id] = { label: '', options: [] }
-          components[doc.id].label = doc.id
-          components[doc.id].options = Object.values(doc.data())
+    GET_COMPONENTS({ state }) {
+      firestore
+        .collection('components_testing')
+        .get()
+        .then(querySnapshot => {
+          const components = {}
+          querySnapshot.forEach(doc => {
+            components[doc.id] = { label: '', options: [] }
+            components[doc.id].label = doc.id
+            components[doc.id].options = Object.values(doc.data())
+          })
+          state.components = components
         })
-        state.components = components
-      })
     }
   }
 })
