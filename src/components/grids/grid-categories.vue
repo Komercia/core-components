@@ -2,8 +2,8 @@
   <div class="grid-categories">
     <nav>
       <ul class="list-categories">
-        <li class="tab" v-for="(item, index) in categorias.slice(0, 4)" :key="index" @click="selected(item.nombre_categoria_producto)" :class="{tab: true, selected: select == item.nombre_categoria_producto}">
-          {{ item.nombre_categoria_producto }}
+        <li class="tab" v-for="(item, index) in setting.data" :key="index" @click="selected(item)" :class="{tab: true, selected: select == item}">
+          {{ item }}
         </li>
       </ul>
     </nav>
@@ -19,24 +19,26 @@ import koCard2 from '../_productCard/product-card2'
 export default {
   name: 'koGrid2',
   components: { koCard2 },
+  props: {
+    setting: {
+      type: Object,
+      default: function() {
+        return {
+          data: []
+        }
+      }
+    }
+  },
   data() {
     return {
       select: ''
     }
   },
   computed: {
-    categorias() {
-      return this.$store.state.categorias
-    },
     productsData() {
       return this.$store.state.productsData.filter(
         product => product.categoria == this.select
       )
-    }
-  },
-  watch: {
-    categorias(value) {
-      this.select = value[0].nombre_categoria_producto
     }
   },
   methods: {
@@ -69,7 +71,7 @@ nav {
 .grid-products {
   max-width: 1600px;
   width: 100%;
-  margin: 0 auto;
+  margin: 30px auto;
   display: grid;
   grid-template-columns: repeat(5, minmax(250px, 1fr));
   /* grid-template-rows: 20vw; */
@@ -77,6 +79,7 @@ nav {
   grid-auto-flow: column;
   padding: 0 20px;
   box-sizing: border-box;
+  justify-content: center;
 }
 .card {
   background-color: #fff;
