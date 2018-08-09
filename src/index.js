@@ -11,8 +11,8 @@ import Video1 from './components/videos/video1'
 import Slider1 from './components/sliders/slider1'
 import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
-import Grid from './components/grids/grid1'
-import Grid2 from './components/grids/grid-categories'
+import Grid1 from './components/grids/grid1'
+import Grid2 from './components/grids/grid2'
 import ProductList1 from './components/product_lists/product_list1'
 import ProductList2 from './components/product_lists/product_list2'
 import Newsletter from './components/newsletters/newsletter1'
@@ -36,7 +36,7 @@ const components = [
   Slider1,
   Slider11,
   Separator,
-  Grid,
+  Grid1,
   Grid2,
   ProductList1,
   Newsletter,
