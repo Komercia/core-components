@@ -14,11 +14,4 @@ const components = [
   GridCategories2
 ]
 
-const modules = {}
-modules.install = Vue => {
-  for (let i = 0, size = components.length; i < size; i += 1) {
-    Vue.component(components[i].name, components[i])
-  }
-}
-
-export default modules
+export default components
