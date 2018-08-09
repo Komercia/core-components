@@ -76,11 +76,13 @@ data() {
     selectComponentAbove: "",
     selectComponentDown: "",
     stores: [
-      { value: 1, label: "Topalxe" },
-      { value: 290, label: "Prontodental" },
-      { value: 364, label: "Ace Delivery's" },
-      { value: 490, label: "Demo 7" },
-      { value: 404, label: "XXX" }
+      { value: 1, label: "Topalxe - 1" },
+      { value: 290, label: "Prontodental - 290" },
+      { value: 364, label: "Ace Delivery's - 364" },
+      { value: 490, label: "Demo 7 - 490" },
+      { value: 576, label: "Helium - 576" },
+      { value: 247, label: "TecnoAqua SAS - 247" },
+      { value: 404, label: "XXX - 404" }
     ]
   };
 },
