@@ -7,19 +7,23 @@ import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Contact1 from './components/contacts/contact1'
 import Content1 from './components/contents/content1'
+import Video1 from './components/videos/video1'
 import Slider1 from './components/sliders/slider1'
 import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
-import Grid from './components/grids/grid1'
-import Grid2 from './components/grids/grid-categories.vue'
+import Grid1 from './components/grids/grid1'
+import Grid2 from './components/grids/grid2'
 import ProductList1 from './components/product_lists/product_list1'
 import ProductList2 from './components/product_lists/product_list2'
 import Newsletter from './components/newsletters/newsletter1'
 import Footer1 from './components/footers/footer1'
 import Footer2 from './components/footers/footer2'
+import Footer3 from './components/footers/footer3'
 import Order1 from './components/_order/order1'
+import setting from './settings'
 
 const components = [
+  ...setting,
   Chat,
   Header1,
   Header2,
@@ -32,14 +36,16 @@ const components = [
   Slider1,
   Slider11,
   Separator,
-  Grid,
+  Grid1,
   Grid2,
   ProductList1,
   Newsletter,
   Footer1,
   Footer2,
+  Footer3,
   Order1,
-  ProductList2
+  ProductList2,
+  Video1
 ]
 
 const modules = {}
@@ -48,5 +54,4 @@ modules.install = Vue => {
     Vue.component(components[i].name, components[i])
   }
 }
-
 export default modules

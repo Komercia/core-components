@@ -1,22 +1,17 @@
-import SliderSetting1 from './slider1'
-import SliderSetting1_1 from './slider1-1'
-import SeparatorSetting1 from './separator1'
-import ContentSetting1 from './content1'
-import GridCategories2 from './grid-categories.vue'
+import SliderSetting1 from './Sliders/slider1'
+import SliderSetting11 from './Sliders/slider1-1'
+import SeparatorSetting1 from './Separators/separator1'
+import ContentSetting1 from './Contents/content1'
+import VideoSetting1 from './Videos/video1'
+import GridSetting2 from './Grids/grid2'
 
 const components = [
   SliderSetting1,
-  SliderSetting1_1,
+  SliderSetting11,
   SeparatorSetting1,
   ContentSetting1,
-  GridCategories2
+  VideoSetting1,
+  GridSetting2
 ]
 
-const modules = {}
-modules.install = Vue => {
-  for (let i = 0, size = components.length; i < size; i += 1) {
-    Vue.component(components[i].name, components[i])
-  }
-}
-
-export default modules
+export default components

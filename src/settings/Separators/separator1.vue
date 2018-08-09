@@ -24,23 +24,17 @@
 </template>
 
 <script>
-import axios from "axios";
-import AngleLeft from "../Icons/AngleLeft.vue";
-import IconText from "../Icons/Text.vue";
-import AlignJustify from "../Icons/AlignJustify.vue";
-import IconLinks from "../Icons/Links.vue";
+import AngleLeft from "../../Icons/AngleLeft.vue";
+import IconText from "../../Icons/Text.vue";
+import AlignJustify from "../../Icons/AlignJustify.vue";
+import IconLinks from "../../Icons/Links.vue";
 
 export default {
-  name: "koSeparator1Setting",
+  name: "koSeparatorSetting1",
   components: { AngleLeft, IconText, AlignJustify, IconLinks },
   computed: {
     settingData() {
       return this.$store.state.settingData;
-    }
-  },
-  methods: {
-    closeSetting() {
-      this.$store.state.settingData = null;
     }
   }
 };

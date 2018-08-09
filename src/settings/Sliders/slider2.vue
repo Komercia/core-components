@@ -96,7 +96,7 @@
 
 <script>
 export default {
-  name: "koSlider2Setting"
+  name: "koSliderSetting2"
 };
 </script>
 

@@ -6,7 +6,7 @@
           <li>
             <p class="title">Contacto</p>
           </li>
-          <li class="item-col1">
+          <li class="item-col1" v-if="info[0]">
             <p>
               <span>Dirección:</span> {{info[0].direccion}}
             </p>
@@ -21,7 +21,7 @@
               <span>Email:</span> {{storeData.email_tienda}}
             </p>
           </li>
-          <li class="item-col1">
+          <li class="item-col1" v-if="info[0]">
             <p>
               <span>Horario:</span> {{info[0].horario}}
             </p>
@@ -70,9 +70,13 @@
             <p>Suscríbete para recibir información sobre promociones y nuevos productos</p>
           </li>
           <li>
-            <el-input class="input-footer" placeholder="Escribe tu email" v-model="input22">
-              <i slot="suffix" class="el-input__icon icon-paper-plane-2"></i>
-            </el-input>
+            <div class="ko-input">
+              <input type="email" placeholder="Escribe tu email" v-model="email" @keyup.enter="toSubscribe">
+              <i class="icon-paper-plane-2" @click="toSubscribe"></i>
+              <transition name="slide-fade">
+                <span class="response" v-show="toSubscribeResponse">Ya estas suscrito!</span>
+              </transition>
+            </div>
           </li>
           <li>
             <p>Copyright © 2018 by komercia. All Rights Reserved. </p>
@@ -91,7 +95,10 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+  name: 'koFooter3',
   data() {
     return {
       routes: [
@@ -109,13 +116,15 @@ export default {
         },
         {
           name: 'Nosotros',
-          route: '/pedido'
+          route: '/nosotros'
         },
         {
           name: 'Contacto',
           route: '/contacto'
         }
-      ]
+      ],
+      email: '',
+      toSubscribeResponse: false
     }
   },
   computed: {
@@ -124,6 +133,19 @@ export default {
     },
     storeData() {
       return this.$store.state.tienda
+    }
+  },
+  methods: {
+    toSubscribe() {
+      this.toSubscribeResponse = false
+      const params = {
+        correo: this.email,
+        tienda: this.storeData.id_tienda,
+      }
+      axios.post('https://templates.komercia.co/api/suscriptores', params).then(() => {
+        this.email = ''
+        this.toSubscribeResponse = true
+      })
     }
   }
 }
@@ -175,6 +197,7 @@ footer {
 }
 li {
   list-style: none;
+  text-align: left;
   padding-top: 14px;
   color: rgba(255, 255, 255, 0.459);
 }
@@ -185,7 +208,7 @@ li a {
   cursor: pointer;
 }
 li a:hover {
-  color: #1e90ff;
+  color: var(--main_color);
 }
 p > span {
   font-weight: 600;
@@ -256,6 +279,56 @@ i {
 }
 .input-footer {
   margin-top: 20px;
+}
+.ko-input{
+  position: relative;
+  display: grid;
+  align-content: start;
+  grid-row-gap: 5px;
+}
+.ko-input input{
+  width: 100%;
+  padding: 10px 35px 10px 15px;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.459);
+  font-size: 14px;
+  border-radius: 2px;
+  outline-color: #FFF;
+  color: #FFF;
+}
+.ko-input i.icon-paper-plane-2{
+  position: absolute;
+  top: 12.5px;
+  right: 5px;
+  z-index: 2;
+}
+.ko-input .response{
+  justify-self: start;
+  background-color: rgba(255,255,255,.1);
+  padding: 0 10px;
+  height: 32px;
+  line-height: 30px;
+  font-size: 12px;
+  color: #FFF;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,.2);
+  white-space: nowrap;
+  height: 28px;
+  line-height: 26px;
+}
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .1s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-10px);
+  opacity: 0;
 }
 .link-komercia {
   font-size: 13px;

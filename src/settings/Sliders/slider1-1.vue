@@ -1,10 +1,16 @@
 <template>
   <div class="form_list">
-    <section class="settingBanner" v-for="(banner, index) in bannersData">
-      <img
-        :src="getBanner(banner.ruta_banner)"
-        :alt="banner.titulo"
-        class="banner_photo">
+    <section class="settingBanner" v-for="(banner, index) in settingData.data">
+      <div class="banner_photo">
+        <img
+        :src="banner.foto_cloudinary"
+        :alt="banner.titulo">
+        <label :for="`banner${index}`" class="upload_hover">
+          <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>
+          <p>Subir banner</p>
+        </label>
+      </div>
+      <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)">
       <div class="input-area">
         <el-input placeholder="Titulo" v-model="banner.titulo">
           <template slot="prepend">
@@ -36,57 +42,34 @@
       </div>
       <div class="settingBanner_actions">
         <el-button @click="updateBanner(banner)">Guardar</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(banner, index)">Eliminar</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(index, banner)">Eliminar</el-button>
       </div>
     </section>
-    <section class="settingBanner" v-if="bannersData.length < 3">
+    <section class="settingBanner" v-if="settingData.data.length < 3">
       <div class="upload-area">
         <label for="uploadBanner" class="upload">
           <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>Subir imagen
         </label>
-        <button class="banner_unplash" @click="openUnplash">
+        <!-- <button class="banner_unplash" @click="openUnplash">
           Explora imágenes gratis
-        </button>
+        </button> -->
         <input type="file" id="uploadBanner" v-on:change="uploadBanner">
-      </div>
-      <div class="input-area">
-        <el-input placeholder="Titulo" v-model="titulo">
-          <template slot="prepend">
-            <icon-base icon-name="text"><icon-text /></icon-base>
-          </template>
-        </el-input>
-      </div>
-      <div class="input-area">
-        <el-input placeholder="Descripción" v-model="descripcion">
-          <template slot="prepend">
-            <icon-base icon-name="align-justify"><align-justify /></icon-base>
-          </template>
-        </el-input>
-      </div>
-      <div class="input-area">
-        <el-input placeholder="Url de redirección" v-model="redireccion">
-          <template slot="prepend">
-            <icon-base icon-name="links"><icon-links /></icon-base>
-          </template>
-        </el-input>
-      </div>
-      <div class="settingBanner_actions">
-        <el-button>Guardar</el-button>
       </div>
     </section>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import axios from 'axios';
-import AngleLeft from '../Icons/AngleLeft.vue'
-import IconText from '../Icons/Text.vue'
-import AlignJustify from '../Icons/AlignJustify.vue'
-import IconLinks from '../Icons/Links.vue'
-import CloudUp from '../Icons/CloudUp.vue'
+import AngleLeft from '../../Icons/AngleLeft.vue'
+import IconText from '../../Icons/Text.vue'
+import AlignJustify from '../../Icons/AlignJustify.vue'
+import IconLinks from '../../Icons/Links.vue'
+import CloudUp from '../../Icons/CloudUp.vue'
 
 export default {
-  name: 'koSlider1Setting',
+  name: 'koSliderSetting1-1',
   components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp },
   data() {
     return {
@@ -111,12 +94,7 @@ export default {
     }
   },
   computed: {
-    settingData () {
-      return this.$store.state.settingData
-    },
-    bannersData() {
-      return this.$store.state.banners;
-    }
+    ...mapState(['currentPage', 'currentComponent', 'settingData'])
   },
   methods: {
     openUnplash() {
@@ -132,60 +110,93 @@ export default {
         this.createBanner(response)
       })
     },
+    uploadBanner2(event, banner) {
+      this.$cropper.upload({
+        type: 'Banner',
+        ratio: 12/4,
+        file: event.target.files[0],
+        desc: 'Peso maximo del banner 20M y tamaño de 1200px X 400px'
+      }).then((response) => {
+        this.updateBannerPhoto(response, banner)
+      })
+    },
     createBanner(blob) {
-      let config = {
-        headers:
-          {
-            'content-type': 'multipart/form-data',
-            'Authorization': `Bearer ${this.$configKomercia.accessToken}`,
-            'Access-Control-Allow-Origin': '*'
-          }
+      if (this.$store.state.settingData.data[0]) {
+        if (this.$store.state.settingData.data[0].id_cloudinary === 'placeholder') {
+          this.deleteBanner(0)
+        }
       }
       let params = new FormData()
-      params.append('banner', blob)
-      params.append('order', this.bannersData.length + 1)
-      axios.post(`${this.$configKomercia.url}/api/admin/tienda/banners/cargar`, params, config).then((response) => {
-        this.$store.state.banners.push(response.data.data)
-        this.$cropper.complete()
-      }).catch((error) => {
-        if (error) {
-          this.$cropper.complete()
-        }
-      })
-    },
-    deleteBanner(banner, index) {
+      params.append('file', blob)
+      params.append('upload_preset', 'qciyydun')
+
       let config = {
         headers:
           {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${this.$configKomercia.accessToken}`,
-            'Access-Control-Allow-Origin': '*'
+            'content-type': 'multipart/form-data'
           }
       }
-      let params = {
-        id: banner.id
-      }
-      axios.post(`${this.$configKomercia.url}/api/admin/tienda/banners/eliminar`, params, config).then((response) => {
-        this.bannersData.splice(index, 1)
+      axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/upload', params, config).then((response) => {
+        const newBanner = {
+          descripcion: '',
+          foto_cloudinary: response.data.secure_url,
+          id_cloudinary: response.data.public_id,
+          signature: response.data.signature,
+          order: 0,
+          posicion: '',
+          redireccion: '',
+          tienda: this.$store.state.configKomercia.tienda.id,
+          titulo: ''
+        }
+        this.$store.state.settingData.data.push(newBanner)
+        this.$cropper.complete()
+      }).catch(() => {
+        this.$cropper.complete()
       })
+    },
+    deleteBanner(index, banner) {
+      // this.deleteBannerPhoto(banner)
+      this.$store.state.settingData.data.splice(index, 1)
     },
     updateBanner (banner) {
+      this.$store.commit('SAVE_STORELAYOUT')
+    },
+    updateBannerPhoto (blob, banner) {
+      // this.deleteBannerPhoto(banner)
+      let params = new FormData()
+      params.append('file', blob)
+      params.append('upload_preset', 'qciyydun')
+
       let config = {
         headers:
           {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${this.$configKomercia.accessToken}`,
-            'Access-Control-Allow-Origin': '*'
+            'content-type': 'multipart/form-data'
           }
       }
-      let params = {
-        titulo: banner.titulo,
-        descripcion: banner.descripcion,
-        redireccion: banner.redireccion,
-        posicion: banner.posicion
-      }
-      axios.put(`${this.$configKomercia.url}/api/admin/tienda/banners/${banner.id}`, params, config).then((response) => {
+      axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/upload', params, config).then((response) => {
+        banner.foto_cloudinary = response.data.secure_url
+        banner.id_cloudinary = response.data.public_id
+        banner.signature = response.data.signature
+        this.$cropper.complete()
+      }).catch(() => {
+        this.$cropper.complete()
       })
+    },
+    deleteBannerPhoto (banner) {
+      const public_id = banner.id_cloudinary || ''
+      const signature = banner.signature || ''
+      if (public_id != '' && signature != '') {
+        let params = {
+          public_id,
+          signature,
+          upload_preset: 'qciyydun',
+          api_key: 596228273228369,
+          timestamp: new Date().getTime()
+        }
+        axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/destroy', params).then((response) => {
+
+        })
+      }
     },
     closeSetting() {
       this.$store.state.settingData = null;
@@ -237,8 +248,38 @@ export default {
     border-bottom: 1px solid rgba(0,0,0,0.1);
   }
   .banner_photo{
+    height: 113px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .banner_photo img{
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     border: 1px solid #c4cdd5;
+  }
+  .banner_photo .upload_hover{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFF;
+    cursor: pointer;
+  }
+  .banner_photo .upload_hover svg{
+    margin-bottom: 5px;
+  }
+  .banner_photo:hover .upload_hover{
+    display: grid;
+  }
+  .settingBanner input[type=file] {
+    display: none;
   }
   .input-area{
     display: flex;
@@ -250,6 +291,9 @@ export default {
     margin-bottom: 5px;
     font-size: 14px;
     color: #333;
+  }
+  .input-area .el-select{
+    width: 100%;
   }
   .upload-area{
     width: 100%;

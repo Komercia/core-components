@@ -142,10 +142,6 @@ export default {
           route: '/pedido'
         },
         {
-          name: 'Nosotros',
-          route: '/pedido'
-        },
-        {
           name: 'Contacto',
           route: '/contacto'
         }
@@ -194,7 +190,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../../../static/camilo.css';
+@import 'https://unpkg.com/komercia-fuentes@1.0.0/styles.css';
 
 .container {
   max-width: 1600px;
@@ -211,8 +207,11 @@ export default {
   max-width: auto;
 }
 .icons {
+  display: flex;
+  align-items: center;
   font-size: 18px;
   position: relative;
+  margin-right: 20px;
 }
 .icon-close {
   font-size: 14px;
@@ -291,10 +290,11 @@ export default {
   position: relative;
 }
 .num-products {
-  font-size: 10px;
+  font-size: 12px;
   position: absolute;
   bottom: 0;
   right: 10px;
+  color: #f49a86;
 }
 .pop-item-link {
   color: #333;

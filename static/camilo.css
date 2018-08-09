@@ -2,11 +2,11 @@
 
 @font-face {
   font-family: 'camilo';
-  src: url('fonts/camilo.eot');
-  src: url('fonts/camilo.eot?#iefix') format('embedded-opentype'),
-    url('fonts/camilo.woff') format('woff'),
-    url('fonts/camilo.ttf') format('truetype'),
-    url('fonts/camilo.svg#camilo') format('svg');
+  src: url('./fonts/camilo.eot');
+  src: url('./fonts/camilo.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/camilo.woff') format('woff'),
+    url('./fonts/camilo.ttf') format('truetype'),
+    url('./fonts/camilo.svg#camilo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
