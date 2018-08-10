@@ -4,7 +4,7 @@
       <img :src="`https://api.komercia.co/tumb/${product.foto}`" :alt="product.name">
     </div>
     <div class="description-product">
-      <p class="name-product">{{product.nombre.slice(0,25)}}</p>
+      <p class="name-product">{{product.nombre.slice(0,25).toLowerCase()}}</p>
       <p class="price">{{product.precio | currency}}
         <s>{{ product.precio * 1.2 | currency }}</s>
       </p>
