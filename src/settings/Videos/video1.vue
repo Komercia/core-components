@@ -8,7 +8,7 @@
       <el-radio-button label="Youtube"></el-radio-button>
       <el-radio-button label="Vimeo"></el-radio-button>
     </el-radio-group>
-    <el-input placeholder="Escribe la url" v-model="url">
+    <el-input placeholder="Escribe la url" v-model="settingData.original_url">
       <template slot="prepend">
         <icon-base
           :icon-name="settingData.type"
@@ -32,12 +32,11 @@ export default {
   components: { IconYoutube, IconVimeo },
   data () {
     return {
-      url: '',
       validVideo: false
     }
   },
   watch: {
-    url (value) {
+    'settingData.original_url': function (value) {
       this.settingData.url = ''
       this.getYoutubeVideoId(value)
     }
