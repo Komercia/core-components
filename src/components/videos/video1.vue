@@ -2,9 +2,9 @@
 <div class="container">
   <div class="containervideo">
       <div class="video">
-        <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${youtubeVideoId}?rel=0&amp;showinfo=0`" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen v-if="setting.type === 'Youtube'">
+        <iframe width="560" height="315" :src="`https://www.youtube.com/embed/${setting.url}?rel=0&amp;showinfo=0`" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen v-if="setting.type === 'Youtube'">
         </iframe>
-        <iframe :src="`https://player.vimeo.com/video/${youtubeVideoId}`" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen v-else>
+        <iframe :src="`https://player.vimeo.com/video/${setting.url}`" width="560" height="315" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen v-else>
         </iframe>
       </div>
   </div>
@@ -24,55 +24,8 @@ export default {
         }
       }
     }
-  },
-  data() {
-    return {
-      youtubeVideoId:'',
-    };
-  },
-  watch:{
-    'setting.url': function (value) {
-      this.getYoutubeVideoId(value);
-    }
-  },
-  methods:{
-    getYoutubeVideoId (url) {
-      if(url.includes('youtube')){
-        if (url !== undefined) {
-          let id = ''
-          if (url) {
-            let index = url.indexOf('?v=')
-            if (index > 0) {
-              id = url.substring(index + 3)
-              this.validVideo = true
-            }else {
-              this.validVideo = false
-            }
-          }else {
-            this.validVideo = false
-          }
-          this.youtubeVideoId = id
-        }
-      }else {
-        if (url !== undefined) {
-          let id ='';
-          if (url) {
-            let index = url.indexOf('m/')
-         if (index > 0) {
-           id = url.substring(index + 2)
-           this.validVideo = true
-         }else {
-           this.validVideo = false
-         }
-       }else {
-         this.validVideo = false
-       }
-       this.youtubeVideoId = id
-          }
-        }
-      }
-    }
   }
+}
 </script>
 
 <style scoped>

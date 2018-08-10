@@ -1,5 +1,5 @@
 <template>
-  <div class="setting">
+  <div class="setting_video">
     <div class="">
       <p class="title">Destino del video</p>
       <p class="desc">Escoge el origen del video y luego escribe la url en el campo de texto</p>
@@ -8,7 +8,7 @@
       <el-radio-button label="Youtube"></el-radio-button>
       <el-radio-button label="Vimeo"></el-radio-button>
     </el-radio-group>
-    <el-input placeholder="Escribe la url" v-model="settingData.url">
+    <el-input placeholder="Escribe la url" v-model="url">
       <template slot="prepend">
         <icon-base
           :icon-name="settingData.type"
@@ -30,25 +30,69 @@ import IconVimeo from "../../Icons/Vimeo.vue";
 export default {
   name: 'koVideoSetting1',
   components: { IconYoutube, IconVimeo },
+  data () {
+    return {
+      url: '',
+      validVideo: false
+    }
+  },
   watch: {
-    'settingData.type': function () {
+    url (value) {
       this.settingData.url = ''
+      this.getYoutubeVideoId(value)
     }
   },
   computed: {
     settingData () {
       return this.$store.state.settingData
     }
+  },
+  methods: {
+    getYoutubeVideoId (url) {
+      if(url.includes('youtube')){
+        if (url !== undefined) {
+          let id = ''
+          if (url) {
+            let index = url.indexOf('?v=')
+            if (index > 0) {
+              id = url.substring(index + 3)
+              this.validVideo = true
+            }else {
+              this.validVideo = false
+            }
+          }else {
+            this.validVideo = false
+          }
+          this.settingData.url = id
+        }
+      }else {
+        if (url !== undefined) {
+          let id ='';
+          if (url) {
+            let index = url.indexOf('m/')
+         if (index > 0) {
+           id = url.substring(index + 2)
+           this.validVideo = true
+         }else {
+           this.validVideo = false
+         }
+       }else {
+         this.validVideo = false
+       }
+       this.settingData.url = id
+          }
+        }
+      }
   }
 }
 </script>
 
 <style scoped>
-  .setting{
+  .setting_video{
     display: grid;
     justify-content: center;
     justify-items: center;
-    align-content: center;
+    align-content: start;
     grid-row-gap: 7px;
     padding: 10px;
     box-sizing: border-box;
