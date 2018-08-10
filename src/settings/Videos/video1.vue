@@ -48,8 +48,10 @@ export default {
     display: grid;
     justify-content: center;
     justify-items: center;
+    align-content: center;
     grid-row-gap: 7px;
     padding: 10px;
+    box-sizing: border-box;
   }
   .row{
     display: grid;
