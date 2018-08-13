@@ -23,7 +23,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 364,
+    idTienda: 576,
     tienda: {},
     userData: {
       id: 0,
@@ -36,33 +36,106 @@ export default new Vuex.Store({
     productos: [],
     productsData: [
       {
+        id: 0,
         placeholder: true,
-        foto: 'placeholder1.svg',
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
-        precio: '14999'
+        precio: '14999',
+        slug: ''
       },
       {
+        id: 1,
         placeholder: true,
-        foto: 'placeholder2.svg',
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
-        precio: '14999'
+        precio: '14999',
+        slug: ''
       },
       {
+        id: 2,
         placeholder: true,
-        foto: 'placeholder3.svg',
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
-        precio: '14999'
+        precio: '14999',
+        slug: ''
       },
       {
+        id: 3,
         placeholder: true,
-        foto: 'placeholder4.svg',
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
-        precio: '14999'
+        precio: '14999',
+        slug: ''
+      },
+      {
+        id: 4,
+        placeholder: true,
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+        slug: ''
+      },
+      {
+        id: 5,
+        placeholder: true,
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+        slug: ''
+      },
+      {
+        id: 6,
+        placeholder: true,
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+        slug: ''
+      },
+      {
+        id: 7,
+        placeholder: true,
+        foto_cloudinary:
+          'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
+        nombre: 'Nombre del producto',
+        precio: '14999',
+        slug: ''
       }
     ],
     menuComponent: false,
     productsCart: cart,
-    categorias: [],
+    categorias: [
+      {
+        id: 0,
+        nombre_categoria_producto: 'Camisetas'
+      },
+      {
+        id: 1,
+        nombre_categoria_producto: 'Blusas'
+      },
+      {
+        id: 2,
+        nombre_categoria_producto: 'Polos'
+      },
+      {
+        id: 3,
+        nombre_categoria_producto: 'Jeans'
+      },
+      {
+        id: 4,
+        nombre_categoria_producto: 'Faldas'
+      },
+      {
+        id: 5,
+        nombre_categoria_producto: 'Camisas'
+      }
+    ],
     subcategorias: [],
     geolocalizacion: [],
     togglePayment: false,
@@ -109,7 +182,9 @@ export default new Vuex.Store({
               }
             })
           }
-          state.categorias = response.data.data.categorias
+          if (response.data.data.categorias.length) {
+            state.categorias = response.data.data.categorias
+          }
           state.subcategorias = response.data.data.subcategorias
           state.geolocalizacion = response.data.data.geolocalizacion
           state.mediospago = response.data.data.medios_pago || {

@@ -1,15 +1,15 @@
 <template>
-  <div class="product-card">
+  <router-link :to="`/productos/${product.slug}`" class="product-card">
     <div class="img-product">
-      <img :src="`https://api.komercia.co/tumb/${product.foto}`" :alt="product.name">
+      <img :src="product.foto_cloudinary">
     </div>
     <div class="description-product">
       <p class="name-product">{{product.nombre.slice(0,25).toLowerCase()}}</p>
       <p class="price">{{product.precio | currency}}
-        <s>{{ product.precio * 1.2 | currency }}</s>
+        <!-- <s>{{ product.precio * 1.2 | currency }}</s> -->
       </p>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
   /* background-color: #333; */
 }
 .description-product {
-  background-color: #333;
+  background-color: var(--button_color);
 }
 .img-product {
   flex: 1;
@@ -66,11 +66,12 @@ export default {
   font-size: 15px;
   letter-spacing: 1.5;
   display: inline-block;
-  color: #fff;
+  color: var(--button_text_color);
 }
 .name-product:hover {
-  color: #f49a86;
+  color: var(--button_text_color);
   cursor: pointer;
+  opacity: 0.7;
 }
 .price {
   margin-left: 20px;
@@ -78,7 +79,7 @@ export default {
   font-weight: 400;
   font-size: 13px;
   letter-spacing: 1.5;
-  color: rgb(228, 228, 228);
+  color: var(--button_text_color);
   padding-bottom: 10px;
 }
 s {

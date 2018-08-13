@@ -9,7 +9,7 @@
           <div class="categories">
             <h3 class="title-categories">Categorias</h3>
             <ul class="list-categories">
-              <li class="item-categorie" @click="selected(categoria)" v-for="(categoria, index) in categorias" :key="index">{{categoria.nombre_categoria_producto}}</li>
+              <li class="item-categorie" @click="selected(categoria)" v-for="categoria in categorias" :key="categoria.id">{{categoria.nombre_categoria_producto}}</li>
             </ul>
           </div>
         </div>
@@ -65,7 +65,19 @@ import koCard2 from '../_productCard/product-card2'
 export default {
   name: 'koProductList3',
   components: { koCard2 },
-
+  mounted() {
+    if (this.$store.state.productsData) {
+      this.products = this.$store.state.productsData
+      let maxTMP = 0
+      this.products.forEach(product => {
+        if (maxTMP <= product.precio) {
+          this.price[1] = product.precio
+          this.range.max = parseInt(product.precio)
+          maxTMP = product.precio
+        }
+      })
+    }
+  },
   data() {
     return {
       add: true,
@@ -167,8 +179,8 @@ export default {
 <style scoped>
 @import 'https://unpkg.com/komercia-fuentes@1.0.1/styles.css';
 .header {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--main_color);
+  color: var(--button_text_color);
   width: 100%;
   height: 160px;
   font-size: 20px;
@@ -234,7 +246,7 @@ export default {
 .card {
   background-color: #fff;
   box-sizing: border-box;
-  border: 1px solid #333;
+  border: 1px solid var(--button_color);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -262,7 +274,7 @@ export default {
   border: 1px solid rgba(26, 26, 26, 0.459);
   font-size: 14px;
   border-radius: 2px;
-  outline-color: rgb(0, 0, 0);
+  outline-color: var(--main_color);
   color: rgb(0, 0, 0);
 }
 .ko-input i.icon-search {

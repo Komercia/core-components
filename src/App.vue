@@ -26,9 +26,9 @@ export default {
 }
 
 :root {
-  --main_color: #f200ff;
+  --main_color: #000;
   --text_color: #292b32;
-  --button_color: #f200ff;
+  --button_color: #333;
   --button_text_color: #fff;
   --background_color: #fff;
 }
