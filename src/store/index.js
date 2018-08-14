@@ -42,7 +42,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 1,
@@ -51,7 +52,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 2,
@@ -60,7 +62,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 3,
@@ -69,7 +72,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 4,
@@ -78,7 +82,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 5,
@@ -87,7 +92,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 6,
@@ -96,7 +102,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       },
       {
         id: 7,
@@ -105,7 +112,8 @@ export default new Vuex.Store({
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
         nombre: 'Nombre del producto',
         precio: '14999',
-        slug: ''
+        slug: '',
+        categoria: 'Camisetas'
       }
     ],
     menuComponent: false,

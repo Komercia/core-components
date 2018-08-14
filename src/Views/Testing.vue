@@ -2,7 +2,7 @@
   <div class="testing">
     <Menu/>
     <!-- <ko-slider3/> -->
-    <!-- <grid2/> -->
+    <grid2/>
     <product-list3/>
     <footer3/>
   </div>

@@ -4,7 +4,7 @@
       <h3 class="title-categorie">Categorias</h3>
       <p class="description">Elige 4 categorias de tu preferencia para visusalizarlas en el componente</p>
       <el-checkbox-group v-model="settingData.data" :min="1" :max="4" size="medium" class="grid">
-        <el-checkbox v-for="(categoria, index) in categorias" :key="index" :label="categoria.nombre_categoria_producto" border></el-checkbox>
+        <el-checkbox v-for="categoria in categorias" :key="categoria.id" :label="categoria.nombre_categoria_producto" border></el-checkbox>
       </el-checkbox-group>
     </div>
   </div>
@@ -19,6 +19,20 @@ export default {
     },
     settingData() {
       return this.$store.state.settingData
+    }
+  },
+  watch: {
+    categorias(value) {
+      this.settingData.data = value
+        .slice(0, 4)
+        .map(category => category.nombre_categoria_producto)
+    }
+  },
+  mounted() {
+    if (this.$store.state.categorias.length) {
+      this.settingData.data = this.categorias
+        .slice(0, 4)
+        .map(category => category.nombre_categoria_producto)
     }
   }
 }
