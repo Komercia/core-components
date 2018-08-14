@@ -1,5 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import products from './modules/products'
 import axios from "axios"
 import firebase from '../utils/connect_firebase'
 
@@ -33,33 +34,7 @@ export default new Vuex.Store({
       nombre: ''
     },
     banners: [],
-    productos: [],
-    productsData: [
-      {
-        placeholder: true,
-        foto: 'placeholder1.svg',
-        nombre: 'Nombre del producto',
-        precio: '14999'
-      },
-      {
-        placeholder: true,
-        foto: 'placeholder2.svg',
-        nombre: 'Nombre del producto',
-        precio: '14999'
-      },
-      {
-        placeholder: true,
-        foto: 'placeholder3.svg',
-        nombre: 'Nombre del producto',
-        precio: '14999'
-      },
-      {
-        placeholder: true,
-        foto: 'placeholder4.svg',
-        nombre: 'Nombre del producto',
-        precio: '14999'
-      }
-    ],
+    productsData: [],
     menuComponent: false,
     productsCart: cart,
     categorias: [],
@@ -76,8 +51,7 @@ export default new Vuex.Store({
       datos: ''
     },
     totalCart: 0,
-    components: null,
-    settingData: null
+    components: null
   },
   mutations: {
     GET_DATA(state) {
@@ -86,9 +60,6 @@ export default new Vuex.Store({
         .then(response => {
           state.banners = response.data.data.banners;
           if (response.data.data.productos.length) {
-            state.productos = response.data.data.productos.sort(
-              (a, b) => a.nombre > b.nombre
-            );
             state.productsData = response.data.data.productos.sort((a, b) => {
               if (a.nombre < b.nombre) return -1;
               if (a.nombre > b.nombre) return 1;
@@ -108,6 +79,7 @@ export default new Vuex.Store({
                 product.variantes = product.variantes[0].variantes;
               }
             });
+            state.products.fullProducts = state.productsData
           }
           state.categorias = response.data.data.categorias;
           state.subcategorias = response.data.data.subcategorias;
@@ -164,5 +136,8 @@ export default new Vuex.Store({
         state.components = components
       })
     }
+  },
+  modules: {
+    products,
   }
 })
