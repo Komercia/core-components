@@ -1,50 +1,38 @@
 <template>
   <div class="product_list">
     <div class="filter_column">
-      <koSearcher @searcher="Searchproduct"/>
+      <koSearcher @searcher="Searchproduct" />
       <div class="lateral">
-        <koCategories
-          @selectionSubcategory="selectedSubCategory"
-          @selectionCategory="selectedCategory"
-          @clear="Allcategories"/>
+        <koCategories @selectionSubcategory="selectedSubCategory" @selectionCategory="selectedCategory" @clear="Allcategories" />
       </div>
       <div class="price_range" v-if="range.max">
         <h4>Filtro por precio</h4>
         <p>Elija un rango de precios para buscar</p>
-        <el-slider
-          v-model="price"
-          range
-          :step="50"
-          :max="range.max">
+        <el-slider v-model="price" range :step="50" :max="range.max">
         </el-slider>
         <div class="price_range_label">
-          <p>Precio: <strong>{{ price[0] | currency }}</strong> - <strong>{{ price[1] | currency }}</strong></p>
+          <p>Precio:
+            <strong>{{ price[0] | currency }}</strong> -
+            <strong>{{ price[1] | currency }}</strong>
+          </p>
         </div>
       </div>
       <el-select v-model="HigherOrLower">
-        <el-option
-        label="Mayor precio"
-        value="higher">
+        <el-option label="Mayor precio" value="higher">
         </el-option>
-        <el-option
-        label="Menor precio"
-        value="lower">
+        <el-option label="Menor precio" value="lower">
         </el-option>
       </el-select>
     </div>
     <div class="products">
       <div class="product_list_wrapper" v-if="products.length">
-          <div class="products_list">
-            <ko-product-card v-for="product in filterProduct" :key="product.id" :data="product" />
-          </div>
-          <div class="product_pagination" v-if="products.length > 12">
-            <el-pagination
-              background
-              layout="prev, pager, next"
-              :total="products.length"
-              :current-page.sync="currentPage">
-            </el-pagination>
-         </div>
+        <div class="products_list">
+          <ko-product-card v-for="product in filterProduct" :key="product.id" :data="product" />
+        </div>
+        <div class="product_pagination" v-if="products.length > 12">
+          <el-pagination background layout="prev, pager, next" :total="products.length" :current-page.sync="currentPage">
+          </el-pagination>
+        </div>
       </div>
     </div>
   </div>
@@ -57,11 +45,11 @@ import koSearcher from '../_components/searcher'
 export default {
   name: 'koProductList2',
   components: { KoProductCard, koCategories, koSearcher },
-  mounted () {
+  mounted() {
     if (this.$store.state.productsData) {
       this.products = this.$store.state.productsData
       let maxTMP = 0
-      this.products.forEach((product) => {
+      this.products.forEach(product => {
         if (maxTMP <= product.precio) {
           this.price[1] = product.precio
           this.range.max = parseInt(product.precio)
@@ -76,7 +64,7 @@ export default {
       active: false,
       price: [0, 1000000],
       range: {
-        max: 0,
+        max: 0
       },
       currentPage: 1,
       HigherOrLower: '',
@@ -92,10 +80,10 @@ export default {
     }
   },
   watch: {
-    Fullproducts (value) {
+    Fullproducts(value) {
       this.products = value
       let maxTMP = 0
-      value.forEach((product) => {
+      value.forEach(product => {
         if (maxTMP <= product.precio) {
           this.price[1] = product.precio
           this.range.max = parseInt(product.precio)
@@ -152,7 +140,7 @@ export default {
       }
       this.currentPage = 1
     },
-    selectedCategory (value) {
+    selectedCategory(value) {
       this.products = this.Fullproducts.filter(
         product => product.categoria === value
       )
@@ -166,7 +154,7 @@ export default {
       this.active = !this.active
       this.currentPage = 1
     },
-    filterRange () {
+    filterRange() {
       this.products = this.Fullproducts.filter(producto => {
         if (
           producto.precio >= this.price[0] &&
@@ -175,14 +163,14 @@ export default {
           return producto
         }
       })
-    },
+    }
   },
   filters: {
     currency(value) {
       if (value) {
-        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
-      return '$0';
+      return '$0'
     }
   }
 }
@@ -203,14 +191,14 @@ export default {
 .responsive {
   display: none;
 }
-.filter_column{
+.filter_column {
   background-color: #f9f9f9;
-  border: 1px solid rgba(0,0,0,0.1);
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   position: sticky;
   top: 120px;
 }
-.filter_column .el-select{
+.filter_column .el-select {
   width: 100%;
   padding: 5px;
   box-sizing: border-box;
@@ -220,18 +208,18 @@ export default {
 }
 .price_range {
   padding: 10px 20px 5px 20px;
-  border-top: 1px solid rgba(0,0,0,0.1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   display: grid;
 }
-.price_range h4{
+.price_range h4 {
   font-size: 14px;
   margin-bottom: 5px;
 }
-.price_range p{
+.price_range p {
   font-size: 12px;
   color: #7e7e7e;
 }
-.price_range_label{
+.price_range_label {
   display: grid;
   grid-auto-flow: column;
   justify-content: space-between;
@@ -242,22 +230,22 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 10px;
 }
-.product_pagination{
+.product_pagination {
   display: grid;
   justify-content: center;
   margin: 30px 0;
 }
 @media screen and (max-width: 840px) {
-  .product_list{
+  .product_list {
     grid-template-columns: 1fr;
     grid-gap: 10px;
   }
-  .filter_column{
+  .filter_column {
     position: static;
   }
 }
 @media screen and (max-width: 525px) {
-  .product_list{
+  .product_list {
     grid-template-columns: 1fr;
     padding: 0px;
   }
@@ -267,7 +255,7 @@ export default {
   }
 }
 @media screen and (max-width: 375px) {
-  .product_list{
+  .product_list {
     padding: 0;
   }
   .products .products_list {
