@@ -57,9 +57,12 @@ import koSearcher from '../_components/searcher'
 export default {
   name: 'koProductList2',
   components: { KoProductCard, koCategories, koSearcher },
+  created () {
+    this.$store.dispatch('products/SET_FILTER', this.$route.query)
+  },
   mounted () {
-    if (this.$store.state.productsData) {
-      this.products = this.$store.state.productsData
+    if (this.$store.state.products.filterProducts) {
+      this.products = this.$store.state.products.filterProducts
       let maxTMP = 0
       this.products.forEach((product) => {
         if (maxTMP <= product.precio) {
@@ -121,7 +124,7 @@ export default {
   },
   computed: {
     Fullproducts() {
-      return this.$store.state.productsData
+      return this.$store.getters['products/filterProducts']
     },
     sizePagination() {
       return Math.ceil(this.products.length / 12)
@@ -133,37 +136,16 @@ export default {
     }
   },
   methods: {
-    Activeselect() {
-      this.active = !this.active
-    },
     Allcategories() {
-      this.products = this.$store.state.productsData
-      this.active = !this.active
       this.currentPage = 1
     },
     Searchproduct(search) {
-      if (search != '') {
-        this.$search(search, this.Fullproducts, this.options).then(results => {
-          this.products = results
-          this.active = !this.active
-        })
-      } else {
-        this.products = this.$store.state.productsData
-      }
       this.currentPage = 1
     },
     selectedCategory (value) {
-      this.products = this.Fullproducts.filter(
-        product => product.categoria === value
-      )
-      this.active = !this.active
       this.currentPage = 1
     },
     selectedSubCategory(value) {
-      this.products = this.Fullproducts.filter(
-        product => product.subcategoria === value
-      )
-      this.active = !this.active
       this.currentPage = 1
     },
     filterRange () {
