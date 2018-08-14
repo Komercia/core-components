@@ -93,7 +93,7 @@ export default new Vuex.Store({
         nombre: 'Nombre del producto',
         precio: '14999',
         slug: '',
-        categoria: 'Camisetas'
+        categoria: 'Blusas'
       },
       {
         id: 6,
@@ -103,7 +103,7 @@ export default new Vuex.Store({
         nombre: 'Nombre del producto',
         precio: '14999',
         slug: '',
-        categoria: 'Camisetas'
+        categoria: 'Blusas'
       },
       {
         id: 7,
@@ -113,7 +113,7 @@ export default new Vuex.Store({
         nombre: 'Nombre del producto',
         precio: '14999',
         slug: '',
-        categoria: 'Camisetas'
+        categoria: 'Blusas'
       }
     ],
     menuComponent: false,

@@ -86,7 +86,7 @@ export default {
 .container {
   margin: 0 auto;
   display: grid;
-  grid-template: 6fr 2fr / repeat(3, 1fr);
+  grid-template: 6fr 1.8fr / repeat(3, 1fr);
   grid-template-areas:
     'header  header header'
     'left midlane right';
@@ -151,7 +151,7 @@ export default {
 .right {
   overflow: hidden;
   position: relative;
-  height: 125px;
+  height: 150px;
   padding-top: 10px;
   padding-left: 50px;
 }
