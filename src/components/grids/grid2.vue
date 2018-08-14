@@ -29,6 +29,15 @@ export default {
       }
     }
   },
+  created() {
+    if (this.$store.state.categorias.length) {
+      if (!this.setting.data.length) {
+        this.setting.data = this.$store.state.categorias
+          .slice(0, 4)
+          .map(category => category.nombre_categoria_producto)
+      }
+    }
+  },
   data() {
     return {
       select: ''
@@ -39,6 +48,21 @@ export default {
       return this.$store.state.productsData.filter(
         product => product.categoria == this.select
       )
+    },
+    categories() {
+      return this.$store.state.categorias
+    }
+  },
+  watch: {
+    'setting.data': function(value) {
+      this.select = value[0]
+    },
+    categories(value) {
+      if (!this.setting.data.length) {
+        this.setting.data = value
+          .slice(0, 4)
+          .map(category => category.nombre_categoria_producto)
+      }
     }
   },
   methods: {
