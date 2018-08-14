@@ -64,22 +64,24 @@ export default {
   methods: {
     Sendsubcategory(value){
       this.selectSubcategory = value
-      this.$emit("selectionSubcategory",this.selectSubcategory)
+      this.$store.dispatch('products/FILTER_BY', {type:'subcategory', data: value})
     },
     sendCategory(value){
-      this.$emit("selectionCategory", value)
+      this.$store.dispatch('products/FILTER_BY', {type:'category', data: value})
+
     },
     clear () {
+      this.$store.dispatch('products/FILTER_BY', {type:'all', data: value})
       this.$emit("clear")
     }
   },
   computed:{
-      categories(){
-        return this.$store.state.categorias;
-      },
-      subcategories(){
-        return this.$store.state.subcategorias;
-      }
+    categories(){
+      return this.$store.state.categorias;
+    },
+    subcategories(){
+      return this.$store.state.subcategorias;
+    }
   }
 
 }
