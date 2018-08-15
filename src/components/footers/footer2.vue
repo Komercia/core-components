@@ -41,7 +41,7 @@
         <div class="footer_about_legal">
           <router-link to="/manejo-de-datos" v-show="politicas.datos != ''">Políticas de manejo de datos</router-link>
           <router-link to="/garantia" v-show="politicas.garantia != ''">Políticas de garantia</router-link>
-          <router-link to="/nosotros" v-show="tienda.nosotros != '' || tienda.mision != '' || tienda.vision != ''">Sobre nosotros</router-link>
+          <router-link to="/nosotros" v-show="activeRoute()">Sobre nosotros</router-link>
         </div>
         <img class="image_security" v-show="mediospago.payco" src="https://369969691f476073508a-60bf0867add971908d4f26a64519c2aa.ssl.cf5.rackcdn.com/btns/powered.png" alt="">
       </div>
@@ -108,6 +108,9 @@
           tienda: this.$store.state.id,
         }
         axios.post(`${this.$urlHttp}/api/front/suscriptores`, json)
+      },
+      activeRoute () {
+        return !!(this.tienda.nosotros || this.tienda.mision || this.tienda.vision)
       }
     }
   }

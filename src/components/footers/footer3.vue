@@ -33,7 +33,7 @@
           <li>
             <p class="title">Tienda</p>
           </li>
-          <li v-for='(item, index) in routes' :key='index' class="navigation-item">
+          <li v-for='(item, index) in routes' :key='index' class="navigation-item" v-show="activeRoute(item)">
             <router-link :to="item.route" class="navigation-link">{{item.name}}</router-link>
           </li>
         </ul>
@@ -136,7 +136,13 @@ export default {
     }
   },
   methods: {
-    toSubscribe() {
+    activeRoute (item) {
+      if (item.name != 'Nosotros') {
+        return true
+      }
+      return !!(this.storeData.mision || this.storeData.vision || this.storeData.nosotros)
+    },
+    toSubscribe () {
       this.toSubscribeResponse = false
       const params = {
         correo: this.email,
