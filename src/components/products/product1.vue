@@ -189,11 +189,12 @@
         if(product.length) {
           return product[0].id
         }
-        return 1
+        return this.productsData[0].id
       },
       getDataProduct() {
-        if(this.searchIdForSlug()) {
-          axios.get(`https://templates.komercia.co/api/producto/${this.searchIdForSlug()}`).then((response) => {
+        const idOfSlug = this.searchIdForSlug()
+        if(idOfSlug) {
+          axios.get(`https://templates.komercia.co/api/producto/${idOfSlug}`).then((response) => {
             this.selectedPhoto(response.data.detalle.foto_cloudinary);
             this.videoYoutube(response.data.info.video);
             this.data = response.data;
