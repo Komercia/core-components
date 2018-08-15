@@ -28,7 +28,6 @@ export default new Vuex.Store({
     tienda: {},
     userData: {
       id: 0,
-
       email: '',
       foto: '',
       nombre: ''
