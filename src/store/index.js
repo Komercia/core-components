@@ -170,7 +170,8 @@ export default new Vuex.Store({
               if (a.nombre > b.nombre) return 1
               return 0
             })
-            state.productsData.map(product => {
+            state.productsData.map(p => {
+              const product = p
               if (product.variantes.length) {
                 product.combinaciones = JSON.parse(
                   product.variantes[0].combinaciones[0].combinaciones
@@ -183,6 +184,7 @@ export default new Vuex.Store({
                 }
                 product.variantes = product.variantes[0].variantes
               }
+              return product
             });
             state.products.fullProducts = state.productsData
           }
