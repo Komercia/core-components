@@ -30,7 +30,7 @@
           <ko-product-card v-for="product in filterProduct" :key="product.id" :data="product" />
         </div>
         <div class="product_pagination" v-if="products.length > 12">
-          <el-pagination background layout="prev, pager, next" :total="products.length" :current-page.sync="currentPage">
+          <el-pagination background layout="prev, pager, next" :page-size="12" :total="products.length" :current-page.sync="currentPage">
           </el-pagination>
         </div>
       </div>
@@ -64,22 +64,12 @@ export default {
   data() {
     return {
       products: [],
-      active: false,
       price: [0, 1000000],
       range: {
         max: 0
       },
       currentPage: 1,
-      HigherOrLower: '',
-      options: {
-        shouldSort: true,
-        threshold: 0.6,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['nombre']
-      }
+      HigherOrLower: ''
     }
   },
   watch: {
@@ -113,9 +103,6 @@ export default {
   computed: {
     Fullproducts() {
       return this.$store.getters['products/filterProducts']
-    },
-    sizePagination() {
-      return Math.ceil(this.products.length / 12)
     },
     filterProduct() {
       const initial = this.currentPage * 12 - 12

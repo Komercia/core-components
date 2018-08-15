@@ -68,10 +68,9 @@ export default {
     },
     sendCategory(value){
       this.$store.dispatch('products/FILTER_BY', {type:'category', data: value})
-
     },
     clear () {
-      this.$store.dispatch('products/FILTER_BY', {type:'all', data: value})
+      this.$store.dispatch('products/FILTER_BY', {type:'all', data: ''})
       this.$emit("clear")
     }
   },
