@@ -2,7 +2,7 @@
   <carousel :perPage="1" :paginationEnabled="true" :autoplay="true" :loop="true" :autoplayTimeout="4000">
     <slide v-for="(banner, index) in setting.data" :key="index">
       <div :class="`${banner.posicion} slide_content`">
-        <img :src="banner.foto_cloudinary" class="slide_photo" :alt="banner.titulo">
+        <image-cloudinary :src="banner.foto_cloudinary" class="slide_photo" :alt="banner.titulo" />
         <div class="slide_texts">
           <h1 v-if="banner.titulo">{{ banner.titulo }}</h1>
           <p v-if="banner.descripcion">{{ banner.descripcion }}</p>
