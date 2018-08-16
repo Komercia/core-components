@@ -4,15 +4,11 @@
       <div class="banner_photo">
         <img :src="banner.photo">
         <label :for="`banner${index}`" class="upload_hover">
-          <icon-base icon-name="cloud-up" icon-color="#FFF">
+          <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
             <cloud-up />
           </icon-base>
           <p>Subir banner</p>
         </label>
-      </div>
-      <div class="settingBanner_actions">
-        <el-button @click="updateBanner(banner)">Guardar</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(banner, index)">Eliminar</el-button>
       </div>
       <div class="input-area">
         <el-input placeholder="Url de redirección" v-model="banner.redireccion">
@@ -21,6 +17,12 @@
               <icon-links /></icon-base>
           </template>
         </el-input>
+      </div>
+      <input type="file" :id="`banner${index}`" @change="uploadBanner($event, banner)" v-if="index == 0">
+      <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)" v-else>
+      <div class="settingBanner_actions">
+        <el-button @click="updateBanner(banner)">Guardar</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(banner, index)">Eliminar</el-button>
       </div>
     </section>
     <section class="settingBanner" v-if="settingData.data.length < 3">
@@ -50,6 +52,7 @@
 <script>
 import IconLinks from '../../Icons/Links.vue'
 import CloudUp from '../../Icons/CloudUp.vue'
+import axios from 'axios'
 export default {
   name: 'koSliderSetting3',
   components: { IconLinks, CloudUp },
@@ -65,61 +68,80 @@ export default {
     }
   },
   methods: {
-    uploadBanner(event) {
+    uploadBanner(event, banner) {
       this.$cropper
         .upload({
           type: 'Banner',
-          ratio: 12 / 4,
+          ratio: 3 / 2,
           file: event.target.files[0],
-          desc: 'Peso maximo del banner 20M y tamaño de 1200px X 400px'
+          desc: 'Peso maximo del banner 20M y tamaño de 1080px X 720px'
         })
         .then(response => {
-          this.createBanner(response)
+          this.updateBannerPhoto(response, banner)
         })
     },
-    getBanner(banner) {
-      return banner
-    }
-  },
-  deleteBanner(banner, index) {
-    let config = {
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${this.$configKomercia.accessToken}`,
-        'Access-Control-Allow-Origin': '*'
+    uploadBanner2(event, banner) {
+      this.$cropper
+        .upload({
+          type: 'Banner',
+          ratio: 358 / 173,
+          file: event.target.files[0],
+          desc: 'Peso maximo del banner 20M y tamaño de 716px X 346px'
+        })
+        .then(response => {
+          this.updateBannerPhoto(response, banner)
+        })
+    },
+    updateBannerPhoto(blob, banner) {
+      // this.deleteBannerPhoto(banner)
+      let params = new FormData()
+      params.append('file', blob)
+      params.append('upload_preset', 'qciyydun')
+
+      let config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
       }
-    }
-    let params = {
-      id: banner.id
-    }
-    axios
-      .post(
-        `${this.$configKomercia.url}/api/admin/tienda/banners/eliminar`,
-        params,
-        config
-      )
-      .then(response => {
-        this.bannersData.splice(index, 1)
-      })
-  },
-  updateBanner(banner) {
-    let config = {
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${this.$configKomercia.accessToken}`,
-        'Access-Control-Allow-Origin': '*'
+      axios
+        .post(
+          'https://api.cloudinary.com/v1_1/komercia-store/image/upload',
+          params,
+          config
+        )
+        .then(response => {
+          banner.photo = response.data.secure_url
+          banner.id_cloudinary = response.data.public_id
+          banner.signature = response.data.signature
+          this.$cropper.complete()
+        })
+        .catch(() => {
+          this.$cropper.complete()
+        })
+    },
+    deleteBanner(index, banner) {
+      // this.deleteBannerPhoto(banner)
+      this.$store.state.settingData.data.splice(index, 1)
+    },
+    updateBanner(banner) {
+      let config = {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${this.$configKomercia.accessToken}`,
+          'Access-Control-Allow-Origin': '*'
+        }
       }
+      let params = {
+        redireccion: banner.redireccion
+      }
+      axios
+        .put(
+          `${this.$configKomercia.url}/api/admin/tienda/banners/${banner.id}`,
+          params,
+          config
+        )
+        .then(response => {})
     }
-    let params = {
-      redireccion: banner.redireccion
-    }
-    axios
-      .put(
-        `${this.$configKomercia.url}/api/admin/tienda/banners/${banner.id}`,
-        params,
-        config
-      )
-      .then(response => {})
   }
 }
 </script>
@@ -139,6 +161,7 @@ export default {
   height: 200px;
   position: relative;
   border: 1px solid #c4cdd5;
+  margin-bottom: 5px;
 }
 .banner_photo img {
   width: 100%;
