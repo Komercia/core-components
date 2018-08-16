@@ -49,8 +49,8 @@ export default {
     this.$store.dispatch('products/SET_FILTER', this.$route.query)
   },
   mounted () {
-    if (this.$store.state.products.filterProducts) {
-      this.products = this.$store.state.products.filterProducts
+    if (this.$store.getters['products/filterProducts']) {
+      this.products = this.$store.getters['products/filterProducts']
       let maxTMP = 0
       this.products.forEach(product => {
         if (maxTMP <= product.precio) {
