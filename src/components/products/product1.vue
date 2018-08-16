@@ -5,9 +5,9 @@
         <div class="section">
           <div class="photos">
             <div class="photos_selected">
-              <img :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover="selectedPhoto(data.detalle.foto_cloudinary)">
-              <img :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos">
-              <img v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
+              <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover="selectedPhoto(data.detalle.foto_cloudinary)" />
+              <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
+              <image-cloudinary v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true" />
             </div>
             <div class="photo_main">
               <zoomed
@@ -42,6 +42,7 @@
               <button type="button" name="button">No esta disponible</button>
               <div>
                 <div class="quantity" v-show="!spent">
+                  <em>Cantidad:</em>
                   <button class="quantity_remove" v-on:click="removeQuantity()"><i class="material-icons">remove</i></button>
                   <p class="quantity_value"> {{ quantityValue }}</p>
                   <button class="quantity_add" v-on:click="addQuantity()"><i class="material-icons">add</i></button>
@@ -543,10 +544,10 @@
     margin: 5px;
   }
 	.quantity em{
-		width: 100%;
 		text-align: center;
-		margin-bottom: 10px;
+		margin-right: 10px;
 		font-size: 13px;
+    font-style: normal;
 	}
 	.quantity_remove, .quantity_add{
 		border-style: none;
