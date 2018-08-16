@@ -9,6 +9,7 @@ import Contact1 from './components/contacts/contact1'
 import Content1 from './components/contents/content1'
 import Video1 from './components/videos/video1'
 import Slider1 from './components/sliders/slider1'
+import Slider3 from './components/sliders/slider3'
 import Slider11 from './components/sliders/slider1-1'
 import Separator from './components/separators/separator1'
 import Grid1 from './components/grids/grid1'
@@ -34,6 +35,7 @@ const components = [
   Contact1,
   Content1,
   Slider1,
+  Slider3,
   Slider11,
   Separator,
   Grid1,

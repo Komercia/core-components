@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <div class="img-principal left">
-      <img :src="setting[0].photo" alt="">
+      <img :src="setting.data[0].photo" alt="">
     </div>
     <div class="right">
       <div class="top">
-        <img :src="setting[1].photo" alt="">
+        <img :src="setting.data[1].photo" alt="">
       </div>
       <div class="bottom">
-        <img :src="setting[2].photo" alt="">
+        <img :src="setting.data[2].photo" alt="">
       </div>
     </div>
   </div>
@@ -23,22 +23,27 @@ export default {
   },
   props: {
     setting: {
-      type: Array,
+      type: Object,
       default: function() {
-        return [
-          {
-            photo:
-              'https://images.unsplash.com/photo-1532365184436-ed06052719f3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a810a6c7a7aa38e50710cc92bfa22fd9&auto=format&fit=crop&w=1500&q=80'
-          },
-          {
-            photo:
-              'https://images.unsplash.com/photo-1509783236416-c9ad59bae472?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=03192d46f050d8f7a19aaecc8876d440&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb'
-          },
-          {
-            photo:
-              'https://images.unsplash.com/photo-1489459398140-fbc7392ee6f5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c1002c0175080cddd5ea53284d253209&auto=format&fit=crop&w=2208&q=80'
-          }
-        ]
+        return {
+          data: [
+            {
+              id: 0,
+              photo:
+                'https://images.unsplash.com/photo-1532365184436-ed06052719f3?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a810a6c7a7aa38e50710cc92bfa22fd9&auto=format&fit=crop&w=1500&q=80'
+            },
+            {
+              id: 1,
+              photo:
+                'https://images.unsplash.com/photo-1509783236416-c9ad59bae472?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=03192d46f050d8f7a19aaecc8876d440&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb'
+            },
+            {
+              id: 2,
+              photo:
+                'https://images.unsplash.com/photo-1489459398140-fbc7392ee6f5?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=c1002c0175080cddd5ea53284d253209&auto=format&fit=crop&w=2208&q=80'
+            }
+          ]
+        }
       }
     }
   }
@@ -61,7 +66,7 @@ export default {
   background-color: var(--background_color);
 }
 .left {
-  height: 50vw;
+  height: 100%;
   width: 100%;
   overflow: hidden;
 }
