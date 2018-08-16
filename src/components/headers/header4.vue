@@ -83,10 +83,10 @@
         <el-popover placement="bottom-end" width="250" trigger="hover" v-else>
           <ul>
             <li class="pop-item">
-              <a class="pop-item-link" :href="`https://login.komercia.co/?from=store&path=${$route.path}&params={'tienda':${storeData.id_tienda},logo:${storeData.logo}}`">Iniciar Sesión</a>
+              <a class="pop-item-link" :href="urlLogin">Iniciar Sesión</a>
             </li>
             <li class="pop-item">
-              <a class="pop-item-link" :href="`https://login.komercia.co/registrar-cliente/?from=store&path=${$route.path}`">Registrar</a>
+              <a class="pop-item-link" :href="urlSignup">Registrar</a>
             </li>
           </ul>
           <i class="icon-user-circle" slot="reference"></i>
@@ -163,6 +163,14 @@ export default {
     },
     productsCart() {
       return this.$store.state.productsCart.length
+    },
+    urlLogin () {
+      const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
+      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
+    },
+    urlSignup () {
+      const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
+      return `https://login.komercia.co/registrar-cliente/?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
     }
   },
   methods: {

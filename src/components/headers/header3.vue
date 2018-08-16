@@ -77,7 +77,8 @@
           this.$store.state.openOrder = true;
       },
       login() {
-        window.location.href = `http://login.komercia.co/auth?from=${this.storeData.subdominio}&path=${this.$route.path}`
+        const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
+        window.location.href = `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
       },
       logout() {
         this.$store.commit('LOGOUT');
@@ -147,6 +148,7 @@
     display: flex;
     align-items: center;
     color: #FFF;
+    cursor: pointer;
   }
   .user_photo{
     width: 50px;
