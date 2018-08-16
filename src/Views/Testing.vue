@@ -1,12 +1,12 @@
 <template>
   <div class="testing">
     <Menu/>
-    <ko-slider2/>
+    <!-- <ko-slider2/> -->
     <!-- <ko-slider3/> -->
-    <grid2/>
-    <product1/>
-    <product-list3/>
-    <newsletter1/>
+    <!-- <grid2/> -->
+    <product2/>
+    <!-- <product-list3/> -->
+    <!-- <newsletter1/> -->
     <footer3/>
   </div>
 </template>
@@ -16,6 +16,7 @@ import Menu from '../components/headers/header4'
 import koSlider2 from '../components/sliders/slider2'
 import koSlider3 from '../components/sliders/slider3'
 import Product1 from '../components/products/product1'
+import Product2 from '../components/products/product2'
 import ProductList3 from '../components/product_lists/product_list3'
 import Grid2 from '../components/grids/grid2'
 import Newsletter1 from '../components/newsletters/newsletter1'
@@ -28,6 +29,7 @@ export default {
     koSlider3,
     ProductList3,
     Product1,
+    Product2,
     Newsletter1,
     Footer3
   }

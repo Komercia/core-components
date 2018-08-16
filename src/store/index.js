@@ -1,7 +1,7 @@
-import Vue from "vue"
-import Vuex from "vuex"
+import Vue from 'vue'
+import Vuex from 'vuex'
 import products from './modules/products'
-import axios from "axios"
+import axios from 'axios'
 import firebase from '../utils/connect_firebase'
 
 const firestore = firebase.firestore()
@@ -24,7 +24,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 576,
+    idTienda: 404,
     tienda: {},
     userData: {
       id: 0,
@@ -185,7 +185,7 @@ export default new Vuex.Store({
                 product.variantes = product.variantes[0].variantes
               }
               return product
-            });
+            })
             state.products.fullProducts = state.productsData
           }
           if (response.data.data.categorias.length) {
@@ -250,6 +250,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    products,
+    products
   }
 })

@@ -22,9 +22,12 @@
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
           <div class="content_buy_price">
-            <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
-            <p class="colorTexto" v-show="salesData.precio">COP</p>
+            <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}
+              <span>COP</span>
+            </h3>
+            <!-- <p class="colorTexto" v-show="salesData.precio"></p> -->
           </div>
+          <div class="line"></div>
           <p>
             <strong>{{ data.info.marca }}</strong>
           </p>
@@ -95,7 +98,7 @@ import koModal from '../_components/modal.vue'
 import koRadioGroup from '../_components/radioGroup'
 
 export default {
-  // name: 'koProduct1',
+  name: 'koProduct1',
   components: { zoomed, productSlide, koModal, koRadioGroup },
   created() {
     this.$store.state.beforeCombination = []
@@ -390,7 +393,7 @@ export default {
 </script>
 <style scoped>
 .wrapper {
-  max-width: 1100px;
+  max-width: 1200px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -403,16 +406,17 @@ export default {
   justify-content: space-between;
 }
 .photos {
+  max-width: 650px;
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  /* align-items: center; */
 }
 .photos.responsive {
   display: none;
 }
 .photos_selected {
-  width: 80px;
+  width: 90px;
   display: flex;
   flex: none;
   flex-direction: column;
@@ -422,35 +426,39 @@ export default {
 .photos_selected img {
   width: 100%;
   box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  /* border-radius: 4px; */
   cursor: pointer;
-  margin: 5px;
+  margin-bottom: 5px;
 }
 .quantity_available {
   font-size: 14px;
   color: #494949;
 }
 .photo_main {
-  max-width: 450px;
-  max-height: 400px;
+  max-width: 485px;
+  max-height: 640px;
   height: 100%;
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  /* border: 1px solid #eee; */
 }
 .photo_main_placeholder {
-  width: 450px;
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
 }
 .content {
-  width: 350px;
-  min-height: 400px;
+  max-width: 550px;
+  width: 100%;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   padding: 15px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
+  /* box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05); */
 }
 i.close {
   color: black;
@@ -459,8 +467,10 @@ i.close {
 }
 .content_name {
   font-weight: normal;
+  font-size: 20px;
   color: var(--text_color);
   margin: 7px 0;
+  text-transform: uppercase;
 }
 .content_buy {
   flex: none;
@@ -505,7 +515,7 @@ i.close {
 }
 .content_buy_price h3 {
   font-weight: normal;
-  font-size: 40px;
+  font-size: 20px;
   color: var(--text_color);
 }
 .content_buy_price p {
@@ -679,6 +689,14 @@ i.close {
 .features_item .tienda {
   max-width: 100px;
   max-height: 100px;
+}
+.zoom {
+  margin: 0 !important;
+  border: 1px solid #eee !important;
+}
+.line {
+  width: 100%;
+  border-top: 1px solid #eee;
 }
 @media (max-width: 1150px) {
   .section:nth-child(2) {
