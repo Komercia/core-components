@@ -14,7 +14,7 @@
       <div class="input-area first">
         <p class="nameItem">Correo electrónico</p>
         <div id="emailFocus" class="container-inputs">
-          <input class="input-email" type="email" placeholder="Correo electronico" name="email" v-model="email" v-validate="'required|email'" data-vv-as="correo" required>
+          <input class="input-email" type="email" placeholder="Correo electronico" name="email" v-model="email" data-vv-as="correo" required>
         </div>
         <!-- <p class="text-error">{{ errors.first('email') }}</p> -->
       </div>

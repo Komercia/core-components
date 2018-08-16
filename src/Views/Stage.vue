@@ -80,6 +80,7 @@ data() {
       { value: 290, label: "Prontodental - 290" },
       { value: 364, label: "Ace Delivery's - 364" },
       { value: 490, label: "Demo 7 - 490" },
+      { value: 349, label: "Demo 1 - 349" },
       { value: 576, label: "Helium - 576" },
       { value: 247, label: "TecnoAqua SAS - 247" },
       { value: 404, label: "XXX - 404" }

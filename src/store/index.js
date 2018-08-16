@@ -1,6 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vue from "vue"
+import Vuex from "vuex"
+import products from './modules/products'
+import axios from "axios"
 import firebase from '../utils/connect_firebase'
 
 const firestore = firebase.firestore()
@@ -27,13 +28,11 @@ export default new Vuex.Store({
     tienda: {},
     userData: {
       id: 0,
-
       email: '',
       foto: '',
       nombre: ''
     },
     banners: [],
-    productos: [],
     productsData: [
       {
         id: 0,
@@ -157,8 +156,7 @@ export default new Vuex.Store({
       datos: ''
     },
     totalCart: 0,
-    components: null,
-    settingData: null
+    components: null
   },
   mutations: {
     GET_DATA(state) {
@@ -167,15 +165,13 @@ export default new Vuex.Store({
         .then(response => {
           state.banners = response.data.data.banners
           if (response.data.data.productos.length) {
-            state.productos = response.data.data.productos.sort(
-              (a, b) => a.nombre > b.nombre
-            )
             state.productsData = response.data.data.productos.sort((a, b) => {
               if (a.nombre < b.nombre) return -1
               if (a.nombre > b.nombre) return 1
               return 0
             })
-            state.productsData.map(product => {
+            state.productsData.map(p => {
+              const product = p
               if (product.variantes.length) {
                 product.combinaciones = JSON.parse(
                   product.variantes[0].combinaciones[0].combinaciones
@@ -188,7 +184,9 @@ export default new Vuex.Store({
                 }
                 product.variantes = product.variantes[0].variantes
               }
-            })
+              return product
+            });
+            state.products.fullProducts = state.productsData
           }
           if (response.data.data.categorias.length) {
             state.categorias = response.data.data.categorias
@@ -250,5 +248,8 @@ export default new Vuex.Store({
           state.components = components
         })
     }
+  },
+  modules: {
+    products,
   }
 })

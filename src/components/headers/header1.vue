@@ -31,7 +31,7 @@
             </ul>
           </el-popover>
         </div>
-        <a :href="`http://login.komercia.co/auth?from=${storeData.subdominio}&path=${$route.path}`" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a>
+        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a>
         <div class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></div>
         <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
@@ -107,6 +107,10 @@ export default {
     },
     style () {
       return this.$store.state.styleData
+    },
+    urlLogin () {
+      const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
+      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
     }
   },
   methods: {

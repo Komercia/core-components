@@ -5,7 +5,7 @@
   </div>
   <div class="item item_content">
     <div class="item texto">
-      <h1>{{ setting.data[0].title }}</h1>
+      <h2>{{ setting.data[0].title }}</h2>
       <p>{{ setting.data[0].description }}</p>
       <a :href="setting.data[0].redirect_url">
         <button class="button">{{setting.data[0].button_text}}</button>
@@ -14,7 +14,7 @@
   </div>
   <div class="item item_content item_last">
     <div class="item texto">
-      <h1>{{ setting.data[1].title }}</h1>
+      <h2>{{ setting.data[1].title }}</h2>
       <p>{{ setting.data[1].description }}</p>
       <a :href="setting.data[1].redirect_url">
         <button class="button">{{setting.data[1].button_text}}</button>
@@ -64,17 +64,19 @@ export default {
   grid-template: repeat(2, 1fr)/repeat(2, 1fr);
   max-width: 1366px;
   margin: 0 auto;
-
 }
 .item{
   font-size: 12px;
 }
 .item .texto{
-  max-width: 250px;
+  max-width: 400px;
   width: 100%;
   text-align: justify;
   line-height: 22px;
-  font-size: 15px;
+  font-size: 16px;
+  padding: 20px;
+  box-sizing: border-box;
+  color: var(--text_color);
 }
 .item .button{
   font-weight: bold;
@@ -101,9 +103,10 @@ export default {
   width: 100%;
   z-index: 1;
 }
-h1{
+h2{
   margin-top: 0px;
   margin-bottom: 10px;
+  font-size: 20px;
 }
 .item_content{
   display: grid;
@@ -112,7 +115,7 @@ h1{
   overflow: hidden;
 
 }
-@media screen and (max-width:800px) {
+@media screen and (max-width: 800px) {
   .container{
     grid-template: repeat(4, 1fr)/ 1fr;
     max-height: 50%;
@@ -122,7 +125,11 @@ h1{
   }
   .item .texto{
     width: initial;
-    padding: 25px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .item .texto{
+    font-size: 14px;
   }
 }
 </style>

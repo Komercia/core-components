@@ -8,7 +8,7 @@
     </div>
     <nav class="container-menu-footer-list">
       <ul class="menu-footer-list">
-        <li v-for='(item, index) in routesFooter' :key='index' class="menu-footer"><router-link class="menu-footer-link" :to="item.route">{{item.name}}</router-link></li>
+        <li v-for='(item, index) in routesFooter' v-show="activeRoute(item)" :key='index' class="menu-footer"><router-link class="menu-footer-link" :to="item.route">{{item.name}}</router-link></li>
       </ul>
     </nav>
   </footer>
@@ -40,7 +40,14 @@ export default {
       return this.$store.state.tienda;
     },
   },
-
+  methods: {
+    activeRoute (item) {
+      if (item.name != 'Sobre nosotros') {
+        return true
+      }
+      return !!(this.info.nosotros || this.info.mision || this.info.vision)
+    }
+  }
 }
 </script>
 

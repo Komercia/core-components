@@ -8,7 +8,7 @@
         <input type="text" placeholder="Nombres" v-model="nombre">
         <input type="text" placeholder="Correo electrónico" v-model="email">
         <input type="text" placeholder="Celular" v-model="numberphone">
-        <textarea rows="8" placeholder="Comentrario" v-model="comment"></textarea>
+        <textarea rows="8" placeholder="Comentario" v-model="comment"></textarea>
         <button class="submitContact" v-on:click="submitContact">Enviar</button>
       </div>
     </div>

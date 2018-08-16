@@ -30,7 +30,7 @@
           <ko-product-card v-for="product in filterProduct" :key="product.id" :data="product" />
         </div>
         <div class="product_pagination" v-if="products.length > 12">
-          <el-pagination background layout="prev, pager, next" :total="products.length" :current-page.sync="currentPage">
+          <el-pagination background layout="prev, pager, next" :page-size="12" :total="products.length" :current-page.sync="currentPage">
           </el-pagination>
         </div>
       </div>
@@ -45,9 +45,12 @@ import koSearcher from '../_components/searcher'
 export default {
   name: 'koProductList2',
   components: { KoProductCard, koCategories, koSearcher },
-  mounted() {
-    if (this.$store.state.productsData) {
-      this.products = this.$store.state.productsData
+  created () {
+    this.$store.dispatch('products/SET_FILTER', this.$route.query)
+  },
+  mounted () {
+    if (this.$store.getters['products/filterProducts']) {
+      this.products = this.$store.getters['products/filterProducts']
       let maxTMP = 0
       this.products.forEach(product => {
         if (maxTMP <= product.precio) {
@@ -61,22 +64,12 @@ export default {
   data() {
     return {
       products: [],
-      active: false,
       price: [0, 1000000],
       range: {
         max: 0
       },
       currentPage: 1,
-      HigherOrLower: '',
-      options: {
-        shouldSort: true,
-        threshold: 0.6,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['nombre']
-      }
+      HigherOrLower: ''
     }
   },
   watch: {
@@ -109,10 +102,7 @@ export default {
   },
   computed: {
     Fullproducts() {
-      return this.$store.state.productsData
-    },
-    sizePagination() {
-      return Math.ceil(this.products.length / 12)
+      return this.$store.getters['products/filterProducts']
     },
     filterProduct() {
       const initial = this.currentPage * 12 - 12
@@ -121,37 +111,16 @@ export default {
     }
   },
   methods: {
-    Activeselect() {
-      this.active = !this.active
-    },
     Allcategories() {
-      this.products = this.$store.state.productsData
-      this.active = !this.active
       this.currentPage = 1
     },
     Searchproduct(search) {
-      if (search != '') {
-        this.$search(search, this.Fullproducts, this.options).then(results => {
-          this.products = results
-          this.active = !this.active
-        })
-      } else {
-        this.products = this.$store.state.productsData
-      }
       this.currentPage = 1
     },
-    selectedCategory(value) {
-      this.products = this.Fullproducts.filter(
-        product => product.categoria === value
-      )
-      this.active = !this.active
+    selectedCategory (value) {
       this.currentPage = 1
     },
     selectedSubCategory(value) {
-      this.products = this.Fullproducts.filter(
-        product => product.subcategoria === value
-      )
-      this.active = !this.active
       this.currentPage = 1
     },
     filterRange() {

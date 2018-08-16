@@ -1,7 +1,7 @@
 <template>
   <div class="product-list">
     <div class="header">
-      {{select}}
+      {{ selectedType == 'category' ? selectedCategory : 'productos' }}
     </div>
     <div class="container-grid">
       <div class="products">
@@ -21,12 +21,8 @@
           </div>
           <!-- end input -->
           <div class="container">
-            <div class="grid-products" v-if="select === 'productos'">
+            <div class="grid-products">
               <ko-card2 :product="product" class="card" v-for="product in filterProduct" :key="product.id" :data="product">
-              </ko-card2>
-            </div>
-            <div class="grid-products" v-else>
-              <ko-card2 :product="product" class="card" v-for="product in getProductsCategorie" :key="product.id">
               </ko-card2>
             </div>
           </div>
@@ -35,21 +31,13 @@
     </div>
     <div class="pagination-medium">
       <div class="product_pagination" v-if="products.length > 12">
-        <el-pagination layout="prev, pager, next" :total="products.length" :current-page.sync="currentPage" class="pagination">
-        </el-pagination>
-      </div>
-      <div class="product_pagination" v-else-if="productsCategory.length > 12">
-        <el-pagination layout="prev, pager, next" :total="productsCategory.length" :current-page.sync="currentPage" class="pagination">
+        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="12" :current-page.sync="currentPage" class="pagination">
         </el-pagination>
       </div>
     </div>
     <div class="pagination-small">
       <div class="product_pagination" v-if="products.length > 12">
-        <el-pagination layout="prev, pager, next" :total="products.length" :current-page.sync="currentPage" class="pagination" :small=true>
-        </el-pagination>
-      </div>
-      <div class="product_pagination" v-else-if="productsCategory.length > 12">
-        <el-pagination layout="prev, pager, next" :total="productsCategory.length" :current-page.sync="currentPage" class="pagination" :small=true>
+        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="12" :current-page.sync="currentPage" class="pagination" :small="true">
         </el-pagination>
       </div>
     </div>
@@ -65,9 +53,12 @@ import koCard2 from '../_productCard/product-card2'
 export default {
   name: 'koProductList3',
   components: { koCard2 },
+  created() {
+    this.$store.dispatch('products/SET_FILTER', this.$route.query)
+  },
   mounted() {
-    if (this.$store.state.productsData) {
-      this.products = this.$store.state.productsData
+    if (this.$store.getters['products/filterProducts']) {
+      this.products = this.$store.getters['products/filterProducts']
       let maxTMP = 0
       this.products.forEach(product => {
         if (maxTMP <= product.precio) {
@@ -81,34 +72,30 @@ export default {
   data() {
     return {
       add: true,
-      select: 'productos',
       search: '',
       productsCategory: [],
       products: [],
-      active: false,
       price: [0, 1000000],
       range: {
         max: 0
       },
-      currentPage: 1,
-      HigherOrLower: '',
-      options: {
-        shouldSort: true,
-        threshold: 0.6,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['nombre']
-      }
+      currentPage: 1
     }
   },
   watch: {
+    Fullproducts(value) {
+      this.products = value
+      let maxTMP = 0
+      value.forEach(product => {
+        if (maxTMP <= product.precio) {
+          this.price[1] = product.precio
+          this.range.max = parseInt(product.precio)
+          maxTMP = product.precio
+        }
+      })
+    },
     search(value) {
       this.Searchproduct(value)
-    },
-    Fullproducts() {
-      this.Searchproduct('')
     },
     currentPage() {
       setTimeout(() => {
@@ -118,13 +105,10 @@ export default {
   },
   computed: {
     Fullproducts() {
-      return this.$store.state.productsData
+      return this.$store.getters['products/filterProducts']
     },
     categorias() {
       return this.$store.state.categorias
-    },
-    productsData() {
-      return this.$store.state.productsData
     },
     getProductsCategorie() {
       const initial = this.currentPage * 12 - 12
@@ -133,39 +117,33 @@ export default {
         product => product.categoria == this.select
       ).slice(initial, final)
     },
-    sizePagination() {
-      return Math.ceil(this.products.length / 12)
-    },
     filterProduct() {
       const initial = this.currentPage * 12 - 12
       const final = initial + 12
       return this.products.slice(initial, final)
+    },
+    selectedCategory () {
+      return this.$store.state.products.payload
+    },
+    selectedType () {
+      return this.$store.state.products.type
     }
   },
   methods: {
     selected(name) {
       this.addClass()
-      this.productsCategory = this.Fullproducts.filter(
-        product => product.categoria == name.nombre_categoria_producto
-      )
-      this.products = []
+      this.$store.dispatch('products/FILTER_BY', {type:'category', data: name.nombre_categoria_producto})
       this.currentPage = 1
-      this.select = name.nombre_categoria_producto
     },
     Allcategories() {
-      this.products = this.$store.state.productsData
-      this.active = !this.active
+      this.$store.dispatch('products/FILTER_BY', {type:'all', data: ''})
       this.currentPage = 1
     },
     Searchproduct(search) {
-      this.select = 'productos'
-      if (search != '') {
-        this.$search(search, this.Fullproducts, this.options).then(results => {
-          this.products = results
-          this.active = !this.active
-        })
+      if (search.length) {
+        this.$store.dispatch('products/FILTER_BY', {type:'search', data: search})
       } else {
-        this.products = this.Fullproducts
+        this.$store.dispatch('products/FILTER_BY', {type:'all', data: ''})
       }
       this.currentPage = 1
     },
@@ -264,7 +242,7 @@ export default {
   justify-content: flex-end;
   grid-row-gap: 5px;
   margin: 20px;
-  /* width: 250px; */
+   /*width: 250px;*/
 }
 .ko-input input {
   width: 100%;
