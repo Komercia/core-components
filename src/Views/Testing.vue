@@ -1,10 +1,12 @@
 <template>
   <div class="testing">
     <Menu/>
-    <!-- <ko-slider2/> -->
-    <ko-slider3/>
+    <ko-slider2/>
+    <!-- <ko-slider3/> -->
     <grid2/>
+    <product1/>
     <product-list3/>
+    <newsletter1/>
     <footer3/>
   </div>
 </template>
@@ -13,11 +15,22 @@
 import Menu from '../components/headers/header4'
 import koSlider2 from '../components/sliders/slider2'
 import koSlider3 from '../components/sliders/slider3'
+import Product1 from '../components/products/product1'
 import ProductList3 from '../components/product_lists/product_list3'
 import Grid2 from '../components/grids/grid2'
+import Newsletter1 from '../components/newsletters/newsletter1'
 import Footer3 from '../components/footers/footer3'
 export default {
-  components: { Menu, Grid2, koSlider2, koSlider3, ProductList3, Footer3 }
+  components: {
+    Menu,
+    Grid2,
+    koSlider2,
+    koSlider3,
+    ProductList3,
+    Product1,
+    Newsletter1,
+    Footer3
+  }
 }
 </script>
 
