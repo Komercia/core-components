@@ -95,7 +95,7 @@ import koModal from '../_components/modal.vue'
 import koRadioGroup from '../_components/radioGroup'
 
 export default {
-  // name: 'koProduct1',
+  name: 'koProduct2',
   components: { zoomed, productSlide, koModal, koRadioGroup },
   created() {
     this.$store.state.beforeCombination = []

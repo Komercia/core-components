@@ -28,43 +28,57 @@
             <!-- <p class="colorTexto" v-show="salesData.precio"></p> -->
           </div>
           <div class="line"></div>
-          <p>
-            <strong>{{ data.info.marca }}</strong>
-          </p>
-          <!-- <p>{{beforeCombination}}</p> -->
+
+          <div class="quantity item-product" v-show="!spent">
+            <p class="name-item">Cantidad:</p>
+            <!-- <el-input-number v-model="quantityValue" @change="handleChange" :min="1" :max="maxQuantityValue"></el-input-number> -->
+
+            <div class="ko-input">
+              <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue">
+              <div class="icons-arrows">
+                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
+                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
+              </div>
+              <transition name="slide-fade">
+                <div class="container-alert" v-show="quantityValue == maxQuantityValue">
+                  <span class="alert">última Unidad!
+                    <div class="arrow"></div>
+                  </span>
+                </div>
+              </transition>
+            </div>
+          </div>
+          <div class="marca item-product" v-show="data.info.marca">
+            <p class="name-item">Marca:</p>
+            <span>{{ data.info.marca.toLowerCase() }}</span>
+          </div>
+          <div class="marca item-product" v-show="data.detalle.categoria_producto.nombre_categoria_producto">
+            <p class="name-item">Categoria:</p>
+            <span>{{ data.detalle.categoria_producto.nombre_categoria_producto.toLowerCase() }}</span>
+          </div>
           <div class="content_variant">
-            <div class="content_variant_item" v-for="(variant, index) in data.variantes">
+            <div class="content_variant_item item-product" v-for="(variant, index) in data.variantes">
               <label>{{ variant.nombre }}:</label>
               <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
-          <div :class="{content_buy: true, disabled: !salesData.estado}">
+          <div class="item-product" :class="{content_buy: true, disabled: !salesData.estado}">
             <button type="button" name="button">No esta disponible</button>
             <div>
-              <div class="quantity" v-show="!spent">
-                <em>Cantidad:</em>
-                <button class="quantity_remove" v-on:click="removeQuantity()">
-                  <i class="material-icons">remove</i>
-                </button>
-                <p class="quantity_value"> {{ quantityValue }}</p>
-                <button class="quantity_add" v-on:click="addQuantity()">
-                  <i class="material-icons">add</i>
-                </button>
-                <!-- <p class="quantity_available" v-if="evalStock(maxQuantityValue, quantityValue)">{{ maxQuantityValue - quantityValue }} disponibles</p> -->
-              </div>
               <div class="content_buy_action">
                 <button v-if="spent" class="spent">Producto agotado
-                  <i class="material-icons">add_shopping_cart</i>
+                  <i class="icon-shopping-basket"></i>
                 </button>
-                <button v-else v-on:click="addShoppingCart">Agregar
-                  <i class="material-icons">add_shopping_cart</i>
+                <button v-else v-on:click="addShoppingCart">
+                  <i class="icon-shopping-basket"></i>
+                  Añadir al carrito
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="section">
+      <!-- <div class="section">
         <div class="content_desc" v-if="data.info.descripcion && data.info.descripcion.length > 12">
           <h3>Descripción del producto</h3>
           <div v-html="data.info.descripcion"></div>
@@ -86,7 +100,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -95,7 +109,7 @@ import axios from 'axios'
 import zoomed from '../_components/zoomed.vue'
 import productSlide from '../_components/productSlide.vue'
 import koModal from '../_components/modal.vue'
-import koRadioGroup from '../_components/radioGroup'
+import koRadioGroup from '../_components/radioGroup2'
 
 export default {
   name: 'koProduct1',
@@ -114,6 +128,7 @@ export default {
   data() {
     return {
       data: {},
+      num1: 1,
       selectPhotoUrl: '',
       idYoutube: '',
       existYoutube: false,
@@ -136,6 +151,11 @@ export default {
     },
     envios(value) {
       this.setOptionEnvio()
+    },
+    quantityValue(value) {
+      if (value > this.maxQuantityValue) {
+        this.quantityValue = this.maxQuantityValue
+      }
     },
     beforeCombination(value) {
       const combinationSelected = JSON.stringify(value)
@@ -212,6 +232,9 @@ export default {
     }
   },
   methods: {
+    handleChange(value) {
+      console.log(value)
+    },
     searchIdForSlug() {
       const product = this.productsData.filter(
         product => product.slug === this.$route.params.slug
@@ -458,6 +481,9 @@ export default {
   flex-direction: column;
   box-sizing: border-box;
   padding: 15px;
+  text-transform: uppercase;
+  color: #333;
+  font-size: 14px;
   /* box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05); */
 }
 i.close {
@@ -489,10 +515,11 @@ i.close {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin: 7px 0;
 }
 .content_buy.disabled > button {
+  width: 200px;
   position: absolute;
   display: flex;
   background-color: #fff;
@@ -511,7 +538,7 @@ i.close {
 .content_buy_price {
   display: flex;
   align-items: flex-end;
-  margin: 10px 0;
+  /* margin: 10px 0; */
 }
 .content_buy_price h3 {
   font-weight: normal;
@@ -523,22 +550,23 @@ i.close {
   color: var(--text_color);
 }
 .content_buy_action {
-  width: 100%;
   display: flex;
   justify-content: center;
   margin: 5px 0;
+  align-items: center;
 }
 .content_buy_action button {
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 5px 20px;
+  padding: 10px 20px;
   align-items: center;
   color: #fff;
   border-style: none;
   background-color: var(--main_color);
   font-size: 13px;
   cursor: pointer;
+  text-transform: uppercase;
   outline: none;
   transition: 0.3s;
 }
@@ -547,13 +575,14 @@ i.close {
   pointer-events: none;
 }
 .content_buy_action button:hover {
-  transform: scale(0.9);
+  /* transform: scale(0.9); */
 }
 .content_buy_action button i {
   font-size: 19px;
-  margin-left: 10px;
-  padding: 4px 0px;
-  padding-left: 10px;
+  margin-right: 10px;
+  /* padding: 4px 0px; */
+  /* padding-left: 10px; */
+  vertical-align: middle;
 }
 .content_desc {
   display: flex;
@@ -573,15 +602,16 @@ i.close {
 .content_variant {
   display: flex;
   flex-direction: column;
-  margin: 5px 0;
+  /* margin: 5px 0; */
 }
 .content_variant_item {
   display: flex;
   align-items: center;
 }
 .content_variant_item label {
-  margin-right: 10px;
+  /* margin-right: 10px; */
   color: #333;
+  width: 150px;
 }
 .quantity {
   width: 100%;
@@ -589,12 +619,12 @@ i.close {
   flex-wrap: wrap;
   /*justify-content: center;*/
   align-items: center;
-  margin: 5px;
+  /* margin: 5px; */
 }
-.quantity em {
-  text-align: center;
-  margin-right: 10px;
-  font-size: 13px;
+.quantity p {
+  /* text-align: center; */
+  /* margin-right: 10px; */
+  /* font-size: 13px; */
   font-style: normal;
 }
 .quantity_remove,
@@ -697,6 +727,84 @@ i.close {
 .line {
   width: 100%;
   border-top: 1px solid #eee;
+  margin: 20px 0;
+}
+.ko-input {
+  position: relative;
+  width: 100px;
+}
+.ko-input input {
+  padding: 12px 0 12px 12px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  width: 100%;
+  box-sizing: border-box;
+}
+.ko-input input:focus {
+  outline: none;
+}
+.icons-arrows {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-left: 1px solid #eee;
+  height: 100%;
+  width: 30px;
+  justify-content: space-around;
+  align-items: center;
+}
+.icons-arrows i {
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text_color);
+  opacity: 0.5;
+}
+.icons-arrows i:hover {
+  color: var(--text_color);
+  opacity: 1;
+}
+.item-product {
+  margin-bottom: 30px;
+  display: flex;
+}
+.item-product span {
+  font-size: 14px;
+  text-transform: capitalize !important;
+  color: #999;
+}
+.name-item {
+  width: 150px;
+  display: inline-block;
+}
+.container-alert {
+  position: absolute;
+  top: -60px;
+  right: 0;
+  width: 80px;
+  background-color: var(--background_color);
+  border: 1px solid #eee;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.alert {
+  text-align: center;
+  padding: 5px 5px;
+  text-transform: capitalize;
+}
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid rgb(231, 231, 231);
+  position: absolute;
+  bottom: -10px;
+  /* border: 1px solid #eee; */
 }
 @media (max-width: 1150px) {
   .section:nth-child(2) {
