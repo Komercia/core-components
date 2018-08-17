@@ -51,9 +51,42 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .footer{
+    width: 100%;
+    height: 150px;
     flex: none;
     background-color: var(--main_color);
+    margin-top: 20px;
+  }
+  .footer-container-icons {
+    display: flex;
+    justify-content: center;
+    padding: 25px 40px;
+  }
+  .footer-container-icons .footer-icon {
+    color: rgba(254, 254, 254, 0.667);
+  }
+  .footer-container-icons .footer-icon ~ .footer-icon {
+    padding-left: 20px;
+  }
+  .footer-container-icons .icon {
+    font-size: 20px;
+  }
+  .menu-footer-list {
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .menu-footer-link {
+    color: rgba(254, 254, 254, 0.667);
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .container-menu-footer-list {
+    display: flex;
+    justify-content: center;
   }
 </style>
