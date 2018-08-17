@@ -216,7 +216,7 @@ h1 {
 }
 .icon-top-menu {
   padding: 0 5px;
-  color: rgb(206, 206, 206);
+  color: rgb(144, 145, 148);
   font-size: 20px;
 }
 .container-icons {
@@ -316,7 +316,7 @@ h1 {
     padding-top: 100px;
   }
   .main-menu-link {
-    color:  rgb(206, 206, 206);
+    color: rgb(144, 145, 148);
     width: 100%;
   }
   .main-menu {
