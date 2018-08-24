@@ -22,18 +22,30 @@
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
           <div class="content_buy_price">
-            <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}
+            <h3 class="colorTexto price" v-show="salesData.precio">${{ salesData.precio | currency }}
               <span>COP</span>
             </h3>
-            <!-- <p class="colorTexto" v-show="salesData.precio"></p> -->
+            <div class="shipping" v-if="envio.titulo == 'Envío gratis'">
+              <i class="icon-023-free-delivery"></i>
+              <p>{{envio.titulo}}</p>
+            </div>
+            <div class="shipping" v-if="envio.titulo == 'Tarifa por precio'">
+              <i class="icon-019-fast-delivery"></i>
+              <p v-if="priceShipping != 0">Envío: ${{priceShipping | currency}} COP</p>
+              <p v-else>Envío Gratis</p>
+            </div>
+            <div class="shipping" v-if="envio.titulo == 'Tarifa plana'">
+              <i class="icon-019-fast-delivery"></i>
+              <p>Envío: ${{envios.valores.valor | currency}} COP</p>
+            </div>
           </div>
           <div class="line"></div>
 
-          <div class="quantity item-product" v-show="!spent">
+          <div class="quantity item-product">
             <p class="name-item">Cantidad:</p>
             <!-- <el-input-number v-model="quantityValue" @change="handleChange" :min="1" :max="maxQuantityValue"></el-input-number> -->
 
-            <div class="ko-input">
+            <div class="ko-input" v-if="spent">
               <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue">
               <div class="icons-arrows">
                 <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
@@ -42,6 +54,21 @@
               <transition name="slide-fade">
                 <div class="container-alert" v-show="quantityValue == maxQuantityValue">
                   <span class="alert">última Unidad!
+                    <div class="arrow"></div>
+                  </span>
+                </div>
+              </transition>
+            </div>
+
+            <div class="ko-input" v-else>
+              <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue" disabled>
+              <div class="icons-arrows">
+                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
+                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
+              </div>
+              <transition name="slide-fade">
+                <div class="container-alert" v-show="salesData.estado == false">
+                  <span class="alert not-available">No disponible
                     <div class="arrow"></div>
                   </span>
                 </div>
@@ -57,17 +84,37 @@
             <span>{{ data.detalle.categoria_producto.nombre_categoria_producto.toLowerCase() }}</span>
           </div>
           <div class="content_variant">
-            <div class="content_variant_item item-product" v-for="(variant, index) in data.variantes">
+            <div class="content_variant_item item-product" v-for="(variant, index) in data.variantes" :key="index">
               <label>{{ variant.nombre }}:</label>
               <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
+          <!-- <div class="content_variant">
+            <p class="name-item">Compartir:</p>
+            <social-sharing :url="url" :title="data.detalle.nombre" :description="data.info.descripcion" :quote="data.info.descripcion" :hashtags="`${data.info.marca}, ${data.detalle.categoria_producto.nombre_categoria_producto}, ${data.detalle.subcategoria_producto.nombre_subcategoria}`" inline-template v-cloak>
+              <div>
+                <network network="facebook">
+                  <i class="fa fa-fw fa-facebook"></i>
+                </network>
+                <network network="pinterest">
+                  <i class="fa fa-fw fa-pinterest"></i>
+                </network>
+                <network network="twitter">
+                  <i class="fa fa-fw fa-twitter"></i>
+                </network>
+                <network network="whatsapp">
+                  <i class="fa fa-fw fa-whatsapp"></i>
+                </network>
+              </div>
+            </social-sharing>
+          </div> -->
           <div class="item-product" :class="{content_buy: true, disabled: !salesData.estado}">
-            <button type="button" name="button">No esta disponible</button>
+            <!-- <button type="button" name="button">No esta disponible</button> -->
             <div>
               <div class="content_buy_action">
-                <button v-if="spent" class="spent">Producto agotado
+                <button v-if="!spent" class="spent">
                   <i class="icon-shopping-basket"></i>
+                  Producto agotado
                 </button>
                 <button v-else v-on:click="addShoppingCart">
                   <i class="icon-shopping-basket"></i>
@@ -75,6 +122,7 @@
                 </button>
               </div>
             </div>
+            <p v-if="precio == 0 || !precio" class="quotation">Añada al carrito para agregar a la lista y recibir tu cotización</p>
           </div>
         </div>
       </div>
@@ -101,6 +149,8 @@
           </div>
         </div>
       </div> -->
+      <ko-description :data="data" :envio="envio"> </ko-description>
+      <ko-related/>
     </div>
   </div>
 </template>
@@ -110,10 +160,19 @@ import zoomed from '../_components/zoomed.vue'
 import productSlide from '../_components/productSlide.vue'
 import koModal from '../_components/modal.vue'
 import koRadioGroup from '../_components/radioGroup2'
+import koDescription from '../_components/descriptionProduct2'
+import koRelated from '../_components/related-products'
 
 export default {
   name: 'koProduct1',
-  components: { zoomed, productSlide, koModal, koRadioGroup },
+  components: {
+    zoomed,
+    productSlide,
+    koModal,
+    koRadioGroup,
+    koDescription,
+    koRelated
+  },
   created() {
     this.$store.state.beforeCombination = []
     if (this.$store.state.productsData.length) {
@@ -198,6 +257,9 @@ export default {
     }
   },
   computed: {
+    url() {
+      return window.location.href
+    },
     productsData() {
       return this.$store.state.productsData
     },
@@ -229,6 +291,27 @@ export default {
           .toString()
           .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
+    },
+    priceShipping() {
+      let value = 0
+      if (this.envios.valores.envio_metodo != null) {
+        if (this.envios.valores.envio_metodo == 'precio') {
+          console.log(this.salesData.precio)
+          let rangos = this.envios.valores.rangos.filter(
+            r =>
+              r.inicial <= this.salesData.precio &&
+              r.final >= this.salesData.precio
+          )
+          // si no exiten rangos
+          if (rangos.length == 0) {
+            value = 0
+            // Existen rangos
+          } else {
+            value = rangos[0].precio
+          }
+        }
+      }
+      return value
     }
   },
   methods: {
@@ -415,6 +498,7 @@ export default {
 }
 </script>
 <style scoped>
+@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';
 .wrapper {
   max-width: 1200px;
   width: 100%;
@@ -427,10 +511,11 @@ export default {
 .section {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 40px;
 }
 .photos {
   max-width: 650px;
-  flex: 1;
+  flex: 1.4;
   display: flex;
   justify-content: flex-start;
   /* align-items: center; */
@@ -458,13 +543,12 @@ export default {
   color: #494949;
 }
 .photo_main {
-  max-width: 485px;
+  max-width: 100%;
   max-height: 640px;
   height: 100%;
-  /* flex: 1; */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   /* margin-right: 10px; */
   /* border: 1px solid #eee; */
 }
@@ -480,10 +564,11 @@ export default {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 0 15px 15px 30px;
   text-transform: uppercase;
   color: #333;
   font-size: 14px;
+  flex: 0.6;
   /* box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05); */
 }
 i.close {
@@ -492,11 +577,11 @@ i.close {
   cursor: pointer;
 }
 .content_name {
-  font-weight: normal;
+  font-weight: 600;
   font-size: 20px;
   color: var(--text_color);
-  margin: 7px 0;
   text-transform: uppercase;
+  line-height: 1;
 }
 .content_buy {
   flex: none;
@@ -530,19 +615,18 @@ i.close {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.07);
   z-index: 2;
 }
-.content_buy.disabled > div {
+/* .content_buy.disabled > div {
   pointer-events: none;
   filter: blur(5px);
   opacity: 0.2;
-}
+} */
 .content_buy_price {
-  display: flex;
+  display: grid;
   align-items: flex-end;
-  /* margin: 10px 0; */
 }
 .content_buy_price h3 {
-  font-weight: normal;
-  font-size: 20px;
+  font-weight: 300;
+  font-size: 18px;
   color: var(--text_color);
 }
 .content_buy_price p {
@@ -569,13 +653,16 @@ i.close {
   text-transform: uppercase;
   outline: none;
   transition: 0.3s;
-}
-.content_buy_action button.spent {
-  background-color: #b0b0b0;
-  pointer-events: none;
+  transition: all 0.2s ease;
 }
 .content_buy_action button:hover {
-  /* transform: scale(0.9); */
+  /* box-shadow: 3px 4px 10px -2px rgba(0, 0, 0, 0.288); */
+  transform: scale(1.02);
+}
+.content_buy_action button.spent {
+  background-color: #eee;
+  pointer-events: none;
+  color: #333;
 }
 .content_buy_action button i {
   font-size: 19px;
@@ -727,7 +814,7 @@ i.close {
 .line {
   width: 100%;
   border-top: 1px solid #eee;
-  margin: 20px 0;
+  margin: 0 0 20px 0;
 }
 .ko-input {
   position: relative;
@@ -804,7 +891,35 @@ i.close {
   border-top: 10px solid rgb(231, 231, 231);
   position: absolute;
   bottom: -10px;
-  /* border: 1px solid #eee; */
+}
+input[type='text']:disabled {
+  background: #eee;
+}
+.not-available {
+  color: #ffafaf !important;
+}
+.quotation {
+  font-size: 12px;
+  text-transform: initial !important;
+  color: #999;
+  text-align: left;
+  align-self: flex-start;
+}
+.price {
+  font-size: 14px;
+}
+.shipping p {
+  font-size: 12px;
+  color: #999;
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 5px;
+}
+.shipping i {
+  font-size: 20px;
+  vertical-align: middle;
+  color: rgb(0, 162, 255);
+  padding-right: 5px;
 }
 @media (max-width: 1150px) {
   .section:nth-child(2) {

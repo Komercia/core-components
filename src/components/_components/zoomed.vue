@@ -1,6 +1,6 @@
 <template>
   <figure class="zoom" :style="setBackground(photo)" v-on:mousemove="zoom">
-    <img :src="photo" class="photo_main">
+    <image-cloudinary :src="photo" class="photo_main" />
   </figure>
 </template>
 
