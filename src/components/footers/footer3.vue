@@ -172,7 +172,6 @@ footer {
   padding: 40px 0;
   margin: 0 auto;
   flex-wrap: wrap;
-  background-color: transparent;
 }
 .logo {
   width: 80px;
