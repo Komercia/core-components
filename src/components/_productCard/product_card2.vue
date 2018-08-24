@@ -1,11 +1,11 @@
 <template>
-  <router-link :to="`/productos/${product.slug}`" class="product-card">
+  <router-link :to="`/productos/${data.slug}`" class="card product-card">
     <div class="img-product">
-      <image-cloudinary :src="product.foto_cloudinary" />
+      <image-cloudinary :src="data.foto_cloudinary" />
     </div>
     <div class="description-product">
-      <p class="name-product">{{product.nombre.slice(0,25).toLowerCase()}}</p>
-      <p class="price">{{product.precio | currency}}
+      <p class="name-product">{{data.nombre.slice(0,25).toLowerCase()}}</p>
+      <p class="price">{{data.precio | currency}}
         <!-- <s>{{ product.precio * 1.2 | currency }}</s> -->
       </p>
     </div>
@@ -14,9 +14,8 @@
 
 <script>
 export default {
-  props: {
-    product: {}
-  },
+  name: "koProductCard2",
+  props: ["data"],
   filters: {
     currency(value) {
       if (value) {
@@ -28,6 +27,14 @@ export default {
 </script>
 
 <style scoped>
+.card {
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 1px solid var(--button_color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .img-product {
   flex: 1;
   width: 100%;

@@ -7,7 +7,7 @@
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.marca}}</div>
       <div class="price">{{data.precio | currency}}</div>
-      <button class="btn-product" type="button" name="button">
+      <button class="btn-product g-btn" type="button" name="button">
         <a>Ir al Producto</a>
       </button>
     </div>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "koProductCard1",
   props: ["data"],
   data() {
     return {};
@@ -75,14 +75,15 @@ export default {
 .btn-product {
   display: flex;
   margin-top: 15px;
-  background-color: var(--button_color);
-  border: 0;
+  background-color: #f9f9f9;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
   cursor: pointer;
   padding: 0;
+  color: #555555;
 }
 .btn-product a {
   padding: 10px 30px;
-  color: var(--button_text_color);
 }
 .name-product {
   text-align: center;
