@@ -6,7 +6,7 @@
     <div class="container-grid">
       <div class="products">
         <div class="left" :class="{ 'left-categories': true, hidden: add}">
-          <div class="categories">
+          <div class="categories g-card">
             <h3 class="title-categories">Categorias</h3>
             <ul class="list-categories">
               <li class="item-categorie" @click="selected(categoria)" v-for="categoria in categorias" :key="categoria.id">{{categoria.nombre_categoria_producto}}</li>
@@ -22,8 +22,8 @@
           <!-- end input -->
           <div class="container">
             <div class="grid-products">
-              <ko-card2 :product="product" class="card" v-for="product in filterProduct" :key="product.id" :data="product">
-              </ko-card2>
+              <div :is="selectedCard" v-for="product in filterProduct" :key="product.id" :data="product">
+              </div>
             </div>
           </div>
         </div>
@@ -49,10 +49,8 @@
 </template>
 
 <script>
-import koCard2 from '../_productCard/product-card2'
 export default {
   name: 'koProductList3',
-  components: { koCard2 },
   created() {
     this.$store.dispatch('products/SET_FILTER', this.$route.query)
   },
@@ -104,6 +102,9 @@ export default {
     }
   },
   computed: {
+    selectedCard () {
+      return this.$store.state.selectedCard
+    },
     Fullproducts() {
       return this.$store.getters['products/filterProducts']
     },
@@ -220,14 +221,6 @@ export default {
   grid-gap: 20px;
   padding: 0 20px;
   box-sizing: border-box;
-}
-.card {
-  background-color: #fff;
-  box-sizing: border-box;
-  border: 1px solid var(--button_color);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 .product-list {
   display: flex;

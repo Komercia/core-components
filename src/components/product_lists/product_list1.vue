@@ -6,7 +6,7 @@
       :per="12"
       tag="div"
       class="product_list">
-      <ko-product-card v-for="product in paginated('products')" :key="product.id" :data="product" />
+      <div :is="selectedCard" v-for="product in paginated('products')" :key="product.id" :data="product"></div>
     </paginate>
     <paginate-links
       v-if="products.length > 13"
@@ -18,16 +18,17 @@
 </template>
 
 <script>
-import KoProductCard from '../_productCard/product-card';
 export default {
   name: 'KoProductList1',
-  components: { KoProductCard },
   data() {
     return {
       paginate: ['products'],
     }
   },
   computed: {
+    selectedCard () {
+      return this.$store.state.selectedCard
+    },
     products() {
       return this.$store.state.productsData;
     },

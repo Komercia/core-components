@@ -16,6 +16,9 @@ import Grid1 from './components/grids/grid1'
 import Grid2 from './components/grids/grid2'
 import ProductList1 from './components/product_lists/product_list1'
 import ProductList2 from './components/product_lists/product_list2'
+import ProductList3 from './components/product_lists/product_list3'
+import ProductCard1 from './components/_productCard/product_card1'
+import ProductCard2 from './components/_productCard/product_card2'
 import Newsletter from './components/newsletters/newsletter1'
 import Footer1 from './components/footers/footer1'
 import Footer2 from './components/footers/footer2'
@@ -41,12 +44,15 @@ const components = [
   Grid1,
   Grid2,
   ProductList1,
+  ProductList2,
+  ProductList3,
+  ProductCard1,
+  ProductCard2,
   Newsletter,
   Footer1,
   Footer2,
   Footer3,
   Order1,
-  ProductList2,
   Video1
 ]
 

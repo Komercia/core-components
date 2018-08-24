@@ -1,6 +1,6 @@
 <template>
   <div class="product_list">
-    <div class="filter_column">
+    <div class="filter_column g-card">
       <koSearcher @searcher="Searchproduct" />
       <div class="lateral">
         <koCategories @selectionSubcategory="selectedSubCategory" @selectionCategory="selectedCategory" @clear="Allcategories" />
@@ -27,7 +27,7 @@
     <div class="products">
       <div class="product_list_wrapper" v-if="products.length">
         <div class="products_list">
-          <ko-product-card v-for="product in filterProduct" :key="product.id" :data="product" />
+          <div :is="selectedCard" v-for="product in filterProduct" :key="product.id" :data="product"></div>
         </div>
         <div class="product_pagination" v-if="products.length > 12">
           <el-pagination background layout="prev, pager, next" :page-size="12" :total="products.length" :current-page.sync="currentPage">
@@ -39,12 +39,11 @@
 </template>
 
 <script>
-import KoProductCard from '../_productCard/product-card'
 import koCategories from '../_categories/categories_1'
 import koSearcher from '../_components/searcher'
 export default {
   name: 'koProductList2',
-  components: { KoProductCard, koCategories, koSearcher },
+  components: { koCategories, koSearcher },
   created () {
     this.$store.dispatch('products/SET_FILTER', this.$route.query)
   },
@@ -101,6 +100,9 @@ export default {
     }
   },
   computed: {
+    selectedCard () {
+      return this.$store.state.selectedCard
+    },
     Fullproducts() {
       return this.$store.getters['products/filterProducts']
     },

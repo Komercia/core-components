@@ -1,17 +1,17 @@
 <template>
     <div class="grid">
       <div v-for="product in products" :key="product.id"  class="grid-item">
-        <ko-product-card :data="product" />
+        <div :is="selectedCard" :data="product"></div>
       </div>
     </div>
 </template>
 <script>
-import KoProductCard from '../_productCard/product-card';
-
 export default {
   name: "koGrid1",
-  components: {KoProductCard},
   computed: {
+    selectedCard () {
+      return this.$store.state.selectedCard
+    },
     products() {
       return this.$store.state.productsData.slice(0,6);
     },

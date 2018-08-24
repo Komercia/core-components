@@ -8,17 +8,19 @@
       </ul>
     </nav>
     <div class="grid-products">
-      <ko-card2 :product="product" class="card" v-for="(product, index) in productsData.slice(0,5)" :key="index">
-      </ko-card2>
+      <div
+        :is="selectedCard"
+        :data="product"
+        v-for="(product, index) in productsData.slice(0,5)"
+        :key="index">
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import koCard2 from '../_productCard/product-card2'
 export default {
   name: 'koGrid2',
-  components: { koCard2 },
   props: {
     setting: {
       type: Object,
@@ -29,14 +31,8 @@ export default {
       }
     }
   },
-  created() {
-    if (this.$store.state.categorias.length) {
-      if (!this.setting.data.length) {
-        this.setting.data = this.$store.state.categorias
-          .slice(0, 4)
-          .map(category => category.nombre_categoria_producto)
-      }
-    }
+  created () {
+    this.select = this.setting.data[0]
   },
   data() {
     return {
@@ -44,6 +40,9 @@ export default {
     }
   },
   computed: {
+    selectedCard () {
+      return this.$store.state.selectedCard
+    },
     productsData() {
       return this.$store.state.productsData.filter(
         product => product.categoria == this.select
@@ -54,15 +53,8 @@ export default {
     }
   },
   watch: {
-    'setting.data': function(value) {
+    'setting.data': function (value) {
       this.select = value[0]
-    },
-    categories(value) {
-      if (!this.setting.data.length) {
-        this.setting.data = value
-          .slice(0, 4)
-          .map(category => category.nombre_categoria_producto)
-      }
     }
   },
   methods: {
