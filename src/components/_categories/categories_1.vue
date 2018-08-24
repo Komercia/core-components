@@ -3,7 +3,7 @@
     <div class="normal">
       <ul class="categories_list">
         <li
-          class="categories_item"
+          class="categories_item g-item"
           v-for="category in categories">
           <p @click="sendCategory(category.nombre_categoria_producto)">{{category.nombre_categoria_producto}}</p>
           <ul class="content">
@@ -16,7 +16,7 @@
           </ul>
         </li>
         <li
-          class="categories_item">
+          class="categories_item g-item">
           <p @click="clear">Todos los productos</p>
         </li>
       </ul>
