@@ -8,7 +8,19 @@
           </el-option>
         </el-select>
       </div>
+      <el-button type="primary" icon="el-icon-plus" @click="handleSetting"></el-button>
     </div>
+
+    <el-dialog title="Crear un ajuste nuevo" :visible.sync="dialogNewSettingVisible">
+      <el-select v-model="selectSection">
+        <el-option v-for="section in sections" :label="section.name" :value="section.type"></el-option>
+      </el-select>
+      <br>
+      <br>
+      <json-editor :onChange="onChange" :json="initialJson" />
+      <br>
+      <el-button type="primary" @click="createComponent">Crear</el-button>
+    </el-dialog>
 
     <div class="component_setting">
       <div v-if="settingData" :is="settingData.name" />
@@ -64,31 +76,47 @@
 
 <script>
 import { mapState } from 'vuex'
+import JSONEditor from 'vue2-jsoneditor'
 
 export default {
 name: "stage",
+components: {
+  'json-editor': JSONEditor
+},
 data() {
   return {
     id_store: 1,
+    dialogNewSettingVisible: false,
     selectComponent: "koHeader1",
     selectSetting: null,
     showSettingsButton: false,
     selectComponentAbove: "",
     selectComponentDown: "",
+    selectSection: "",
+    initialJson: {
+      label: '',
+      name: 'ko-',
+      setting: {
+        name: 'ko'
+      },
+      source: '',
+      type: ''
+    },
+    json: {},
     stores: [
       { value: 1, label: "Topalxe - 1" },
       { value: 290, label: "Prontodental - 290" },
       { value: 364, label: "Ace Delivery's - 364" },
       { value: 490, label: "Demo 7 - 490" },
       { value: 349, label: "Demo 1 - 349" },
-      { value: 576, label: "Helium - 576" },
+      { value: 595, label: "Europio - 595" },
       { value: 247, label: "TecnoAqua SAS - 247" },
       { value: 404, label: "XXX - 404" }
     ]
   };
 },
 computed: {
-  ...mapState(['components', 'settingData']),
+  ...mapState([ 'sections', 'components', 'settingData']),
   idTienda: {
     get() {
       return this.$store.state.idTienda;
@@ -113,6 +141,15 @@ watch: {
   }
 },
 methods: {
+  handleSetting() {
+    this.dialogNewSettingVisible = !this.dialogNewSettingVisible
+  },
+  onChange(newJson) {
+    this.json = newJson
+  },
+  createComponent() {
+    this.$store.dispatch('CREATE_COMPONENT', {newComponent: this.json, selectedSection: this.selectSection})
+  },
   hiddenSettings() {
     this.showSettingsButton == true
       ? (this.showSettingsButton = false)
@@ -126,7 +163,6 @@ methods: {
 </script>
 
 <style scoped>
-
 .el-slider__button-wrapper {
 z-index: 98 !important;
 }
