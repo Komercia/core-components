@@ -5,9 +5,9 @@
         <div class="section">
           <div class="photos">
             <div class="photos_selected">
-              <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover="selectedPhoto(data.detalle.foto_cloudinary)" />
-              <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
-              <image-cloudinary v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true" />
+              <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)" />
+              <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
+              <img v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
             </div>
             <div class="photo_main">
               <zoomed
