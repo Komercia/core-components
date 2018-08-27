@@ -15,6 +15,9 @@
         :key="index">
       </div>
     </div>
+    <router-link to="/productos">
+      <button class="btn-products">Ver más</button>
+    </router-link>
   </div>
 </template>
 
@@ -123,7 +126,24 @@ nav {
 .selected {
   border: 1px solid #333;
 }
-
+.btn-products {
+  width: 150px;
+  background-color: var(--background_color);
+  /* color: var(--button_text_color); */
+  border: 2px solid #ddd;
+  padding: 10px 30px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  margin: 40px auto;
+  text-transform: uppercase;
+  transition: 0.3s all ease;
+}
+.btn-products:hover {
+  background-color: var(--main_color);
+  border: 2px solid var(--main_color);
+  color: var(--background_color);
+}
 @media (max-width: 1660px) {
   .grid-products .card:nth-child(5) {
     display: none;

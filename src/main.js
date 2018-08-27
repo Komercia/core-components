@@ -17,6 +17,8 @@ import Settings from './settings'
 import IconBase from './Icons/IconBase'
 import firebase from './utils/connect_firebase'
 import KomerciaCropper from 'komercia-cropper'
+import SocialSharing from 'vue-social-sharing'
+import Meta from 'vue-meta'
 
 Vue.prototype.$firebase = firebase
 
@@ -29,6 +31,9 @@ Vue.use(Vuex)
 Vue.use(ImageCloudinary)
 Vue.use(KomerciaCropper)
 Vue.config.productionTip = false
+
+Vue.use(SocialSharing)
+Vue.use(Meta)
 
 Vue.use(elementUI, { locale })
 

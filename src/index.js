@@ -5,6 +5,7 @@ import Header3 from './components/headers/header3'
 import Header4 from './components/headers/header4'
 import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
+import Product2 from './components/products/product2'
 import Contact1 from './components/contacts/contact1'
 import Content1 from './components/contents/content1'
 import Video1 from './components/videos/video1'
@@ -35,6 +36,7 @@ const components = [
   Header4,
   Cart1,
   Product1,
+  Product2,
   Contact1,
   Content1,
   Slider1,

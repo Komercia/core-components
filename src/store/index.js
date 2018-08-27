@@ -1,7 +1,7 @@
-import Vue from "vue"
-import Vuex from "vuex"
+import Vue from 'vue'
+import Vuex from 'vuex'
 import products from './modules/products'
-import axios from "axios"
+import axios from 'axios'
 import firebase from '../utils/connect_firebase'
 
 const firestore = firebase.firestore()
@@ -24,7 +24,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 404,
+    idTienda: 247,
     tienda: {},
     userData: {
       id: 0,
@@ -110,7 +110,7 @@ export default new Vuex.Store({
         placeholder: true,
         foto_cloudinary:
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
-        nombre: 'Nombre del producto',
+        nombre: 'Nombre del producto',=======
         precio: '14999',
         slug: '',
         categoria: 'Blusas'
@@ -187,7 +187,7 @@ export default new Vuex.Store({
                 product.variantes = product.variantes[0].variantes
               }
               return product
-            });
+            })
             state.products.fullProducts = state.productsData
           }
           if (response.data.data.categorias.length) {
@@ -260,6 +260,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    products,
+    products
   }
 })
