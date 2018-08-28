@@ -37,6 +37,7 @@ export default {
 }
 .description-product {
   background-color: var(--button_color);
+  text-align: left;
 }
 .img-product {
   flex: 1;

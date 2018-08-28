@@ -66,7 +66,8 @@
 
     <div class="component_principal">
       <div :is="selectComponentAbove" />
-      <div :is="selectComponent" :setting="settingData"/>
+      <div :is="selectComponent" v-if="settingData" :setting="settingData"/>
+      <div :is="selectComponent" v-else/>
       <div :is="selectComponentDown" />
     </div>
 
