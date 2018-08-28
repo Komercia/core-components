@@ -11,7 +11,7 @@
         </label>
       </div>
       <div class="input-area">
-        <el-input placeholder="Url de redirección" v-model="banner.redireccion">
+        <el-input placeholder="Url de redirección" v-model="banner.redirect_to">
           <template slot="prepend">
             <icon-base icon-name="links">
               <icon-links /></icon-base>
@@ -23,27 +23,6 @@
       <div class="settingBanner_actions">
         <el-button @click="updateBanner(banner)">Guardar</el-button>
         <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(banner, index)">Eliminar</el-button>
-      </div>
-    </section>
-    <section class="settingBanner" v-if="settingData.data.length < 3">
-      <div class="upload-area">
-        <label for="uploadBanner" class="upload">
-          <icon-base icon-name="cloud-up" icon-color="#FFF">
-            <cloud-up />
-          </icon-base>Subir imagen
-        </label>
-        <input type="file" id="uploadBanner" v-on:change="uploadBanner">
-      </div>
-      <div class="input-area">
-        <el-input placeholder="Url de redirección" v-model="redireccion">
-          <template slot="prepend">
-            <icon-base icon-name="links">
-              <icon-links /></icon-base>
-          </template>
-        </el-input>
-      </div>
-      <div class="settingBanner_actions">
-        <el-button>Guardar</el-button>
       </div>
     </section>
   </div>
@@ -63,8 +42,13 @@ export default {
     }
   },
   computed: {
-    settingData() {
-      return this.$store.state.settingData
+    settingData: {
+      get () {
+        return this.$store.state.settingData
+      },
+      set (newValue) {
+        this.$store.state.settingData = newValue
+      }
     }
   },
   methods: {
@@ -122,25 +106,6 @@ export default {
     deleteBanner(index, banner) {
       // this.deleteBannerPhoto(banner)
       this.$store.state.settingData.data.splice(index, 1)
-    },
-    updateBanner(banner) {
-      let config = {
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${this.$configKomercia.accessToken}`,
-          'Access-Control-Allow-Origin': '*'
-        }
-      }
-      let params = {
-        redireccion: banner.redireccion
-      }
-      axios
-        .put(
-          `${this.$configKomercia.url}/api/admin/tienda/banners/${banner.id}`,
-          params,
-          config
-        )
-        .then(response => {})
     }
   }
 }

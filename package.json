@@ -1,6 +1,6 @@
 {
   "name": "komercia-core-components",
-  "version": "3.0.5",
+  "version": "3.0.9",
   "description": "A Vue.js project",
   "author": "Camilo <titanmar15@gmail.com>",
   "private": false,
@@ -38,8 +38,8 @@
     "vue-mq": "^0.2.1",
     "vue-paginate": "^3.6.0",
     "vue-router": "^3.0.1",
-    "vue2-jsoneditor": "^1.0.5",
     "vue-social-sharing": "^2.3.3",
+    "vue2-jsoneditor": "^1.0.5",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

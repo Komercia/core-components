@@ -33,7 +33,7 @@ export default new Vuex.Store({
       nombre: ''
     },
     banners: [],
-    selectedCard: 'koProductCard1',
+    selectedCard: 'koProductCard2',
     productsData: [
       {
         id: 0,
@@ -110,7 +110,7 @@ export default new Vuex.Store({
         placeholder: true,
         foto_cloudinary:
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
-        nombre: 'Nombre del producto',=======
+        nombre: 'Nombre del producto',
         precio: '14999',
         slug: '',
         categoria: 'Blusas'
