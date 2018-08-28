@@ -164,7 +164,7 @@ import koDescription from '../_components/descriptionProduct2'
 import koRelated from '../_components/related-products'
 
 export default {
-  name: 'koProduct1',
+  name: 'koProduct2',
   components: {
     zoomed,
     productSlide,
