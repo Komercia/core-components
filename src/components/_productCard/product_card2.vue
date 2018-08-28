@@ -14,8 +14,8 @@
 
 <script>
 export default {
-  name: "koProductCard2",
-  props: ["data"],
+  name: 'koProductCard2',
+  props: ['data'],
   filters: {
     currency(value) {
       if (value) {
@@ -35,17 +35,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
-.img-product {
-  flex: 1;
-  width: 100%;
-  max-height: 300px;
-  cursor: pointer;
-  border: 1px solid transparent;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  /* background-color: #333; */
-}
 .description-product {
   background-color: var(--button_color);
 }
@@ -54,7 +43,7 @@ export default {
   width: 100%;
   max-height: 300px;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 0px solid transparent;
   box-sizing: border-box;
   display: flex;
   align-items: center;

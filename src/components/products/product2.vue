@@ -150,7 +150,7 @@
         </div>
       </div> -->
       <ko-description :data="data" :envio="envio"> </ko-description>
-      <ko-related/>
+      <ko-related :data="data" />
     </div>
   </div>
 </template>
@@ -940,6 +940,7 @@ input[type='text']:disabled {
   .content {
     width: 100%;
     height: initial;
+    padding-top: 20px;
   }
 }
 @media (max-width: 710px) {
@@ -956,6 +957,9 @@ input[type='text']:disabled {
     top: 10px;
     right: 10px;
   }
+  .wrapper {
+    padding: 5px;
+  }
 }
 @media (max-width: 600px) {
   .photos {
@@ -965,6 +969,17 @@ input[type='text']:disabled {
   }
   .photos.responsive {
     display: flex;
+  }
+  .content_name {
+    font-size: 16px;
+  }
+}
+@media (max-width: 510px) {
+  .content {
+    padding: 20px 0;
+  }
+  .swiper-container {
+    height: initial !important;
   }
 }
 @media (max-width: 320px) {

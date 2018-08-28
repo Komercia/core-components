@@ -1,97 +1,91 @@
 <template>
-    <div class="product" v-if="data.detalle">
-      <ko-modal v-show="modalPayment"></ko-modal>
-      <div class="wrapper">
-        <div class="section">
-          <div class="photos">
-            <div class="photos_selected">
-              <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)" />
-              <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
-              <img v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
-            </div>
-            <div class="photo_main">
-              <zoomed
-                v-if="data.detalle.foto !== 'placeholder1.svg'"
-                v-show="!existYoutube"
-                :photo="selectPhotoUrl">
-              </zoomed>
-              <img
-                :src="selectPhotoUrl"
-                v-else
-                class="photo_main_placeholder">
-              <iframe v-show="existYoutube" width="400" height="250" :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`" frameborder="0" allowfullscreen></iframe>
-            </div>
+  <div class="product" v-if="data.detalle">
+    <ko-modal v-show="modalPayment"></ko-modal>
+    <div class="wrapper">
+      <div class="section">
+        <div class="photos">
+          <div class="photos_selected">
+            <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)" />
+            <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
+            <img v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true">
           </div>
-        </div>
-        <div class="photos responsive">
-          <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
-        </div>
-        <div class="content">
-          <h2 class="content_name">{{data.detalle.nombre}}</h2>
-          <div class="content_buy_price">
-            <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
-            <p class="colorTexto" v-show="salesData.precio">COP</p>
-          </div>
-          <p>
-            <strong>{{ data.info.marca }}</strong>
-          </p>
-          <!-- <p>{{beforeCombination}}</p> -->
-          <div class="content_variant">
-            <div class="content_variant_item" v-for="(variant, index) in data.variantes">
-              <label>{{ variant.nombre }}:</label>
-              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
-            </div>
-          </div>
-          <div :class="{content_buy: true, disabled: !salesData.estado}">
-            <button type="button" name="button">No esta disponible</button>
-            <div>
-              <div class="quantity" v-show="!spent">
-                <em>Cantidad:</em>
-                <button class="quantity_remove" v-on:click="removeQuantity()">
-                  <i class="material-icons">remove</i>
-                </button>
-                <p class="quantity_value"> {{ quantityValue }}</p>
-                <button class="quantity_add" v-on:click="addQuantity()">
-                  <i class="material-icons">add</i>
-                </button>
-                <!-- <p class="quantity_available" v-if="evalStock(maxQuantityValue, quantityValue)">{{ maxQuantityValue - quantityValue }} disponibles</p> -->
-              </div>
-              <div class="content_buy_action">
-                <button v-if="spent" class="spent">Producto agotado
-                  <i class="material-icons">add_shopping_cart</i>
-                </button>
-                <button v-else v-on:click="addShoppingCart">Agregar
-                  <i class="material-icons">add_shopping_cart</i>
-                </button>
-              </div>
-            </div>
+          <div class="photo_main">
+            <zoomed v-if="data.detalle.foto !== 'placeholder1.svg'" v-show="!existYoutube" :photo="selectPhotoUrl">
+            </zoomed>
+            <img :src="selectPhotoUrl" v-else class="photo_main_placeholder">
+            <iframe v-show="existYoutube" width="400" height="250" :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`" frameborder="0" allowfullscreen></iframe>
           </div>
         </div>
       </div>
-      <div class="section">
-        <div class="content_desc" v-if="data.info.descripcion && data.info.descripcion.length > 12">
-          <h3>Descripción del producto</h3>
-          <div v-html="data.info.descripcion"></div>
+      <div class="photos responsive">
+        <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
+      </div>
+      <div class="content">
+        <h2 class="content_name">{{data.detalle.nombre}}</h2>
+        <div class="content_buy_price">
+          <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
+          <p class="colorTexto" v-show="salesData.precio">COP</p>
         </div>
-        <div class="features">
-          <div class="features_item">
-            <img src="../../assets/cards.png" alt="">
-            <div class="features_item_info">
-              <h3>Pagos online</h3>
-              <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-              <button v-show="existPayments" v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
-            </div>
+        <p>
+          <strong>{{ data.info.marca }}</strong>
+        </p>
+        <!-- <p>{{beforeCombination}}</p> -->
+        <div class="content_variant">
+          <div class="content_variant_item" v-for="(variant, index) in data.variantes">
+            <label>{{ variant.nombre }}:</label>
+            <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
           </div>
-          <div class="features_item" v-show="envios.estado">
-            <img src="../../assets/mensajero.png" alt="">
-            <div class="features_item_info">
-              <h3>{{ envio.titulo }}</h3>
-              <p>{{ envio.desc }}</p>
+        </div>
+        <div :class="{content_buy: true, disabled: !salesData.estado}">
+          <button type="button" name="button">No esta disponible</button>
+          <div>
+            <div class="quantity" v-show="!spent">
+              <em>Cantidad:</em>
+              <button class="quantity_remove" v-on:click="removeQuantity()">
+                <i class="material-icons">remove</i>
+              </button>
+              <p class="quantity_value"> {{ quantityValue }}</p>
+              <button class="quantity_add" v-on:click="addQuantity()">
+                <i class="material-icons">add</i>
+              </button>
+              <!-- <p class="quantity_available" v-if="evalStock(maxQuantityValue, quantityValue)">{{ maxQuantityValue - quantityValue }} disponibles</p> -->
+            </div>
+            <div class="content_buy_action">
+              <button v-if="spent" class="spent">Producto agotado
+                <i class="material-icons">add_shopping_cart</i>
+              </button>
+              <button v-else v-on:click="addShoppingCart">Agregar
+                <i class="material-icons">add_shopping_cart</i>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="section">
+      <div class="content_desc" v-if="data.info.descripcion && data.info.descripcion.length > 12">
+        <h3>Descripción del producto</h3>
+        <div v-html="data.info.descripcion"></div>
+      </div>
+      <div class="features">
+        <div class="features_item">
+          <img src="../../assets/cards.png" alt="">
+          <div class="features_item_info">
+            <h3>Pagos online</h3>
+            <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
+            <button v-show="existPayments" v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
+          </div>
+        </div>
+        <div class="features_item" v-show="envios.estado">
+          <img src="../../assets/mensajero.png" alt="">
+          <div class="features_item_info">
+            <h3>{{ envio.titulo }}</h3>
+            <p>{{ envio.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </div>
 </template>
 <script>

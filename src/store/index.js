@@ -24,7 +24,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 247,
+    idTienda: 290,
     tienda: {},
     userData: {
       id: 0,
@@ -33,7 +33,7 @@ export default new Vuex.Store({
       nombre: ''
     },
     banners: [],
-    selectedCard: 'koProductCard1',
+    selectedCard: 'koProductCard2',
     productsData: [
       {
         id: 0,
@@ -110,7 +110,7 @@ export default new Vuex.Store({
         placeholder: true,
         foto_cloudinary:
           'https://cdn.shopify.com/s/files/1/0207/8508/products/Magnolia_Tees_Edit_4_of_17_1024x1024.jpg?v=1504703736',
-        nombre: 'Nombre del producto',=======
+        nombre: 'Nombre del producto',
         precio: '14999',
         slug: '',
         categoria: 'Blusas'
@@ -237,9 +237,13 @@ export default new Vuex.Store({
       commit('GET_DATA')
     },
     GET_SECTIONS({ state }) {
-      axios.get(`https://komercia-2c50b.firebaseio.com/sections.json?auth=NbJcMDHW4Ueg4x67y5hHmxbZF3fhsyneVfQBpSFn`).then((response) => {
-        state.sections = Object.values(response.data)
-      })
+      axios
+        .get(
+          `https://komercia-2c50b.firebaseio.com/sections.json?auth=NbJcMDHW4Ueg4x67y5hHmxbZF3fhsyneVfQBpSFn`
+        )
+        .then(response => {
+          state.sections = Object.values(response.data)
+        })
     },
     GET_COMPONENTS({ state }) {
       firestore
@@ -255,8 +259,11 @@ export default new Vuex.Store({
           state.components = components
         })
     },
-    CREATE_COMPONENT({ state }, {newComponent, selectedSection}) {
-      firestore.collection('components_testing').doc(selectedSection).update({1:newComponent});
+    CREATE_COMPONENT({ state }, { newComponent, selectedSection }) {
+      firestore
+        .collection('components_testing')
+        .doc(selectedSection)
+        .update({ 1: newComponent })
     }
   },
   modules: {
