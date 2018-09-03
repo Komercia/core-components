@@ -4,7 +4,7 @@
     <div class="grid-products">
       <!-- <div is="ko-product-card2" :data="product" v-for="product in productsData.slice(0,5)" :key="product.id"></div> -->
       <carousel ref="carousel" :spacePadding="0" :autoplay="autoplay" :paginationEnabled="paginationEnabled" :scrollPerPage="scrollPerPage" :perPageCustom="custom">
-        <slide v-for="product in productsData.slice(0,10)" :key="product.id">
+        <slide @click.native="redirecToStore(product.id)" v-for="product in productsData.slice(0,10)" :key="product.id">
           <div class="card" is="ko-product-card2" :data="product">
 
           </div>
@@ -79,6 +79,9 @@ export default {
       } else {
         this.maxPage = true
       }
+    },
+    redirecToStore(id) {
+      this.$router.push(`/producto/${id}`)
     }
   }
 }

@@ -4,7 +4,7 @@
       <div class="maps" v-show="geolocalizacion.length">
         <div id="map"></div>
         <div class="info">
-          <p class="description">Visita nuestra tienda más cerca</p>
+          <p class="description">Visita nuestra tienda más cercana</p>
           <div class="block">
             <i class="icon-facebook-places"></i>
             <p class="address" v-if="geolocalizacion[0]">{{geolocalizacion[0].direccion}}</p>
@@ -114,6 +114,11 @@
                     <i class="icon-youtube-play" />
                   </a>
                 </li>
+                <li v-show="storeData.telefono.startsWith('3') && storeData.telefono.length > 8">
+                  <a :href="`https://api.whatsapp.com/send?phone=57${storeData.telefono.replace(/\s/g, '').slice(0,10)}`" target="_blank">
+                    <ko-whatsapp class="whatsapp" />
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -125,9 +130,13 @@
 
 <script>
 import axios from 'axios'
+import koWhatsapp from '../../Icons/whatsapp'
 
 export default {
   name: 'koContact2',
+  components: {
+    koWhatsapp
+  },
   mounted() {
     this.makeMap()
     if (Object.keys(this.$store.state.envios).length) {
@@ -523,6 +532,11 @@ a > i {
 }
 .color_youtub:hovere {
   background-color: rgba(203, 32, 39, 0.6);
+}
+.whatsapp {
+  fill: #27d367;
+  width: 40px;
+  background: #fff;
 }
 @media (max-width: 1260px) {
   .contacto_content {

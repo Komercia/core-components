@@ -16,7 +16,7 @@
           <li v-if="mediospago.payco == 1">
             <h4>• Pasarela de pagos epayco</h4>
             <p>Paga con tu tarjeta hasta 24 cuotas o en efectivo en mas de 14.000 puntos en todo el país</p>
-            <img src="http://0523aae09f0cadbd79f4-60bf0867add971908d4f26a64519c2aa.r62.cf5.rackcdn.com/btns/epayco/epayco_pago_seguro.png" alt="">
+            <img src="../../assets/logospasarela.png" alt="">
           </li>
           <li v-if="mediospago.contraentrega == 1">
             <h4>• Pago contra entrega</h4>

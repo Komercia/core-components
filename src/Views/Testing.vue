@@ -4,8 +4,8 @@
     <!-- <ko-slider2/> -->
     <!-- <ko-slider3/> -->
     <!-- <grid2/> -->
-    <contact2/>
-    <!-- <product2/> -->
+    <!-- <contact2/> -->
+    <product2/>
     <!-- <product-list3/> -->
     <!-- <newsletter1/> -->
     <footer3/>
