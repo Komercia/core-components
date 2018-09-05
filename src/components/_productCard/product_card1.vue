@@ -7,10 +7,10 @@
       <div class="name-product">{{data.nombre}}</div>
       <div class="category">{{data.marca}}</div>
       <div class="price">{{data.precio | currency}}</div>
-      <button class="btn-product g-btn" type="button" name="button">
-        <a>Ir al Producto</a>
-      </button>
     </div>
+    <button class="btn-product g-btn" type="button" name="button">
+      <a>Ir al Producto</a>
+    </button>
   </router-link>
 </template>
 
@@ -46,8 +46,10 @@ export default {
   width: 100%;
   height: 100%;
   display: grid;
-  /*justify-content: center;*/
-  align-items: end;
+  grid-template-rows: auto 1fr auto;
+  justify-content: center;
+  justify-items: center;
+  align-items: space-between;
 }
 .img-grid-item {
   max-width: 250px;
@@ -58,7 +60,7 @@ export default {
   justify-items: center;
   justify-self: center;
   align-items: center;
-  box-shadow: 0 0 5px #eee;
+  background-color: #FFF;
   overflow: hidden;
 }
 .img-grid-item img {
