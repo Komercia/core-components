@@ -1,8 +1,8 @@
 <template>
   <div id="app" :class="`container ${selectStyle}`">
-    <button @click="handle_style('defaultstyle')">Default</button>
+    <!-- <button @click="handle_style('defaultstyle')">Default</button>
     <button @click="handle_style('materialstyle')">Material Design</button>
-    <button @click="handle_style('borderstyle')">Borderless</button>
+    <button @click="handle_style('borderstyle')">Borderless</button> -->
     <router-view />
   </div>
 </template>
@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    handle_style(style){
+    handle_style(style) {
       this.selectStyle = style
     }
   }
@@ -51,7 +51,7 @@ export default {
 .el-slider__button-wrapper {
   z-index: 98 !important;
 }
-.jsoneditor{
+.jsoneditor {
   height: 300px !important;
 }
 </style>
