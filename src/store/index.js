@@ -33,7 +33,7 @@ export default new Vuex.Store({
       nombre: ''
     },
     banners: [],
-    selectedCard: 'koProductCard2',
+    selectedCard: 'koProductCard1',
     productsData: [
       {
         id: 0,
