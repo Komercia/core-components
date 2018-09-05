@@ -1,10 +1,11 @@
 <template>
   <div class="description">
-    <div class="left">
-      <h3 class="title-description">Descripción</h3>
+    <div class="left" v-if="!activeClass">
+      <h3>Descripción</h3>
       <div v-html="data.info.descripcion"></div>
+      <!-- <ko-related :data="data" :custom="custom" /> -->
     </div>
-    <div class="right">
+    <div class="right" :class="{'stage': activeClass }">
       <div class="payments section">
         <div class="content">
           <ko-pay class="icon"></ko-pay>
@@ -15,7 +16,7 @@
           <li v-if="mediospago.payco == 1">
             <h4>• Pasarela de pagos epayco</h4>
             <p>Paga con tu tarjeta hasta 24 cuotas o en efectivo en mas de 14.000 puntos en todo el país</p>
-            <img src="http://0523aae09f0cadbd79f4-60bf0867add971908d4f26a64519c2aa.r62.cf5.rackcdn.com/btns/epayco/epayco_pago_seguro.png" alt="">
+            <img src="../../assets/logospasarela.png" alt="">
           </li>
           <li v-if="mediospago.contraentrega == 1">
             <h4>• Pago contra entrega</h4>
@@ -35,7 +36,7 @@
           </li>
         </ul>
       </div>
-      <div class="line"></div>
+      <div class="line" v-if="!activeClass"></div>
       <div class="deliverys section">
         <div class="content">
           <ko-delivery class="icon"></ko-delivery>
@@ -51,15 +52,28 @@
 <script>
 import koPay from '../../Icons/pay'
 import koDelivery from '../../Icons/Delivery'
+import koRelated from '../_components/related-products'
 export default {
-  components: { koPay, koDelivery },
+  components: { koPay, koDelivery, koRelated },
   props: {
     data: {},
     envio: {}
   },
+  data() {
+    return {
+      // custom: [[710, 3], [1200, 4]]
+    }
+  },
   computed: {
     mediospago() {
       return this.$store.state.mediospago
+    },
+    activeClass() {
+      if (this.data.info.descripcion == '') {
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
@@ -99,6 +113,7 @@ export default {
   align-self: flex-start;
 }
 .right img {
+  max-width: 310px;
   width: 100%;
   margin-top: 15px;
 }
@@ -137,5 +152,22 @@ li p {
 }
 .deliverys {
   padding-top: 20px;
+}
+.stage {
+  display: flex;
+  border-left: 0;
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .section {
+    padding: 5px;
+  }
+  .deliverys {
+    padding: 5px;
+  }
+  .stage {
+    flex-wrap: wrap;
+  }
 }
 </style>

@@ -24,8 +24,10 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 247,
-    tienda: {},
+    idTienda: 404,
+    tienda: {
+      telefono: ''
+    },
     userData: {
       id: 0,
       email: '',
@@ -237,9 +239,13 @@ export default new Vuex.Store({
       commit('GET_DATA')
     },
     GET_SECTIONS({ state }) {
-      axios.get(`https://komercia-2c50b.firebaseio.com/sections.json?auth=NbJcMDHW4Ueg4x67y5hHmxbZF3fhsyneVfQBpSFn`).then((response) => {
-        state.sections = Object.values(response.data)
-      })
+      axios
+        .get(
+          `https://komercia-2c50b.firebaseio.com/sections.json?auth=NbJcMDHW4Ueg4x67y5hHmxbZF3fhsyneVfQBpSFn`
+        )
+        .then(response => {
+          state.sections = Object.values(response.data)
+        })
     },
     GET_COMPONENTS({ state }) {
       firestore
@@ -255,8 +261,11 @@ export default new Vuex.Store({
           state.components = components
         })
     },
-    CREATE_COMPONENT({ state }, {newComponent, selectedSection}) {
-      firestore.collection('components_testing').doc(selectedSection).update({1:newComponent});
+    CREATE_COMPONENT({ state }, { newComponent, selectedSection }) {
+      firestore
+        .collection('components_testing')
+        .doc(selectedSection)
+        .update({ 1: newComponent })
     }
   },
   modules: {

@@ -136,22 +136,28 @@ export default {
     }
   },
   methods: {
-    activeRoute (item) {
+    activeRoute(item) {
       if (item.name != 'Nosotros') {
         return true
       }
-      return !!(this.storeData.mision || this.storeData.vision || this.storeData.nosotros)
+      return !!(
+        this.storeData.mision ||
+        this.storeData.vision ||
+        this.storeData.nosotros
+      )
     },
-    toSubscribe () {
+    toSubscribe() {
       this.toSubscribeResponse = false
       const params = {
         correo: this.email,
-        tienda: this.storeData.id_tienda,
+        tienda: this.storeData.id_tienda
       }
-      axios.post('https://templates.komercia.co/api/suscriptores', params).then(() => {
-        this.email = ''
-        this.toSubscribeResponse = true
-      })
+      axios
+        .post('https://templates.komercia.co/api/suscriptores', params)
+        .then(() => {
+          this.email = ''
+          this.toSubscribeResponse = true
+        })
     }
   }
 }
@@ -285,13 +291,13 @@ i {
 .input-footer {
   margin-top: 20px;
 }
-.ko-input{
+.ko-input {
   position: relative;
   display: grid;
   align-content: start;
   grid-row-gap: 5px;
 }
-.ko-input input{
+.ko-input input {
   width: 100%;
   padding: 10px 35px 10px 15px;
   box-sizing: border-box;
@@ -299,36 +305,36 @@ i {
   border: 1px solid rgba(255, 255, 255, 0.459);
   font-size: 14px;
   border-radius: 2px;
-  outline-color: #FFF;
-  color: #FFF;
+  outline-color: #fff;
+  color: #fff;
 }
-.ko-input i.icon-paper-plane-2{
+.ko-input i.icon-paper-plane-2 {
   position: absolute;
   top: 12.5px;
   right: 5px;
   z-index: 2;
 }
-.ko-input .response{
+.ko-input .response {
   justify-self: start;
-  background-color: rgba(255,255,255,.1);
+  background-color: rgba(255, 255, 255, 0.1);
   padding: 0 10px;
   height: 32px;
   line-height: 30px;
   font-size: 12px;
-  color: #FFF;
+  color: #fff;
   border-radius: 4px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  border: 1px solid rgba(255,255,255,.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   white-space: nowrap;
   height: 28px;
   line-height: 26px;
 }
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .1s ease;
+  transition: all 0.1s ease;
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
@@ -339,5 +345,11 @@ i {
   font-size: 13px;
   letter-spacing: 0.8px;
   line-height: 2;
+}
+@media (max-width: 650px) {
+  .col5 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 </style>

@@ -19,6 +19,7 @@ import firebase from './utils/connect_firebase'
 import KomerciaCropper from 'komercia-cropper'
 import SocialSharing from 'vue-social-sharing'
 import Meta from 'vue-meta'
+import VueCarousel from 'vue-carousel'
 
 Vue.prototype.$firebase = firebase
 
@@ -36,6 +37,8 @@ Vue.use(SocialSharing)
 Vue.use(Meta)
 
 Vue.use(elementUI, { locale })
+
+Vue.use(VueCarousel)
 
 Vue.prototype.$urlHttp = 'https://api.komercia.co'
 store.state.urlHttp = Vue.prototype.$urlHttp
