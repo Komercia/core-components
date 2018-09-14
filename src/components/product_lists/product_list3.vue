@@ -6,7 +6,7 @@
     <div class="container-grid">
       <div class="products">
         <div class="left" :class="{ 'left-categories': true, hidden: add}">
-          <div class="categories g-card">
+          <div class="categories">
             <h3 class="title-categories">Categorias</h3>
             <ul class="list-categories">
               <li class="item-categorie" @click="selected(categoria)" v-for="categoria in categorias" :key="categoria.id">{{categoria.nombre_categoria_producto}}</li>
@@ -30,14 +30,14 @@
       </div>
     </div>
     <div class="pagination-medium">
-      <div class="product_pagination" v-if="products.length > 12">
-        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="12" :current-page.sync="currentPage" class="pagination">
+      <div class="product_pagination" v-if="products.length > 40">
+        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="40" :current-page.sync="currentPage" class="pagination">
         </el-pagination>
       </div>
     </div>
     <div class="pagination-small">
-      <div class="product_pagination" v-if="products.length > 12">
-        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="12" :current-page.sync="currentPage" class="pagination" :small="true">
+      <div class="product_pagination" v-if="products.length > 40">
+        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="40" :current-page.sync="currentPage" class="pagination" :small="true">
         </el-pagination>
       </div>
     </div>
@@ -112,15 +112,15 @@ export default {
       return this.$store.state.categorias
     },
     getProductsCategorie() {
-      const initial = this.currentPage * 12 - 12
-      const final = initial + 12
+      const initial = this.currentPage * 40 - 40
+      const final = initial + 40
       return this.Fullproducts.filter(
         product => product.categoria == this.select
       ).slice(initial, final)
     },
     filterProduct() {
-      const initial = this.currentPage * 12 - 12
-      const final = initial + 12
+      const initial = this.currentPage * 40 - 40
+      const final = initial + 40
       return this.products.slice(initial, final)
     },
     selectedCategory () {

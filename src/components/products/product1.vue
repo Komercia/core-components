@@ -68,7 +68,7 @@
         </div>
         <div class="features">
           <div class="features_item">
-            <img src="../../assets/cards.png" alt="">
+            <img src="http://res.cloudinary.com/komercia-store/image/upload/v1536696054/komercia/cards.png" alt="">
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
@@ -76,7 +76,7 @@
             </div>
           </div>
           <div class="features_item" v-show="envios.estado">
-            <img src="../../assets/mensajero.png" alt="">
+            <img src="http://res.cloudinary.com/komercia-store/image/upload/v1536696043/komercia/mensajero.png" alt="">
             <div class="features_item_info">
               <h3>{{ envio.titulo }}</h3>
               <p>{{ envio.desc }}</p>
@@ -387,6 +387,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .wrapper {
   max-width: 1100px;
@@ -449,6 +450,7 @@ export default {
   flex-direction: column;
   box-sizing: border-box;
   padding: 15px;
+  background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
 }
 i.close {
@@ -631,7 +633,7 @@ i.close {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f1f1f1;
+  background-color: rgba(255, 255, 255, 0.2);
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   margin: 10px 0;
   padding: 0 25px;

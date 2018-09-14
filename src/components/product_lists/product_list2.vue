@@ -29,8 +29,8 @@
         <div class="products_list">
           <div :is="selectedCard" v-for="product in filterProduct" :key="product.id" :data="product"></div>
         </div>
-        <div class="product_pagination" v-if="products.length > 12">
-          <el-pagination background layout="prev, pager, next" :page-size="12" :total="products.length" :current-page.sync="currentPage">
+        <div class="product_pagination" v-if="products.length > 40">
+          <el-pagination background layout="prev, pager, next" :page-size="40" :total="products.length" :current-page.sync="currentPage">
           </el-pagination>
         </div>
       </div>
@@ -107,8 +107,8 @@ export default {
       return this.$store.getters['products/filterProducts']
     },
     filterProduct() {
-      const initial = this.currentPage * 12 - 12
-      const final = initial + 12
+      const initial = this.currentPage * 40 - 40
+      const final = initial + 40
       return this.products.slice(initial, final)
     }
   },

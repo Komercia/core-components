@@ -12,7 +12,8 @@
         :is="selectedCard"
         :data="product"
         v-for="(product, index) in productsData.slice(0,5)"
-        :key="index">
+        :key="index"
+        class="card">
       </div>
     </div>
     <router-link to="/productos">
@@ -100,17 +101,6 @@ nav {
   box-sizing: border-box;
   justify-content: center;
 }
-.card {
-  background-color: #fff;
-  box-sizing: border-box;
-  border: 1px solid #333;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.card:hover {
-  /* box-shadow: 0px 0px 6px 6px rgba(238, 238, 238, 0.658); */
-}
 .tab {
   background-color: #fff;
   border: 1px solid #fff;
@@ -184,6 +174,12 @@ nav {
 @media (max-width: 450px) {
   .tab {
     font-size: 12px;
+  }
+}
+@media (max-width: 400px) {
+  .grid-products {
+    grid-template-columns: repeat(auto-fill, minmax(145px, 300px));
+    grid-auto-flow: initial;
   }
 }
 </style>

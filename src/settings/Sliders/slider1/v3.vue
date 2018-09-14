@@ -1,7 +1,7 @@
 <template>
   <div class="form_list">
     <section class="settingBanner" v-for="(banner, index) in settingData.data">
-      <Upload :banner="banner" :index="index" @change="uploadBanner2($event, banner)"/>
+      <Upload :item="banner" :src="banner.foto_cloudinary" @change="uploadBanner2($event, banner)"/>
       <div class="input-area">
         <el-input placeholder="Titulo" v-model="banner.titulo">
           <template slot="prepend">
@@ -34,7 +34,7 @@
       </div>
     </section>
     <section class="settingBanner" v-if="settingData.data.length < 3">
-      <Upload :index="index" @change="uploadBanner"/>
+      <Upload @change="uploadBanner"/>
     </section>
   </div>
 </template>
@@ -42,13 +42,13 @@
 <script>
 import { mapState } from 'vuex'
 import axios from 'axios';
-import Upload from '@/settings/_components/Upload.vue'
-import RedirectTo from '@/settings/_components/RedirectTo.vue'
-import AngleLeft from '@/Icons/AngleLeft.vue'
-import IconText from '@/Icons/Text.vue'
-import AlignJustify from '@/Icons/AlignJustify.vue'
-import IconLinks from '@/Icons/Links.vue'
-import CloudUp from '@/Icons/CloudUp.vue'
+import Upload from '../../_components/Upload.vue'
+import RedirectTo from '../../_components/RedirectTo.vue'
+import AngleLeft from '../../../Icons/AngleLeft.vue'
+import IconText from '../../../Icons/Text.vue'
+import AlignJustify from '../../../Icons/AlignJustify.vue'
+import IconLinks from '../../../Icons/Links.vue'
+import CloudUp from '../../../Icons/CloudUp.vue'
 
 export default {
   name: 'koSliderSetting1_v3',
@@ -129,7 +129,10 @@ export default {
           posicion: '',
           redireccion: '',
           tienda: this.$store.state.configKomercia.tienda.id,
-          titulo: ''
+          titulo: '',
+          titulosize: '5',
+          descripcionsize: '20',
+          spaces: '3'
         }
         this.$store.state.settingData.data.push(newBanner)
         this.$cropper.complete()

@@ -47,8 +47,8 @@
       </div>
         <div class="footer_last">
           <span class="effects"></span>
-          <p class="text">Desarrollado por komercia.co</p>
-          <img src="../../assets/komercia.png">
+          <p class="text powered_by">Desarrollado por <a href="https://komercia.co" target="_blank">komercia.co</a></p>
+          <img src="http://res.cloudinary.com/komercia-store/image/upload/v1536178935/komercia/logo.png">
         </div>
   </footer>
 </template>
@@ -234,7 +234,7 @@ footer{
 }
 .footer_last{
   width: 100%;
-  height: 60px;
+  height: 40px;
   position: relative;
   display: flex;
   align-items: center;
@@ -257,6 +257,13 @@ footer{
 .footer_last img{
   width: 120px;
   z-index: 2;
+}
+.powered_by{
+  font-size: 15px;
+}
+.powered_by a{
+  color: #FFF;
+  font-weight: bold;
 }
 @media(max-width: 1185px){
   .footer_actions_email{

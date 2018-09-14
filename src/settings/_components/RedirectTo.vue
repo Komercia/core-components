@@ -4,7 +4,7 @@
     <hr>
     <div class="redirect_to__type">
       <p><strong>Tipo</strong></p>
-      <el-select size="small" v-model="selectedOption" placeholder="Seleccionar tipo">
+      <el-select size="small" v-model="selectedOption" clearable placeholder="Seleccionar tipo">
         <el-option
         v-for="item in options"
         :key="item.id"
@@ -14,7 +14,7 @@
       </el-select>
     </div>
     <div class="redirect_to__destination">
-      <p><strong>Destino</strong></p>
+      <p v-if="selectedOption !== ''"><strong>Destino</strong></p>
       <el-select size="small" v-model="selectedValue" placeholder="Selecciona producto" v-if="selectedOption === 1">
               <el-option
               v-for="item in productsData"
@@ -69,7 +69,7 @@ export default {
           label: 'Url Externa'
         }
       ],
-      selectedOption: 1,
+      selectedOption: 5,
       selectedValue: '',
       pages: [
         {
@@ -147,5 +147,6 @@ export default {
     width: 100%;
     border-style: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.19);
+    margin: 8px 0;
   }
 </style>

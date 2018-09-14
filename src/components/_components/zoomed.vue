@@ -44,9 +44,12 @@ figure.zoom {
 }
 figure.zoom img {
   max-width: 100%;
-  max-height: 600px;
+  max-height: 400px;
   background-color: #fff;
   transition: opacity 0.3s;
+}
+.photo_main{
+  object-fit: contain;
 }
 figure.zoom img:hover {
   opacity: 0;

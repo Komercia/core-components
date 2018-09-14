@@ -7,7 +7,9 @@ import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Product2 from './components/products/product2'
 import Contact1 from './components/contacts/contact1'
+import Contact2 from './components/contacts/contact2'
 import Content1 from './components/contents/content1'
+import Content2 from './components/contents/content2/v1'
 import Video1 from './components/videos/video1'
 import Slider3 from './components/sliders/slider3'
 import Slider1 from './components/sliders/slider1/v1'
@@ -39,7 +41,9 @@ const components = [
   Product1,
   Product2,
   Contact1,
+  Contact2,
   Content1,
+  Content2,
   Slider1,
   Slider3,
   Slider11,

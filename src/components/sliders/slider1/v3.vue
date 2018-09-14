@@ -3,9 +3,9 @@
     <slide v-for="(banner, index) in setting.data" :key="index">
       <div :class="`${banner.posicion} slide_content`">
         <image-cloudinary :src="banner.foto_cloudinary" class="slide_photo" :alt="banner.titulo" />
-        <div class="slide_texts">
+        <div class="slide_texts" :style="`grid-gap: ${banner.spaces}px;`">
           <h1 v-if="banner.titulo" :style="`font-size: ${banner.titulosize}vw`">{{ banner.titulo }}</h1>
-          <p v-if="banner.descripcion" :style="`font-size: ${banner.descripcionsize}px; margin: ${banner.spaces}px 0;`">{{ banner.descripcion }}</p>
+          <p v-if="banner.descripcion" :style="`font-size: ${banner.descripcionsize}px;`">{{ banner.descripcion }}</p>
           <template v-if="banner.redirect_to">
             <router-link v-if="banner.redirect_to.type == 1" :to="`/productos/${banner.redirect_to.value}`">
               <button type="button">Ir a la pagina</button>
@@ -81,6 +81,7 @@ export default {
   text-align: left;
   padding: 0 10vw;
   color: var(--text_color);
+  display: grid;
   /*top: 0;*/
   /*left: 0;*/
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="">
-    <div class="banner_photo" v-if="banner">
+    <div class="banner_photo" v-if="src">
       <img
-      :src="banner.foto_cloudinary"
-      :alt="banner.titulo">
+      :src="src"
+      :alt="item.titulo">
       <div class="upload_hover">
       </div>
       <div class="upload_area_wrapper">
@@ -15,7 +15,7 @@
     <div class="upload_area" v-else>
       <div class="upload_area_wrapper">
         <button class="upload_button"><i class="el-icon-picture-outline"></i>Subir foto</button>
-        <input type="file" v-on:change="uploadBanner">
+        <input type="file" v-on:change="change">
       </div>
     </div>
 
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import CloudUp from '@/Icons/CloudUp.vue'
+import CloudUp from '../../Icons/CloudUp.vue'
 
 export default {
   components: { CloudUp },
-  props: ['banner', 'index'],
+  props: ['item', 'src'],
   methods: {
     change(event) {
       this.$emit('change', event)
@@ -74,7 +74,7 @@ export default {
 .banner_photo img{
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 2px;
   box-sizing: border-box;
 }
@@ -104,7 +104,7 @@ export default {
   align-content: center;
   grid-row-gap: 10px;
   border: 1px dashed #c4cdd5;
-  background-color: #f4f6f8;
+  background-color: #fff;
 }
 .upload_area_wrapper{
   position: relative;

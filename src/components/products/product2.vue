@@ -5,8 +5,8 @@
       <div class="section">
         <div class="photos">
           <div class="photos_selected">
-            <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover="selectedPhoto(data.detalle.foto_cloudinary)" />
-            <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
+            <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)" />
+            <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
             <image-cloudinary v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true" />
           </div>
           <div class="photo_main">
@@ -493,12 +493,13 @@ export default {
       if (value) {
         return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
+      return 0
     }
   }
 }
 </script>
 <style scoped>
-@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';
+/*@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';*/
 .wrapper {
   max-width: 1200px;
   width: 100%;
