@@ -1,83 +1,83 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
-import Vuex from 'vuex'
-import App from './App'
-import router from './router'
-import store from './store'
-import axios from 'axios'
-import locale from 'element-ui/lib/locale/lang/es'
-import '../static/index.css'
-import elementUI from 'element-ui'
-import VuePaginate from 'vue-paginate'
-import ImageCloudinary from 'image-cloudinary'
-import VueFuse from 'vue-fuse'
-import Components from './index'
-import Settings from './settings'
-import IconBase from './Icons/IconBase'
-import firebase from './utils/connect_firebase'
-import KomerciaCropper from 'komercia-cropper'
-import SocialSharing from 'vue-social-sharing'
-import Meta from 'vue-meta'
-import VueCarousel from 'vue-carousel'
+import Vue from "vue";
+import Vuex from "vuex";
+import App from "./App";
+import router from "./router";
+import store from "./store";
+import axios from "axios";
+import locale from "element-ui/lib/locale/lang/es";
+import "../static/index.css";
+import elementUI from "element-ui";
+import VuePaginate from "vue-paginate";
+import ImageCloudinary from "image-cloudinary";
+import VueFuse from "vue-fuse";
+import Components from "./index";
+import Settings from "./settings";
+import IconBase from "./Icons/IconBase";
+import firebase from "./utils/connect_firebase";
+import KomerciaCropper from "komercia-cropper";
+import SocialSharing from "vue-social-sharing";
+import Meta from "vue-meta";
+import VueCarousel from "vue-carousel";
 
-Vue.prototype.$firebase = firebase
+Vue.prototype.$firebase = firebase;
 
-Vue.component('icon-base', IconBase)
-Vue.use(Components)
-Vue.use(Settings)
-Vue.use(VueFuse)
-Vue.use(VuePaginate)
-Vue.use(Vuex)
-Vue.use(ImageCloudinary)
-Vue.use(KomerciaCropper)
-Vue.config.productionTip = false
+Vue.component("icon-base", IconBase);
+Vue.use(Components);
+Vue.use(Settings);
+Vue.use(VueFuse);
+Vue.use(VuePaginate);
+Vue.use(Vuex);
+Vue.use(ImageCloudinary);
+Vue.use(KomerciaCropper);
+Vue.config.productionTip = false;
 
-Vue.use(SocialSharing)
-Vue.use(Meta)
+Vue.use(SocialSharing);
+Vue.use(Meta);
 
-Vue.use(elementUI, { locale })
+Vue.use(elementUI, { locale });
 
-Vue.use(VueCarousel)
+Vue.use(VueCarousel);
 
-Vue.prototype.$urlHttp = 'https://api.komercia.co'
-store.state.urlHttp = Vue.prototype.$urlHttp
+Vue.prototype.$urlHttp = "https://api2.komercia.co";
+store.state.urlHttp = Vue.prototype.$urlHttp;
 
 const getCookie = cname => {
-  const name = `${cname}=`
-  const decodedCookie = decodeURIComponent(document.cookie)
-  const ca = decodedCookie.split(';')
+  const name = `${cname}=`;
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(";");
   for (let i = 0; i < ca.length; i++) {
-    let c = ca[i]
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1)
+    let c = ca[i];
+    while (c.charAt(0) === " ") {
+      c = c.substring(1);
     }
     if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length)
+      return c.substring(name.length, c.length);
     }
   }
-  return '16agNLhBNkZUbmbco6pnY0RvKh3YvGWbcw11YrVM'
-}
+  return "16agNLhBNkZUbmbco6pnY0RvKh3YvGWbcw11YrVM";
+};
 
-const authData = getCookie('authData')
+const authData = getCookie("authData");
 if (authData) {
   const config = {
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
       Authorization: `Bearer ${authData}`,
-      'Access-Control-Allow-Origin': '*'
+      "Access-Control-Allow-Origin": "*"
     }
-  }
-  axios.get('https://api.komercia.co/api/user/data', config).then(response => {
-    store.state.userData = response.data.usuario
-  })
+  };
+  axios.get("https://api2.komercia.co/api/user/data", config).then(response => {
+    store.state.userData = response.data.usuario;
+  });
 }
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
+  el: "#app",
   router,
   store,
-  template: '<App/>',
+  template: "<App/>",
   components: { App }
-})
+});

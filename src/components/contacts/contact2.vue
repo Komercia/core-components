@@ -39,7 +39,7 @@
           <div class="information section">
             <div class="section-about" v-if="storeData.descripcion">
               <p class="title-section">Información sobre nosotros</p>
-              <p class="description-store text-secundary">{{storeData.descripcion}}</p>
+              <p class="description-store text-secundary"><div v-html="storeData.descripcion"></div>{{}}</p>
             </div>
             <div class="section-contact">
               <p class="title-section">Contáctanos</p>

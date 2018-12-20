@@ -103,7 +103,7 @@ export default {
 </script>
 
 <style scoped>
-.sectionBar{
+.sectionBar {
   position: absolute;
   top: 0;
   width: 100%;
@@ -114,57 +114,58 @@ export default {
   z-index: 3;
   overflow: hidden;
 }
-.sectionBar_header{
+.sectionBar_header {
   width: 100%;
   height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: #FFF;
+  background-color: #fff;
   box-sizing: border-box;
-  box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15);
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05),
+    0 1px 3px 0 rgba(63, 63, 68, 0.15);
 }
-.sectionBar_header p{
+.sectionBar_header p {
   /*color: #FFF;*/
 }
-.sectionBar_header span{
+.sectionBar_header span {
   flex: 1;
   display: flex;
   align-items: center;
 }
-.sectionBar_header span.angle-left{
+.sectionBar_header span.angle-left {
   cursor: pointer;
 }
-.setting_list{
+.setting_list {
   overflow: auto;
 }
-.item_setting{
+.item_setting {
   display: grid;
   align-content: start;
   grid-row-gap: 5px;
   padding: 5px;
 }
-.input-area{
+.input-area {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.settingBanner{
+.settingBanner {
   padding: 20px 0;
   border-bottom: 1px solid;
 }
-.upload-area{
+.upload-area {
   position: relative;
   width: 100%;
-  background-color:#f4f6f8;
+  background-color: #f4f6f8;
   display: grid;
   justify-items: center;
   align-content: center;
   overflow: hidden;
   cursor: pointer;
 }
-.upload-area .upload_hover{
+.upload-area .upload_hover {
   position: absolute;
   top: 0;
   width: 100%;
@@ -173,38 +174,38 @@ export default {
   justify-content: center;
   justify-items: center;
   align-content: center;
-  background-color: rgba(0,0,0,0.5);
-  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
   pointer-events: none;
 }
-.upload-area .upload_hover svg{
+.upload-area .upload_hover svg {
   margin-bottom: 5px;
 }
-.upload-area:hover .upload_hover{
+.upload-area:hover .upload_hover {
   display: grid;
 }
-.upload{
-  background-color: #0F9380;
+.upload {
+  background-color: #0f9380;
   cursor: pointer;
   padding: 10px;
   color: white;
   text-align: center;
   display: flex;
 }
-.upload svg{
+.upload svg {
   margin-right: 5px;
 }
-.upload_photo{
+.upload_photo {
   width: 100%;
   height: 200px;
   cursor: pointer;
 }
-.upload_photo img{
+.upload_photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.uploadBanner{
+.uploadBanner {
   display: none;
 }
 </style>

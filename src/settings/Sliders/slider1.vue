@@ -191,112 +191,113 @@ export default {
       this.$store.state.settingData = null;
     },
     getBanner(banner) {
-      return `https://api.komercia.co/banners/${banner}`
+      return `https://api2.komercia.co/banners/${banner}`
     }
   }
 }
 </script>
 
 <style scoped>
-  .sectionBar{
-    position: absolute;
-    top: 0;
-    width: 100%;
-    background-color: #e9ecef;
-    z-index: 3;
-  }
-  .sectionBar_header{
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    background-color: #FFF;
-    box-sizing: border-box;
-    box-shadow: 0 0 0 1px rgba(63,63,68,0.05), 0 1px 3px 0 rgba(63,63,68,0.15);
-  }
-  .sectionBar_header p{
-    /*color: #FFF;*/
-  }
-  .sectionBar_header span{
-    flex: 1;
-    display: flex;
-    align-items: center;
-  }
-  .sectionBar_header span.angle-left{
-    cursor: pointer;
-  }
-  .form_list{
-    box-sizing: border-box;
-    padding: 10px 5px;
-    overflow: auto;
-  }
-  .settingBanner{
-    padding: 20px 0;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  }
-  .banner_photo{
-    width: 100%;
-    border: 1px solid #c4cdd5;
-  }
-  .input-area{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 5px 0;
-  }
-  .input-area p{
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #333;
-  }
-  .upload-area{
-    width: 100%;
-    height: 120px;
-    display: grid;
-    justify-content: center;
-    align-content: center;
-    grid-row-gap: 10px;
-    border: 1px solid #c4cdd5;
-    background-color: #f4f6f8;
-  }
+.sectionBar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: #e9ecef;
+  z-index: 3;
+}
+.sectionBar_header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px rgba(63, 63, 68, 0.05),
+    0 1px 3px 0 rgba(63, 63, 68, 0.15);
+}
+.sectionBar_header p {
+  /*color: #FFF;*/
+}
+.sectionBar_header span {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.sectionBar_header span.angle-left {
+  cursor: pointer;
+}
+.form_list {
+  box-sizing: border-box;
+  padding: 10px 5px;
+  overflow: auto;
+}
+.settingBanner {
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.banner_photo {
+  width: 100%;
+  border: 1px solid #c4cdd5;
+}
+.input-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 5px 0;
+}
+.input-area p {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #333;
+}
+.upload-area {
+  width: 100%;
+  height: 120px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-row-gap: 10px;
+  border: 1px solid #c4cdd5;
+  background-color: #f4f6f8;
+}
 
-  #uploadBanner{
-    visibility: hidden;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    display: none;
-  }
-  .upload{
-    background-color: #0F9380;
-    color: #FFF;
-    padding: 10px;
-    cursor: pointer;
-  }
-  .upload img{
-    width: 100%;
-  }
-  .upload svg{
-    fill: #FFF;
-  }
-  .banner_unplash{
-    border-style: none;
-    background-color: transparent;
-    text-decoration: underline;
-  }
-  .newBanner_action{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #f5f7fa;
-    box-sizing: border-box;
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
-    padding: 5px;
-    color: #909399;
-    margin-top: 10px;
-    font-size: 14px;
-  }
+#uploadBanner {
+  visibility: hidden;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  display: none;
+}
+.upload {
+  background-color: #0f9380;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
+.upload img {
+  width: 100%;
+}
+.upload svg {
+  fill: #fff;
+}
+.banner_unplash {
+  border-style: none;
+  background-color: transparent;
+  text-decoration: underline;
+}
+.newBanner_action {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f5f7fa;
+  box-sizing: border-box;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  padding: 5px;
+  color: #909399;
+  margin-top: 10px;
+  font-size: 14px;
+}
 </style>

@@ -33,7 +33,7 @@
             </ul>
           </el-popover>
           <figure class="user_photo" v-popover:popover3>
-            <img :src="`https://api.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
+            <img :src="`https://api2.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
           </figure>
         </template>
       </ul>
@@ -88,150 +88,150 @@
 </script>
 
 <style scoped>
-  .header_main{
-    position: sticky;
-    top: 0;
+.header_main {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+  box-sizing: border-box;
+  padding: 0 10px;
+  background-color: var(--main_color);
+}
+.header_brand {
+  display: flex;
+  align-items: center;
+}
+.header__logo {
+  max-width: 70px;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 10px 0 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0px 0px 0px 4px rgba(255, 255, 255, 0.5);
+}
+.header__logo img {
+  width: 100%;
+  height: auto;
+}
+.header__title {
+  font-size: 1.25em;
+  color: #fff;
+}
+.icon_menu {
+  display: none;
+}
+.header_navigation {
+  height: 100%;
+}
+.header_navigation_list {
+  height: 100%;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+.header_navigation__item {
+  height: 100%;
+  display: flex;
+}
+.header_navigation__item a {
+  height: 100%;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+}
+.user_photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-left: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.user_photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.user_options_item {
+  display: flex;
+  padding: 10px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #dbdbdb;
+}
+.user_options_item:hover {
+  background-color: #eee;
+}
+.user_options_item * {
+  color: #39393b !important;
+}
+.user_options_item:first-child {
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+  align-items: center;
+  text-align: left;
+  cursor: initial;
+}
+.user_options_item:first-child:hover {
+  background-color: #fff;
+}
+.user_options_item:last-child {
+  border-bottom: 0px;
+}
+.user_options_item i {
+  margin-right: 5px;
+  font-size: 20px;
+}
+.header__cart {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  flex: none;
+  background-color: rgba(0, 0, 0, 0.25);
+  color: #fff;
+}
+.header__cart i {
+  padding-left: 10px;
+  font-size: 1.2em;
+}
+.header__cart p {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  margin-left: 10px;
+  font-size: 1em;
+}
+@media (max-width: 700px) {
+  .header__logo {
+    max-width: 55px;
     width: 100%;
-    height: 90px;
+    height: 55px;
+  }
+  .header__title {
+    font-size: 1em;
+    color: #fff;
+  }
+  .icon_menu {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: auto;
-    box-sizing: border-box;
-    padding: 0 10px;
-    background-color: var(--main_color);
+    color: #fff;
   }
-  .header_brand{
-    display: flex;
-    align-items: center;
-  }
-  .header__logo{
-    max-width: 70px;
-    width: 70px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0px 10px 0 0;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #FFF;
-    box-shadow: 0px 0px 0px 4px rgba(255,255,255, 0.5);
-  }
-  .header__logo img{
-    width: 100%;
-    height: auto;
-  }
-  .header__title{
-    font-size: 1.25em;
-    color: #FFF;
-  }
-  .icon_menu{
+  .header_navigation {
     display: none;
   }
-  .header_navigation{
-    height: 100%;
-  }
-  .header_navigation_list{
-    height: 100%;
-    list-style: none;
-    display: flex;
-    align-items: center;
-  }
-  .header_navigation__item{
-    height: 100%;
-    display: flex;
-  }
-  .header_navigation__item a{
-    height: 100%;
-    margin: 0 10px;
-    display: flex;
-    align-items: center;
-    color: #FFF;
-    cursor: pointer;
-  }
-  .user_photo{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #FFF;
-    margin-left: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
-    cursor: pointer;
-  }
-  .user_photo img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .user_options_item{
-    display: flex;
-    padding: 10px 0;
-    cursor: pointer;
-    border-bottom: 1px solid #DBDBDB;
-  }
-  .user_options_item:hover{
-    background-color: #EEE;
-  }
-  .user_options_item *{
-    color: #39393b !important;
-  }
-  .user_options_item:first-child{
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
-    align-items: center;
-    text-align: left;
-    cursor: initial;
-  }
-  .user_options_item:first-child:hover{
-    background-color: #FFF;
-  }
-  .user_options_item:last-child{
-    border-bottom: 0px;
-  }
-  .user_options_item i{
-    margin-right: 5px;
-    font-size: 20px;
-  }
-  .header__cart{
-		display: flex;
-		align-items: center;
-		border-radius: 8px;
-		overflow: hidden;
-		cursor: pointer;
-		flex: none;
-		background-color: rgba(0,0,0,0.25);
-    color: #FFF;
-	}
-	.header__cart i{
-		padding-left: 10px;
-		font-size: 1.2em;
-	}
-	.header__cart p{
-		height: 40px;
-		display: flex;
-		align-items: center;
-		padding: 0 10px;
-		margin-left: 10px;
-		font-size: 1em;
-	}
-  @media(max-width:700px){
-    .header__logo{
-      max-width: 55px;
-      width: 100%;
-      height: 55px;
-    }
-    .header__title{
-      font-size: 1em;
-      color: #FFF;
-    }
-    .icon_menu{
-      display: flex;
-      color: #FFF;
-    }
-    .header_navigation{
-      display: none;
-    }
-  }
+}
 </style>

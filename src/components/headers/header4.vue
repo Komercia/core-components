@@ -7,7 +7,7 @@
         <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData.id">
           <div class="container-data-user">
             <div class="img-user" slot="reference">
-              <img :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
             </div>
             <div class="data-user">
               <p class="name-user">{{userData.nombre}}</p>
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="prueba" slot="reference">
-            <img class="img-usuario" :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
           </div>
         </el-popover>
 
@@ -67,7 +67,7 @@
         <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData.id">
           <div class="container-data-user">
             <div class="img-user" slot="reference">
-              <img :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
             </div>
             <div class="data-user">
               <p class="name-user">{{userData.nombre}}</p>
@@ -76,7 +76,7 @@
             </div>
           </div>
           <div class="prueba" slot="reference">
-            <img class="img-usuario" :src="`https://api.komercia.co/users/${userData.foto}`" alt="">
+            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
           </div>
         </el-popover>
 
@@ -198,7 +198,7 @@ export default {
 </script>
 
 <style scoped>
-@import 'https://unpkg.com/komercia-fuentes@1.0.0/styles.css';
+@import "https://unpkg.com/komercia-fuentes@1.0.0/styles.css";
 
 .container {
   max-width: 1600px;
