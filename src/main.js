@@ -56,7 +56,7 @@ const getCookie = cname => {
       return c.substring(name.length, c.length);
     }
   }
-  return "16agNLhBNkZUbmbco6pnY0RvKh3YvGWbcw11YrVM";
+  return "";
 };
 
 const authData = getCookie("authData");
@@ -68,8 +68,9 @@ if (authData) {
       "Access-Control-Allow-Origin": "*"
     }
   };
-  axios.get("https://api2.komercia.co/api/user/data", config).then(response => {
-    store.state.userData = response.data.usuario;
+  Vue.prototype.$configHttp = config
+  axios.get("https://api2.komercia.co/api/user", config).then(response => {
+    store.state.userData = response.data.data;
   });
 }
 

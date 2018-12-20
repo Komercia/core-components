@@ -34,7 +34,7 @@
             <p>{{ (totalCart + shipping) | currency }}</p>
           </span>
         </div>
-        <button class="p_button" @click="GoPayments" v-if="isQuotation()">Cotizar</button>
+        <button class="p_button" @click="createQuotation" v-if="isQuotation()">Cotizar</button>
         <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
         <br>
         <button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
   name: "koOrder1",
   computed: {
@@ -127,24 +129,19 @@ export default {
         location.href = `https://checkout.komercia.co/?params=${json}`;
       }
     },
-    createQuotation() {
+    async createQuotation() {
       let quotation = {
-        productos: [
-          {
-            id: 813,
-            cantidad: 1,
-            precio: 40000
-          }
-        ],
-        tienda: 1,
+        productos: this.$store.state.productsCart,
+        tienda: this.$store.state.tienda.id_tienda,
         tipo: 1,
-        total: 2000,
+        total: this.$store.state.totalCart,
         estado: 0,
-        direccion_entrega: 2,
+        direccion_entrega: 1,
         metodo_pago: "7",
-        costo_envio: "0"
+        costo_envio: this.shipping
       };
-      axios.post(`https://komercia.co/api/usuario/orden`)
+      const response = await axios.post(`https://api2.komercia.co/api/usuario/orden`, quotation, this.$configHttp)
+      this.$store.state.openOrder = false
     }
   },
   filters: {
