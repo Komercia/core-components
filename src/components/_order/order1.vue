@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   name: "koOrder1",
@@ -140,8 +140,13 @@ export default {
         metodo_pago: "7",
         costo_envio: this.shipping
       };
-      const response = await axios.post(`https://api2.komercia.co/api/usuario/orden`, quotation, this.$configHttp)
-      this.$store.state.openOrder = false
+      console.log(quotation);
+      const response = await axios.post(
+        `https://api2.komercia.co/api/usuario/orden`,
+        quotation,
+        this.$configHttp
+      );
+      this.$store.state.openOrder = false;
     }
   },
   filters: {

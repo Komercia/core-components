@@ -24,7 +24,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 690,
+    idTienda: 431,
     tienda: {
       telefono: ''
     },
