@@ -140,13 +140,14 @@ export default {
         metodo_pago: "7",
         costo_envio: this.shipping
       };
-      console.log(quotation);
       const response = await axios.post(
         `https://api2.komercia.co/api/usuario/orden`,
         quotation,
         this.$configHttp
       );
       this.$store.state.openOrder = false;
+      this.$store.state.productsCart = [];
+      this.$store.commit('UPDATE_CONTENTCART')
     }
   },
   filters: {
