@@ -24,18 +24,20 @@
             </li>
           </ul>
         </div>
-        <div class="order_total">
-          <span class="order_total_domicile">
-            <p>Costo domicilio</p>
-            <p>{{ shipping | currency }}</p>
-          </span>
-          <span class="order_total_net">
-            <p>Total a pagar</p>
-            <p>{{ (totalCart + shipping) | currency }}</p>
-          </span>
-        </div>
-        <button class="p_button" @click="createQuotation" v-if="isQuotation()">Cotizar</button>
-        <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
+        <template v-if="productsCart.length">
+          <div class="order_total">
+            <span class="order_total_domicile">
+              <p>Costo domicilio</p>
+              <p>{{ shipping | currency }}</p>
+            </span>
+            <span class="order_total_net">
+              <p>Total a pagar</p>
+              <p>{{ (totalCart + shipping) | currency }}</p>
+            </span>
+          </div>
+          <button class="p_button" @click="createQuotation" v-if="isQuotation()">Cotizar</button>
+          <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
+        </template>
         <br>
         <button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
       </div>
