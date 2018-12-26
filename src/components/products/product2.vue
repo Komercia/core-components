@@ -77,11 +77,11 @@
           </div>
           <div class="marca item-product" v-show="data.info.marca">
             <p class="name-item">Marca:</p>
-            <span>{{ data.info.marca.toLowerCase() }}</span>
+            <span>{{ data.info.marca | toLowerCase }}</span>
           </div>
           <div class="marca item-product" v-show="data.detalle.categoria_producto.nombre_categoria_producto">
             <p class="name-item">Categoria:</p>
-            <span>{{ data.detalle.categoria_producto.nombre_categoria_producto.toLowerCase() }}</span>
+            <span>{{ data.detalle.categoria_producto.nombre_categoria_producto | toLowerCase }}</span>
           </div>
           <div class="content_variant">
             <div class="content_variant_item item-product" v-for="(variant, index) in data.variantes" :key="index">
@@ -494,6 +494,12 @@ export default {
         return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
       return 0
+    },
+    toLowerCase(value) {
+      if (value) {
+        return value.toLowerCase()
+      }
+      return ''
     }
   }
 }
