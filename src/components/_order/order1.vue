@@ -38,7 +38,11 @@
                     <p>{{ (totalCart + shipping) | currency }}</p>
                   </span>
                 </div>
-                <button class="p_button" @click="createQuotation" v-if="userData.id">Cotizar</button>
+                <button
+                  class="p_button"
+                  @click="createQuotation"
+                  v-if="userData.id && isQuotation()"
+                >Cotizar</button>
                 <button
                   class="p_button"
                   @click="toggleLayout"
