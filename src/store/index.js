@@ -17,6 +17,13 @@ if (localStorage.getItem('ShoppingCart')) {
 
 export default new Vuex.Store({
   state: {
+    configHttp: {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer `,
+        'Access-Control-Allow-Origin': '*'
+      }
+    },
     urlHttp: '',
     openOrder: false,
     envios: {

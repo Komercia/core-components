@@ -6,40 +6,53 @@
           <h3>Tu Orden</h3>
           <button @click="closeOrder" class="order_header_close">Cerrar</button>
         </div>
-        <div class="order_products">
-          <ul class="order_products_list">
-            <li class="order_products_list_item" v-for="(product, index) in productsCart">
-              <div class="photo">
-                <img :src="product.foto_cloudinary">
+        <transition name="slide">
+          <template v-if="layoutLogin">
+            <div class="order--wrapper">
+              <div class="order_products">
+                <ul class="order_products_list">
+                  <li class="order_products_list_item" v-for="(product, index) in productsCart">
+                    <div class="photo">
+                      <img :src="product.foto_cloudinary">
+                    </div>
+                    <div class="name">
+                      <p>{{ product.nombre | capitalize }}</p>
+                      <p class="item_info_price">{{ product.precio | currency }}</p>
+                      <p>{{ product.cantidad }} und</p>
+                    </div>
+                    <div>
+                      <p>{{ (product.precio * product.cantidad) | currency }}</p>
+                    </div>
+                    <i class="material-icons delete" v-on:click="deleteItemCart(index)">clear</i>
+                  </li>
+                </ul>
               </div>
-              <div class="name">
-                <p>{{ product.nombre | capitalize }}</p>
-                <p class="item_info_price">{{ product.precio | currency }}</p>
-                <p>{{ product.cantidad }} und</p>
-              </div>
-              <div>
-                <p>{{ (product.precio * product.cantidad) | currency }}</p>
-              </div>
-              <i class="material-icons delete" v-on:click="deleteItemCart(index)">clear</i>
-            </li>
-          </ul>
-        </div>
-        <template v-if="productsCart.length">
-          <div class="order_total">
-            <span class="order_total_domicile">
-              <p>Costo domicilio</p>
-              <p>{{ shipping | currency }}</p>
-            </span>
-            <span class="order_total_net">
-              <p>Total a pagar</p>
-              <p>{{ (totalCart + shipping) | currency }}</p>
-            </span>
-          </div>
-          <button class="p_button" @click="createQuotation" v-if="isQuotation()">Cotizar</button>
-          <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
-        </template>
-        <br>
-        <button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
+              <template v-if="productsCart.length">
+                <div class="order_total">
+                  <span class="order_total_domicile">
+                    <p>Costo domicilio</p>
+                    <p>{{ shipping | currency }}</p>
+                  </span>
+                  <span class="order_total_net">
+                    <p>Total a pagar</p>
+                    <p>{{ (totalCart + shipping) | currency }}</p>
+                  </span>
+                </div>
+                <button class="p_button" @click="createQuotation" v-if="userData.id">Cotizar</button>
+                <button class="p_button" @click="toggleLayout" v-else-if="isQuotation()">Iniciar sesión</button>
+                <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
+              </template>
+              <br>
+              <button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
+            </div>
+          </template>
+          <template v-else>
+            <div class="order__login">
+              <button @click="toggleLayout" class=""><i class="material-icons">arrow_back</i><p>Ver Resumen de la orden</p></button>
+              <login style="position: absolute; top: 51px;" @authenticated="toggleLayout"/>
+            </div>
+          </template>
+        </transition>
       </div>
     </div>
   </transition>
@@ -47,10 +60,20 @@
 
 <script>
 import axios from "axios";
+import login from "@/components/_components/login.vue"
 
 export default {
   name: "koOrder1",
+  components: { login },
+  data() {
+    return {
+      layoutLogin: true
+    }
+  },
   computed: {
+    userData () {
+      return this.$store.state.userData
+    },
     openOrder() {
       return this.$store.state.openOrder;
     },
@@ -144,12 +167,14 @@ export default {
       };
       const response = await axios.post(
         `https://api2.komercia.co/api/usuario/orden`,
-        quotation,
-        this.$configHttp
+        quotation
       );
       this.$store.state.openOrder = false;
       this.$store.state.productsCart = [];
       this.$store.commit('UPDATE_CONTENTCART')
+    },
+    toggleLayout() {
+      this.layoutLogin = !this.layoutLogin
     }
   },
   filters: {
@@ -195,6 +220,7 @@ export default {
   box-sizing: border-box;
   padding-bottom: 10px;
   animation: dispatch 0.2s linear 1;
+  overflow: hidden;
 }
 @keyframes dispatch {
   0% {
@@ -223,6 +249,9 @@ export default {
   cursor: pointer;
   outline: none;
   flex: none;
+}
+.order--wrapper{
+  display: grid;
 }
 .order_products_list {
   height: 380px;
@@ -307,6 +336,7 @@ export default {
   font-weight: bold;
 }
 .p_button {
+  justify-self: center;
   width: 80%;
   height: 40px;
   border-style: none;
@@ -325,6 +355,7 @@ export default {
   transition: 0.3s;
 }
 .continue_shopping {
+  justify-self: center;
   width: 80%;
   height: 30px;
   border-style: none;
@@ -341,6 +372,27 @@ export default {
   flex: none;
   transition: 0.3s;
 }
+.order__login > button{
+  display: flex;
+  align-items: center;
+  position: absolute;
+  margin: 10px 0 0 40px;
+  border-style: none;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0;
+  z-index: 2;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+}
+.order__login > button:hover{
+  color: #000;
+}
+.order__login > button i{
+  font-size: 16px;
+}
 .p_button:hover,
 .continue_shopping:hover {
   transform: scale(0.95);
@@ -350,6 +402,19 @@ export default {
   transition: opacity 0.3s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.slide-enter-active {
+  transition: all .3s ease;
+}
+.slide-leave-active {
+  transition: all .3s ease;
+}
+.slide-enter, .slide-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  /* transform: translateX(200px); */
+  margin-left: 150px;
   opacity: 0;
 }
 </style>

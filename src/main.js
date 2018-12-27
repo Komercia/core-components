@@ -56,19 +56,20 @@ const getCookie = cname => {
       return c.substring(name.length, c.length);
     }
   }
-  return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI2YTYxY2M3Mjc1Y2M4YTA3N2I0MjNhODgwZDA4Y2RiZjkyODZjZGRiM2FmZTRkOWIzYWNiMTM3NmFmMGQ5YzIxNTYzNmYwNjRiYzYyZTkxIn0.eyJhdWQiOiIxIiwianRpIjoiYjZhNjFjYzcyNzVjYzhhMDc3YjQyM2E4ODBkMDhjZGJmOTI4NmNkZGIzYWZlNGQ5YjNhY2IxMzc2YWYwZDljMjE1NjM2ZjA2NGJjNjJlOTEiLCJpYXQiOjE1NDUzNDU1OTUsIm5iZiI6MTU0NTM0NTU5NSwiZXhwIjoxNTc2ODgxNTk1LCJzdWIiOiI2OTciLCJzY29wZXMiOltdfQ.OGnyWiqPpXoWHZ-aA7BftaOeNu9TKsSxcXJgqTe6UgNHSoEMDKRo5HZsgVpOeKHfZf1do13WW5OZQ-jkzXA4dI1y1sOVZXEOD3TZNZb3Fx_4IUS67g6OXI6ycOzJiK3_ki2aGsarPERq7LB8fB6DB95vD8WLWO8rwpWlk7aRqsFmGW6nt39nZ3HdsRL1vNwcz1e63tH9qKtaDEyyyLI7PHGZGXsW1QKSWHvOoOo44Y6rLaT2PX5p04TKmyLL-7obyTSfScw705TJZ21hCLLFZE3AmDoUJixVyGfrCbJIbWWPcTxnoynqtTlh2yBOriTUCavfGog93rT0rguwZPsKgxZcMyDSlMSeRckkLGHsyloja_YjDB3WP98ekHRBHeO-DMxfzo6f8TPdAYiMYQ7oEqDBbJBWoBtnp9zRL3WCD3TVeg7ilyIEiklmGQYu42YukLb_GJSYHHOuageCLBLQs3wnMdy_Hq_kbptVVL0ll6ON8aI_u8cicj_Ra57bgi3bqzOsdI4WDkKVeOatPOAmAC2AwVoBveQoHRtObwoVUfYq2DWkY0TzoWCfPcrhw26MKemJ3yW0i3Jn_hFdCqWXM_qkQQvsMflOugu6P2YkWALHS3VqZXY-qNR16Qsb8u7Rq4GJEVNVtgPLxGJhHnHoX9F5zUYCZELuK85vkZz05s0';
+  return ''
+  // return 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImI2YTYxY2M3Mjc1Y2M4YTA3N2I0MjNhODgwZDA4Y2RiZjkyODZjZGRiM2FmZTRkOWIzYWNiMTM3NmFmMGQ5YzIxNTYzNmYwNjRiYzYyZTkxIn0.eyJhdWQiOiIxIiwianRpIjoiYjZhNjFjYzcyNzVjYzhhMDc3YjQyM2E4ODBkMDhjZGJmOTI4NmNkZGIzYWZlNGQ5YjNhY2IxMzc2YWYwZDljMjE1NjM2ZjA2NGJjNjJlOTEiLCJpYXQiOjE1NDUzNDU1OTUsIm5iZiI6MTU0NTM0NTU5NSwiZXhwIjoxNTc2ODgxNTk1LCJzdWIiOiI2OTciLCJzY29wZXMiOltdfQ.OGnyWiqPpXoWHZ-aA7BftaOeNu9TKsSxcXJgqTe6UgNHSoEMDKRo5HZsgVpOeKHfZf1do13WW5OZQ-jkzXA4dI1y1sOVZXEOD3TZNZb3Fx_4IUS67g6OXI6ycOzJiK3_ki2aGsarPERq7LB8fB6DB95vD8WLWO8rwpWlk7aRqsFmGW6nt39nZ3HdsRL1vNwcz1e63tH9qKtaDEyyyLI7PHGZGXsW1QKSWHvOoOo44Y6rLaT2PX5p04TKmyLL-7obyTSfScw705TJZ21hCLLFZE3AmDoUJixVyGfrCbJIbWWPcTxnoynqtTlh2yBOriTUCavfGog93rT0rguwZPsKgxZcMyDSlMSeRckkLGHsyloja_YjDB3WP98ekHRBHeO-DMxfzo6f8TPdAYiMYQ7oEqDBbJBWoBtnp9zRL3WCD3TVeg7ilyIEiklmGQYu42YukLb_GJSYHHOuageCLBLQs3wnMdy_Hq_kbptVVL0ll6ON8aI_u8cicj_Ra57bgi3bqzOsdI4WDkKVeOatPOAmAC2AwVoBveQoHRtObwoVUfYq2DWkY0TzoWCfPcrhw26MKemJ3yW0i3Jn_hFdCqWXM_qkQQvsMflOugu6P2YkWALHS3VqZXY-qNR16Qsb8u7Rq4GJEVNVtgPLxGJhHnHoX9F5zUYCZELuK85vkZz05s0';
 };
 
 const authData = getCookie('authData');
+const config = {
+  headers: {
+    'content-type': 'application/json',
+    Authorization: `Bearer ${authData}`,
+    'Access-Control-Allow-Origin': '*'
+  }
+};
+Vue.prototype.$configHttp = config;
 if (authData) {
-  const config = {
-    headers: {
-      'content-type': 'application/json',
-      Authorization: `Bearer ${authData}`,
-      'Access-Control-Allow-Origin': '*'
-    }
-  };
-  Vue.prototype.$configHttp = config;
   axios.get('https://api2.komercia.co/api/user', config).then(response => {
     store.state.userData = response.data.data;
   });
