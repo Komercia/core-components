@@ -39,7 +39,11 @@
                   </span>
                 </div>
                 <button class="p_button" @click="createQuotation" v-if="userData.id">Cotizar</button>
-                <button class="p_button" @click="toggleLayout" v-else-if="isQuotation()">Iniciar sesión</button>
+                <button
+                  class="p_button"
+                  @click="toggleLayout"
+                  v-else-if="isQuotation()"
+                >Iniciar sesión</button>
                 <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
               </template>
               <br>
@@ -48,7 +52,10 @@
           </template>
           <template v-else>
             <div class="order__login">
-              <button @click="toggleLayout" class=""><i class="material-icons">arrow_back</i><p>Ver Resumen de la orden</p></button>
+              <button @click="toggleLayout" class>
+                <i class="material-icons">arrow_back</i>
+                <p>Ver Resumen de la orden</p>
+              </button>
               <login style="position: absolute; top: 51px;" @authenticated="toggleLayout"/>
             </div>
           </template>
@@ -60,7 +67,7 @@
 
 <script>
 import axios from "axios";
-import login from "@/components/_components/login.vue"
+import login from "../_components/login.vue";
 
 export default {
   name: "koOrder1",
@@ -68,11 +75,11 @@ export default {
   data() {
     return {
       layoutLogin: true
-    }
+    };
   },
   computed: {
-    userData () {
-      return this.$store.state.userData
+    userData() {
+      return this.$store.state.userData;
     },
     openOrder() {
       return this.$store.state.openOrder;
@@ -171,10 +178,10 @@ export default {
       );
       this.$store.state.openOrder = false;
       this.$store.state.productsCart = [];
-      this.$store.commit('UPDATE_CONTENTCART')
+      this.$store.commit("UPDATE_CONTENTCART");
     },
     toggleLayout() {
-      this.layoutLogin = !this.layoutLogin
+      this.layoutLogin = !this.layoutLogin;
     }
   },
   filters: {
@@ -250,7 +257,7 @@ export default {
   outline: none;
   flex: none;
 }
-.order--wrapper{
+.order--wrapper {
   display: grid;
 }
 .order_products_list {
@@ -372,7 +379,7 @@ export default {
   flex: none;
   transition: 0.3s;
 }
-.order__login > button{
+.order__login > button {
   display: flex;
   align-items: center;
   position: absolute;
@@ -387,10 +394,10 @@ export default {
   cursor: pointer;
   outline: none;
 }
-.order__login > button:hover{
+.order__login > button:hover {
   color: #000;
 }
-.order__login > button i{
+.order__login > button i {
   font-size: 16px;
 }
 .p_button:hover,
@@ -406,10 +413,10 @@ export default {
 }
 
 .slide-enter-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-leave-active {
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 }
 .slide-enter, .slide-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
