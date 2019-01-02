@@ -20,7 +20,7 @@
             <ul class="user_options_list">
               <li class="user_options_item">
                 <figure class="user_photo">
-                  <img :src="`https://api.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
+                  <img :src="`https://api2.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
                 </figure>
                 <div class="">
                   <strong>Hola {{ userData.nombre }}</strong><p>{{ userData.email }}</p>

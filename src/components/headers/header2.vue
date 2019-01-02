@@ -18,7 +18,7 @@
             <ul class="user_options_list">
               <li class="user_options_item">
                 <figure class="user_photo">
-                  <img :src="`https://api.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
+                  <img :src="`https://api2.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
                 </figure>
                 <div class="">
                   <strong>Hola {{ userData.nombre }}</strong><p>{{ userData.email }}</p>
@@ -131,7 +131,7 @@ export default {
 </script>
 
 <style scoped>
-.header2{
+.header2 {
   position: sticky;
   top: 0;
   background-color: var(--background_color);
@@ -148,7 +148,7 @@ export default {
 }
 .main-menu {
   height: 50px;
-  background: #04779B;
+  background: #04779b;
   display: flex;
   justify-content: center;
 }
@@ -173,7 +173,6 @@ export default {
 }
 .main-menu-item:hover {
   background-color: rgba(0, 0, 0, 0.2);
-
 }
 .logo-top-menu {
   max-height: 90%;
@@ -195,7 +194,7 @@ export default {
   position: relative;
   cursor: pointer;
 }
-.cart_top-icon span{
+.cart_top-icon span {
   position: absolute;
   top: -6px;
   right: -6px;
@@ -206,7 +205,7 @@ export default {
   align-items: center;
   border-radius: 50%;
   background-color: red;
-  color: #FFF;
+  color: #fff;
 }
 .social-networks_top-menu {
   padding-left: 20px;
@@ -228,11 +227,11 @@ export default {
   color: #fefefe;
 }
 
-.user{
+.user {
   cursor: pointer;
   outline: none;
 }
-.user_photo{
+.user_photo {
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -240,37 +239,37 @@ export default {
   overflow: hidden;
   cursor: pointer;
 }
-.user_photo img{
+.user_photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.user_options_item{
+.user_options_item {
   display: flex;
   padding: 10px 0;
   cursor: pointer;
-  border-bottom: 1px solid #DBDBDB;
+  border-bottom: 1px solid #dbdbdb;
 }
-.user_options_item:hover{
-  background-color: #EEE;
+.user_options_item:hover {
+  background-color: #eee;
 }
-.user_options_item *{
+.user_options_item * {
   color: #39393b !important;
 }
-.user_options_item:first-child{
+.user_options_item:first-child {
   /*flex-direction: column;*/
   /*justify-content: center;*/
   align-items: center;
   text-align: left;
   cursor: initial;
 }
-.user_options_item:first-child:hover{
-  background-color: #FFF;
+.user_options_item:first-child:hover {
+  background-color: #fff;
 }
-.user_options_item:last-child{
+.user_options_item:last-child {
   border-bottom: 0px;
 }
-.user_options_item i{
+.user_options_item i {
   margin-right: 5px;
   font-size: 20px;
 }
@@ -281,7 +280,7 @@ export default {
     flex-direction: column;
   }
   .main-menu-link {
-    color:  rgb(206, 206, 206);
+    color: rgb(206, 206, 206);
     width: 100%;
   }
   .main-menu {
@@ -317,21 +316,22 @@ export default {
     margin-right: 20px;
   }
   .slide-fade-enter-active {
-    transition: all .3s ease;
+    transition: all 0.3s ease;
   }
   .slide-fade-leave-active {
-    transition: all .3s ease;
+    transition: all 0.3s ease;
   }
-  .slide-fade-enter, .slide-fade-leave-to{
+  .slide-fade-enter,
+  .slide-fade-leave-to {
     transform: translateX(100%);
   }
   .logo-top-menu {
     height: 50px;
   }
- }
+}
 
- @media screen and (max-width: 450px) {
-  .social-networks_top-menu{
+@media screen and (max-width: 450px) {
+  .social-networks_top-menu {
     display: none;
   }
   .logo-top-menu {
@@ -345,24 +345,23 @@ export default {
   .main-menu {
     z-index: 100;
   }
- }
+}
 
-
-  .top-menu{
-    max-width: 100%;
-    box-sizing: border-box;
-    padding: 0 50px;
-    box-shadow: 0 1px 5px 0 rgba(0,0,0,0.2);
-    background-color: #FFF;
-  }
-  .main-menu{
-    display: none;
-    background-color: #FFF;
-  }
-  .main-menu-list li a{
-    color: var(--main_color);
-  }
-  /*.main-menu-item {
+.top-menu {
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 50px;
+  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+}
+.main-menu {
+  display: none;
+  background-color: #fff;
+}
+.main-menu-list li a {
+  color: var(--main_color);
+}
+/*.main-menu-item {
     height: 100%;
     display: flex;
     align-items: center;
@@ -370,41 +369,41 @@ export default {
     text-transform: uppercase;
     font-weight: bold;
   }*/
-  .logo-top-menu{
-    max-width: none;
-    flex: 1;
+.logo-top-menu {
+  max-width: none;
+  flex: 1;
+}
+.logo-top-menu img {
+  max-width: 200px;
+  width: 100%;
+  height: 63px;
+  object-fit: contain;
+}
+.login-cart_top-menu.container-icons {
+  align-items: center;
+}
+@media (max-width: 800px) {
+  .top-menu .main-menu-list {
+    display: none;
   }
-  .logo-top-menu img{
-    max-width: 200px;
-    width: 100%;
-    height: 63px;
+  .login-cart_top-menu {
+    padding-right: 0;
+  }
+  .main-menu {
+    display: flex;
+  }
+}
+@media (max-width: 600px) {
+  .top-menu {
+    padding: 0 30px;
+  }
+}
+@media (max-width: 450px) {
+  .logo-top-menu {
+    padding-left: 0px;
+  }
+  .logo-top-menu img {
     object-fit: contain;
   }
-  .login-cart_top-menu.container-icons{
-    align-items: center;
-  }
-  @media(max-width: 800px){
-    .top-menu .main-menu-list{
-      display: none;
-    }
-    .login-cart_top-menu{
-      padding-right: 0;
-    }
-    .main-menu{
-      display: flex;
-    }
-  }
-  @media(max-width: 600px){
-    .top-menu{
-      padding: 0 30px;
-    }
-  }
-  @media(max-width: 450px){
-    .logo-top-menu{
-      padding-left: 0px;
-    }
-    .logo-top-menu img{
-      object-fit: contain;
-    }
-  }
+}
 </style>

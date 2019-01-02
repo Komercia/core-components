@@ -1,21 +1,13 @@
 <template>
   <div id="komerciaChat" v-show="loading">
-    <div class="komercia_chat" v-show="openchat">
-      <div class="komercia_chat_header" style="background-color: var(--main_color);">
-        <template v-if="storeData.logo">
-          <img class="komercia_chat_header_logo" :src="`https://api.komercia.co/logos/${storeData.logo}`">
-        </template>
-        <svg @click="openChat" fill="#FFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-          <path d="M0 0h24v24H0z" fill="none"/>
-        </svg>
-      </div>
+    <div :class="{komercia_chat: true, new_chat: !messages.length}" v-show="openchat">
+      <chatHeader :storeData="storeData" @openChat="openChat"/>
       <template v-if="userData.id">
         <div class="komercia_chat_messages" id="KomerciaMessages">
           <p v-for="(item, index) in messages" :key="index" :class="item.from" style="background-color: var(--main_color);">{{ item.message }}</p>
         </div>
         <div class="komercia_chat_input">
-          <input v-model="message" @keydown.enter.prevent="submitMessage" placeholder="Escribir una respuesta">
+          <input v-model="message" @keydown.enter.prevent="submitMessage" placeholder="Escribe tu mensaje">
           <img @click="submitMessage" src="https://js.intercomcdn.com/images/send-button.553b8d28.png">
         </div>
       </template>
@@ -36,9 +28,10 @@
 
 <script>
 import Login from './login'
+import chatHeader from './header'
 
 export default {
-  components: { Login },
+  components: { Login, chatHeader},
   name: 'KoChat',
   created() {
     window.onload = () => {
@@ -214,40 +207,10 @@ export default {
     box-shadow: 0 5px 40px rgba(0,0,0,.16);
     z-index: 3;
   }
-  .komercia_chat_header{
-    width: 100%;
-    height: 70px;
-    padding: 0 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #FFF;
-    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
-    box-sizing: border-box;
-    z-index: 2;
-  }
-  .komercia_chat_header_logo{
-    max-width: 100px;
-    max-height: 50px;
-    padding: 0 10px;
-  }
-  .komercia_chat_header_info{
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-  }
-  .komercia_chat_header_info svg{
-    display: none;
-  }
-  .komercia_chat_header_info h2{
-    font-size: 15px;
-    font-weight: normal;
-  }
-  .komercia_chat_header_info p{
-    font-size: 12px;
-    font-weight: lighter;
-    color: rgba(255, 255, 255, 0.7);
-  }
+
+
+
+
   .komercia_chat_input{
     width: 100%;
     height: 50px;
@@ -280,12 +243,17 @@ export default {
     flex-direction: column;
     align-items: flex-start;
     overflow: auto;
+    box-shadow: inset 0 21px 4px -20px rgba(0,0,0,.2);
+  }
+  .komercia_chat_messages p{
+    font-size: 14px;
   }
   .komercia_chat_messages .store{
     max-width: 98%;
     background-color: #EEE !important;
     padding: 10px;
     margin: 10px;
+    border-radius: 4px 4px 4px 0;
   }
   .komercia_chat_messages .customer{
     max-width: 98%;
@@ -294,7 +262,9 @@ export default {
     align-self: flex-end;
     margin: 10px;
     text-align: right;
+    border-radius: 4px 4px 0 4px;
   }
+
   @media(max-width: 500px){
     .komercia_chat{
       top: 0;
@@ -304,7 +274,7 @@ export default {
       max-width: 100%;
       max-height: 100vh;
     }
-    .komercia_chat_header_info svg{
+    .komercia_chat_header svg{
       display: block;
     }
   }

@@ -1,35 +1,22 @@
 <template>
   <div class="form_list">
     <section class="settingBanner" v-for="(banner, index) in settingData.data">
-      <div class="banner_photo">
-        <img
-        :src="banner.foto_cloudinary"
-        :alt="banner.titulo">
-        <label :for="`banner${index}`" class="upload_hover">
-          <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>
-          <p>Subir banner</p>
-        </label>
-      </div>
-      <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)">
+      <Upload :item="banner" :src="banner.foto_cloudinary" @change="uploadBanner2($event, banner)"/>
       <div class="input-area">
         <el-input placeholder="Titulo" v-model="banner.titulo">
           <template slot="prepend">
             <icon-base icon-name="text"><icon-text /></icon-base>
           </template>
         </el-input>
+        <el-input-number v-model="banner.titulosize" :min="3" :max="25"></el-input-number>
       </div>
       <div class="input-area">
         <el-input placeholder="Descripción" v-model="banner.descripcion">
           <template slot="prepend"><icon-base icon-name="align-justify"><align-justify /></icon-base></template>
         </el-input>
+        <el-input-number v-model="banner.descripcionsize" :min="10" :max="35"></el-input-number>
       </div>
-      <div class="input-area">
-        <el-input placeholder="Url de redirección" v-model="banner.redireccion">
-          <template slot="prepend">
-            <icon-base icon-name="links"><icon-links /></icon-base>
-          </template>
-        </el-input>
-      </div>
+      <RedirectTo v-model="banner.redirect_to"/>
       <div class="input-area">
         <el-select placeholder="Posición del contenido" v-model="banner.posicion">
           <el-option
@@ -39,6 +26,7 @@
             :key="position.value">
           </el-option>
         </el-select>
+        <el-input-number v-model="banner.spaces" :min="0" :max="75"></el-input-number>
       </div>
       <div class="settingBanner_actions">
         <el-button @click="updateBanner(banner)">Guardar</el-button>
@@ -46,15 +34,7 @@
       </div>
     </section>
     <section class="settingBanner" v-if="settingData.data.length < 3">
-      <div class="upload-area">
-        <label for="uploadBanner" class="upload">
-          <icon-base icon-name="cloud-up" icon-color="#FFF"><cloud-up /></icon-base>Subir imagen
-        </label>
-        <!-- <button class="banner_unplash" @click="openUnplash">
-          Explora imágenes gratis
-        </button> -->
-        <input type="file" id="uploadBanner" v-on:change="uploadBanner">
-      </div>
+      <Upload @change="uploadBanner"/>
     </section>
   </div>
 </template>
@@ -62,17 +42,20 @@
 <script>
 import { mapState } from 'vuex'
 import axios from 'axios';
-import AngleLeft from '../../Icons/AngleLeft.vue'
-import IconText from '../../Icons/Text.vue'
-import AlignJustify from '../../Icons/AlignJustify.vue'
-import IconLinks from '../../Icons/Links.vue'
-import CloudUp from '../../Icons/CloudUp.vue'
+import Upload from '../../_components/Upload.vue'
+import RedirectTo from '../../_components/RedirectTo.vue'
+import AngleLeft from '../../../Icons/AngleLeft.vue'
+import IconText from '../../../Icons/Text.vue'
+import AlignJustify from '../../../Icons/AlignJustify.vue'
+import IconLinks from '../../../Icons/Links.vue'
+import CloudUp from '../../../Icons/CloudUp.vue'
 
 export default {
-  name: 'koSliderSetting1-1',
-  components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp },
+  name: 'koSliderSetting1_v3',
+  components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp, RedirectTo, Upload },
   data() {
     return {
+      value: null,
       titulo: '',
       descripcion: '',
       redireccion: '',
@@ -146,7 +129,10 @@ export default {
           posicion: '',
           redireccion: '',
           tienda: this.$store.state.configKomercia.tienda.id,
-          titulo: ''
+          titulo: '',
+          titulosize: '5',
+          descripcionsize: '20',
+          spaces: '3'
         }
         this.$store.state.settingData.data.push(newBanner)
         this.$cropper.complete()
@@ -248,43 +234,10 @@ export default {
   padding: 20px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
-.banner_photo {
-  height: 113px;
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-.banner_photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border: 1px solid #c4cdd5;
-}
-.banner_photo .upload_hover {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  justify-content: center;
-  justify-items: center;
-  align-content: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  cursor: pointer;
-}
-.banner_photo .upload_hover svg {
-  margin-bottom: 5px;
-}
-.banner_photo:hover .upload_hover {
-  display: grid;
-}
-.settingBanner input[type="file"] {
-  display: none;
-}
 .input-area {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 5px;
   align-items: flex-start;
   margin: 5px 0;
 }
@@ -296,40 +249,8 @@ export default {
 .input-area .el-select {
   width: 100%;
 }
-.upload-area {
-  width: 100%;
-  height: 120px;
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  grid-row-gap: 10px;
-  border: 1px solid #c4cdd5;
-  background-color: #f4f6f8;
-}
-
-#uploadBanner {
-  visibility: hidden;
-  opacity: 0;
-  width: 0;
-  height: 0;
-  display: none;
-}
-.upload {
-  background-color: #0f9380;
-  color: #fff;
-  padding: 10px;
-  cursor: pointer;
-}
-.upload img {
-  width: 100%;
-}
-.upload svg {
-  fill: #fff;
-}
-.banner_unplash {
-  border-style: none;
-  background-color: transparent;
-  text-decoration: underline;
+.input-area .el-input-number {
+  width: 125px;
 }
 .newBanner_action {
   display: flex;

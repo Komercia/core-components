@@ -17,6 +17,13 @@ if (localStorage.getItem('ShoppingCart')) {
 
 export default new Vuex.Store({
   state: {
+    configHttp: {
+      headers: {
+        'content-type': 'application/json',
+        'Authorization': `Bearer `,
+        'Access-Control-Allow-Origin': '*'
+      }
+    },
     urlHttp: '',
     openOrder: false,
     envios: {
@@ -24,7 +31,7 @@ export default new Vuex.Store({
         envio_metodo: 'gratis'
       }
     },
-    idTienda: 404,
+    idTienda: 431,
     tienda: {
       telefono: ''
     },
@@ -35,7 +42,7 @@ export default new Vuex.Store({
       nombre: ''
     },
     banners: [],
-    selectedCard: 'koProductCard2',
+    selectedCard: 'koProductCard1',
     productsData: [
       {
         id: 0,

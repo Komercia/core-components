@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      // URL: 'https://api.komerci.co/api/front/tienda/364',
+      // URL: 'https://api2.komerci.co/api/front/tienda/364',
       scrollPerPage: true,
       perPageCustom: [[520, 3], [930, 4], [1200, 4]],
       paginationEnabled: false,

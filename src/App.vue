@@ -37,9 +37,8 @@ export default {
 * {
   font-family: 'Open Sans', sans-serif;
 }
-
 :root {
-  --main_color: #000;
+  --main_color: #333;
   --text_color: #292b32;
   --button_color: #333;
   --button_text_color: #fff;

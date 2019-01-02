@@ -87,20 +87,24 @@ export default {
     },
     login() {
       const params = {
-        grant_type:password,
+        grant_type: 'password',
         client_id: 2,
         client_secret: 'S3kE1jYcd6hFWcu0jIOm3cRFMOnjjmtmtfoYdra1',
         password: this.password,
         username: this.email,
       }
       axios
-        .post(`${this.$urlHttp}/oauth/token`, params)
+        .post(`https://api2.komercia.co/oauth/token`, params)
         .then(response => {
-          localStorage.setItem('authData', JSON.stringify(response.data))
           document.cookie = `authData = ${
-            response.data.accessToken
+            response.data.access_token
           }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`
-          this.authentication(response.data.accessToken)
+          axios.defaults.headers.common = {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${response.data.access_token}`,
+            'Access-Control-Allow-Origin': '*'
+          };
+          this.authentication(response.data.access_token)
         })
         .catch(err => {
           if (err) {
@@ -116,8 +120,9 @@ export default {
           'Access-Control-Allow-Origin': '*'
         }
       }
-      axios.get(`${this.$urlHttp}/api/user/data`, config).then(response => {
-        this.$store.state.userData = response.data.usuario
+      axios.get(`${this.$urlHttp}/api/user`, config).then(response => {
+        this.$store.state.userData = response.data.data
+        this.$emit('authenticated')
       })
     },
     showPassword() {

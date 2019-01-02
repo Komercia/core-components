@@ -169,7 +169,6 @@ footer {
   width: 100%;
   background-color: #111;
   height: auto;
-  margin-top: 60px;
 }
 .footer {
   display: flex;

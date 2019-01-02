@@ -11,6 +11,10 @@
         <li v-for='(item, index) in routesFooter' v-show="activeRoute(item)" :key='index' class="menu-footer"><router-link class="menu-footer-link" :to="item.route">{{item.name}}</router-link></li>
       </ul>
     </nav>
+    <div class="footer_powered_by">
+      <img src="http://res.cloudinary.com/komercia-store/image/upload/v1536181546/komercia/icon.png">
+      <p>Desarrollado por <a href="https://komercia.co">Komercia</a></p>
+    </div>
   </footer>
 </template>
 
@@ -55,6 +59,7 @@ export default {
   .footer{
     width: 100%;
     height: 150px;
+    display: grid;
     flex: none;
     background-color: var(--main_color);
     margin-top: 20px;
@@ -62,7 +67,8 @@ export default {
   .footer-container-icons {
     display: flex;
     justify-content: center;
-    padding: 25px 40px;
+    align-items: flex-end;
+    padding: 10px 40px;
   }
   .footer-container-icons .footer-icon {
     color: rgba(254, 254, 254, 0.667);
@@ -88,5 +94,27 @@ export default {
   .container-menu-footer-list {
     display: flex;
     justify-content: center;
+    align-items: center;
+  }
+  .footer_powered_by{
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+  .footer_powered_by img{
+    width: 30px;
+    opacity: 0.667;
+  }
+  .footer_powered_by p{
+    font-size: 13px;
+    color: rgba(254, 254, 254, 0.667);
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin: 0;
+  }
+  .footer_powered_by p a{
+    color: rgba(254, 254, 254, 0.667);
   }
 </style>

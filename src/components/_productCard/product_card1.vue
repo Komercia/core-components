@@ -4,13 +4,12 @@
       <image-cloudinary :src="data.foto_cloudinary" />
     </div>
     <div class="grid-item-description">
-      <div class="name-product">{{data.nombre}}</div>
-      <div class="category">{{data.marca}}</div>
       <div class="price">{{data.precio | currency}}</div>
-      <button class="btn-product g-btn" type="button" name="button">
-        <a>Ir al Producto</a>
-      </button>
+      <p class="name-product">{{data.nombre}} <span v-show="data.marca">- {{data.marca}}</span></p>
     </div>
+    <button class="btn-product g-btn" type="button" name="button">
+      <a>Ir al Producto</a>
+    </button>
   </router-link>
 </template>
 
@@ -41,13 +40,15 @@ export default {
 };
 </script>
 
-<style >
+<style scoped>
 .container-product {
   width: 100%;
   height: 100%;
   display: grid;
-  /*justify-content: center;*/
-  align-items: end;
+  grid-template-rows: auto 1fr auto;
+  justify-content: center;
+  justify-items: center;
+  align-items: space-between;
 }
 .img-grid-item {
   max-width: 250px;
@@ -58,7 +59,7 @@ export default {
   justify-items: center;
   justify-self: center;
   align-items: center;
-  box-shadow: 0 0 5px #eee;
+  background-color: #FFF;
   overflow: hidden;
 }
 .img-grid-item img {
@@ -75,22 +76,12 @@ export default {
 .btn-product {
   display: flex;
   margin-top: 15px;
-  background-color: #f9f9f9;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
   cursor: pointer;
-  padding: 0;
-  color: #555555;
-}
-.btn-product a {
-  padding: 10px 30px;
 }
 .name-product {
   text-align: center;
   color: var(--text_color);
-  text-transform: uppercase;
   font-size: 14px;
-  font-weight: bold;
 }
 .category {
   color: var(--text_color);

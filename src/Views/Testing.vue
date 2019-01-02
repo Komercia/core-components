@@ -4,11 +4,14 @@
     <!-- <ko-slider2/> -->
     <!-- <ko-slider3/> -->
     <!-- <grid2/> -->
-    <!-- <contact2/> -->
-    <!-- <product2/> -->
-    <featured-product/>
+    <!-- <content2/> -->
+    <contact2/>
+    <!-- <product1/>
+    <product2/> -->
+    <!-- <featured-product/> -->
     <!-- <product-list3/> -->
     <!-- <newsletter1/> -->
+    <chat/>
     <footer3/>
   </div>
 </template>
@@ -21,10 +24,13 @@ import Product1 from '../components/products/product1'
 import Product2 from '../components/products/product2'
 import ProductList3 from '../components/product_lists/product_list3'
 import Grid2 from '../components/grids/grid2'
+import Content2 from '../components/contents/content2/v1'
 import Contact2 from '../components/contacts/contact2'
 import Newsletter1 from '../components/newsletters/newsletter1'
 import FeaturedProduct from '../components/featuredProducts/featuredProduct1'
 import Footer3 from '../components/footers/footer3'
+import chat from '../components/chat/chat'
+
 export default {
   components: {
     Menu,
@@ -35,9 +41,11 @@ export default {
     Product1,
     Product2,
     Newsletter1,
+    Content2,
     Contact2,
     FeaturedProduct,
-    Footer3
+    Footer3,
+    chat
   }
 }
 </script>

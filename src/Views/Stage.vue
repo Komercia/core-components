@@ -107,12 +107,14 @@ data() {
     stores: [
       { value: 1, label: "Topalxe - 1" },
       { value: 290, label: "Prontodental - 290" },
+      { value: 452, label: "EngelShoes - 452" },
       { value: 364, label: "Ace Delivery's - 364" },
       { value: 490, label: "Demo 7 - 490" },
       { value: 349, label: "Demo 1 - 349" },
-      { value: 595, label: "Europio - 595" },
+      { value: 574, label: "Child Clothes - 574" },
       { value: 247, label: "TecnoAqua SAS - 247" },
-      { value: 404, label: "XXX - 404" }
+      { value: 404, label: "XXX - 404" },
+      { value: 605, label: 'Origen SP'}
     ]
   };
 },

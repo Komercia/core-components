@@ -5,8 +5,8 @@
       <div class="section">
         <div class="photos">
           <div class="photos_selected">
-            <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover="selectedPhoto(data.detalle.foto_cloudinary)" />
-            <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
+            <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)" />
+            <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
             <image-cloudinary v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true" />
           </div>
           <div class="photo_main">
@@ -77,11 +77,11 @@
           </div>
           <div class="marca item-product" v-show="data.info.marca">
             <p class="name-item">Marca:</p>
-            <span>{{ data.info.marca.toLowerCase() }}</span>
+            <span>{{ data.info.marca | toLowerCase }}</span>
           </div>
           <div class="marca item-product" v-show="data.detalle.categoria_producto.nombre_categoria_producto">
             <p class="name-item">Categoria:</p>
-            <span>{{ data.detalle.categoria_producto.nombre_categoria_producto.toLowerCase() }}</span>
+            <span>{{ data.detalle.categoria_producto.nombre_categoria_producto | toLowerCase }}</span>
           </div>
           <div class="content_variant">
             <div class="content_variant_item item-product" v-for="(variant, index) in data.variantes" :key="index">
@@ -493,12 +493,19 @@ export default {
       if (value) {
         return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
+      return 0
+    },
+    toLowerCase(value) {
+      if (value) {
+        return value.toLowerCase()
+      }
+      return ''
     }
   }
 }
 </script>
 <style scoped>
-@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';
+/*@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';*/
 .wrapper {
   max-width: 1200px;
   width: 100%;

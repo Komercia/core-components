@@ -3,13 +3,13 @@
     <paginate
       name="products"
       :list="products"
-      :per="12"
+      :per="40"
       tag="div"
       class="product_list">
       <div :is="selectedCard" v-for="product in paginated('products')" :key="product.id" :data="product"></div>
     </paginate>
     <paginate-links
-      v-if="products.length > 13"
+      v-if="products.length > 41"
       for="products"
       :show-step-links="true"
       :limit="5">
@@ -56,7 +56,6 @@ export default {
   }
   .product_list1 .paginate-links.products {
     display: flex;
-    background-color: #FFF;
     margin-top: 30px;
     /*border: 1px solid black;*/
   }
