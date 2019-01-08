@@ -7,6 +7,7 @@ import ContentSetting1 from './Contents/content1'
 import koContent2Setting from './Contents/content2/v1'
 import VideoSetting1 from './Videos/video1'
 import GridSetting2 from './Grids/grid2'
+import HeaderSetting1 from './Headers/thomas/v1'
 
 const components = [
   SliderSetting1,
@@ -17,7 +18,8 @@ const components = [
   ContentSetting1,
   koContent2Setting,
   VideoSetting1,
-  GridSetting2
+  GridSetting2,
+  HeaderSetting1
 ]
 
 export default components

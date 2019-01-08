@@ -3,6 +3,7 @@ import Header1 from './components/headers/header1'
 import Header2 from './components/headers/header2'
 import Header3 from './components/headers/header3'
 import Header4 from './components/headers/header4'
+import HeaderThomas from './components/headers/headerThomas'
 import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Product2 from './components/products/product2'
@@ -37,6 +38,7 @@ const components = [
   Header2,
   Header3,
   Header4,
+  HeaderThomas,
   Cart1,
   Product1,
   Product2,

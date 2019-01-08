@@ -1,38 +1,78 @@
 <template>
   <div class="main-header">
-    <ko-order1/>
+    <ko-order1 />
     <div class="main-top-menu">
       <div class="icons-left">
 
-        <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData.id">
+        <el-popover
+          placement="bottom-end"
+          width="280"
+          trigger="hover"
+          v-if="userData.id"
+        >
           <div class="container-data-user">
-            <div class="img-user" slot="reference">
-              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
+            <div
+              class="img-user"
+              slot="reference"
+            >
+              <img
+                :src="`https://api2.komercia.co/users/${userData.foto}`"
+                alt=""
+              >
             </div>
             <div class="data-user">
               <p class="name-user">{{userData.nombre}}</p>
               <p class="email-user">{{userData.email}}</p>
-              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
+              <el-button
+                class="btn-logout"
+                type="info"
+                @click="logout"
+                plain
+              >Salir</el-button>
             </div>
           </div>
-          <div class="prueba" slot="reference">
-            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
+          <div
+            class="prueba"
+            slot="reference"
+          >
+            <img
+              class="img-usuario"
+              :src="`https://api2.komercia.co/users/${userData.foto}`"
+              alt=""
+            >
           </div>
         </el-popover>
 
-        <el-popover placement="bottom-end" width="280" trigger="hover" v-else>
+        <el-popover
+          placement="bottom-end"
+          width="280"
+          trigger="hover"
+          v-else
+        >
           <ul>
             <li class="pop-item">
-              <a class="pop-item-link" :href="`https://login.komercia.co/?from=store&path=${$route.path}&params={'tienda':${storeData.id_tienda},logo:${storeData.logo}}`">Iniciar Sesión</a>
+              <a
+                class="pop-item-link"
+                :href="`https://login.komercia.co/?from=store&path=${$route.path}&params={'tienda':${storeData.id_tienda},logo:${storeData.logo}}`"
+              >Iniciar Sesión</a>
             </li>
             <li class="pop-item">
-              <a class="pop-item-link" :href="`https://login.komercia.co/registrar-cliente/?from=store&path=${$route.path}`">Registrar</a>
+              <a
+                class="pop-item-link"
+                :href="`https://login.komercia.co/registrar-cliente/?from=store&path=${$route.path}`"
+              >Registrar</a>
             </li>
           </ul>
-          <i class="icon-user-circle" slot="reference"></i>
+          <i
+            class="icon-user-circle"
+            slot="reference"
+          ></i>
         </el-popover>
 
-        <i @click="openOrder" class="icon-shopping-basket">
+        <i
+          @click="openOrder"
+          class="icon-shopping-basket"
+        >
           <em class="num-products">{{ productsCart }}</em>
         </i>
       </div>
@@ -48,13 +88,26 @@
     </div>
     <div class="line"></div>
     <div class="container">
-      <router-link to="/" class="container-logo">
-        <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
+      <router-link
+        to="/"
+        class="container-logo"
+      >
+        <img
+          :src="`${$urlHttp}/logos/${info.logo}`"
+          alt="logo"
+        >
       </router-link>
       <nav class="header-navigation">
         <ul class="navigation-list">
-          <li v-for='(item, index) in routes' :key='index' class="navigation-item">
-            <router-link :to="item.route" class="navigation-link">{{item.name}}</router-link>
+          <li
+            v-for='(item, index) in routes'
+            :key='index'
+            class="navigation-item"
+          >
+            <router-link
+              :to="item.route"
+              class="navigation-link"
+            >{{item.name}}</router-link>
           </li>
         </ul>
       </nav>
@@ -64,34 +117,74 @@
         <!-- <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
         <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i> -->
 
-        <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData.id">
+        <el-popover
+          placement="bottom-end"
+          width="300"
+          trigger="hover"
+          v-if="userData.id"
+        >
           <div class="container-data-user">
-            <div class="img-user" slot="reference">
-              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
+            <div
+              class="img-user"
+              slot="reference"
+            >
+              <img
+                :src="`https://api2.komercia.co/users/${userData.foto}`"
+                alt=""
+              >
             </div>
             <div class="data-user">
               <p class="name-user">{{userData.nombre}}</p>
               <p class="email-user">{{userData.email}}</p>
-              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
+              <el-button
+                class="btn-logout"
+                type="info"
+                @click="logout"
+                plain
+              >Salir</el-button>
             </div>
           </div>
-          <div class="prueba" slot="reference">
-            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt="">
+          <div
+            class="prueba"
+            slot="reference"
+          >
+            <img
+              class="img-usuario"
+              :src="`https://api2.komercia.co/users/${userData.foto}`"
+              alt=""
+            >
           </div>
         </el-popover>
 
-        <el-popover placement="bottom-end" width="250" trigger="hover" v-else>
+        <el-popover
+          placement="bottom-end"
+          width="250"
+          trigger="hover"
+          v-else
+        >
           <ul>
             <li class="pop-item">
-              <a class="pop-item-link" :href="urlLogin">Iniciar Sesión</a>
+              <a
+                class="pop-item-link"
+                :href="urlLogin"
+              >Iniciar Sesión</a>
             </li>
             <li class="pop-item">
-              <a class="pop-item-link" :href="urlSignup">Registrar</a>
+              <a
+                class="pop-item-link"
+                :href="urlSignup"
+              >Registrar</a>
             </li>
           </ul>
-          <i class="icon-user-circle" slot="reference"></i>
+          <i
+            class="icon-user-circle"
+            slot="reference"
+          ></i>
         </el-popover>
-        <i @click="openOrder" class="icon-shopping-basket">
+        <i
+          @click="openOrder"
+          class="icon-shopping-basket"
+        >
           <em class="num-products">{{ productsCart }}</em>
         </i>
         <!-- *****************************Input Buscador ********************************** -->
@@ -100,16 +193,32 @@
           </el-input>
         </transition> -->
       </div>
-      <i @click="toggleMenu" class="icon-menu"></i>
+      <i
+        @click="toggleMenu"
+        class="icon-menu"
+      ></i>
     </div>
     <transition name="slide-fade">
-      <nav v-show="show" class="main-menu">
+      <nav
+        v-show="show"
+        class="main-menu"
+      >
         <ul class="main-menu-list">
-          <li @click="toggleMenu" class="main-menu-item item-close">
+          <li
+            @click="toggleMenu"
+            class="main-menu-item item-close"
+          >
             <i class="icon-close"></i>
           </li>
-          <li v-for='(item, index) in routes' :key='index' class="main-menu-item">
-            <a @click="redirectTo(item.route)" class="main-menu-link">{{item.name}}</a>
+          <li
+            v-for='(item, index) in routes'
+            :key='index'
+            class="main-menu-item"
+          >
+            <a
+              @click="redirectTo(item.route)"
+              class="main-menu-link"
+            >{{item.name}}</a>
           </li>
         </ul>
       </nav>
@@ -118,9 +227,9 @@
 </template>
 
 <script>
-import koOrder1 from '../_order/order1.vue'
+import koOrder1 from "../_order/order1.vue";
 export default {
-  name: 'koHeader4',
+  name: "koHeader4",
   components: { koOrder1 },
   data() {
     return {
@@ -130,76 +239,84 @@ export default {
       windowsWidth: 0,
       routes: [
         {
-          name: 'Inicio',
-          route: '/'
+          name: "Inicio",
+          route: "/"
         },
         {
-          name: 'Productos',
-          route: '/productos'
+          name: "Productos",
+          route: "/productos"
         },
         {
-          name: 'Carrito',
-          route: '/pedido'
+          name: "Carrito",
+          route: "/pedido"
         },
         {
-          name: 'Contacto',
-          route: '/contacto'
+          name: "Contacto",
+          route: "/contacto"
         }
       ]
-    }
+    };
   },
   computed: {
     storeData() {
-      return this.$store.state.tienda
+      return this.$store.state.tienda;
     },
     userData() {
-      return this.$store.state.userData
+      return this.$store.state.userData;
     },
     info() {
-      return this.$store.state.tienda
+      return this.$store.state.tienda;
     },
     style() {
-      return this.$store.state.styleData
+      return this.$store.state.styleData;
     },
     productsCart() {
-      return this.$store.state.productsCart.length
+      return this.$store.state.productsCart.length;
     },
-    urlLogin () {
-      const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
-      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
+    urlLogin() {
+      const params = JSON.stringify({
+        tienda: this.storeData.id_tienda,
+        logo: this.storeData.logo
+      });
+      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${
+        this.$route.path
+      }&params=${params}`;
     },
-    urlSignup () {
-      const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
-      return `https://login.komercia.co/registrar-cliente/?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
+    urlSignup() {
+      const params = JSON.stringify({
+        tienda: this.storeData.id_tienda,
+        logo: this.storeData.logo
+      });
+      return `https://login.komercia.co/registrar-cliente/?from=${
+        this.storeData.subdominio
+      }&path=${this.$route.path}&params=${params}`;
     }
   },
   methods: {
     redirectTo(route) {
-      this.$router.push(route)
-      this.hideMenu()
+      this.$router.push(route);
+      this.hideMenu();
     },
     hideMenu() {
-      this.show = false
+      this.show = false;
     },
     getShowIcon() {
-      this.showIcon = !this.showIcon
+      this.showIcon = !this.showIcon;
     },
     logout() {
-      this.$store.commit('LOGOUT')
+      this.$store.commit("LOGOUT");
     },
     openOrder() {
-      this.$store.state.openOrder = true
+      this.$store.state.openOrder = true;
     },
     toggleMenu() {
-      this.show = !this.show
+      this.show = !this.show;
     }
   }
-}
+};
 </script>
 
 <style scoped>
-@import "https://unpkg.com/komercia-fuentes@1.0.0/styles.css";
-
 .container {
   max-width: 1600px;
   width: 100%;
