@@ -1,40 +1,85 @@
 <template>
-  <div class="product" v-if="data.detalle">
+  <div
+    class="product"
+    v-if="data.detalle"
+  >
     <ko-modal v-show="modalPayment"></ko-modal>
     <div class="wrapper">
       <div class="section">
         <div class="photos">
           <div class="photos_selected">
-            <image-cloudinary :src="setMiniPhoto(data.detalle.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)" />
-            <image-cloudinary :src="setMiniPhoto(foto.foto_cloudinary)" v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)" v-for="foto in data.fotos" />
-            <image-cloudinary v-if="idYoutube" :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`" v-show="idYoutube" v-on:mouseover="existYoutube = true" />
+            <image-cloudinary
+              :src="setMiniPhoto(data.detalle.foto_cloudinary)"
+              v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)"
+            />
+            <image-cloudinary
+              :src="setMiniPhoto(foto.foto_cloudinary)"
+              v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)"
+              v-for="foto in data.fotos"
+            />
+            <image-cloudinary
+              v-if="idYoutube"
+              :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
+              v-show="idYoutube"
+              v-on:mouseover="existYoutube = true"
+            />
           </div>
           <div class="photo_main">
-            <zoomed v-if="data.detalle.foto !== 'placeholder1.svg'" v-show="!existYoutube" :photo="selectPhotoUrl">
+            <zoomed
+              v-if="data.detalle.foto !== 'placeholder1.svg'"
+              v-show="!existYoutube"
+              :photo="selectPhotoUrl"
+            >
             </zoomed>
-            <img :src="selectPhotoUrl" v-else class="photo_main_placeholder">
-            <iframe v-show="existYoutube" width="400" height="250" :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`" frameborder="0" allowfullscreen></iframe>
+            <img
+              :src="selectPhotoUrl"
+              v-else
+              class="photo_main_placeholder"
+            >
+            <iframe
+              v-show="existYoutube"
+              width="400"
+              height="250"
+              :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`"
+              frameborder="0"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
         <div class="photos responsive">
-          <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
+          <product-slide
+            :photos="data.fotos"
+            :photo="data.detalle.foto_cloudinary"
+          ></product-slide>
         </div>
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
           <div class="content_buy_price">
-            <h3 class="colorTexto price" v-show="salesData.precio">${{ salesData.precio | currency }}
+            <h3
+              class="colorTexto price"
+              v-show="salesData.precio"
+            >${{ salesData.precio | currency }}
               <span>COP</span>
             </h3>
-            <div class="shipping" v-if="envio.titulo == 'Envío gratis'">
+            <div
+              class="shipping"
+              v-if="envio.titulo == 'Envío gratis'"
+            >
               <i class="icon-023-free-delivery"></i>
               <p>{{envio.titulo}}</p>
             </div>
-            <div class="shipping" v-if="envio.titulo == 'Tarifa por precio'">
+            <div
+              class="shipping"
+              v-if="envio.titulo == 'Tarifa por precio'"
+            >
               <i class="icon-019-fast-delivery"></i>
               <p v-if="priceShipping != 0">Envío: ${{priceShipping | currency}} COP</p>
               <p v-else>Envío Gratis</p>
             </div>
-            <div class="shipping" v-if="envio.titulo == 'Tarifa plana'">
+            <div
+              class="shipping"
+              v-if="envio.titulo == 'Tarifa plana'"
+            >
               <i class="icon-019-fast-delivery"></i>
               <p>Envío: ${{envios.valores.valor | currency}} COP</p>
             </div>
@@ -45,14 +90,32 @@
             <p class="name-item">Cantidad:</p>
             <!-- <el-input-number v-model="quantityValue" @change="handleChange" :min="1" :max="maxQuantityValue"></el-input-number> -->
 
-            <div class="ko-input" v-if="spent">
-              <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue">
+            <div
+              class="ko-input"
+              v-if="spent"
+            >
+              <input
+                type="text"
+                value="1"
+                v-model="quantityValue"
+                :min="1"
+                :max="maxQuantityValue"
+              >
               <div class="icons-arrows">
-                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
-                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
+                <i
+                  class="el-icon-arrow-up"
+                  v-on:click="addQuantity()"
+                ></i>
+                <i
+                  class="el-icon-arrow-down"
+                  v-on:click="removeQuantity()"
+                ></i>
               </div>
               <transition name="slide-fade">
-                <div class="container-alert" v-show="quantityValue == maxQuantityValue">
+                <div
+                  class="container-alert"
+                  v-show="quantityValue == maxQuantityValue"
+                >
                   <span class="alert">última Unidad!
                     <div class="arrow"></div>
                   </span>
@@ -60,14 +123,33 @@
               </transition>
             </div>
 
-            <div class="ko-input" v-else>
-              <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue" disabled>
+            <div
+              class="ko-input"
+              v-else
+            >
+              <input
+                type="text"
+                value="1"
+                v-model="quantityValue"
+                :min="1"
+                :max="maxQuantityValue"
+                disabled
+              >
               <div class="icons-arrows">
-                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
-                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
+                <i
+                  class="el-icon-arrow-up"
+                  v-on:click="addQuantity()"
+                ></i>
+                <i
+                  class="el-icon-arrow-down"
+                  v-on:click="removeQuantity()"
+                ></i>
               </div>
               <transition name="slide-fade">
-                <div class="container-alert" v-show="salesData.estado == false">
+                <div
+                  class="container-alert"
+                  v-show="salesData.estado == false"
+                >
                   <span class="alert not-available">No disponible
                     <div class="arrow"></div>
                   </span>
@@ -75,18 +157,31 @@
               </transition>
             </div>
           </div>
-          <div class="marca item-product" v-show="data.info.marca">
+          <div
+            class="marca item-product"
+            v-show="data.info.marca"
+          >
             <p class="name-item">Marca:</p>
             <span>{{ data.info.marca | toLowerCase }}</span>
           </div>
-          <div class="marca item-product" v-show="data.detalle.categoria_producto.nombre_categoria_producto">
+          <div
+            class="marca item-product"
+            v-show="data.detalle.categoria_producto.nombre_categoria_producto"
+          >
             <p class="name-item">Categoria:</p>
             <span>{{ data.detalle.categoria_producto.nombre_categoria_producto | toLowerCase }}</span>
           </div>
           <div class="content_variant">
-            <div class="content_variant_item item-product" v-for="(variant, index) in data.variantes" :key="index">
+            <div
+              class="content_variant_item item-product"
+              v-for="(variant, index) in data.variantes"
+              :key="index"
+            >
               <label>{{ variant.nombre }}:</label>
-              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
+              <ko-radio-group
+                :options="variant.valores"
+                :index="index"
+              ></ko-radio-group>
             </div>
           </div>
           <!-- <div class="content_variant">
@@ -108,21 +203,33 @@
               </div>
             </social-sharing>
           </div> -->
-          <div class="item-product" :class="{content_buy: true, disabled: !salesData.estado}">
+          <div
+            class="item-product"
+            :class="{content_buy: true, disabled: !salesData.estado}"
+          >
             <!-- <button type="button" name="button">No esta disponible</button> -->
             <div>
               <div class="content_buy_action">
-                <button v-if="!spent" class="spent">
+                <button
+                  v-if="!spent"
+                  class="spent"
+                >
                   <i class="icon-shopping-basket"></i>
                   Producto agotado
                 </button>
-                <button v-else v-on:click="addShoppingCart">
+                <button
+                  v-else
+                  v-on:click="addShoppingCart"
+                >
                   <i class="icon-shopping-basket"></i>
                   Añadir al carrito
                 </button>
               </div>
             </div>
-            <p v-if="precio == 0 || !precio" class="quotation">Añada al carrito para agregar a la lista y recibir tu cotización</p>
+            <p
+              v-if="precio == 0 || !precio"
+              class="quotation"
+            >Añada al carrito para agregar a la lista y recibir tu cotización</p>
           </div>
         </div>
       </div>
@@ -149,22 +256,25 @@
           </div>
         </div>
       </div> -->
-      <ko-description :data="data" :envio="envio"> </ko-description>
+      <ko-description
+        :data="data"
+        :envio="envio"
+      > </ko-description>
       <ko-related :data="data" />
     </div>
   </div>
 </template>
 <script>
-import axios from 'axios'
-import zoomed from '../_components/zoomed.vue'
-import productSlide from '../_components/productSlide.vue'
-import koModal from '../_components/modal.vue'
-import koRadioGroup from '../_components/radioGroup2'
-import koDescription from '../_components/descriptionProduct2'
-import koRelated from '../_components/related-products'
+import axios from "axios";
+import zoomed from "../_components/zoomed.vue";
+import productSlide from "../_components/productSlide.vue";
+import koModal from "../_components/modal.vue";
+import koRadioGroup from "../_components/radioGroup2";
+import koDescription from "../_components/descriptionProduct2";
+import koRelated from "../_components/related-products";
 
 export default {
-  name: 'koProduct2',
+  name: "koProduct2",
   components: {
     zoomed,
     productSlide,
@@ -174,57 +284,57 @@ export default {
     koRelated
   },
   created() {
-    this.$store.state.beforeCombination = []
+    this.$store.state.beforeCombination = [];
     if (this.$store.state.productsData.length) {
-      this.getDataProduct()
+      this.getDataProduct();
     }
   },
   mounted() {
     if (Object.keys(this.$store.state.envios).length) {
-      this.setOptionEnvio()
+      this.setOptionEnvio();
     }
   },
   data() {
     return {
       data: {},
       num1: 1,
-      selectPhotoUrl: '',
-      idYoutube: '',
+      selectPhotoUrl: "",
+      idYoutube: "",
       existYoutube: false,
       maxQuantityValue: 1,
       quantityValue: 1,
       productIndexCart: null,
-      warranty: '',
+      warranty: "",
       productCart: {},
       salesData: null,
       spent: false,
       envio: {
-        titulo: '',
-        desc: ''
+        titulo: "",
+        desc: ""
       }
-    }
+    };
   },
   watch: {
     productsData(value) {
-      this.getDataProduct()
+      this.getDataProduct();
     },
     envios(value) {
-      this.setOptionEnvio()
+      this.setOptionEnvio();
     },
     quantityValue(value) {
       if (value > this.maxQuantityValue) {
-        this.quantityValue = this.maxQuantityValue
+        this.quantityValue = this.maxQuantityValue;
       }
     },
     beforeCombination(value) {
-      const combinationSelected = JSON.stringify(value)
-      const combinaciones = JSON.parse(this.data.combinaciones.combinaciones)
+      const combinationSelected = JSON.stringify(value);
+      const combinaciones = JSON.parse(this.data.combinaciones.combinaciones);
       const result = combinaciones.filter(
         (combinacion, index) =>
           JSON.stringify(combinacion.combinacion) == combinationSelected
-      )[0]
-      this.productCart = []
-      this.productIndexCart = null
+      )[0];
+      this.productCart = [];
+      this.productIndexCart = null;
       for (const [
         index,
         productCart
@@ -234,37 +344,37 @@ export default {
           JSON.stringify(productCart.combinacion) ==
             JSON.stringify(result.combinacion)
         ) {
-          this.productIndexCart = index
-          this.productCart = productCart
+          this.productIndexCart = index;
+          this.productCart = productCart;
         }
       }
       if (result) {
-        this.spent = false
-        this.maxQuantityValue = result.unidades
+        this.spent = false;
+        this.maxQuantityValue = result.unidades;
         if (result.unidades == 0) {
-          this.spent = true
+          this.spent = true;
         }
         if (this.productCart.cantidad) {
           this.maxQuantityValue =
-            parseInt(result.unidades) - this.productCart.cantidad
+            parseInt(result.unidades) - this.productCart.cantidad;
           if (this.maxQuantityValue <= 0) {
-            this.spent = true
+            this.spent = true;
           }
         }
-        this.salesData = result
-        this.quantityValue = 1
+        this.salesData = result;
+        this.quantityValue = 1;
       }
     }
   },
   computed: {
     url() {
-      return window.location.href
+      return window.location.href;
     },
     productsData() {
-      return this.$store.state.productsData
+      return this.$store.state.productsData;
     },
     existPayments() {
-      const mediospago = this.$store.state.mediospago
+      const mediospago = this.$store.state.mediospago;
       if (
         mediospago.consignacion ||
         mediospago.convenir ||
@@ -272,186 +382,186 @@ export default {
         mediospago.tienda ||
         mediospago.efecty
       ) {
-        return true
+        return true;
       }
-      return false
+      return false;
     },
     modalPayment() {
-      return this.$store.state.togglePayment
+      return this.$store.state.togglePayment;
     },
     beforeCombination() {
-      return this.$store.state.beforeCombination
+      return this.$store.state.beforeCombination;
     },
     envios() {
-      return this.$store.state.envios
+      return this.$store.state.envios;
     },
     precio() {
       if (this.data.detalle.precio) {
         return `$${this.data.detalle.precio
           .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
     },
     priceShipping() {
-      let value = 0
+      let value = 0;
       if (this.envios.valores.envio_metodo != null) {
-        if (this.envios.valores.envio_metodo == 'precio') {
-          console.log(this.salesData.precio)
+        if (this.envios.valores.envio_metodo == "precio") {
           let rangos = this.envios.valores.rangos.filter(
             r =>
               r.inicial <= this.salesData.precio &&
               r.final >= this.salesData.precio
-          )
+          );
           // si no exiten rangos
           if (rangos.length == 0) {
-            value = 0
+            value = 0;
             // Existen rangos
           } else {
-            value = rangos[0].precio
+            value = rangos[0].precio;
           }
         }
       }
-      return value
+      return value;
     }
   },
   methods: {
     handleChange(value) {
-      console.log(value)
+      console.log(value);
     },
     searchIdForSlug() {
       const product = this.productsData.filter(
         product => product.slug === this.$route.params.slug
-      )
+      );
       if (product.length) {
-        return product[0].id
+        return product[0].id;
       }
-      return this.productsData[0].id
+      return this.productsData[0].id;
     },
     getDataProduct() {
-      const idOfSlug = this.searchIdForSlug()
+      const idOfSlug = this.searchIdForSlug();
       if (idOfSlug) {
         axios
           .get(`https://templates.komercia.co/api/producto/${idOfSlug}`)
           .then(response => {
-            this.selectedPhoto(response.data.detalle.foto_cloudinary)
-            this.videoYoutube(response.data.info.video)
-            this.data = response.data
+            this.selectedPhoto(response.data.detalle.foto_cloudinary);
+            this.videoYoutube(response.data.info.video);
+            this.data = response.data;
             this.salesData = {
               precio: this.data.detalle.precio,
               unidades: this.data.info.inventario,
               sku: this.data.info.sku,
               estado: true
-            }
-            this.maxQuantityValue = this.data.info.inventario
+            };
+            this.maxQuantityValue = this.data.info.inventario;
             for (const [
               index,
               productCart
             ] of this.$store.state.productsCart.entries()) {
               if (this.data.detalle.id == productCart.id) {
-                this.productIndexCart = index
-                this.productCart = productCart
+                this.productIndexCart = index;
+                this.productCart = productCart;
                 this.maxQuantityValue =
-                  this.data.info.inventario - productCart.cantidad
+                  this.data.info.inventario - productCart.cantidad;
               }
             }
             if (this.salesData.unidades == 0 || this.maxQuantityValue <= 0) {
-              this.spent = true
+              this.spent = true;
             }
-          })
+          });
       } else {
-        this.selectedPhoto(this.productsData[0].foto_cloudinary)
+        this.selectedPhoto(this.productsData[0].foto_cloudinary);
         // this.videoYoutube(this.productsData[0].foto);
         this.data.detalle = {
           foto_cloudinary: this.productsData[0].foto_cloudinary,
           nombre: this.productsData[0].nombre,
           precio: this.productsData[0].precio
-        }
+        };
         this.data.info = {
-          marca: '',
-          descripcion: ''
-        }
-        this.maxQuantityValue = 0
+          marca: "",
+          descripcion: ""
+        };
+        this.maxQuantityValue = 0;
         this.salesData = {
           precio: 29998,
           unidades: 0,
-          sku: '4a00'
-        }
-        this.spent = true
+          sku: "4a00"
+        };
+        this.spent = true;
       }
     },
     togglePayment() {
-      this.$store.state.togglePayment = !this.$store.state.togglePayment
+      this.$store.state.togglePayment = !this.$store.state.togglePayment;
     },
     setOptionEnvio() {
-      switch (this.envios.valores.envio_metodo) {
-        case 'gratis':
-          this.envio = {
-            titulo: 'Envío gratis',
-            desc: 'Disfruta de este obsequio por parte de la tienda.'
-          }
-          break
-        case 'tarifa_plana':
-          this.envio = {
-            titulo: 'Tarifa plana',
-            desc: 'Este costo de envio no varia'
-          }
-          break
-        case 'precio':
-          this.envio = {
-            titulo: 'Tarifa por precio',
-            desc:
-              'Segun la suma del costo de tus productos te cobraran el envio'
-          }
-          break
-        case 'peso':
-          this.envio = {
-            titulo: 'Tarifa por peso',
-            desc: ''
-          }
-          break
-        default:
+      if (this.data.detalle.envio_gratis) {
+        this.envio = {
+          titulo: "Envío gratis",
+          desc: "Disfruta de este obsequio por parte de la tienda."
+        };
+      } else {
+        switch (this.envios.valores.envio_metodo) {
+          case "tarifa_plana":
+            this.envio = {
+              titulo: "Tarifa plana",
+              desc: "Este costo de envio no varia"
+            };
+            break;
+          case "precio":
+            this.envio = {
+              titulo: "Tarifa por precio",
+              desc:
+                "Segun la suma del costo de tus productos te cobraran el envio"
+            };
+            break;
+          case "peso":
+            this.envio = {
+              titulo: "Tarifa por peso",
+              desc: ""
+            };
+            break;
+          default:
+        }
       }
     },
     quantity(productCart) {
-      this.quantityValue = productCart.cantidad
+      this.quantityValue = productCart.cantidad;
     },
     addQuantity() {
       if (this.maxQuantityValue > this.quantityValue) {
-        this.quantityValue++
-        this.data.cantidad = this.quantityValue
+        this.quantityValue++;
+        this.data.cantidad = this.quantityValue;
       } else {
         // Alerta de limite de sku
       }
     },
     removeQuantity() {
       if (this.data.cantidad >= 2) {
-        this.quantityValue--
-        this.data.cantidad = this.quantityValue
+        this.quantityValue--;
+        this.data.cantidad = this.quantityValue;
       }
     },
     setMiniPhoto(photo) {
-      if (photo === 'placeholder1.svg') {
-        return require(`../../assets/${photo}`)
+      if (photo === "placeholder1.svg") {
+        return require(`../../assets/${photo}`);
       }
-      return photo
+      return photo;
     },
     selectedPhoto(photo) {
-      if (photo === 'placeholder1.svg') {
-        this.selectPhotoUrl = require(`../../assets/${photo}`)
+      if (photo === "placeholder1.svg") {
+        this.selectPhotoUrl = require(`../../assets/${photo}`);
       } else {
-        this.selectPhotoUrl = photo
+        this.selectPhotoUrl = photo;
       }
-      this.existYoutube = false
+      this.existYoutube = false;
     },
     videoYoutube(video) {
       if (video) {
-        const index = video.indexOf('?v=') + 3
-        this.idYoutube = video.substring(index)
+        const index = video.indexOf("?v=") + 3;
+        this.idYoutube = video.substring(index);
       }
     },
     addShoppingCart() {
       if (!this.data.cantidad) {
-        this.data.cantidad = this.quantityValue
+        this.data.cantidad = this.quantityValue;
       }
       const product = {
         id: this.data.detalle.id,
@@ -460,49 +570,49 @@ export default {
         foto_cloudinary: this.data.detalle.foto_cloudinary,
         nombre: this.data.detalle.nombre,
         combinacion: this.salesData.combinacion
-      }
+      };
       if (this.salesData) {
-        product.limitQuantity = this.salesData.unidades
+        product.limitQuantity = this.salesData.unidades;
       } else {
-        product.limitQuantity = this.data.info.inventario
+        product.limitQuantity = this.data.info.inventario;
       }
-      if (typeof this.productIndexCart === 'number') {
+      if (typeof this.productIndexCart === "number") {
         const mutableProduct = this.$store.state.productsCart[
           this.productIndexCart
-        ]
-        mutableProduct.cantidad += this.data.cantidad
+        ];
+        mutableProduct.cantidad += this.data.cantidad;
         this.$store.state.productsCart.splice(
           this.productIndexCart,
           1,
           mutableProduct
-        )
+        );
       } else {
-        this.$store.state.productsCart.push(product)
+        this.$store.state.productsCart.push(product);
       }
-      this.$store.commit('UPDATE_CONTENTCART')
-      this.$router.push('/productos')
-      this.$store.state.openOrder = true
-      this.$store.state.orderComponent = true
+      this.$store.commit("UPDATE_CONTENTCART");
+      this.$router.push("/productos");
+      this.$store.state.openOrder = true;
+      this.$store.state.orderComponent = true;
     },
     evalStock(mq, qv) {
-      return !(mq - qv < 0)
+      return !(mq - qv < 0);
     }
   },
   filters: {
     currency(value) {
       if (value) {
-        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
+        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
-      return 0
+      return 0;
     },
     toLowerCase(value) {
       if (value) {
-        return value.toLowerCase()
+        return value.toLowerCase();
       }
-      return ''
+      return "";
     }
   }
-}
+};
 </script>
 <style scoped>
 /*@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';*/
@@ -899,7 +1009,7 @@ i.close {
   position: absolute;
   bottom: -10px;
 }
-input[type='text']:disabled {
+input[type="text"]:disabled {
   background: #eee;
 }
 .not-available {
