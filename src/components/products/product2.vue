@@ -445,6 +445,7 @@ export default {
             this.selectedPhoto(response.data.detalle.foto_cloudinary);
             this.videoYoutube(response.data.info.video);
             this.data = response.data;
+            this.setOptionEnvio()
             this.salesData = {
               precio: this.data.detalle.precio,
               unidades: this.data.info.inventario,
