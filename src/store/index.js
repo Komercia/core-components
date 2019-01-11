@@ -20,7 +20,7 @@ export default new Vuex.Store({
     configHttp: {
       headers: {
         'content-type': 'application/json',
-        'Authorization': `Bearer `,
+        Authorization: `Bearer `,
         'Access-Control-Allow-Origin': '*'
       }
     },
@@ -238,6 +238,9 @@ export default new Vuex.Store({
     },
     SET_SETTING(state, setting) {
       state.settingData = setting
+    },
+    LOGOUT() {
+      window.location.href = 'https://perfil.komercia.co/logout'
     }
   },
   actions: {
