@@ -79,7 +79,7 @@
             </div>
           </li>
           <li>
-            <p>Copyright © 2018 by komercia. All Rights Reserved. </p>
+            <p>Copyright © {{new Date().getFullYear()}} by komercia. All Rights Reserved. </p>
             <a class="link-komercia" href="http://komercia.co">Powered by Komercia</a>
           </li>
         </ul>
