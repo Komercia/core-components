@@ -35,6 +35,7 @@ export default new Vuex.Store({
     tienda: {
       telefono: ''
     },
+    banksData: {},
     userData: {
       id: 0,
       email: '',
@@ -241,6 +242,13 @@ export default new Vuex.Store({
     },
     LOGOUT() {
       window.location.href = 'https://perfil.komercia.co/logout'
+    },
+    GET_PAYMENTS(state) {
+      axios
+        .get(`${state.configKomercia.url}/api/bancos`, state.configAxios)
+        .then(response => {
+          state.banksData = response.data.data
+        })
     }
   },
   actions: {

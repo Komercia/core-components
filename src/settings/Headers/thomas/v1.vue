@@ -65,6 +65,7 @@ export default {
           styleObject: {
             order: "3",
             width: "200",
+            //widthresponsive: "200",
             colorHeader: "#53a8f8",
             colorNav: "#53a8f8",
             colorText: "#6f7072",

@@ -59,6 +59,10 @@
               <p>Ingresar</p>
               <i class="el-icon-arrow-down"></i>
             </div>
+            <i
+              class="icon-menu"
+              @click="toggleMenu"
+            ></i>
             <transition name="down">
               <div
                 class="popover"
@@ -86,14 +90,21 @@
           <div
             class="content-icon-cart"
             :style="`color:${setting.styleObject.colorText}`"
-            @click="openOrder"
           >
+            <i
+              class="icon-user"
+              @click="mouseOver"
+            ></i>
             <el-badge
-              :value="3"
+              :value="productsCart"
               class="item"
             >
-              <i class="icon-shopping-cart"></i>
+              <i
+                class="icon-shopping-cart"
+                @click="openOrder"
+              ></i>
             </el-badge>
+
           </div>
         </div>
       </div>
@@ -115,6 +126,31 @@
         @click="mouseOver"
       ></div>
     </transition>
+    <transition name="slide-fade">
+      <nav
+        v-show="show"
+        class="main-menu"
+      >
+        <ul class="main-menu-list">
+          <li
+            @click="toggleMenu"
+            class="main-menu-item item-close"
+          >
+            <i class="icon-close"></i>
+          </li>
+          <li
+            v-for='(item, index) in routes'
+            :key='index'
+            class="main-menu-item"
+          >
+            <a
+              @click="redirectTo(item.route)"
+              class="main-menu-link"
+            >{{item.name}}</a>
+          </li>
+        </ul>
+      </nav>
+    </transition>
   </div>
 </template>
 
@@ -129,6 +165,7 @@ export default {
       type: Object,
       default: function() {
         return {
+          show: false,
           styleObject: {
             order: "3",
             width: "200",
@@ -143,6 +180,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       routes: [
         {
           name: "Inicio",
@@ -189,6 +227,9 @@ export default {
       return `https://login.komercia.co/registrar-cliente/?from=${
         this.storeData.subdominio
       }&path=${this.$route.path}&params=${params}`;
+    },
+    productsCart() {
+      return this.$store.state.productsCart.length;
     }
   },
   methods: {
@@ -210,6 +251,9 @@ export default {
     },
     fadeOf() {
       this.popover = false;
+    },
+    toggleMenu() {
+      this.show = !this.show;
     }
   }
 };
@@ -287,6 +331,10 @@ export default {
   align-items: center;
   color: #6f7072;
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
 }
 .icon-shopping-cart {
   display: flex;
@@ -379,5 +427,112 @@ export default {
 }
 .btn-logout {
   margin-top: 10px;
+}
+.icon-user {
+  display: none;
+}
+.icon-menu {
+  display: none;
+}
+i {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -khtml-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+@media (max-width: 700px) {
+  .nav {
+    display: none;
+  }
+  .main-header {
+    margin: 0 !important;
+  }
+  .content-header {
+    position: absolute;
+    /* z-index: 1; */
+  }
+  .logo-container {
+    z-index: 0;
+    max-width: 90px !important;
+    max-height: 60px !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+  .icon-user {
+    display: initial;
+    margin-right: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .name {
+    display: none;
+  }
+  .icon-menu {
+    display: initial;
+    font-size: 25px;
+  }
+  .content-icon-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .main-menu {
+    background: rgb(255, 255, 255);
+    width: 320px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    border-right: 1px solid rgb(207, 207, 207);
+    left: 0;
+  }
+  .main-menu-list {
+    width: 320px;
+    height: auto;
+    display: grid;
+    padding: 23px 20px;
+    box-sizing: border-box;
+  }
+  .main-menu-item {
+    padding: 10px 0;
+    height: auto;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .main-menu-link {
+    height: 100%;
+    color: #000;
+    width: 100%;
+    font-size: 16px;
+  }
+  .slide-fade-enter-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-leave-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    transform: translateX(-100%);
+  }
+  .item-close {
+    justify-self: flex-end;
+  }
+}
+@media (max-width: 480px) {
+  .logo-container {
+    max-width: 70px !important;
+    max-height: 50px !important;
+  }
+  .name {
+    font-size: 12px;
+  }
+  .content-icon-cart {
+    font-size: 22px;
+  }
 }
 </style>
