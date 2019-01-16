@@ -353,13 +353,13 @@ export default {
   },
   methods: {
     searchIdForSlug() {
-      const product = this.productsData.filter(
+      const product = this.productsData.find(
         product => product.slug === this.$route.params.slug
       );
       if (product.length) {
-        return product[0].id;
+        return product.id;
       }
-      return this.productsData[0].id;
+      return this.productsData.id;
     },
     getDataProduct() {
       const idOfSlug = this.searchIdForSlug();
