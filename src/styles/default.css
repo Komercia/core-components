@@ -1,7 +1,7 @@
-.defaultstyle .g-card{
+.defaultstyle .g-card {
   border-radius: 30px;
 }
-.defaultstyle .g-btn{
+.defaultstyle .g-btn {
   display: flex;
   margin-top: 15px;
   background-color: #f9f9f9;
@@ -11,4 +11,10 @@
   padding: 0;
   color: #555555;
   padding: 10px 25px;
+}
+.main-header sup {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -khtml-user-select: none !important;
+  -ms-user-select: none !important;
 }

@@ -6,22 +6,37 @@
           <li>
             <p class="title">Contacto</p>
           </li>
-          <li class="item-col1" v-if="info[0]">
-            <p>
-              <span>Dirección:</span> {{info[0].direccion}}
+          <li
+            class="item-col1"
+            v-if="info[0].direccion"
+          >
+            <p
+              v-for="(item, index) in info"
+              :key="index"
+            >
+              <span>Dirección:</span> {{item.direccion}}
             </p>
           </li>
-          <li class="item-col1">
+          <li
+            class="item-col1"
+            v-if="storeData.telefono"
+          >
             <p>
               <span>Teléfonos:</span> {{storeData.telefono}}
             </p>
           </li>
-          <li class="item-col1">
+          <li
+            class="item-col1"
+            v-if="storeData.email_tienda"
+          >
             <p>
               <span>Email:</span> {{storeData.email_tienda}}
             </p>
           </li>
-          <li class="item-col1" v-if="info[0]">
+          <li
+            class="item-col1"
+            v-if="info[0].horario"
+          >
             <p>
               <span>Horario:</span> {{info[0].horario}}
             </p>
@@ -33,8 +48,16 @@
           <li>
             <p class="title">Tienda</p>
           </li>
-          <li v-for='(item, index) in routes' :key='index' class="navigation-item" v-show="activeRoute(item)">
-            <router-link :to="item.route" class="navigation-link">{{item.name}}</router-link>
+          <li
+            v-for='(item, index) in routes'
+            :key='index'
+            class="navigation-item"
+            v-show="activeRoute(item)"
+          >
+            <router-link
+              :to="item.route"
+              class="navigation-link"
+            >{{item.name}}</router-link>
           </li>
         </ul>
       </div>
@@ -45,19 +68,31 @@
           </li>
           <li v-show="storeData.red_facebook !== ''">
             <i class="icon-facebook-official" />
-            <a :href="storeData.red_facebook" target="_blank">Facebook</a>
+            <a
+              :href="storeData.red_facebook"
+              target="_blank"
+            >Facebook</a>
           </li>
           <li v-show="storeData.red_instagram !== ''">
             <i class="icon-instagram" />
-            <a :href="storeData.red_instagram" target="_blank">Instagram</a>
+            <a
+              :href="storeData.red_instagram"
+              target="_blank"
+            >Instagram</a>
           </li>
           <li v-show="storeData.red_twitter !== ''">
             <i class="icon-twitter" />
-            <a :href="storeData.red_twitter" target="_blank">Twitter</a>
+            <a
+              :href="storeData.red_twitter"
+              target="_blank"
+            >Twitter</a>
           </li>
           <li v-show="storeData.red_youtube !== ''">
             <i class="icon-youtube" />
-            <a :href="storeData.red_youtube" target="_blank">Youtube</a>
+            <a
+              :href="storeData.red_youtube"
+              target="_blank"
+            >Youtube</a>
           </li>
         </ul>
       </div>
@@ -71,16 +106,30 @@
           </li>
           <li>
             <div class="ko-input">
-              <input type="email" placeholder="Escribe tu email" v-model="email" @keyup.enter="toSubscribe">
-              <i class="icon-paper-plane-2" @click="toSubscribe"></i>
+              <input
+                type="email"
+                placeholder="Escribe tu email"
+                v-model="email"
+                @keyup.enter="toSubscribe"
+              >
+              <i
+                class="icon-paper-plane-2"
+                @click="toSubscribe"
+              ></i>
               <transition name="slide-fade">
-                <span class="response" v-show="toSubscribeResponse">Ya estas suscrito!</span>
+                <span
+                  class="response"
+                  v-show="toSubscribeResponse"
+                >Ya estas suscrito!</span>
               </transition>
             </div>
           </li>
           <li>
-            <p>Copyright © 2018 by komercia. All Rights Reserved. </p>
-            <a class="link-komercia" href="http://komercia.co">Powered by Komercia</a>
+            <p>Copyright © {{new Date().getFullYear()}} by komercia. All Rights Reserved. </p>
+            <a
+              class="link-komercia"
+              href="http://komercia.co"
+            >Powered by Komercia</a>
           </li>
         </ul>
       </div>
@@ -95,76 +144,76 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  name: 'koFooter3',
+  name: "koFooter3",
   data() {
     return {
       routes: [
         {
-          name: 'Inicio',
-          route: '/'
+          name: "Inicio",
+          route: "/"
         },
         {
-          name: 'Productos',
-          route: '/productos'
+          name: "Productos",
+          route: "/productos"
         },
         {
-          name: 'Carrito',
-          route: '/pedido'
+          name: "Carrito",
+          route: "/pedido"
         },
         {
-          name: 'Nosotros',
-          route: '/nosotros'
+          name: "Nosotros",
+          route: "/nosotros"
         },
         {
-          name: 'Contacto',
-          route: '/contacto'
+          name: "Contacto",
+          route: "/contacto"
         }
       ],
-      email: '',
+      email: "",
       toSubscribeResponse: false
-    }
+    };
   },
   computed: {
     info() {
-      return this.$store.state.geolocalizacion
+      return this.$store.state.geolocalizacion;
     },
     storeData() {
-      return this.$store.state.tienda
+      return this.$store.state.tienda;
     }
   },
   methods: {
     activeRoute(item) {
-      if (item.name != 'Nosotros') {
-        return true
+      if (item.name != "Nosotros") {
+        return true;
       }
       return !!(
         this.storeData.mision ||
         this.storeData.vision ||
         this.storeData.nosotros
-      )
+      );
     },
     toSubscribe() {
-      this.toSubscribeResponse = false
+      this.toSubscribeResponse = false;
       const params = {
         correo: this.email,
         tienda: this.storeData.id_tienda
-      }
+      };
       axios
-        .post('https://templates.komercia.co/api/suscriptores', params)
+        .post("https://templates.komercia.co/api/suscriptores", params)
         .then(() => {
-          this.email = ''
-          this.toSubscribeResponse = true
-        })
+          this.email = "";
+          this.toSubscribeResponse = true;
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped>
-@import 'https://unpkg.com/komercia-fuentes@1.0.0/styles.css';
+@import "https://unpkg.com/komercia-fuentes@1.0.0/styles.css";
 footer {
   width: 100%;
   background-color: #111;
