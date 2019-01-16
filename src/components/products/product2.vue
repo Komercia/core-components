@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="product"
-    v-if="data.detalle"
-  >
+  <div class="product" v-if="data.detalle">
     <ko-modal v-show="modalPayment"></ko-modal>
     <div class="wrapper">
       <div class="section">
@@ -29,13 +26,8 @@
               v-if="data.detalle.foto !== 'placeholder1.svg'"
               v-show="!existYoutube"
               :photo="selectPhotoUrl"
-            >
-            </zoomed>
-            <img
-              :src="selectPhotoUrl"
-              v-else
-              class="photo_main_placeholder"
-            >
+            ></zoomed>
+            <img :src="selectPhotoUrl" v-else class="photo_main_placeholder">
             <iframe
               v-show="existYoutube"
               width="400"
@@ -47,39 +39,25 @@
           </div>
         </div>
         <div class="photos responsive">
-          <product-slide
-            :photos="data.fotos"
-            :photo="data.detalle.foto_cloudinary"
-          ></product-slide>
+          <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
         </div>
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
           <div class="content_buy_price">
-            <h3
-              class="colorTexto price"
-              v-show="salesData.precio"
-            >${{ salesData.precio | currency }}
+            <h3 class="colorTexto price" v-show="salesData.precio">
+              ${{ salesData.precio | currency }}
               <span>COP</span>
             </h3>
-            <div
-              class="shipping"
-              v-if="envio.titulo == 'Envío gratis'"
-            >
+            <div class="shipping" v-if="envio.titulo == 'Envío gratis'">
               <i class="icon-023-free-delivery"></i>
               <p>{{envio.titulo}}</p>
             </div>
-            <div
-              class="shipping"
-              v-if="envio.titulo == 'Tarifa por precio'"
-            >
+            <div class="shipping" v-if="envio.titulo == 'Tarifa por precio'">
               <i class="icon-019-fast-delivery"></i>
               <p v-if="priceShipping != 0">Envío: ${{priceShipping | currency}} COP</p>
               <p v-else>Envío Gratis</p>
             </div>
-            <div
-              class="shipping"
-              v-if="envio.titulo == 'Tarifa plana'"
-            >
+            <div class="shipping" v-if="envio.titulo == 'Tarifa plana'">
               <i class="icon-019-fast-delivery"></i>
               <p>Envío: ${{envios.valores.valor | currency}} COP</p>
             </div>
@@ -88,34 +66,14 @@
 
           <div class="quantity item-product">
             <p class="name-item">Cantidad:</p>
-            <!-- <el-input-number v-model="quantityValue" @change="handleChange" :min="1" :max="maxQuantityValue"></el-input-number> -->
-
-            <div
-              class="ko-input"
-              v-if="spent"
-            >
-              <input
-                type="text"
-                value="1"
-                v-model="quantityValue"
-                :min="1"
-                :max="maxQuantityValue"
-              >
+            <div class="ko-input" v-if="spent">
+              <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue">
               <div class="icons-arrows">
-                <i
-                  class="el-icon-arrow-up"
-                  v-on:click="addQuantity()"
-                ></i>
-                <i
-                  class="el-icon-arrow-down"
-                  v-on:click="removeQuantity()"
-                ></i>
+                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
+                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
               </div>
               <transition name="slide-fade">
-                <div
-                  class="container-alert"
-                  v-show="quantityValue == maxQuantityValue"
-                >
+                <div class="container-alert" v-show="quantityValue == maxQuantityValue">
                   <span class="alert">última Unidad!
                     <div class="arrow"></div>
                   </span>
@@ -123,10 +81,7 @@
               </transition>
             </div>
 
-            <div
-              class="ko-input"
-              v-else
-            >
+            <div class="ko-input" v-else>
               <input
                 type="text"
                 value="1"
@@ -136,20 +91,11 @@
                 disabled
               >
               <div class="icons-arrows">
-                <i
-                  class="el-icon-arrow-up"
-                  v-on:click="addQuantity()"
-                ></i>
-                <i
-                  class="el-icon-arrow-down"
-                  v-on:click="removeQuantity()"
-                ></i>
+                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
+                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
               </div>
               <transition name="slide-fade">
-                <div
-                  class="container-alert"
-                  v-show="salesData.estado == false"
-                >
+                <div class="container-alert" v-show="salesData.estado == false">
                   <span class="alert not-available">No disponible
                     <div class="arrow"></div>
                   </span>
@@ -157,10 +103,7 @@
               </transition>
             </div>
           </div>
-          <div
-            class="marca item-product"
-            v-show="data.info.marca"
-          >
+          <div class="marca item-product" v-show="data.info.marca">
             <p class="name-item">Marca:</p>
             <span>{{ data.info.marca | toLowerCase }}</span>
           </div>
@@ -178,10 +121,7 @@
               :key="index"
             >
               <label>{{ variant.nombre }}:</label>
-              <ko-radio-group
-                :options="variant.valores"
-                :index="index"
-              ></ko-radio-group>
+              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
           <!-- <div class="content_variant">
@@ -202,25 +142,16 @@
                 </network>
               </div>
             </social-sharing>
-          </div> -->
-          <div
-            class="item-product"
-            :class="{content_buy: true, disabled: !salesData.estado}"
-          >
+          </div>-->
+          <div class="item-product" :class="{content_buy: true, disabled: !salesData.estado}">
             <!-- <button type="button" name="button">No esta disponible</button> -->
             <div>
               <div class="content_buy_action">
-                <button
-                  v-if="!spent"
-                  class="spent"
-                >
+                <button v-if="spent" class="spent">
                   <i class="icon-shopping-basket"></i>
                   Producto agotado
                 </button>
-                <button
-                  v-else
-                  v-on:click="addShoppingCart"
-                >
+                <button v-else v-on:click="addShoppingCart">
                   <i class="icon-shopping-basket"></i>
                   Añadir al carrito
                 </button>
@@ -255,12 +186,9 @@
             </div>
           </div>
         </div>
-      </div> -->
-      <ko-description
-        :data="data"
-        :envio="envio"
-      > </ko-description>
-      <ko-related :data="data" />
+      </div>-->
+      <ko-description :data="data" :envio="envio"></ko-description>
+      <ko-related :data="data"/>
     </div>
   </div>
 </template>
@@ -424,9 +352,6 @@ export default {
     }
   },
   methods: {
-    handleChange(value) {
-      console.log(value);
-    },
     searchIdForSlug() {
       const product = this.productsData.filter(
         product => product.slug === this.$route.params.slug
@@ -445,6 +370,7 @@ export default {
             this.selectedPhoto(response.data.detalle.foto_cloudinary);
             this.videoYoutube(response.data.info.video);
             this.data = response.data;
+            this.setOptionEnvio();
             this.salesData = {
               precio: this.data.detalle.precio,
               unidades: this.data.info.inventario,
