@@ -356,7 +356,7 @@ export default {
       const product = this.productsData.find(
         product => product.slug === this.$route.params.slug
       );
-      if (product.length) {
+      if (product) {
         return product.id;
       }
       return this.productsData.id;
