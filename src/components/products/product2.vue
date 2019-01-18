@@ -206,7 +206,7 @@
             :class="{content_buy: true, disabled: !salesData.estado}"
           >
             <!-- <button type="button" name="button">No esta disponible</button> -->
-            <div>
+            <div class="wrapper-buttons">
               <div class="content_buy_action">
                 <button
                   v-if="spent"
@@ -223,6 +223,11 @@
                   Añadir al carrito
                 </button>
               </div>
+              <ko-whatsapp
+                v-if="whatsapp"
+                class="whatsapp"
+                @click.native="redirectWhatsapp()"
+              />
             </div>
             <p
               v-if="precio == 0 || !precio"
@@ -270,6 +275,7 @@ import koModal from "../_components/modal.vue";
 import koRadioGroup from "../_components/radioGroup2";
 import koDescription from "../_components/descriptionProduct2";
 import koRelated from "../_components/related-products";
+import koWhatsapp from "../../Icons/whatsapp";
 
 export default {
   name: "koProduct2",
@@ -279,12 +285,14 @@ export default {
     koModal,
     koRadioGroup,
     koDescription,
-    koRelated
+    koRelated,
+    koWhatsapp
   },
   created() {
     this.$store.state.beforeCombination = [];
     if (this.$store.state.productsData.length) {
       this.getDataProduct();
+      console.log(this.productsData);
     }
   },
   mounted() {
@@ -419,6 +427,9 @@ export default {
         }
       }
       return value;
+    },
+    whatsapp() {
+      return this.$store.state.whatsapp;
     }
   },
   methods: {
@@ -430,6 +441,14 @@ export default {
         return product[0].id;
       }
       return this.productsData[0].id;
+    },
+    redirectWhatsapp() {
+      window.open(
+        `https://web.whatsapp.com/send?phone=57${this.whatsapp}&text=${
+          window.location
+        }`,
+        "_blank"
+      );
     },
     getDataProduct() {
       const idOfSlug = this.searchIdForSlug();
@@ -709,14 +728,21 @@ i.close {
 .content_buy > button {
   display: none;
 }
-.content_buy > div {
+.wrapper-buttons {
   width: 100%;
   flex: none;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  align-items: center;
   margin: 7px 0;
+}
+.whatsapp {
+  fill: #27d367;
+  width: 40px;
+  background: #fff;
+  cursor: pointer;
+  margin-left: 20px;
 }
 .content_buy.disabled > button {
   width: 200px;
