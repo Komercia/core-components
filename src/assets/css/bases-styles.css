@@ -124,3 +124,6 @@ table {
 body {
   background-color: #fff;
 }
+.content_desc img {
+  width: 100%;
+}
