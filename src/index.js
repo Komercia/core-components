@@ -14,6 +14,7 @@ import Content2 from './components/contents/content2/v1'
 import Video1 from './components/videos/video1'
 import Slider3 from './components/sliders/slider3'
 import Slider1 from './components/sliders/slider1/v1'
+import Slider4 from './components/sliders/slider4/v1'
 import Slider11 from './components/sliders/slider1/v2'
 import Slider1v3 from './components/sliders/slider1/v3'
 import Separator from './components/separators/separator1'
@@ -48,6 +49,7 @@ const components = [
   Content2,
   Slider1,
   Slider3,
+  Slider4,
   Slider11,
   Slider1v3,
   Separator,
