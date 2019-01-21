@@ -15,6 +15,7 @@
 <script>
 import WhatsappIcon from "../../Icons/whatsapp2";
 export default {
+  name: "whatsapp",
   components: {
     WhatsappIcon
   },
