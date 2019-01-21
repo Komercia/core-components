@@ -5,26 +5,21 @@
       ref="mySwiper"
       @someSwiperEvent="callback"
     >
-      <swiper-slide v-for="(item, index) in 3">
+      <swiper-slide v-for="(item, index) in setting.data">
         <div class="slide">
           <img
-            src="https://images.unsplash.com/photo-1547564091-6c5a23ce7aba"
+            :src="item.foto_cloudinary"
             alt=""
           >
         </div>
       </swiper-slide>
-
-      <!-- <div
-        class="swiper-pagination"
-        slot="pagination"
-      ></div> -->
       <div
         class="pagination"
         slot="pagination"
       >
         <div
           class="btn"
-          v-for="(item, index) in 3"
+          v-for="(item, index) in setting.data.length"
           @click="changeSlide(index)"
         ></div>
       </div>
@@ -37,6 +32,22 @@
 <script>
 export default {
   name: "ko-slider4",
+    props: {
+    setting: {
+      type: Object,
+      default: function() {
+        return {
+          name: '',
+          data: [
+            {
+              foto_cloudinary:
+                'https://cdn.shopify.com/s/files/1/0011/8423/5583/files/slideshow1_776d460a-9623-4173-a569-66e3ed4966ef.png?v=1529577793'
+            }
+          ]
+        }
+      }
+    }
+  },
   data() {
     return {
       swiperOption: {

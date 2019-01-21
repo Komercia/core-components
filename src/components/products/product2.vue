@@ -292,7 +292,6 @@ export default {
     this.$store.state.beforeCombination = [];
     if (this.$store.state.productsData.length) {
       this.getDataProduct();
-      console.log(this.productsData);
     }
   },
   mounted() {
