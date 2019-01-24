@@ -3,7 +3,12 @@
     <div :class="{container_settings: true, hidden: showSettingsButton}">
       <div class="title">
         <div class="select_stores">
-          <el-select v-model="id_store" placeholder="Select" v-on:change="updateIdStore" clearable>
+          <el-select
+            v-model="id_store"
+            placeholder="Select"
+            v-on:change="updateIdStore"
+            clearable
+          >
             <el-option
               v-for="item in stores"
               :key="item.value"
@@ -12,11 +17,21 @@
             ></el-option>
           </el-select>
         </div>
-        <el-button type="primary" icon="el-icon-plus" @click="handleSetting"></el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleSetting"
+        ></el-button>
       </div>
 
-      <el-dialog title="Crear un ajuste nuevo" :visible.sync="dialogNewSettingVisible">
-        <el-select v-model="selectSection" clearable>
+      <el-dialog
+        title="Crear un ajuste nuevo"
+        :visible.sync="dialogNewSettingVisible"
+      >
+        <el-select
+          v-model="selectSection"
+          clearable
+        >
           <el-option
             v-for="(section, index) in sections"
             :key="index"
@@ -26,32 +41,55 @@
         </el-select>
         <br>
         <br>
-        <json-editor :onChange="onChange" :json="initialJson"/>
+        <json-editor
+          :onChange="onChange"
+          :json="initialJson"
+        />
         <br>
-        <el-button type="primary" @click="createComponent">Crear</el-button>
+        <el-button
+          type="primary"
+          @click="createComponent"
+        >Crear</el-button>
       </el-dialog>
 
       <div class="component_setting">
-        <div v-if="settingData" :is="settingData.name"/>
+        <div
+          v-if="settingData"
+          :is="settingData.name"
+        />
       </div>
     </div>
 
     <div class="container_components">
-      <div class="title hidden_menu_components" style="margin-bottom: 10px ">
-        <a v-on:click="hiddenSettings" class="hidden_settings_button">
-          <el-button type="primary" icon="el-icon-menu" circle></el-button>
+      <div
+        class="title hidden_menu_components"
+        style="margin-bottom: 10px "
+      >
+        <a
+          v-on:click="hiddenSettings"
+          class="hidden_settings_button"
+        >
+          <el-button
+            type="primary"
+            icon="el-icon-menu"
+            circle
+          ></el-button>
         </a>
 
         <h1>
           Arriba
-          <i class="el-icon-upload2"/>
+          <i class="el-icon-upload2" />
           <el-select
             v-model="selectComponentAbove"
             placeholder="Select Component "
             style="margin-left:10px "
             clearable
           >
-            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+            <el-option-group
+              v-for="group in components "
+              :key="group.label"
+              :label="group.label"
+            >
               <el-option
                 v-for="item in group.options"
                 :key="item.name"
@@ -69,7 +107,11 @@
             style="margin-left:10px "
             clearable
           >
-            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+            <el-option-group
+              v-for="group in components "
+              :key="group.label"
+              :label="group.label"
+            >
               <el-option
                 v-for="item in group.options"
                 :key="item.name"
@@ -82,14 +124,18 @@
 
         <h1>
           Abajo
-          <i class="el-icon-download"/>
+          <i class="el-icon-download" />
           <el-select
             v-model="selectComponentDown"
             placeholder="Select Component "
             style="margin-left:10px "
             clearable
           >
-            <el-option-group v-for="group in components " :key="group.label" :label="group.label">
+            <el-option-group
+              v-for="group in components "
+              :key="group.label"
+              :label="group.label"
+            >
               <el-option
                 v-for="item in group.options"
                 :key="item.name"
@@ -102,10 +148,17 @@
       </div>
 
       <div class="component_principal">
-        <div :is="selectComponentAbove"/>
-        <div :is="selectComponent" v-if="settingData" :setting="settingData"/>
-        <div :is="selectComponent" v-else/>
-        <div :is="selectComponentDown"/>
+        <div :is="selectComponentAbove" />
+        <div
+          :is="selectComponent"
+          v-if="settingData"
+          :setting="settingData"
+        />
+        <div
+          :is="selectComponent"
+          v-else
+        />
+        <div :is="selectComponentDown" />
       </div>
     </div>
   </div>
@@ -150,6 +203,8 @@ export default {
         { value: 574, label: "Child Clothes - 574" },
         { value: 247, label: "TecnoAqua SAS - 247" },
         { value: 404, label: "XXX - 404" },
+        { value: 715, label: "Frenos Colombia - 715" },
+        { value: 401, label: "Demo Camilo - 401" },
         { value: 605, label: "Origen SP" }
       ]
     };

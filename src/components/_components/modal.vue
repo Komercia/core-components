@@ -24,7 +24,7 @@
         >
           <h3>Pago a convenir</h3>
           <p>Elija esta opción en caso que desee arreglar la logística del pago de sus productos directamente con la tienda.</p>
-          <img src="../../assets/conversation.png">
+          <img src="https://templates.komercia.co/template3/img/conversation.png">
         </div>
         <div
           class="modal_content_item"
@@ -32,7 +32,7 @@
         >
           <h3>Pago en tienda</h3>
           <p>Esta opción permite la compra presencial en la tienda física. En este caso podras generar reservas que posteriormente puedas recoger y pagar en el local propio de esta tienda.</p>
-          <img src="../../assets/pagos_store.png">
+          <img src="https://templates.komercia.co/template3/img/pagos_store.png">
         </div>
         <div
           class="modal_content_item"
@@ -40,7 +40,7 @@
         >
           <h3>Consignación Bancaria</h3>
           <p>Elige esta opción en caso de que desees procesar el pago mediante consignación bancaria. En este caso, debe ser confirmado el pago y te haran envió del producto o entrega del servicio según el caso.</p>
-          <img src="../../assets/receipt.png">
+          <img src="https://templates.komercia.co/template3/img/receipt.png">
         </div>
         <div
           class="modal_content_item"
@@ -48,7 +48,7 @@
         >
           <h3>Consignación Efecty</h3>
           <p>Elija esta opción en caso que desee hacer un giro por efecty como un medio de pago de la tienda.</p>
-          <img src="../../assets/efecty.png">
+          <img src="https://templates.komercia.co/template3/img/efecty.png">
         </div>
       </div>
     </div>

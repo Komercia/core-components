@@ -48,7 +48,7 @@ export default {
 }
 @media (max-width: 700px) {
   .container-separator {
-    padding: 0;
+    padding: 0 0 40px 0;
   }
 }
 </style>

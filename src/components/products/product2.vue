@@ -1,5 +1,8 @@
 <template>
-  <div class="product" v-if="data.detalle">
+  <div
+    class="product"
+    v-if="data.detalle"
+  >
     <ko-modal v-show="modalPayment"></ko-modal>
     <div class="wrapper">
       <div class="section">
@@ -27,7 +30,11 @@
               v-show="!existYoutube"
               :photo="selectPhotoUrl"
             ></zoomed>
-            <img :src="selectPhotoUrl" v-else class="photo_main_placeholder">
+            <img
+              :src="selectPhotoUrl"
+              v-else
+              class="photo_main_placeholder"
+            >
             <iframe
               v-show="existYoutube"
               width="400"
@@ -39,25 +46,40 @@
           </div>
         </div>
         <div class="photos responsive">
-          <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
+          <product-slide
+            :photos="data.fotos"
+            :photo="data.detalle.foto_cloudinary"
+          ></product-slide>
         </div>
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
           <div class="content_buy_price">
-            <h3 class="colorTexto price" v-show="salesData.precio">
+            <h3
+              class="colorTexto price"
+              v-show="salesData.precio"
+            >
               ${{ salesData.precio | currency }}
               <span>COP</span>
             </h3>
-            <div class="shipping" v-if="envio.titulo == 'Envío gratis'">
+            <div
+              class="shipping"
+              v-if="envio.titulo == 'Envío gratis'"
+            >
               <i class="icon-023-free-delivery"></i>
               <p>{{envio.titulo}}</p>
             </div>
-            <div class="shipping" v-if="envio.titulo == 'Tarifa por precio'">
+            <div
+              class="shipping"
+              v-if="envio.titulo == 'Tarifa por precio'"
+            >
               <i class="icon-019-fast-delivery"></i>
               <p v-if="priceShipping != 0">Envío: ${{priceShipping | currency}} COP</p>
               <p v-else>Envío Gratis</p>
             </div>
-            <div class="shipping" v-if="envio.titulo == 'Tarifa plana'">
+            <div
+              class="shipping"
+              v-if="envio.titulo == 'Tarifa plana'"
+            >
               <i class="icon-019-fast-delivery"></i>
               <p>Envío: ${{envios.valores.valor | currency}} COP</p>
             </div>
@@ -66,14 +88,32 @@
 
           <div class="quantity item-product">
             <p class="name-item">Cantidad:</p>
-            <div class="ko-input" v-if="spent">
-              <input type="text" value="1" v-model="quantityValue" :min="1" :max="maxQuantityValue">
+            <div
+              class="ko-input"
+              v-if="spent"
+            >
+              <input
+                type="text"
+                value="1"
+                v-model="quantityValue"
+                :min="1"
+                :max="maxQuantityValue"
+              >
               <div class="icons-arrows">
-                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
-                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
+                <i
+                  class="el-icon-arrow-up"
+                  v-on:click="addQuantity()"
+                ></i>
+                <i
+                  class="el-icon-arrow-down"
+                  v-on:click="removeQuantity()"
+                ></i>
               </div>
               <transition name="slide-fade">
-                <div class="container-alert" v-show="quantityValue == maxQuantityValue">
+                <div
+                  class="container-alert"
+                  v-show="quantityValue == maxQuantityValue"
+                >
                   <span class="alert">última Unidad!
                     <div class="arrow"></div>
                   </span>
@@ -81,7 +121,10 @@
               </transition>
             </div>
 
-            <div class="ko-input" v-else>
+            <div
+              class="ko-input"
+              v-else
+            >
               <input
                 type="text"
                 value="1"
@@ -91,11 +134,20 @@
                 disabled
               >
               <div class="icons-arrows">
-                <i class="el-icon-arrow-up" v-on:click="addQuantity()"></i>
-                <i class="el-icon-arrow-down" v-on:click="removeQuantity()"></i>
+                <i
+                  class="el-icon-arrow-up"
+                  v-on:click="addQuantity()"
+                ></i>
+                <i
+                  class="el-icon-arrow-down"
+                  v-on:click="removeQuantity()"
+                ></i>
               </div>
               <transition name="slide-fade">
-                <div class="container-alert" v-show="salesData.estado == false">
+                <div
+                  class="container-alert"
+                  v-show="salesData.estado == false"
+                >
                   <span class="alert not-available">No disponible
                     <div class="arrow"></div>
                   </span>
@@ -103,7 +155,10 @@
               </transition>
             </div>
           </div>
-          <div class="marca item-product" v-show="data.info.marca">
+          <div
+            class="marca item-product"
+            v-show="data.info.marca"
+          >
             <p class="name-item">Marca:</p>
             <span>{{ data.info.marca | toLowerCase }}</span>
           </div>
@@ -121,7 +176,10 @@
               :key="index"
             >
               <label>{{ variant.nombre }}:</label>
-              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
+              <ko-radio-group
+                :options="variant.valores"
+                :index="index"
+              ></ko-radio-group>
             </div>
           </div>
           <!-- <div class="content_variant">
@@ -143,19 +201,33 @@
               </div>
             </social-sharing>
           </div>-->
-          <div class="item-product" :class="{content_buy: true, disabled: !salesData.estado}">
+          <div
+            class="item-product"
+            :class="{content_buy: true, disabled: !salesData.estado}"
+          >
             <!-- <button type="button" name="button">No esta disponible</button> -->
-            <div>
+            <div class="wrapper-buttons">
               <div class="content_buy_action">
-                <button v-if="spent" class="spent">
+                <button
+                  v-if="spent"
+                  class="spent"
+                >
                   <i class="icon-shopping-basket"></i>
                   Producto agotado
                 </button>
-                <button v-else v-on:click="addShoppingCart">
+                <button
+                  v-else
+                  v-on:click="addShoppingCart"
+                >
                   <i class="icon-shopping-basket"></i>
                   Añadir al carrito
                 </button>
               </div>
+              <ko-whatsapp
+                v-if="whatsapp"
+                class="whatsapp"
+                @click.native="redirectWhatsapp()"
+              />
             </div>
             <p
               v-if="precio == 0 || !precio"
@@ -187,8 +259,11 @@
           </div>
         </div>
       </div>-->
-      <ko-description :data="data" :envio="envio"></ko-description>
-      <ko-related :data="data"/>
+      <ko-description
+        :data="data"
+        :envio="envio"
+      ></ko-description>
+      <ko-related :data="data" />
     </div>
   </div>
 </template>
@@ -200,6 +275,7 @@ import koModal from "../_components/modal.vue";
 import koRadioGroup from "../_components/radioGroup2";
 import koDescription from "../_components/descriptionProduct2";
 import koRelated from "../_components/related-products";
+import koWhatsapp from "../../Icons/whatsapp";
 
 export default {
   name: "koProduct2",
@@ -209,7 +285,8 @@ export default {
     koModal,
     koRadioGroup,
     koDescription,
-    koRelated
+    koRelated,
+    koWhatsapp
   },
   created() {
     this.$store.state.beforeCombination = [];
@@ -349,6 +426,9 @@ export default {
         }
       }
       return value;
+    },
+    whatsapp() {
+      return this.$store.state.whatsapp;
     }
   },
   methods: {
@@ -360,6 +440,14 @@ export default {
         return product[0].id;
       }
       return this.productsData[0].id;
+    },
+    redirectWhatsapp() {
+      window.open(
+        `https://web.whatsapp.com/send?phone=57${this.whatsapp}&text=${
+          window.location
+        }`,
+        "_blank"
+      );
     },
     getDataProduct() {
       const idOfSlug = this.searchIdForSlug();
@@ -428,7 +516,9 @@ export default {
           case "tarifa_plana":
             this.envio = {
               titulo: "Tarifa plana",
-              desc: "Este costo de envio no varia"
+              desc: `Compra todo lo que quieras en nuestra tienda, el valor del envio siempre sera el mismo: Valor envio $${
+                this.envios.valores.valor
+              }`
             };
             break;
           case "precio":
@@ -637,14 +727,21 @@ i.close {
 .content_buy > button {
   display: none;
 }
-.content_buy > div {
+.wrapper-buttons {
   width: 100%;
   flex: none;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  align-items: center;
   margin: 7px 0;
+}
+.whatsapp {
+  fill: #27d367;
+  width: 40px;
+  background: #fff;
+  cursor: pointer;
+  margin-left: 20px;
 }
 .content_buy.disabled > button {
   width: 200px;
