@@ -1,9 +1,11 @@
 import Chat from './components/chat/chat'
+import Whatsapp from './components/chat/whatsapp.vue'
 import Header1 from './components/headers/header1'
 import Header2 from './components/headers/header2'
 import Header3 from './components/headers/header3'
 import Header4 from './components/headers/header4'
 import HeaderThomas from './components/headers/headerThomas'
+import Header6 from './components/headers/header6'
 import Cart1 from './components/carts/cart1'
 import Product1 from './components/products/product1'
 import Product2 from './components/products/product2'
@@ -14,6 +16,7 @@ import Content2 from './components/contents/content2/v1'
 import Video1 from './components/videos/video1'
 import Slider3 from './components/sliders/slider3'
 import Slider1 from './components/sliders/slider1/v1'
+import Slider4 from './components/sliders/slider4/v1'
 import Slider11 from './components/sliders/slider1/v2'
 import Slider1v3 from './components/sliders/slider1/v3'
 import Separator from './components/separators/separator1'
@@ -34,10 +37,12 @@ import setting from './settings'
 const components = [
   ...setting,
   Chat,
+  Whatsapp,
   Header1,
   Header2,
   Header3,
   Header4,
+  Header6,
   HeaderThomas,
   Cart1,
   Product1,
@@ -48,6 +53,7 @@ const components = [
   Content2,
   Slider1,
   Slider3,
+  Slider4,
   Slider11,
   Slider1v3,
   Separator,

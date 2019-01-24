@@ -168,7 +168,8 @@ export default new Vuex.Store({
     },
     totalCart: 0,
     sections: null,
-    components: null
+    components: null,
+    whatsapp: ''
   },
   mutations: {
     GET_DATA(state) {
@@ -217,6 +218,7 @@ export default new Vuex.Store({
           state.envios.valores = JSON.parse(
             response.data.data.medios_envio.valores
           )
+          state.whatsapp = state.tienda.whatsapp
         })
     },
     UPDATE_CONTENTCART(state) {
@@ -256,6 +258,7 @@ export default new Vuex.Store({
       state.idTienda = newValue
       commit('GET_DATA')
     },
+    GET_WHATSAPP({ state }) {},
     GET_SECTIONS({ state }) {
       axios
         .get(

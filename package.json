@@ -32,7 +32,7 @@
     "image-cloudinary": "^1.1.7",
     "komercia-cropper": "^1.0.2",
     "vue": "^2.5.2",
-    "vue-awesome-swiper": "3.1.0",
+    "vue-awesome-swiper": "^3.1.0",
     "vue-carousel": "^0.6.15",
     "vue-fuse": "^1.5.2",
     "vue-meta": "^1.5.3",
