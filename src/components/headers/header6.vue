@@ -28,6 +28,7 @@
                     :style="`color:${color}`"
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
+                    @click.native="toggleMenuAction"
                   >
                     {{item.name}}
                   </router-link>
@@ -37,6 +38,7 @@
                     :style="`color:${color}`"
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
+                    @click.native="toggleMenuAction"
                   >
                     {{item.name}}
                   </router-link>
@@ -46,6 +48,7 @@
                     :style="`color:${color}`"
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
+                    @click.native="toggleMenuAction"
                   >
                     {{item.name}}
                   </router-link>
@@ -55,6 +58,7 @@
                     :style="`color:${color}`"
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
+                    @click.native="toggleMenuAction"
                   >
                     {{item.name}}
                   </router-link>
@@ -64,6 +68,7 @@
                     :style="`color:${color}`"
                     @mouseover="handleHover($event, true)"
                     @mouseleave="handleHover($event, false)"
+                    @click="toggleMenuAction"
                   >{{item.name}}</a>
                 </li>
               </ul>
@@ -146,10 +151,15 @@
           </transition>
 
         </div>
-        <i
-          class="icon-shopping-basket"
-          @click="openOrder"
-        ></i>
+        <el-badge
+          :value="productsCart"
+          class="item"
+        >
+          <i
+            class="icon-shopping-basket"
+            @click="openOrder"
+          ></i>
+        </el-badge>
         <div
           class="content-icon-menu"
           @click="toggleMenuAction"
@@ -200,7 +210,7 @@ export default {
     return {
       popover: false,
       popoverUser: false,
-      toggleMenu: false
+      toggleMenu: true
     };
   },
   computed: {
@@ -233,6 +243,9 @@ export default {
     },
     color() {
       return this.setting.styleObject.colorText;
+    },
+    productsCart() {
+      return this.$store.state.productsCart.length;
     }
   },
   methods: {
@@ -247,10 +260,6 @@ export default {
     },
     mouseOver() {
       this.popover = !this.popover;
-      console.log(this.popover);
-    },
-    mouseOverColor(x) {
-      x.style.color = "#ff0000";
     },
     handleHover(event, bool) {
       bool
