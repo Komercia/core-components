@@ -8,7 +8,7 @@
       <swiper-slide v-for="(item, index) in setting.data">
         <div class="slide">
           <img
-            :src="item.foto_cloudinary"
+            :src="item.photo"
             alt=""
           >
         </div>
@@ -32,19 +32,19 @@
 <script>
 export default {
   name: "ko-slider4",
-    props: {
+  props: {
     setting: {
       type: Object,
       default: function() {
         return {
-          name: '',
+          name: "",
           data: [
             {
-              foto_cloudinary:
-                'https://cdn.shopify.com/s/files/1/0011/8423/5583/files/slideshow1_776d460a-9623-4173-a569-66e3ed4966ef.png?v=1529577793'
+              photo:
+                "https://cdn.shopify.com/s/files/1/0011/8423/5583/files/slideshow1_776d460a-9623-4173-a569-66e3ed4966ef.png?v=1529577793"
             }
           ]
-        }
+        };
       }
     }
   },
