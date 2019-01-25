@@ -2,11 +2,13 @@
   <div class="header">
     <ko-order1 />
     <div class="container-nav">
-      <img
-        class="logo"
-        :src="`https://api2.komercia.co/logos/${info.logo}`"
-        :alt="info.nomre"
-      >
+      <div class="wrapper-logo">
+        <img
+          class="logo"
+          :src="`https://api2.komercia.co/logos/${info.logo}`"
+          :alt="info.nomre"
+        >
+      </div>
       <div class="wrapper-nav">
         <transition name="downMenu">
           <nav
@@ -322,8 +324,18 @@ export default {
 .main-menu-list a {
   color: rgb(48, 48, 48);
 }
+.wrapper-logo {
+  padding: 6px 0;
+  box-sizing: border-box;
+}
+
 .logo {
   height: 100%;
+  width: 100%;
+  object-fit: contain;
+  display: flex;
+  justify-content: flex-start;
+  object-position: 0;
 }
 .popover {
   background-color: #fff;

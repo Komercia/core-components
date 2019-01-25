@@ -3,6 +3,7 @@
     <el-tabs
       type="border-card"
       :stretch="true"
+      @tab-click="handleClick"
     >
       <el-tab-pane label="Links">
         <draggable v-model="settingData.data.tabs">
@@ -48,6 +49,7 @@
       </el-tab-pane>
     </el-tabs>
     <div
+      v-if="show"
       class="btn-newtab"
       @click="createTab()"
     >
@@ -65,7 +67,8 @@ export default {
   components: { RedirectTo, draggable },
   data() {
     return {
-      activeName: "first"
+      activeName: "first",
+      show: true
     };
   },
   computed: {
@@ -92,6 +95,9 @@ export default {
     },
     handleColorHover(color) {
       this.settingData.styleObject.colorHover = color;
+    },
+    handleClick() {
+      this.show = !this.show;
     }
   }
 };
