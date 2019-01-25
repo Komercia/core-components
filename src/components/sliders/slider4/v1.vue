@@ -3,9 +3,11 @@
     <swiper
       :options="swiperOption"
       ref="mySwiper"
-      @someSwiperEvent="callback"
     >
-      <swiper-slide v-for="(item, index) in setting.data">
+      <swiper-slide
+        v-for="(item, index) in setting.data.banners"
+        :key="index"
+      >
         <div class="slide">
           <img
             :src="item.photo"
@@ -19,13 +21,12 @@
       >
         <div
           class="btn"
-          v-for="(item, index) in setting.data.length"
+          v-for="(item, index) in setting.data.banners.length"
           @click="changeSlide(index)"
+          :key="index"
         ></div>
       </div>
-
     </swiper>
-
   </div>
 </template>
 
@@ -38,12 +39,20 @@ export default {
       default: function() {
         return {
           name: "",
-          data: [
-            {
-              photo:
-                "https://cdn.shopify.com/s/files/1/0011/8423/5583/files/slideshow1_776d460a-9623-4173-a569-66e3ed4966ef.png?v=1529577793"
-            }
-          ]
+          data: {
+            banners: [
+              {
+                photo:
+                  "https://lh3.googleusercontent.com/RjgDMs-pimIHX-BVgssw1xlXOydfu6fvW42SVywW0ykZhmwV0aUTVSoODyrX-qWbF5CnaHjhP563CXTIiQg3=w1920-h969-rw",
+                redirect_to: "https://komercia.co"
+              },
+              {
+                photo:
+                  "https://lh3.googleusercontent.com/zmAuDgr5Dt4oDuw02nFkYuBKjQPtNz4TevAZEE8_M7uVCcdq1CqKvgDyw55HXJ_xwTWgBUIYVLJclzBykE70I3BiER5soLvZNRL0rdxOkWcQNRYLn81-ePGcjaVjRknrsptblzTnhlC6OwanU1fCCgfeKTw33gRd1pLzcuQhHpAafkMQboRydOjwh7cha5Ey_iUwlPlV1d7s12iO6eE8zQO54PlSbV7YGQSXN3lDPw4ue4WNqIiscajJsnFIdQs2klN57__Ayuk6HieVTiTKatN-9zpeAFK1krTDy8DyF0MAmu6NTa_N_LQ736SMtiGphub-YvqY2p_gqlZJDIxBvu3vFpnAlHRxQRQzIne8l5HE5Xn7rKeg8uROFwefYgHoEwnezu-yXeRuw5s-E9HzQnRIG5jm8A3u-dO2jB6E7zOOV9J9Yb3MVRZz9mmsIOoIkU9V0S2rVT-td3Jj0cGXVS5444YuYgpRuswHfed26RlDukq3svH0VVUzP-xK1XtkUzSaWOG2jNyk0w2gmKLAk2Zq7YReYdDTPfszixtN6zfrx9PXFsakqYIoqip6uxqiRzoDrUoAYP_byAZCObAN4PkGgLC5KaQN=w1920-h969",
+                redirect_to: ""
+              }
+            ]
+          }
         };
       }
     }
@@ -67,11 +76,6 @@ export default {
       return this.$refs.mySwiper.swiper;
     }
   },
-  mounted() {
-    // current swiper instance
-    console.log("this is current swiper instance object", this.swiper);
-    this.swiper.slideTo(3, 1000, false);
-  },
   methods: {
     changeSlide(index) {
       this.swiper.slideTo(index, 1000, false);
@@ -82,7 +86,7 @@ export default {
 
 <style scoped>
 .slider {
-  /* width: 100%; */
+  cursor: pointer;
 }
 .swiper-container {
   max-width: 1600px !important;
@@ -108,7 +112,7 @@ export default {
   bottom: 25px;
   z-index: 9;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   /* right: 200px; */
 }
@@ -121,17 +125,24 @@ export default {
   transform: rotate(15deg);
   position: relative;
   cursor: pointer;
+  margin-left: 12px;
+}
+.btn:nth-child(2) {
+  transform: rotate(35deg);
 }
 .btn::before {
   content: "";
   position: absolute;
-  top: -8px;
-  left: -19px;
+  top: -6px;
+  left: -18px;
   width: 0;
   height: 0;
-  border-top: 8px solid transparent;
-  border-left: 16px solid rgb(255, 255, 255);
-  border-bottom: 8px solid transparent;
+  border-top: 6px solid transparent;
+  border-left: 15px solid rgb(255, 255, 255);
+  border-bottom: 6px solid transparent;
   /* transform: rotate(15deg); */
+}
+.btn:hover::before {
+  border-left: 15px solid rgb(0, 183, 255);
 }
 </style>
