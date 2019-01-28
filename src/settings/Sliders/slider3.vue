@@ -1,53 +1,82 @@
 <template>
   <div class="form_list">
-    <section class="settingBanner" v-for="(banner, index) in settingData.data">
+    <section
+      class="settingBanner"
+      v-for="(banner, index) in settingData.data"
+    >
       <div class="banner_photo">
         <img :src="banner.photo">
-        <label :for="`banner${index}`" class="upload_hover">
-          <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
+        <label
+          :for="`banner${index}`"
+          class="upload_hover"
+        >
+          <icon-base
+            icon-name="cloud-up"
+            width="30px"
+            heigth="30px"
+            icon-color="#FFF"
+          >
             <cloud-up />
           </icon-base>
           <p>Subir banner</p>
         </label>
       </div>
       <div class="input-area">
-        <el-input placeholder="Url de redirección" v-model="banner.redirect_to">
+        <el-input
+          placeholder="Url de redirección"
+          v-model="banner.redirect_to"
+        >
           <template slot="prepend">
             <icon-base icon-name="links">
-              <icon-links /></icon-base>
+              <icon-links />
+            </icon-base>
           </template>
         </el-input>
       </div>
-      <input type="file" :id="`banner${index}`" @change="uploadBanner($event, banner)" v-if="index == 0">
-      <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)" v-else>
+      <input
+        type="file"
+        :id="`banner${index}`"
+        @change="uploadBanner($event, banner)"
+        v-if="index == 0"
+      >
+      <input
+        type="file"
+        :id="`banner${index}`"
+        @change="uploadBanner2($event, banner)"
+        v-else
+      >
       <div class="settingBanner_actions">
         <el-button @click="updateBanner(banner)">Guardar</el-button>
-        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(banner, index)">Eliminar</el-button>
+        <el-button
+          type="danger"
+          icon="el-icon-delete"
+          @click="deleteBanner(banner, index)"
+        >Eliminar</el-button>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import IconLinks from '../../Icons/Links.vue'
-import CloudUp from '../../Icons/CloudUp.vue'
-import axios from 'axios'
+import IconLinks from "../../Icons/Links.vue";
+import CloudUp from "../../Icons/CloudUp.vue";
+import axios from "axios";
 export default {
-  name: 'koSliderSetting3',
+  name: "koSliderSetting3",
   components: { IconLinks, CloudUp },
   data() {
     return {
-      redireccion: '',
+      redireccion: "",
       newBanner: false
-    }
+    };
   },
   computed: {
     settingData: {
-      get () {
-        return this.$store.state.settingData
+      get() {
+        return this.$store.state.settingData;
       },
-      set (newValue) {
-        this.$store.state.settingData = newValue
+      set(newValue) {
+        this.$store.state.settingData = newValue;
       }
     }
   },
@@ -55,60 +84,60 @@ export default {
     uploadBanner(event, banner) {
       this.$cropper
         .upload({
-          type: 'Banner',
+          type: "Banner",
           ratio: 3 / 2,
           file: event.target.files[0],
-          desc: 'Peso maximo del banner 20M y tamaño de 1080px X 720px'
+          desc: "Peso maximo del banner 20M y tamaño de 1080px X 720px"
         })
         .then(response => {
-          this.updateBannerPhoto(response, banner)
-        })
+          this.updateBannerPhoto(response, banner);
+        });
     },
     uploadBanner2(event, banner) {
       this.$cropper
         .upload({
-          type: 'Banner',
+          type: "Banner",
           ratio: 358 / 173,
           file: event.target.files[0],
-          desc: 'Peso maximo del banner 20M y tamaño de 716px X 346px'
+          desc: "Peso maximo del banner 20M y tamaño de 716px X 346px"
         })
         .then(response => {
-          this.updateBannerPhoto(response, banner)
-        })
+          this.updateBannerPhoto(response, banner);
+        });
     },
     updateBannerPhoto(blob, banner) {
       // this.deleteBannerPhoto(banner)
-      let params = new FormData()
-      params.append('file', blob)
-      params.append('upload_preset', 'qciyydun')
+      let params = new FormData();
+      params.append("file", blob);
+      params.append("upload_preset", "qciyydun");
 
       let config = {
         headers: {
-          'content-type': 'multipart/form-data'
+          "content-type": "multipart/form-data"
         }
-      }
+      };
       axios
         .post(
-          'https://api.cloudinary.com/v1_1/komercia-store/image/upload',
+          "https://api.cloudinary.com/v1_1/komercia-store/image/upload",
           params,
           config
         )
         .then(response => {
-          banner.photo = response.data.secure_url
-          banner.id_cloudinary = response.data.public_id
-          banner.signature = response.data.signature
-          this.$cropper.complete()
+          banner.photo = response.data.secure_url;
+          banner.id_cloudinary = response.data.public_id;
+          banner.signature = response.data.signature;
+          this.$cropper.complete();
         })
         .catch(() => {
-          this.$cropper.complete()
-        })
+          this.$cropper.complete();
+        });
     },
     deleteBanner(index, banner) {
       // this.deleteBannerPhoto(banner)
-      this.$store.state.settingData.data.splice(index, 1)
+      this.$store.state.settingData.data.splice(index, 1);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -185,7 +214,7 @@ export default {
 .banner_photo:hover .upload_hover {
   display: grid;
 }
-.settingBanner input[type='file'] {
+.settingBanner input[type="file"] {
   display: none;
 }
 .input-area .el-select {

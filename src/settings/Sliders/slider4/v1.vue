@@ -7,8 +7,14 @@
     >
       <div class="row">
         <el-button-group>
-          <el-button icon="el-icon-delete"></el-button>
-          <el-button icon="el-icon-rank"></el-button>
+          <el-button
+            icon="el-icon-delete"
+            @click="deleteBanner(banner, index)"
+          ></el-button>
+          <el-button
+            icon="el-icon-rank"
+            @click="updateBanner(banner)"
+          ></el-button>
         </el-button-group>
         <div class="banner_photo">
           <img :src="banner.photo">
@@ -27,6 +33,11 @@
             <p>Subir banner</p>
           </label>
         </div>
+        <input
+          type="file"
+          :id="`banner${index}`"
+          @change="uploadBanner($event, banner)"
+        >
       </div>
       <RedirectTo v-model="banner.redirect_to" />
       <!-- <div class="input-area">
@@ -62,6 +73,12 @@
         >Eliminar</el-button>
       </div> -->
     </section>
+    <div
+      class="btn-newbanner"
+      v-if="settingData.data.banners.length < 3"
+      @click="uploadBanner"
+    >Nuevo Banner
+    </div>
   </div>
 </template>
 
@@ -69,10 +86,11 @@
 import RedirectTo from "../../_components/RedirectTo";
 import IconLinks from "../../../Icons/Links";
 import CloudUp from "../../../Icons/CloudUp.vue";
+import Upload from "../../_components/Upload.vue";
 import axios from "axios";
 export default {
   name: "koSliderSetting4",
-  components: { IconLinks, CloudUp, RedirectTo },
+  components: { IconLinks, CloudUp, RedirectTo, Upload },
   data() {
     return {
       redireccion: "",
@@ -118,7 +136,8 @@ export default {
       // this.deleteBannerPhoto(banner)
       let params = new FormData();
       params.append("file", blob);
-      params.append("upload_preset", "qciyydun");
+      params.append("upload_preset", "shngmeqw");
+      // params.append("upload_preset", "qciyydun");
 
       let config = {
         headers: {
@@ -127,7 +146,7 @@ export default {
       };
       axios
         .post(
-          "https://api.cloudinary.com/v1_1/komercia-store/image/upload",
+          "https://api.cloudinary.com/v1_1/komercia/image/upload",
           params,
           config
         )
@@ -256,5 +275,19 @@ export default {
 .el-button-group {
   display: flex;
   justify-content: flex-end;
+}
+.btn-newbanner {
+  margin: 20px auto;
+  background-color: rgb(36, 148, 114);
+  padding: 10px 15px;
+  width: 120px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 5px;
+  text-align: center;
+}
+.btn-newbanner:hover {
+  background-color: rgb(58, 194, 153);
 }
 </style>

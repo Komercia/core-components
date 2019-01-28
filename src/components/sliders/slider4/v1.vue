@@ -8,12 +8,62 @@
         v-for="(item, index) in setting.data.banners"
         :key="index"
       >
-        <div class="slide">
-          <img
-            :src="item.photo"
-            alt=""
-          >
-        </div>
+        <router-link
+          :to="`/productos/${item.redirect_to.value}`"
+          v-if="item.redirect_to.type == 1"
+        >
+          <div class="slide">
+            <img
+              :src="item.photo"
+              alt=""
+            >
+          </div>
+        </router-link>
+        <router-link
+          :to="`/productos?category=${item.redirect_to.value}`"
+          v-if="item.redirect_to.type == 2"
+        >
+          <div class="slide">
+            <img
+              :src="item.photo"
+              alt=""
+            >
+          </div>
+        </router-link>
+        <router-link
+          :to="`/productos?search=${item.redirect_to.value}`"
+          v-if="item.redirect_to.type == 3"
+        >
+          <div class="slide">
+            <img
+              :src="item.photo"
+              alt=""
+            >
+          </div>
+        </router-link>
+        <router-link
+          :to="item.redirect_to.value"
+          v-if="item.redirect_to.type == 4"
+        >
+          <div class="slide">
+            <img
+              :src="item.photo"
+              alt=""
+            >
+          </div>
+        </router-link>
+        <a
+          :href="item.redirect_to.value"
+          v-else-if="item.redirect_to.type == 5"
+          :key="index"
+        >
+          <div class="slide">
+            <img
+              :src="item.photo"
+              alt=""
+            >
+          </div>
+        </a>
       </swiper-slide>
       <div
         class="pagination"
