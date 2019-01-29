@@ -72,6 +72,7 @@
         <div
           class="btn"
           v-for="(item, index) in setting.data.banners.length"
+          :style="`border-left: 20px solid ${btnColor}`"
           @click="changeSlide(index)"
           :key="index"
         ></div>
@@ -124,6 +125,9 @@ export default {
   computed: {
     swiper() {
       return this.$refs.mySwiper.swiper;
+    },
+    btnColor() {
+      return this.setting.styleObject.btnColor;
     }
   },
   methods: {
@@ -190,9 +194,10 @@ export default {
   border-top: 6px solid transparent;
   border-left: 15px solid rgb(255, 255, 255);
   border-bottom: 6px solid transparent;
+  transform: scale(1);
   /* transform: rotate(15deg); */
 }
 .btn:hover::before {
-  border-left: 15px solid rgb(0, 183, 255);
+  transform: scale(0);
 }
 </style>

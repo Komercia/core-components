@@ -1,5 +1,11 @@
 <template>
   <div class="form_list">
+    <div
+      class="btn-newbanner"
+      v-if="settingData.data.banners.length < 3"
+      @click="uploadBanner2"
+    >Nuevo Banner
+    </div>
     <section
       class="settingBanner"
       v-for="(banner, index) in settingData.data.banners"
@@ -11,10 +17,10 @@
             icon="el-icon-delete"
             @click="deleteBanner(banner, index)"
           ></el-button>
-          <el-button
-            icon="el-icon-rank"
+          <!-- <el-button
+            icon="el-icon-check"
             @click="updateBanner(banner)"
-          ></el-button>
+          >Guardar</el-button> -->
         </el-button-group>
         <div class="banner_photo">
           <img :src="banner.photo">
@@ -40,6 +46,7 @@
         >
       </div>
       <RedirectTo v-model="banner.redirect_to" />
+
       <!-- <div class="input-area">
         <el-input
           placeholder="Url de redirección"
@@ -73,11 +80,13 @@
         >Eliminar</el-button>
       </div> -->
     </section>
-    <div
-      class="btn-newbanner"
-      v-if="settingData.data.banners.length < 3"
-      @click="uploadBanner"
-    >Nuevo Banner
+    <div class="settingBanner">
+      <p class="title">Elige el color del botón:</p>
+      <el-color-picker
+        size="small"
+        v-model="settingData.styleObject.btnColor"
+        @active-change="handleColorHover"
+      ></el-color-picker>
     </div>
   </div>
 </template>
@@ -112,7 +121,7 @@ export default {
       this.$cropper
         .upload({
           type: "Banner",
-          ratio: 3 / 2,
+          ratio: 16 / 5,
           file: event.target.files[0],
           desc: "Peso maximo del banner 20M y tamaño de 1080px X 720px"
         })
@@ -120,17 +129,17 @@ export default {
           this.updateBannerPhoto(response, banner);
         });
     },
-    uploadBanner2(event, banner) {
-      this.$cropper
-        .upload({
-          type: "Banner",
-          ratio: 358 / 173,
-          file: event.target.files[0],
-          desc: "Peso maximo del banner 20M y tamaño de 716px X 346px"
-        })
-        .then(response => {
-          this.updateBannerPhoto(response, banner);
-        });
+    uploadBanner2() {
+      const banner = {
+        photo: "",
+        redirect_to: {
+          value: "",
+          type: 4
+        },
+        id_cloudinary: "",
+        signature: ""
+      };
+      this.$store.state.settingData.data.banners.push(banner);
     },
     updateBannerPhoto(blob, banner) {
       // this.deleteBannerPhoto(banner)
@@ -156,13 +165,34 @@ export default {
           banner.signature = response.data.signature;
           this.$cropper.complete();
         })
-        .catch(() => {
-          this.$cropper.complete();
-        });
+        .catch(() => {});
     },
-    deleteBanner(index, banner) {
-      // this.deleteBannerPhoto(banner)
-      this.$store.state.settingData.data.splice(index, 1);
+    deleteBannerPhoto(banner) {
+      const public_id = banner.id_cloudinary || "";
+      const signature = banner.signature || "";
+      if (public_id != "" && signature != "") {
+        let params = {
+          public_id,
+          signature,
+          upload_preset: "shngmeqw",
+          api_key: 722777295248551,
+          timestamp: new Date().getTime()
+        };
+        axios
+          .post(
+            "https://api.cloudinary.com/v1_1/komercia-store/image/destroy",
+            params
+          )
+          .then(response => {});
+      }
+    },
+    deleteBanner(banner, index) {
+      // this.deleteBannerPhoto(banner);
+      console.log(index);
+      this.$store.state.settingData.data.banners.splice(index, 1);
+    },
+    handleColorHover(color) {
+      this.settingData.styleObject.btnColor = color;
     }
   }
 };
@@ -183,7 +213,7 @@ export default {
 }
 .banner_photo {
   width: 100%;
-  height: auto;
+  height: 85px;
   position: relative;
   margin: 5px 0;
 }
@@ -275,6 +305,7 @@ export default {
 .el-button-group {
   display: flex;
   justify-content: flex-end;
+  /* margin-top: 10px; */
 }
 .btn-newbanner {
   margin: 20px auto;
@@ -289,5 +320,15 @@ export default {
 }
 .btn-newbanner:hover {
   background-color: rgb(58, 194, 153);
+}
+.title {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.block {
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 10px;
 }
 </style>
