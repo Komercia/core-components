@@ -27,7 +27,9 @@ export default {
   methods: {
     redirectWhatsapp() {
       window.open(
-        `https://web.whatsapp.com/send?phone=57${this.whatsapp}&text=Hola`,
+        `https://web.whatsapp.com/send?phone=57${
+          this.whatsapp
+        }&text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
         "_blank"
       );
     }
