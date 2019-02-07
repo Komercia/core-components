@@ -2,6 +2,7 @@ import SliderSetting1 from './Sliders/slider1'
 import SliderSetting11 from './Sliders/slider1-1'
 import SliderSetting1v3 from './Sliders/slider1/v3'
 import SliderSetting3 from './Sliders/slider3'
+import SliderSetting4 from './Sliders/slider4/v1.vue'
 import SeparatorSetting1 from './Separators/separator1'
 import ContentSetting1 from './Contents/content1'
 import koContent2Setting from './Contents/content2/v1'
@@ -15,6 +16,7 @@ const components = [
   SliderSetting11,
   SliderSetting1v3,
   SliderSetting3,
+  SliderSetting4,
   SeparatorSetting1,
   ContentSetting1,
   koContent2Setting,

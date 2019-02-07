@@ -1,5 +1,6 @@
 <template>
   <div class="testing">
+    <preloader />
     <Menu />
     <!-- <ko-slider2/> -->
     <!-- <ko-slider3/> -->
@@ -31,6 +32,7 @@ import FeaturedProduct from "../components/featuredProducts/featuredProduct1";
 import Footer3 from "../components/footers/footer3";
 import chat from "../components/chat/chat";
 import whatsapp from "../components/chat/whatsapp";
+import preloader from "../components/preloaders/preloader1";
 
 export default {
   components: {
@@ -47,7 +49,8 @@ export default {
     FeaturedProduct,
     Footer3,
     chat,
-    whatsapp
+    whatsapp,
+    preloader
   }
 };
 </script>
