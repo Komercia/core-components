@@ -6,7 +6,7 @@
         :class="setting.data.effect"
         :to="`/productos/${brand.redirect_to.value}`"
       >
-        <img
+        <image-cloudinary
           :src="brand.source"
           :title="brand.title"
           :alt="brand.title"
@@ -21,7 +21,7 @@
         :class="setting.data.effect"
         :to="`/productos?category=${brand.redirect_to.value}`"
       >
-        <img
+        <image-cloudinary
           :src="brand.source"
           :title="brand.title"
           :alt="brand.title"
@@ -36,7 +36,7 @@
         :class="setting.data.effect"
         :to="`/productos?search=${brand.redirect_to.value}`"
       >
-        <img
+        <image-cloudinary
           :src="brand.source"
           :title="brand.title"
           :alt="brand.title"
@@ -51,7 +51,7 @@
         :class="setting.data.effect"
         :to="brand.redirect_to.value"
       >
-        <img
+        <image-cloudinary
           :src="brand.source"
           :title="brand.title"
           :alt="brand.title"
@@ -67,7 +67,7 @@
         :href="brand.redirect_to.value"
         target="_blank"
       >
-        <img
+        <image-cloudinary
           :src="brand.source"
           :title="brand.title"
           :alt="brand.title"
@@ -77,12 +77,8 @@
         />
         <button class="text g-btn">{{ brand.title || 'Sin titulo' }}</button>
       </a>
-      <a
-        v-else
-        href="#"
-        :class="setting.data.effect"
-      >
-        <img
+      <a v-else href="#" :class="setting.data.effect">
+        <image-cloudinary
           :src="brand.source"
           :title="brand.title"
           :alt="brand.title"

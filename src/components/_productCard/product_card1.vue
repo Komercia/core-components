@@ -1,11 +1,14 @@
 <template>
   <router-link :to="`/productos/${data.slug}`" class="container-product">
     <div class="img-grid-item">
-      <image-cloudinary :src="data.foto_cloudinary" />
+      <image-cloudinary :src="data.foto_cloudinary" width="300"/>
     </div>
     <div class="grid-item-description">
       <div class="price">{{data.precio | currency}}</div>
-      <p class="name-product">{{data.nombre}} <span v-show="data.marca">- {{data.marca}}</span></p>
+      <p class="name-product">
+        {{data.nombre}}
+        <span v-show="data.marca">- {{data.marca}}</span>
+      </p>
     </div>
     <button class="btn-product g-btn" type="button" name="button">
       <a>Ir al Producto</a>
@@ -59,7 +62,7 @@ export default {
   justify-items: center;
   justify-self: center;
   align-items: center;
-  background-color: #FFF;
+  background-color: #fff;
   overflow: hidden;
 }
 .img-grid-item img {

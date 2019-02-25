@@ -1,57 +1,37 @@
 <template>
   <div class="form_list">
-    <el-tabs
-      type="border-card"
-      :stretch="true"
-      @tab-click="handleClick"
-    >
+    <el-tabs type="border-card" :stretch="true">
       <el-tab-pane label="Banners">
         <div
           class="btn-newbanner"
           v-if="settingData.data.banners.length < 3"
           @click="uploadBanner2"
-        >Nuevo Banner
-        </div>
+        >Nuevo Banner</div>
         <section
           class="settingBanner"
           v-for="(banner, index) in settingData.data.banners"
           :key="index"
         >
           <div class="row">
-            <i
-              class="el-icon-close"
-              @click="deleteBanner(banner, index)"
-            ></i>
+            <i class="el-icon-close" @click="deleteBanner(banner, index)"></i>
             <!-- <el-button-group>
               <el-button
                 icon="el-icon-delete"
                 @click="deleteBanner(banner, index)"
               ></el-button>
-            </el-button-group> -->
+            </el-button-group>-->
             <div class="banner_photo">
-              <img :src="banner.photo">
-              <label
-                :for="`banner${index}`"
-                class="upload_hover"
-              >
-                <icon-base
-                  icon-name="cloud-up"
-                  width="30px"
-                  heigth="30px"
-                  icon-color="#FFF"
-                >
-                  <cloud-up />
+              <image-cloudinary :src="banner.photo"/>
+              <label :for="`banner${index}`" class="upload_hover">
+                <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
+                  <cloud-up/>
                 </icon-base>
                 <p>Subir banner</p>
               </label>
             </div>
-            <input
-              type="file"
-              :id="`banner${index}`"
-              @change="uploadBanner($event, banner)"
-            >
+            <input type="file" :id="`banner${index}`" @change="uploadBanner($event, banner)">
           </div>
-          <RedirectTo v-model="banner.redirect_to" />
+          <RedirectTo v-model="banner.redirect_to"/>
         </section>
         <div class="settingBanner">
           <p class="title">Elige el color del botón:</p>
@@ -67,31 +47,19 @@
           class="btn-newbanner"
           v-if="settingData.data.bannersResponsive.length < 3"
           @click="uploadBanner2Responsive"
-        >Nuevo Banner
-        </div>
+        >Nuevo Banner</div>
         <section
           class="settingBanner"
           v-for="(banner, index) in settingData.data.bannersResponsive"
           :key="index"
         >
           <div class="row">
-            <i
-              class="el-icon-close"
-              @click="deleteBannerResponsive(banner, index)"
-            ></i>
+            <i class="el-icon-close" @click="deleteBannerResponsive(banner, index)"></i>
             <div class="banner_photo_responsive">
-              <img :src="banner.photo">
-              <label
-                :for="`banner_responsive${index}`"
-                class="upload_hover"
-              >
-                <icon-base
-                  icon-name="cloud-up"
-                  width="30px"
-                  heigth="30px"
-                  icon-color="#FFF"
-                >
-                  <cloud-up />
+              <image-cloudinary :src="banner.photo"/>
+              <label :for="`banner_responsive${index}`" class="upload_hover">
+                <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
+                  <cloud-up/>
                 </icon-base>
                 <p>Subir banner</p>
               </label>
@@ -102,7 +70,7 @@
               @change="uploadBannerResponsive($event, banner)"
             >
           </div>
-          <RedirectTo v-model="banner.redirect_to" />
+          <RedirectTo v-model="banner.redirect_to"/>
         </section>
       </el-tab-pane>
     </el-tabs>
@@ -131,6 +99,22 @@ export default {
       },
       set(newValue) {
         this.$store.state.settingData = newValue;
+      }
+    },
+    cloudinary_config() {
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        return {
+          upload_preset: "shngmeqw",
+          cloud_name: "komercia"
+        };
+      } else {
+        return {
+          upload_preset: "qciyydun",
+          cloud_name: "komercia-store"
+        };
       }
     }
   },
@@ -187,7 +171,7 @@ export default {
       // this.deleteBannerPhoto(banner)
       let params = new FormData();
       params.append("file", blob);
-      params.append("upload_preset", "shngmeqw");
+      params.append("upload_preset", this.cloudinary_config.upload_preset);
       // params.append("upload_preset", "qciyydun");
 
       let config = {
@@ -197,7 +181,9 @@ export default {
       };
       axios
         .post(
-          "https://api.cloudinary.com/v1_1/komercia/image/upload",
+          `https://api.cloudinary.com/v1_1/${
+            this.cloudinary_config.cloud_name
+          }/image/upload`,
           params,
           config
         )
@@ -216,13 +202,15 @@ export default {
         let params = {
           public_id,
           signature,
-          upload_preset: "shngmeqw",
+          upload_preset: this.cloudinary_config.upload_preset,
           api_key: 722777295248551,
           timestamp: new Date().getTime()
         };
         axios
           .post(
-            "https://api.cloudinary.com/v1_1/komercia-store/image/destroy",
+            `https://api.cloudinary.com/v1_1/${
+              this.cloudinary_config.cloud_name
+            }/image/destroy`,
             params
           )
           .then(response => {});
@@ -246,17 +234,17 @@ export default {
 <style scoped>
 .form_list {
   box-sizing: border-box;
-  padding: 10px 5px;
   overflow: auto;
 }
 .settingBanner {
-  margin: 0 0 20px 0;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-gap: 10px;
   background-color: #fff;
-  box-sizing: border-box;
   padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 0 8px 4px rgba(144, 147, 153, 0.103);
+  border-radius: 5px;
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
 }
 .banner_photo {
   width: 100%;
