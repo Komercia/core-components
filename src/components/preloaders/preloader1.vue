@@ -1,9 +1,6 @@
 <template>
   <div class="loader">
-    <img
-      src="../../assets/preview.gif"
-      alt="loading"
-    >
+    <img src="../../assets/preview.gif" alt="loading">
   </div>
 </template>
 
@@ -25,11 +22,9 @@ export default {
         if (this.loader) {
           const loader = document.querySelector(".loader");
           loader.className += " hidden";
-          console.log(this.loader);
           clearTimeout(interval);
         } else {
           this.load();
-          console.log(this.loader);
         }
       }, 5000);
     },

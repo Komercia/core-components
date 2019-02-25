@@ -1,5 +1,6 @@
 import Chat from './components/chat/chat'
 import Whatsapp from './components/chat/whatsapp.vue'
+import Preloader from "./components/preloaders/preloader1"
 import Header1 from './components/headers/header1'
 import Header2 from './components/headers/header2'
 import Header3 from './components/headers/header3'
@@ -38,6 +39,7 @@ const components = [
   ...setting,
   Chat,
   Whatsapp,
+  Preloader,
   Header1,
   Header2,
   Header3,
