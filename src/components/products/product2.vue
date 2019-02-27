@@ -497,10 +497,12 @@ export default {
       }
       this.existYoutube = false;
     },
-    videoYoutube(video) {
-      if (video) {
-        const index = video.indexOf("?v=") + 3;
-        this.idYoutube = video.substring(index);
+    videoYoutube(url) {
+      let myregexp = /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/;
+      let id = "";
+      if (url !== undefined) {
+        this.validVideo = true;
+        this.idYoutube = url.match(myregexp)[1];
       }
     },
     addShoppingCart() {
