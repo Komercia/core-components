@@ -39,7 +39,11 @@
           </div>
         </div>
         <div class="photos responsive">
-          <product-slide :photos="data.fotos" :photo="data.detalle.foto_cloudinary"></product-slide>
+          <product-slide
+            :photos="data.fotos"
+            :photo="data.detalle.foto_cloudinary"
+            :idYoutube="idYoutube"
+          ></product-slide>
         </div>
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
@@ -500,7 +504,7 @@ export default {
     videoYoutube(url) {
       let myregexp = /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/;
       let id = "";
-      if (url !== undefined) {
+      if (url && url !== "" && url !== "null") {
         this.validVideo = true;
         this.idYoutube = url.match(myregexp)[1];
       }
