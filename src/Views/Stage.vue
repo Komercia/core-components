@@ -146,7 +146,7 @@ export default {
         { value: 452, label: "EngelShoes - 452" },
         { value: 364, label: "Ace Delivery's - 364" },
         { value: 729, label: "Prueba54545 - 729" },
-        { value: 349, label: "Demo 1 - 349" },
+        { value: 349, label: "La Tienda - 560" },
         { value: 574, label: "Child Clothes - 574" },
         { value: 247, label: "TecnoAqua SAS - 247" },
         { value: 824, label: "Ticbu - 824" },
