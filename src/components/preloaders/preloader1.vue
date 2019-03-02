@@ -1,6 +1,9 @@
 <template>
   <div class="loader">
-    <img src="../../assets/preview.gif" alt="loading">
+    <img
+      src="https://res.cloudinary.com/komercia-store/image/upload/v1551545737/komercia/preview.gif"
+      alt="loading"
+    >
   </div>
 </template>
 
