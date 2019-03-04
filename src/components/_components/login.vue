@@ -1,39 +1,54 @@
 <template>
   <div class="komercia_chat_login">
-    <button class="btn btn-facebook" v-on:click="getUIDWithFacebook"><i class="fa fa-facebook-square"></i>Ingresar con Facebook</button>
+    <button class="btn btn-facebook" v-on:click="getUIDWithFacebook">
+      <i class="fa fa-facebook-square"></i>Ingresar con Facebook
+    </button>
 
     <div class="divide">
       <div class="line-horizontal"></div>
-      <p >ó</p>
+      <p>ó</p>
       <div class="line-horizontal"></div>
     </div>
     <form v-on:submit.prevent class="form">
-
       <p class="action-signup">Ingresa con email y contraseña</p>
 
       <div class="input-area first">
         <p class="nameItem">Correo electrónico</p>
         <div id="emailFocus" class="container-inputs">
-          <input class="input-email" type="email" placeholder="Correo electronico" name="email" v-model="email" data-vv-as="correo" required>
+          <input
+            class="input-email"
+            type="email"
+            placeholder="Correo electronico"
+            name="email"
+            v-model="email"
+            data-vv-as="correo"
+            required
+          >
         </div>
         <!-- <p class="text-error">{{ errors.first('email') }}</p> -->
       </div>
       <div class="input-area">
-        <span v-if="typePassword == 'password'" @click="showPassword"><i class="fa fa-eye"></i>Mostrar</span>
-        <span v-else @click="hiddenPassword"><i class="fa fa-eye-slash"></i>Ocultar</span>
+        <span v-if="typePassword == 'password'" @click="showPassword">
+          <i class="fa fa-eye"></i>Mostrar
+        </span>
+        <span v-else @click="hiddenPassword">
+          <i class="fa fa-eye-slash"></i>Ocultar
+        </span>
         <p class="nameItem">Contraseña</p>
         <div id="passwordFocus" class="container-inputs">
-          <input class="input-password" :type="typePassword" placeholder="Contraseña" v-model="password">
+          <input
+            class="input-password"
+            :type="typePassword"
+            placeholder="Contraseña"
+            v-model="password"
+          >
         </div>
       </div>
-      <el-alert
-      :title="messageInvalid"
-      v-show="showInvalid"
-      type="error"
-      :closable="false">
-    </el-alert>
+      <el-alert :title="messageInvalid" v-show="showInvalid" type="error" :closable="false"></el-alert>
       <div class="container-button">
-        <button class="btn btn-login btn-fill" v-on:click="login"><p>Inicia Sesión</p></button>
+        <button class="btn btn-login btn-fill" v-on:click="login">
+          <p>Inicia Sesión</p>
+        </button>
       </div>
       <div class="forgot">
         <a href="https://login.komercia.co/registrar-cliente">
@@ -45,99 +60,100 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { Button, Input } from 'element-ui'
+import axios from "axios";
+import Cookies from "js-cookie";
+import { Button, Input } from "element-ui";
 
 export default {
   components: { ElButton: Button, ElInput: Input },
   data() {
     return {
       messageInvalid:
-        'La dirección de correo electrónico o contraseña no es válida',
-      email: '',
-      password: '',
-      greet: '',
+        "La dirección de correo electrónico o contraseña no es válida",
+      email: "",
+      password: "",
+      greet: "",
       showInvalid: false,
-      typePassword: 'password'
-    }
+      typePassword: "password"
+    };
   },
   methods: {
     getUIDWithFacebook() {
-      let provider = new firebase.auth.FacebookAuthProvider()
+      let provider = new firebase.auth.FacebookAuthProvider();
       this.$firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          this.loginFacebook(result.user.providerData[0])
+          this.loginFacebook(result.user.providerData[0]);
         })
-        .catch(function(error) {})
+        .catch(function(error) {});
     },
     loginFacebook(providerData) {
-      let params = {}
-      params.id = providerData.uid
-      params.name = providerData.displayName
-      params.email = providerData.email
-      params.token = ''
+      let params = {};
+      params.id = providerData.uid;
+      params.name = providerData.displayName;
+      params.email = providerData.email;
+      params.token = "";
       axios.post(`${this.$urlHttp}/login/facebook`, params).then(response => {
-        document.cookie = `authData = ${
-          response.data.accessToken
-        }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`
-        this.authentication(response.data.accessToken)
-      })
+        Cookies.set("authData", response.data.accessToken, {
+          domain: "komercia.co"
+        });
+        this.authentication(response.data.accessToken);
+      });
     },
     login() {
       const params = {
-        grant_type: 'password',
+        grant_type: "password",
         client_id: 2,
-        client_secret: 'S3kE1jYcd6hFWcu0jIOm3cRFMOnjjmtmtfoYdra1',
+        client_secret: "S3kE1jYcd6hFWcu0jIOm3cRFMOnjjmtmtfoYdra1",
         password: this.password,
-        username: this.email,
-      }
+        username: this.email
+      };
       axios
         .post(`https://api2.komercia.co/oauth/token`, params)
         .then(response => {
           document.cookie = `authData = ${
             response.data.access_token
-          }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`
+          }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
           axios.defaults.headers.common = {
-            'content-type': 'application/json',
-            'Authorization': `Bearer ${response.data.access_token}`,
-            'Access-Control-Allow-Origin': '*'
+            "content-type": "application/json",
+            Authorization: `Bearer ${response.data.access_token}`,
+            "Access-Control-Allow-Origin": "*"
           };
-          this.authentication(response.data.access_token)
+          this.authentication(response.data.access_token);
         })
         .catch(err => {
           if (err) {
             this.show();
           }
-        })
+        });
     },
     authentication(accessToken) {
       const config = {
         headers: {
-          'content-type': 'application/json',
+          "content-type": "application/json",
           Authorization: `Bearer ${accessToken}`,
-          'Access-Control-Allow-Origin': '*'
+          "Access-Control-Allow-Origin": "*"
         }
-      }
+      };
       axios.get(`${this.$urlHttp}/api/user`, config).then(response => {
-        this.$store.state.userData = response.data.data
-        this.$emit('authenticated')
-      })
+        this.$store.state.userData = response.data.data;
+        this.$emit("authenticated");
+      });
     },
     showPassword() {
-      this.typePassword = 'text'
-      document.querySelector('.input-password').focus()
+      this.typePassword = "text";
+      document.querySelector(".input-password").focus();
     },
     hiddenPassword() {
-      this.typePassword = 'password'
-      document.querySelector('.input-password').focus()
+      this.typePassword = "password";
+      document.querySelector(".input-password").focus();
     },
     show() {
       this.showInvalid = true;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -382,7 +398,7 @@ button {
   font-size: 15px;
 }
 .focus:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0px;
   right: 0px;
@@ -497,7 +513,7 @@ button {
   color: #fff;
 }
 .btn-fill::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 100%;
@@ -517,7 +533,7 @@ button {
 .btn-facebook:hover {
   background-color: #254278;
 }
-.btn-facebook i.fa{
+.btn-facebook i.fa {
   margin-right: 10px;
   font-size: 18px;
 }
