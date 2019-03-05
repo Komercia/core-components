@@ -374,7 +374,10 @@ export default {
       let id = "";
       if (url && url !== "" && url !== "null") {
         this.validVideo = true;
-        this.idYoutube = url.match(myregexp)[1];
+        let id = url.match(myregexp);
+        if (id) {
+          return id[1];
+        }
       }
     },
     addShoppingCart() {
