@@ -20,6 +20,7 @@ import Slider1 from './components/sliders/slider1/v1'
 import Slider4 from './components/sliders/slider4/v1'
 import Slider11 from './components/sliders/slider1/v2'
 import Slider1v3 from './components/sliders/slider1/v3'
+import Slider5v1 from './components/sliders/slider5/v1'
 import Separator from './components/separators/separator1'
 import Grid1 from './components/grids/grid1'
 import Grid2 from './components/grids/grid2'
@@ -56,6 +57,7 @@ const components = [
   Slider1,
   Slider3,
   Slider4,
+  Slider5v1,
   Slider11,
   Slider1v3,
   Separator,
