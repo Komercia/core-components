@@ -46,6 +46,8 @@ export default {
 <style scoped>
 .slider_setting {
   display: grid;
+  align-content: start;
+  align-items: start;
   grid-gap: 10px;
   padding: 5px;
 }
