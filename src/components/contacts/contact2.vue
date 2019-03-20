@@ -39,7 +39,7 @@
           <div class="information section">
             <div class="section-about" v-if="storeData.descripcion">
               <p class="title-section">Información sobre nosotros</p>
-              <p class="description-store text-secundary"><div v-html="storeData.descripcion"></div>{{}}</p>
+              <p class="description-store text-secundary"><div v-html="storeData.descripcion"></div></p>
             </div>
             <div class="section-contact">
               <p class="title-section">Contáctanos</p>
@@ -81,8 +81,8 @@
                   </div>
                 </div>
                 <div class="item">
-                  <i class="icon-019-fast-delivery"></i>
-                  <div class="info-item">
+                  <i class="icon-019-fast-delivery" v-if="envios.estado"></i>
+                  <div class="info-item" v-if="envios.estado">
                     <p class="text-item text-secundary">
                       <span>{{envio.titulo}}:</span>
                     </p>
@@ -93,23 +93,23 @@
             </div>
             <div class="social">
               <ul class="list-social">
-                <li v-show="storeData.red_facebook !== ''">
+                <li v-show="storeData.red_facebook">
                   <a class="color_facebook" :href="storeData.red_facebook" target="_blank">
                     <i class="icon-facebook" />
                   </a>
                 </li>
-                <li v-show="storeData.red_instagram !== ''">
+                <li v-show="storeData.red_instagram">
                   <a class="color_instagram" :href="storeData.red_instagram" target="_blank">
                     <i class="icon-instagram-1" />
                   </a>
                 </li>
-                <li v-show="storeData.red_twitter !== ''">
+                <li v-show="storeData.red_twitter">
 
                   <a class="color_twitter" :href="storeData.red_twitter" target="_blank">
                     <i class="icon-twitter" />
                   </a>
                 </li>
-                <li v-show="storeData.red_youtube !== ''">
+                <li v-show="storeData.red_youtube">
                   <a class="color_youtube" :href="storeData.red_youtube" target="_blank">
                     <i class="icon-youtube-play" />
                   </a>
@@ -217,33 +217,40 @@ export default {
       }
     },
     setOptionEnvio() {
-      switch (this.envios.valores.envio_metodo) {
-        case 'gratis':
-          this.envio = {
-            titulo: 'Envío gratis',
-            desc: 'Disfruta de este obsequio por parte de la tienda.'
-          }
-          break
-        case 'tarifa_plana':
-          this.envio = {
-            titulo: 'Tarifa plana',
-            desc: 'Este costo de envio no varia'
-          }
-          break
-        case 'precio':
-          this.envio = {
-            titulo: 'Tarifa por precio',
-            desc:
-              'Segun la suma del costo de tus productos te cobraran el envio'
-          }
-          break
-        case 'peso':
-          this.envio = {
-            titulo: 'Tarifa por peso',
-            desc: ''
-          }
-          break
-        default:
+      if (this.envios.estado) {
+        switch (this.envios.valores.envio_metodo) {
+          case 'gratis':
+            this.envio = {
+              titulo: 'Envío gratis',
+              desc: 'Disfruta de este obsequio por parte de la tienda.'
+            }
+            break
+          case 'tarifa_plana':
+            this.envio = {
+              titulo: 'Tarifa plana',
+              desc: 'Este costo de envio no varia'
+            }
+            break
+          case 'precio':
+            this.envio = {
+              titulo: 'Tarifa por precio',
+              desc:
+                'Segun la suma del costo de tus productos te cobraran el envio'
+            }
+            break
+          case 'peso':
+            this.envio = {
+              titulo: 'Tarifa por peso',
+              desc: ''
+            }
+            break
+          default:
+        }
+      } else {
+        this.envio = {
+          titulo: '',
+          desc: ''
+        }
       }
     }
   }
