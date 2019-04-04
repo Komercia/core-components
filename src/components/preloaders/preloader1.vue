@@ -1,7 +1,7 @@
 <template>
   <div class="loader">
     <img
-      src="../../assets/preview.gif"
+      src="http://template.komercia.co/template3/img/preview.gif"
       alt="loading"
     >
   </div>
