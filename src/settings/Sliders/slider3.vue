@@ -1,34 +1,20 @@
 <template>
   <div class="form_list">
-    <section
-      class="settingBanner"
-      v-for="(banner, index) in settingData.data"
-    >
+    <section class="settingBanner" v-for="(banner, index) in settingData.data">
       <div class="banner_photo">
-        <img :src="banner.photo">
-        <label
-          :for="`banner${index}`"
-          class="upload_hover"
-        >
-          <icon-base
-            icon-name="cloud-up"
-            width="30px"
-            heigth="30px"
-            icon-color="#FFF"
-          >
-            <cloud-up />
+        <image-cloudinary :src="banner.photo"/>
+        <label :for="`banner${index}`" class="upload_hover">
+          <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
+            <cloud-up/>
           </icon-base>
           <p>Subir banner</p>
         </label>
       </div>
       <div class="input-area">
-        <el-input
-          placeholder="Url de redirección"
-          v-model="banner.redirect_to"
-        >
+        <el-input placeholder="Url de redirección" v-model="banner.redirect_to">
           <template slot="prepend">
             <icon-base icon-name="links">
-              <icon-links />
+              <icon-links/>
             </icon-base>
           </template>
         </el-input>
@@ -39,19 +25,10 @@
         @change="uploadBanner($event, banner)"
         v-if="index == 0"
       >
-      <input
-        type="file"
-        :id="`banner${index}`"
-        @change="uploadBanner2($event, banner)"
-        v-else
-      >
+      <input type="file" :id="`banner${index}`" @change="uploadBanner2($event, banner)" v-else>
       <div class="settingBanner_actions">
         <el-button @click="updateBanner(banner)">Guardar</el-button>
-        <el-button
-          type="danger"
-          icon="el-icon-delete"
-          @click="deleteBanner(banner, index)"
-        >Eliminar</el-button>
+        <el-button type="danger" icon="el-icon-delete" @click="deleteBanner(banner, index)">Eliminar</el-button>
       </div>
     </section>
   </div>
@@ -77,6 +54,22 @@ export default {
       },
       set(newValue) {
         this.$store.state.settingData = newValue;
+      }
+    },
+    cloudinary_config() {
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        return {
+          upload_preset: "shngmeqw",
+          cloud_name: "komercia"
+        };
+      } else {
+        return {
+          upload_preset: "qciyydun",
+          cloud_name: "komercia-store"
+        };
       }
     }
   },
@@ -109,7 +102,7 @@ export default {
       // this.deleteBannerPhoto(banner)
       let params = new FormData();
       params.append("file", blob);
-      params.append("upload_preset", "qciyydun");
+      params.append("upload_preset", this.cloudinary_config.upload_preset);
 
       let config = {
         headers: {
@@ -118,7 +111,9 @@ export default {
       };
       axios
         .post(
-          "https://api.cloudinary.com/v1_1/komercia-store/image/upload",
+          `https://api.cloudinary.com/v1_1/${
+            this.cloudinary_config.cloud_name
+          }/image/upload`,
           params,
           config
         )

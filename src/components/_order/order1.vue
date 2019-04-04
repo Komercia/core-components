@@ -151,9 +151,7 @@ export default {
           id: this.$store.state.tienda.id_tienda,
           nombre: this.$store.state.tienda.nombre,
           logo: this.$store.state.tienda.logo,
-          location:
-            this.$store.state.tienda.dominio ||
-            `http://${this.$store.state.tienda.subdominio}.komercia.co/`
+          location: window.location.href
         },
         tipo: 0,
         total: this.$store.state.totalCart,

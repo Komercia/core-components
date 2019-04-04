@@ -13,28 +13,30 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'koNewsletter1',
+  name: "koNewsletter1",
   data() {
     return {
       description: {
-        description1:'Suscribete a nuestro newsletter para obtener información',
+        description1: "Suscribete a nuestro newsletter para obtener información"
       },
-      email: null,
+      email: null
     };
   },
   methods: {
     submitNewsletter() {
-      const json = {
-        correo: this.email,
-        tienda: this.$store.state.id,
-      };
-      axios.post(`https://templates.komercia.co/api/suscriptores`, json);
+      if (this.email) {
+        const json = {
+          email: this.email,
+          tienda: this.$store.state.id
+        };
+        axios.post(`https://api2.komercia.co/api/tienda/suscriptor`, json);
+      }
     }
   }
-}
+};
 </script>
 
 <style>
@@ -63,7 +65,7 @@ export default {
   line-height: 1.2;
   text-align: center;
 }
-.container-subscription{
+.container-subscription {
   width: 100%;
   display: grid;
   grid-template-columns: 200px 150px;

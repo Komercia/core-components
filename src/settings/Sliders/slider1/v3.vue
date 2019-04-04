@@ -5,14 +5,20 @@
       <div class="input-area">
         <el-input placeholder="Titulo" v-model="banner.titulo">
           <template slot="prepend">
-            <icon-base icon-name="text"><icon-text /></icon-base>
+            <icon-base icon-name="text">
+              <icon-text/>
+            </icon-base>
           </template>
         </el-input>
         <el-input-number v-model="banner.titulosize" :min="3" :max="25"></el-input-number>
       </div>
       <div class="input-area">
         <el-input placeholder="Descripción" v-model="banner.descripcion">
-          <template slot="prepend"><icon-base icon-name="align-justify"><align-justify /></icon-base></template>
+          <template slot="prepend">
+            <icon-base icon-name="align-justify">
+              <align-justify/>
+            </icon-base>
+          </template>
         </el-input>
         <el-input-number v-model="banner.descripcionsize" :min="10" :max="35"></el-input-number>
       </div>
@@ -23,8 +29,8 @@
             v-for="position in positions"
             :label="position.label"
             :value="position.value"
-            :key="position.value">
-          </el-option>
+            :key="position.value"
+          ></el-option>
         </el-select>
         <el-input-number v-model="banner.spaces" :min="0" :max="75"></el-input-number>
       </div>
@@ -40,158 +46,209 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import axios from 'axios';
-import Upload from '../../_components/Upload.vue'
-import RedirectTo from '../../_components/RedirectTo.vue'
-import AngleLeft from '../../../Icons/AngleLeft.vue'
-import IconText from '../../../Icons/Text.vue'
-import AlignJustify from '../../../Icons/AlignJustify.vue'
-import IconLinks from '../../../Icons/Links.vue'
-import CloudUp from '../../../Icons/CloudUp.vue'
+import { mapState } from "vuex";
+import axios from "axios";
+import Upload from "../../_components/Upload.vue";
+import RedirectTo from "../../_components/RedirectTo.vue";
+import AngleLeft from "../../../Icons/AngleLeft.vue";
+import IconText from "../../../Icons/Text.vue";
+import AlignJustify from "../../../Icons/AlignJustify.vue";
+import IconLinks from "../../../Icons/Links.vue";
+import CloudUp from "../../../Icons/CloudUp.vue";
 
 export default {
-  name: 'koSliderSetting1_v3',
-  components: { AngleLeft, IconText, AlignJustify, IconLinks, CloudUp, RedirectTo, Upload },
+  name: "koSliderSetting1_v3",
+  components: {
+    AngleLeft,
+    IconText,
+    AlignJustify,
+    IconLinks,
+    CloudUp,
+    RedirectTo,
+    Upload
+  },
   data() {
     return {
       value: null,
-      titulo: '',
-      descripcion: '',
-      redireccion: '',
+      titulo: "",
+      descripcion: "",
+      redireccion: "",
       newBanner: false,
       positions: [
         {
-          label: 'Izquierda',
-          value: 'left'
+          label: "Izquierda",
+          value: "left"
         },
         {
-          label: 'Centrado',
-          value: 'center'
+          label: "Centrado",
+          value: "center"
         },
         {
-          label: 'Derecha',
-          value: 'right'
+          label: "Derecha",
+          value: "right"
         }
       ]
-    }
+    };
   },
   computed: {
-    ...mapState(['currentPage', 'currentComponent', 'settingData'])
+    ...mapState(["currentPage", "currentComponent", "settingData"]),
+    cloudinary_config() {
+      if (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1"
+      ) {
+        return {
+          upload_preset: "shngmeqw",
+          cloud_name: "komercia"
+        };
+      } else {
+        return {
+          upload_preset: "qciyydun",
+          cloud_name: "komercia-store"
+        };
+      }
+    }
   },
   methods: {
     openUnplash() {
       this.$store.state.unplash.status = true;
     },
     uploadBanner(event) {
-      this.$cropper.upload({
-        type: 'Banner',
-        ratio: 12/4,
-        file: event.target.files[0],
-        desc: 'Peso maximo del banner 20M y tamaño de 1200px X 400px'
-      }).then((response) => {
-        this.createBanner(response)
-      })
+      this.$cropper
+        .upload({
+          type: "Banner",
+          ratio: 12 / 4,
+          file: event.target.files[0],
+          desc: "Peso maximo del banner 20M y tamaño de 1200px X 400px"
+        })
+        .then(response => {
+          this.createBanner(response);
+        });
     },
     uploadBanner2(event, banner) {
-      this.$cropper.upload({
-        type: 'Banner',
-        ratio: 12/4,
-        file: event.target.files[0],
-        desc: 'Peso maximo del banner 20M y tamaño de 1200px X 400px'
-      }).then((response) => {
-        this.updateBannerPhoto(response, banner)
-      })
+      this.$cropper
+        .upload({
+          type: "Banner",
+          ratio: 12 / 4,
+          file: event.target.files[0],
+          desc: "Peso maximo del banner 20M y tamaño de 1200px X 400px"
+        })
+        .then(response => {
+          this.updateBannerPhoto(response, banner);
+        });
     },
     createBanner(blob) {
       if (this.$store.state.settingData.data[0]) {
-        if (this.$store.state.settingData.data[0].id_cloudinary === 'placeholder') {
-          this.deleteBanner(0)
+        if (
+          this.$store.state.settingData.data[0].id_cloudinary === "placeholder"
+        ) {
+          this.deleteBanner(0);
         }
       }
-      let params = new FormData()
-      params.append('file', blob)
-      params.append('upload_preset', 'qciyydun')
+      let params = new FormData();
+      params.append("file", blob);
+      params.append("upload_preset", this.cloudinary_config.upload_preset);
 
       let config = {
-        headers:
-          {
-            'content-type': 'multipart/form-data'
-          }
-      }
-      axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/upload', params, config).then((response) => {
-        const newBanner = {
-          descripcion: '',
-          foto_cloudinary: response.data.secure_url,
-          id_cloudinary: response.data.public_id,
-          signature: response.data.signature,
-          order: 0,
-          posicion: '',
-          redireccion: '',
-          tienda: this.$store.state.configKomercia.tienda.id,
-          titulo: '',
-          titulosize: '5',
-          descripcionsize: '20',
-          spaces: '3'
+        headers: {
+          "content-type": "multipart/form-data"
         }
-        this.$store.state.settingData.data.push(newBanner)
-        this.$cropper.complete()
-      }).catch(() => {
-        this.$cropper.complete()
-      })
+      };
+      axios
+        .post(
+          `https://api.cloudinary.com/v1_1/${
+            this.cloudinary_config.cloud_name
+          }/image/upload`,
+          params,
+          config
+        )
+        .then(response => {
+          const newBanner = {
+            descripcion: "",
+            foto_cloudinary: response.data.secure_url,
+            id_cloudinary: response.data.public_id,
+            signature: response.data.signature,
+            order: 0,
+            posicion: "",
+            redireccion: "",
+            tienda: this.$store.state.configKomercia.tienda.id,
+            titulo: "",
+            titulosize: "5",
+            descripcionsize: "20",
+            spaces: "3"
+          };
+          this.$store.state.settingData.data.push(newBanner);
+          this.$cropper.complete();
+        })
+        .catch(() => {
+          this.$cropper.complete();
+        });
     },
     deleteBanner(index, banner) {
       // this.deleteBannerPhoto(banner)
-      this.$store.state.settingData.data.splice(index, 1)
+      this.$store.state.settingData.data.splice(index, 1);
     },
-    updateBanner (banner) {
-      this.$store.commit('SAVE_STORELAYOUT')
+    updateBanner(banner) {
+      this.$store.commit("SAVE_STORELAYOUT");
     },
-    updateBannerPhoto (blob, banner) {
+    updateBannerPhoto(blob, banner) {
       // this.deleteBannerPhoto(banner)
-      let params = new FormData()
-      params.append('file', blob)
-      params.append('upload_preset', 'qciyydun')
+      let params = new FormData();
+      params.append("file", blob);
+      params.append("upload_preset", this.cloudinary_config.upload_preset);
 
       let config = {
-        headers:
-          {
-            'content-type': 'multipart/form-data'
-          }
-      }
-      axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/upload', params, config).then((response) => {
-        banner.foto_cloudinary = response.data.secure_url
-        banner.id_cloudinary = response.data.public_id
-        banner.signature = response.data.signature
-        this.$cropper.complete()
-      }).catch(() => {
-        this.$cropper.complete()
-      })
+        headers: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      axios
+        .post(
+          `https://api.cloudinary.com/v1_1/${
+            this.cloudinary_config.cloud_name
+          }/image/upload`,
+          params,
+          config
+        )
+        .then(response => {
+          banner.foto_cloudinary = response.data.secure_url;
+          banner.id_cloudinary = response.data.public_id;
+          banner.signature = response.data.signature;
+          this.$cropper.complete();
+        })
+        .catch(() => {
+          this.$cropper.complete();
+        });
     },
-    deleteBannerPhoto (banner) {
-      const public_id = banner.id_cloudinary || ''
-      const signature = banner.signature || ''
-      if (public_id != '' && signature != '') {
+    deleteBannerPhoto(banner) {
+      const public_id = banner.id_cloudinary || "";
+      const signature = banner.signature || "";
+      if (public_id != "" && signature != "") {
         let params = {
           public_id,
           signature,
-          upload_preset: 'qciyydun',
+          upload_preset: this.cloudinary_config.upload_preset,
           api_key: 596228273228369,
           timestamp: new Date().getTime()
-        }
-        axios.post('https://api.cloudinary.com/v1_1/komercia-store/image/destroy', params).then((response) => {
-
-        })
+        };
+        axios
+          .post(
+            `https://api.cloudinary.com/v1_1/${
+              this.cloudinary_config.cloud_name
+            }/image/destroy`,
+            params
+          )
+          .then(response => {});
       }
     },
     closeSetting() {
       this.$store.state.settingData = null;
     },
     getBanner(banner) {
-      return `https://api2.komercia.co/banners/${banner}`
+      return `https://api2.komercia.co/banners/${banner}`;
     }
   }
-}
+};
 </script>
 
 <style scoped>

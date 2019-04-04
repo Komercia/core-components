@@ -1,7 +1,7 @@
 <template>
   <div class="loader">
     <img
-      src="http://template.komercia.co/template3/img/preview.gif"
+      src="https://res.cloudinary.com/komercia-store/image/upload/v1551545737/komercia/preview.gif"
       alt="loading"
     >
   </div>
@@ -25,11 +25,9 @@ export default {
         if (this.loader) {
           const loader = document.querySelector(".loader");
           loader.className += " hidden";
-          console.log(this.loader);
           clearTimeout(interval);
         } else {
           this.load();
-          console.log(this.loader);
         }
       }, 5000);
     },

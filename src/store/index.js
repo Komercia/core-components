@@ -1,18 +1,18 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import products from './modules/products'
-import axios from 'axios'
-import firebase from '../utils/connect_firebase'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import products from './modules/products';
+import axios from 'axios';
+import firebase from '../utils/connect_firebase';
 
-const firestore = firebase.firestore()
-const settings = { /* your settings... */ timestampsInSnapshots: true }
-firestore.settings(settings)
+const firestore = firebase.firestore();
+const settings = { /* your settings... */ timestampsInSnapshots: true };
+firestore.settings(settings);
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-let cart = []
+let cart = [];
 if (localStorage.getItem('ShoppingCart')) {
-  cart = JSON.parse(localStorage.getItem('ShoppingCart'))
+  cart = JSON.parse(localStorage.getItem('ShoppingCart'));
 }
 
 export default new Vuex.Store({
@@ -176,87 +176,87 @@ export default new Vuex.Store({
       axios
         .get(`https://templates.komercia.co/api/tienda/${state.idTienda}`)
         .then(response => {
-          state.banners = response.data.data.banners
+          state.banners = response.data.data.banners;
           if (response.data.data.productos.length) {
             state.productsData = response.data.data.productos.sort((a, b) => {
-              if (a.nombre < b.nombre) return -1
-              if (a.nombre > b.nombre) return 1
-              return 0
-            })
+              if (a.nombre < b.nombre) return -1;
+              if (a.nombre > b.nombre) return 1;
+              return 0;
+            });
             state.productsData.map(p => {
-              const product = p
+              const product = p;
               if (product.variantes.length) {
                 product.combinaciones = JSON.parse(
                   product.variantes[0].combinaciones[0].combinaciones
-                )
+                );
                 if (product.combinaciones.length) {
                   const arrPrices = product.combinaciones.map(
                     combinacion => combinacion.precio
-                  )
-                  product.precio = Math.min(...arrPrices)
+                  );
+                  product.precio = Math.min(...arrPrices);
                 }
-                product.variantes = product.variantes[0].variantes
+                product.variantes = product.variantes[0].variantes;
               }
-              return product
-            })
-            state.products.fullProducts = state.productsData
+              return product;
+            });
+            state.products.fullProducts = state.productsData;
           }
           if (response.data.data.categorias.length) {
-            state.categorias = response.data.data.categorias
+            state.categorias = response.data.data.categorias;
           }
-          state.subcategorias = response.data.data.subcategorias
-          state.geolocalizacion = response.data.data.geolocalizacion
+          state.subcategorias = response.data.data.subcategorias;
+          state.geolocalizacion = response.data.data.geolocalizacion;
           state.mediospago = response.data.data.medios_pago || {
             epayco: false
-          }
+          };
           state.politicas = response.data.data.politicas || {
             garantia: '',
             datos: ''
-          }
-          state.tienda = response.data.data.tienda
-          state.envios = response.data.data.medios_envio
+          };
+          state.tienda = response.data.data.tienda;
+          state.envios = response.data.data.medios_envio;
           state.envios.valores = JSON.parse(
             response.data.data.medios_envio.valores
-          )
-          state.whatsapp = state.tienda.whatsapp
-        })
+          );
+          state.whatsapp = state.tienda.whatsapp;
+        });
     },
     UPDATE_CONTENTCART(state) {
-      state.totalCart = 0
-      localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart))
+      state.totalCart = 0;
+      localStorage.setItem('ShoppingCart', JSON.stringify(state.productsCart));
       for (const product of state.productsCart) {
-        state.totalCart += product.precio * product.cantidad
+        state.totalCart += product.precio * product.cantidad;
       }
     },
     REMOVE_PRODUCTSPURCHASED(state, id) {
       if (document.getElementById(id)) {
-        document.getElementById(id).classList.remove('bought')
+        document.getElementById(id).classList.remove('bought');
       }
     },
     CALCULATE_TOTALCART(state) {
-      state.totalCart = 0
+      state.totalCart = 0;
       for (const product of state.productsCart) {
-        state.totalCart += product.precio * product.cantidad
+        state.totalCart += product.precio * product.cantidad;
       }
     },
     SET_SETTING(state, setting) {
-      state.settingData = setting
+      state.settingData = setting;
     },
     LOGOUT() {
-      window.location.href = 'https://perfil.komercia.co/logout'
+      window.location.href = 'https://perfil.komercia.co/logout';
     },
     GET_PAYMENTS(state) {
       axios
         .get(`${state.configKomercia.url}/api/bancos`, state.configAxios)
         .then(response => {
-          state.banksData = response.data.data
-        })
+          state.banksData = response.data.data;
+        });
     }
   },
   actions: {
     UPDATE_ID_TIENDA({ state, commit }, newValue) {
-      state.idTienda = newValue
-      commit('GET_DATA')
+      state.idTienda = newValue;
+      commit('GET_DATA');
     },
     GET_WHATSAPP({ state }) {},
     GET_SECTIONS({ state }) {
@@ -265,31 +265,31 @@ export default new Vuex.Store({
           `https://komercia-2c50b.firebaseio.com/sections.json?auth=NbJcMDHW4Ueg4x67y5hHmxbZF3fhsyneVfQBpSFn`
         )
         .then(response => {
-          state.sections = Object.values(response.data)
-        })
+          state.sections = Object.values(response.data);
+        });
     },
     GET_COMPONENTS({ state }) {
       firestore
         .collection('components_testing')
         .get()
         .then(querySnapshot => {
-          const components = {}
+          const components = {};
           querySnapshot.forEach(doc => {
-            components[doc.id] = { label: '', options: [] }
-            components[doc.id].label = doc.id
-            components[doc.id].options = Object.values(doc.data())
-          })
-          state.components = components
-        })
+            components[doc.id] = { label: '', options: [] };
+            components[doc.id].label = doc.id;
+            components[doc.id].options = Object.values(doc.data());
+          });
+          state.components = components;
+        });
     },
     CREATE_COMPONENT({ state }, { newComponent, selectedSection }) {
       firestore
         .collection('components_testing')
         .doc(selectedSection)
-        .update({ 1: newComponent })
+        .update({ 1: newComponent });
     }
   },
   modules: {
     products
   }
-})
+});

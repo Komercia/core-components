@@ -1,7 +1,7 @@
 <template lang="html">
 <div class="container">
     <div class="item header">
-       <img :src="setting[0].photo" class="imgdown">
+       <image-cloudinary :src="setting[0].photo" class="imgdown" />
         <!-- <div class="item">
           <p class="phrase" :style="{ fontSize:setting[0].fontsize + 'px' }">
             {{setting[0].title}}
@@ -11,7 +11,7 @@
     </div>
 
     <div class="item left">
-        <img :src="setting[1].photo" class="imgdown">
+        <image-cloudinary :src="setting[1].photo" class="imgdown" />
         <!-- <div class="item">
             <p>{{setting[1].title}}</p>
             <button class="button">{{setting[1].button_text}}</button>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="item midlane">
-      <img :src="setting[2].photo" class="imgdown">
+      <image-cloudinary :src="setting[2].photo" class="imgdown" />
           <!-- <div class="item">
             <p>{{setting[2].title}}</p>
            <button class="button">{{setting[2].button_text}}</button>
@@ -28,7 +28,7 @@
    </div>
 
    <div class="item right">
-      <img :src="setting[3].photo" class="imgdown">
+      <image-cloudinary :src="setting[3].photo" class="imgdown" />
       <!-- <div class="item">
             <p>{{setting[3].title}}</p>
             <button class="button">{{setting[3].button_text}}</button>
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: 'koSlider2',
+  name: "koSlider2",
   props: {
     setting: {
       type: Array,
@@ -49,38 +49,38 @@ export default {
         return [
           {
             photo:
-              'https://images.pexels.com/photos/1154638/pexels-photo-1154638.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            title: 'ALL FREE',
+              "https://images.pexels.com/photos/1154638/pexels-photo-1154638.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            title: "ALL FREE",
             fontsize: 25,
-            redirect_url: '',
-            button_text: 'NOW'
+            redirect_url: "",
+            button_text: "NOW"
           },
           {
             photo:
-              'https://images.unsplash.com/photo-1438029071396-1e831a7fa6d8?ixlib=rb-0.3.5&s=9e7a727e0656634634ca38120e466a6b&auto=format&fit=crop&w=992&q=80',
-            title: 'SUMMER',
-            redirect_url: '',
-            button_text: 'SHOP NOW'
+              "https://images.unsplash.com/photo-1438029071396-1e831a7fa6d8?ixlib=rb-0.3.5&s=9e7a727e0656634634ca38120e466a6b&auto=format&fit=crop&w=992&q=80",
+            title: "SUMMER",
+            redirect_url: "",
+            button_text: "SHOP NOW"
           },
           {
             photo:
-              'https://images.unsplash.com/photo-1526855051836-66a11ba27090?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=87e69a477ddd5f980131b77d8ab8d5ff&auto=format&fit=crop&w=1575&q=80',
-            title: 'SPRING',
-            redirect_url: '',
-            button_text: 'BROWSE IT'
+              "https://images.unsplash.com/photo-1526855051836-66a11ba27090?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=87e69a477ddd5f980131b77d8ab8d5ff&auto=format&fit=crop&w=1575&q=80",
+            title: "SPRING",
+            redirect_url: "",
+            button_text: "BROWSE IT"
           },
           {
             photo:
-              'https://images.pexels.com/photos/843277/pexels-photo-843277.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            title: 'WINTER',
-            redirect_url: '',
-            button_text: 'READY ?'
+              "https://images.pexels.com/photos/843277/pexels-photo-843277.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+            title: "WINTER",
+            redirect_url: "",
+            button_text: "READY ?"
           }
-        ]
+        ];
       }
     }
   }
-}
+};
 </script>
 <style scoped>
 .container {
@@ -88,8 +88,8 @@ export default {
   display: grid;
   grid-template: 6fr 1.8fr / repeat(3, 1fr);
   grid-template-areas:
-    'header  header header'
-    'left midlane right';
+    "header  header header"
+    "left midlane right";
   font-weight: bold;
   max-width: 1366px;
   max-height: 80vh;
@@ -204,10 +204,10 @@ export default {
     max-height: 750px;
     grid-template: 1fr 1fr 1fr 1fr / 4fr;
     grid-template-areas:
-      'header'
-      'left'
-      'midlane'
-      'right';
+      "header"
+      "left"
+      "midlane"
+      "right";
     grid-gap: 10px;
   }
   .header {

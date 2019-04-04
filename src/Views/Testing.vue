@@ -1,19 +1,19 @@
 <template>
   <div class="testing">
-    <preloader />
-    <Menu />
+    <preloader/>
+    <Menu/>
     <!-- <ko-slider2/> -->
     <!-- <ko-slider3/> -->
     <!-- <grid2/> -->
     <!-- <content2/> -->
-    <contact2 />
-    <!-- <product1/>
-    <product2/> -->
+    <!-- <contact2/> -->
+    <!-- <product1/> -->
+    <product2/>
     <!-- <featured-product/> -->
     <!-- <product-list3/> -->
     <!-- <newsletter1/> -->
-    <whatsapp />
-    <footer3 />
+    <whatsapp/>
+    <footer3/>
   </div>
 </template>
 

@@ -1,29 +1,16 @@
 <template>
   <div class="header">
-    <ko-order1 />
-    <div class="container-nav">
+    <ko-order1/>
+    <div class="container-nav" v-if="setting">
       <div class="wrapper-logo">
-        <img
-          class="logo"
-          :src="`https://api2.komercia.co/logos/${info.logo}`"
-          :alt="info.nomre"
-        >
+        <img class="logo" :src="`https://api2.komercia.co/logos/${info.logo}`" :alt="info.nomre">
       </div>
       <div class="wrapper-nav">
         <transition name="downMenu">
-          <nav
-            class="nav"
-            v-show="toggleMenu"
-          >
+          <nav class="nav" v-show="toggleMenu">
             <transition name="downList">
-              <ul
-                class="main-menu-list menu-toggle-list"
-                v-show="toggleMenu"
-              >
-                <li
-                  v-for="(item, index) in setting.data.tabs"
-                  :key="index"
-                >
+              <ul class="main-menu-list menu-toggle-list" v-show="toggleMenu">
+                <li v-for="(item, index) in setting.data.tabs" :key="index">
                   <router-link
                     :to="`/productos/${item.redirect_to.value}`"
                     v-if="item.redirect_to.type == 1"
@@ -31,9 +18,7 @@
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
                     @click.native="toggleMenuAction"
-                  >
-                    {{item.name}}
-                  </router-link>
+                  >{{item.name}}</router-link>
                   <router-link
                     :to="`/productos?category=${item.redirect_to.value}`"
                     v-if="item.redirect_to.type == 2"
@@ -41,9 +26,7 @@
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
                     @click.native="toggleMenuAction"
-                  >
-                    {{item.name}}
-                  </router-link>
+                  >{{item.name}}</router-link>
                   <router-link
                     :to="`/productos?search=${item.redirect_to.value}`"
                     v-if="item.redirect_to.type == 3"
@@ -51,9 +34,7 @@
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
                     @click.native="toggleMenuAction"
-                  >
-                    {{item.name}}
-                  </router-link>
+                  >{{item.name}}</router-link>
                   <router-link
                     :to="item.redirect_to.value"
                     v-if="item.redirect_to.type == 4"
@@ -61,9 +42,7 @@
                     @mouseover.native="handleHover($event, true)"
                     @mouseleave.native="handleHover($event, false)"
                     @click.native="toggleMenuAction"
-                  >
-                    {{item.name}}
-                  </router-link>
+                  >{{item.name}}</router-link>
                   <a
                     :href="item.redirect_to.value"
                     v-else-if="item.redirect_to.type == 5"
@@ -77,10 +56,7 @@
             </transition>
           </nav>
         </transition>
-        <div
-          class="wrapper"
-          v-if="userData.id"
-        >
+        <div class="wrapper" v-if="userData.id">
           <div
             class="content-user"
             @mouseover="popoverUser = true"
@@ -89,13 +65,10 @@
             <img
               v-if="userData.foto"
               :src="`https://api2.komercia.co/users/${userData.foto}`"
-              alt=""
+              alt
               class="imagen-user"
             >
-            <user-icon
-              v-else
-              class="icon-login"
-            />
+            <user-icon v-else class="icon-login"/>
           </div>
           <!-- @click="toggleMenu" -->
           <transition name="down">
@@ -112,60 +85,29 @@
                     :src="`https://api2.komercia.co/users/${userData.foto}`"
                     class="imagen-user"
                   >
-                  <user-icon
-                    v-else
-                    class="icon-login-big"
-                  />
+                  <user-icon v-else class="icon-login-big"/>
                 </div>
                 <div class="left">
                   <p>{{userData.nombre}}</p>
                   <p>{{userData.email}}</p>
                 </div>
               </div>
-              <el-button
-                class="btn-logout"
-                type="info"
-                @click="logout"
-                plain
-              >Salir</el-button>
+              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
             </div>
           </transition>
-
         </div>
-        <div
-          class="wrapper-user"
-          v-else
-        >
-          <i
-            class="icon-user-circle"
-            @click="mouseOver"
-          ></i>
+        <div class="wrapper-user" v-else>
+          <i class="icon-user-circle" @click="mouseOver"></i>
           <transition name="down">
-            <div
-              class="popover"
-              v-if="popover"
-            >
-              <login
-                v-show="popover"
-                @authenticated="fadeOf"
-              />
+            <div class="popover" v-if="popover">
+              <login v-show="popover" @authenticated="fadeOf"/>
             </div>
           </transition>
-
         </div>
-        <el-badge
-          :value="productsCart"
-          class="item"
-        >
-          <i
-            class="icon-shopping-basket"
-            @click="openOrder"
-          ></i>
+        <el-badge :value="productsCart" class="item">
+          <i class="icon-shopping-basket" @click="openOrder"></i>
         </el-badge>
-        <div
-          class="content-icon-menu"
-          @click="toggleMenuAction"
-        >
+        <div class="content-icon-menu" @click="toggleMenuAction">
           <i class="icon-menu"></i>
         </div>
       </div>
@@ -184,27 +126,7 @@ export default {
     setting: {
       type: Object,
       default: function() {
-        return {
-          data: {
-            tabs: [
-              {
-                name: "Inicio",
-                value: "/",
-                type: "4"
-              },
-              {
-                name: "Productos",
-                value: "/productos",
-                type: "4"
-              },
-              {
-                name: "Enlace",
-                value: "https://komercia.co/",
-                type: "5"
-              }
-            ]
-          }
-        };
+        return null;
       }
     }
   },
@@ -269,7 +191,9 @@ export default {
         : (event.target.style.color = this.setting.styleObject.colorText);
     },
     toggleMenuAction() {
-      this.toggleMenu = !this.toggleMenu;
+      if (window.innerWidth <= 770) {
+        this.toggleMenu = !this.toggleMenu;
+      }
     }
   }
 };
@@ -287,7 +211,6 @@ export default {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  /* background-color: rgb(255, 209, 209); */
   display: flex;
   justify-content: space-between;
 }
