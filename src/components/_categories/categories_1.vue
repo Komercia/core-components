@@ -63,7 +63,6 @@ export default {
   },
   methods: {
     Sendsubcategory(value) {
-      console.log(value);
       this.selectSubcategory = value;
       this.$store.dispatch("products/FILTER_BY", {
         type: "subcategory",
