@@ -87,7 +87,10 @@
       </div> -->
     </div>
     <div class="line"></div>
-    <div class="container">
+    <div
+      class="container"
+      v-if="setting"
+    >
       <router-link
         to="/"
         class="container-logo"
@@ -100,14 +103,35 @@
       <nav class="header-navigation">
         <ul class="navigation-list">
           <li
-            v-for='(item, index) in routes'
+            v-for='(item, index) in setting.data.tabs'
             :key='index'
             class="navigation-item"
           >
             <router-link
-              :to="item.route"
+              :to="`/productos/${item.redirect_to.value}`"
               class="navigation-link"
+              v-if="item.redirect_to.type == 1"
             >{{item.name}}</router-link>
+            <router-link
+              :to="`/productos?category=${item.redirect_to.value}`"
+              class="navigation-link"
+              v-if="item.redirect_to.type == 2"
+            >{{item.name}}</router-link>
+            <router-link
+              :to="`/productos?search=${item.redirect_to.value}`"
+              class="navigation-link"
+              v-if="item.redirect_to.type == 3"
+            >{{item.name}}</router-link>
+            <router-link
+              :to="item.redirect_to.value"
+              class="navigation-link"
+              v-if="item.redirect_to.type == 4"
+            >{{item.name}}</router-link>
+            <a
+              :href="item.redirect_to.value"
+              class="navigation-link"
+              v-else-if="item.redirect_to.type == 5"
+            >{{item.name}}</a>
           </li>
         </ul>
       </nav>
@@ -210,7 +234,7 @@
           >
             <i class="icon-close"></i>
           </li>
-          <li
+          <!-- <li
             v-for='(item, index) in routes'
             :key='index'
             class="main-menu-item"
@@ -218,6 +242,42 @@
             <a
               @click="redirectTo(item.route)"
               class="main-menu-link"
+            >{{item.name}}</a>
+          </li> -->
+
+          <li
+            v-for='(item, index) in setting.data.tabs'
+            :key='index'
+            class="navigation-item"
+          >
+            <router-link
+              :to="`/productos/${item.redirect_to.value}`"
+              tag="li"
+              class="main-menu-item"
+              v-if="item.redirect_to.type == 1"
+            >{{item.name}}</router-link>
+            <router-link
+              :to="`/productos?category=${item.redirect_to.value}`"
+              tag="li"
+              class="main-menu-item"
+              v-if="item.redirect_to.type == 2"
+            >{{item.name}}</router-link>
+            <router-link
+              :to="`/productos?search=${item.redirect_to.value}`"
+              tag="li"
+              class="main-menu-item"
+              v-if="item.redirect_to.type == 3"
+            >{{item.name}}</router-link>
+            <router-link
+              :to="item.redirect_to.value"
+              tag="li"
+              class="main-menu-item"
+              v-if="item.redirect_to.type == 4"
+            >{{item.name}}</router-link>
+            <a
+              :href="item.redirect_to.value"
+              class="main-menu-link"
+              v-else-if="item.redirect_to.type == 5"
             >{{item.name}}</a>
           </li>
         </ul>
@@ -231,6 +291,14 @@ import koOrder1 from "../_order/order1.vue";
 export default {
   name: "koHeader4",
   components: { koOrder1 },
+  props: {
+    setting: {
+      type: Object,
+      default: function() {
+        return null;
+      }
+    }
+  },
   data() {
     return {
       showIcon: false,
@@ -563,6 +631,8 @@ button.el-button.btn-logout.el-button--info.is-plain {
     color: #000;
     width: 100%;
     font-size: 16px;
+    display: block;
+    padding: 10px 0;
   }
   .item-close {
     justify-self: flex-end;
