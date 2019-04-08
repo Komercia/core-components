@@ -1,31 +1,41 @@
 <template>
-  <figure class="zoom" :style="setBackground(photo)" v-on:mousemove="zoom">
-    <image-cloudinary :src="photo" class="photo_main" />
+  <figure
+    class="zoom"
+    :style="setBackground(photo)"
+    v-on:mousemove="zoom"
+  >
+    <image-cloudinary
+      :src="photo"
+      class="photo_main"
+      :width="500"
+    />
   </figure>
 </template>
 
 <script>
 export default {
-  props: ['photo'],
+  props: ["photo"],
   methods: {
     zoom(e) {
-      const zoomer = e.currentTarget
-      let offsetX, offsetY
+      const zoomer = e.currentTarget;
+      let offsetX, offsetY;
       if (e.offsetY) {
-        e.offsetY ? (offsetY = e.offsetY) : (offsetX = e.touches[0].pageY)
+        e.offsetY ? (offsetY = e.offsetY) : (offsetX = e.touches[0].pageY);
       }
       if (e.offsetX) {
-        e.offsetX ? (offsetX = e.offsetX) : (offsetX = e.touches[0].pageX)
+        e.offsetX ? (offsetX = e.offsetX) : (offsetX = e.touches[0].pageX);
       }
-      const x = offsetX / zoomer.offsetWidth * 100
-      const y = offsetY / zoomer.offsetHeight * 100
-      zoomer.style.backgroundPosition = `${x}% ${y}%`
+      const x = (offsetX / zoomer.offsetWidth) * 100;
+      const y = (offsetY / zoomer.offsetHeight) * 100;
+      zoomer.style.backgroundPosition = `${x}% ${y}%`;
     },
     setBackground(p) {
-      return `background-image: url('${p}')`
+      return `background-image: url('${this.$ImageCloudinary(p, {
+        width: 700
+      })}')`;
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -48,7 +58,7 @@ figure.zoom img {
   background-color: #fff;
   transition: opacity 0.3s;
 }
-.photo_main{
+.photo_main {
   object-fit: contain;
 }
 figure.zoom img:hover {
