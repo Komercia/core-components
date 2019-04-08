@@ -5,24 +5,67 @@
     </div>
     <div class="container-grid">
       <div class="products">
-        <div class="left" :class="{ 'left-categories': true, hidden: add}">
+        <div
+          class="left"
+          :class="{ 'left-categories': true, hidden: add}"
+        >
           <div class="categories">
             <h3 class="title-categories">Categorias</h3>
             <ul class="list-categories">
-              <li class="item-categorie" @click="selected(categoria)" v-for="categoria in categorias" :key="categoria.id">{{categoria.nombre_categoria_producto}}</li>
+              <li
+                class="item-categorie"
+                @click="clear"
+              >
+                <span>Todos los Productos</span>
+              </li>
+              <li
+                class="item-categorie"
+                @mouseover="mouseOver(index)"
+                @mouseleave="mouseLeave"
+                @click="selected(categoria)"
+                v-for="(categoria, index) in categorias"
+                :key="categoria.id"
+              >
+                <p @click="sendCategory(categoria.nombre_categoria_producto)">{{categoria.nombre_categoria_producto}}</p>
+                <div
+                  :class="{ popover: sub == index}"
+                  v-if="sub == index"
+                >
+                  <ul>
+                    <li
+                      class="item-subcategorie"
+                      v-for="subcategory in subcategories"
+                      v-if="categoria.id===subcategory.categoria"
+                      @click="Sendsubcategory(subcategory.id)"
+                      :key="subcategory.id"
+                    >
+
+                      <span>{{subcategory.nombre_subcategoria}}</span></li>
+                  </ul>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
         <div class="right">
           <!-- input -->
           <div class="ko-input">
-            <input v-model="search" type="email" placeholder="Buscar">
+            <input
+              v-model="search"
+              type="email"
+              placeholder="Buscar"
+            >
             <i class="icon-search"></i>
           </div>
           <!-- end input -->
           <div class="container">
             <div class="grid-products">
-              <div :is="selectedCard" v-for="product in filterProduct" :key="product.id" :data="product">
+              <div
+                :is="selectedCard"
+                v-for="product in filterProduct"
+                :key="product.id"
+                :data="product"
+              >
               </div>
             </div>
           </div>
@@ -30,19 +73,40 @@
       </div>
     </div>
     <div class="pagination-medium">
-      <div class="product_pagination" v-if="products.length > 40">
-        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="40" :current-page.sync="currentPage" class="pagination">
+      <div
+        class="product_pagination"
+        v-if="products.length > 40"
+      >
+        <el-pagination
+          layout="prev, pager, next"
+          :total="products.length"
+          :page-size="40"
+          :current-page.sync="currentPage"
+          class="pagination"
+        >
         </el-pagination>
       </div>
     </div>
     <div class="pagination-small">
-      <div class="product_pagination" v-if="products.length > 40">
-        <el-pagination layout="prev, pager, next" :total="products.length" :page-size="40" :current-page.sync="currentPage" class="pagination" :small="true">
+      <div
+        class="product_pagination"
+        v-if="products.length > 40"
+      >
+        <el-pagination
+          layout="prev, pager, next"
+          :total="products.length"
+          :page-size="40"
+          :current-page.sync="currentPage"
+          class="pagination"
+          :small="true"
+        >
         </el-pagination>
       </div>
     </div>
-
-    <div class="btn-categories" @click="addClass()">
+    <div
+      class="btn-categories"
+      @click="addClass()"
+    >
       <i class="icon-filter"></i>
     </div>
   </div>
@@ -50,113 +114,159 @@
 
 <script>
 export default {
-  name: 'koProductList3',
+  name: "koProductList3",
   created() {
-    this.$store.dispatch('products/SET_FILTER', this.$route.query)
+    this.$store.dispatch("products/SET_FILTER", this.$route.query);
   },
   mounted() {
-    if (this.$store.getters['products/filterProducts']) {
-      this.products = this.$store.getters['products/filterProducts']
-      let maxTMP = 0
+    if (this.$store.getters["products/filterProducts"]) {
+      this.products = this.$store.getters["products/filterProducts"];
+      let maxTMP = 0;
       this.products.forEach(product => {
         if (maxTMP <= product.precio) {
-          this.price[1] = product.precio
-          this.range.max = parseInt(product.precio)
-          maxTMP = product.precio
+          this.price[1] = product.precio;
+          this.range.max = parseInt(product.precio);
+          maxTMP = product.precio;
         }
-      })
+      });
     }
   },
   data() {
     return {
       add: true,
-      search: '',
+      search: "",
       productsCategory: [],
       products: [],
       price: [0, 1000000],
       range: {
         max: 0
       },
-      currentPage: 1
-    }
+      currentPage: 1,
+      sub: 0,
+      show: false,
+      value: "",
+      valuesub: "",
+      selectSubcategory: ""
+    };
   },
   watch: {
     Fullproducts(value) {
-      this.products = value
-      let maxTMP = 0
+      this.products = value;
+      let maxTMP = 0;
       value.forEach(product => {
         if (maxTMP <= product.precio) {
-          this.price[1] = product.precio
-          this.range.max = parseInt(product.precio)
-          maxTMP = product.precio
+          this.price[1] = product.precio;
+          this.range.max = parseInt(product.precio);
+          maxTMP = product.precio;
         }
-      })
+      });
     },
     search(value) {
-      this.Searchproduct(value)
+      this.Searchproduct(value);
     },
     currentPage() {
       setTimeout(() => {
-        window.scrollTo(0, 0)
-      }, 250)
+        window.scrollTo(0, 0);
+      }, 250);
+    },
+    value(value) {
+      this.sendCategory(value);
+    },
+    valuesub(value) {
+      this.Sendsubcategory(value);
     }
   },
   computed: {
-    selectedCard () {
-      return this.$store.state.selectedCard
+    selectedCard() {
+      return this.$store.state.selectedCard;
     },
     Fullproducts() {
-      return this.$store.getters['products/filterProducts']
+      return this.$store.getters["products/filterProducts"];
     },
     categorias() {
-      return this.$store.state.categorias
+      return this.$store.state.categorias;
+    },
+    subcategories() {
+      return this.$store.state.subcategorias;
     },
     getProductsCategorie() {
-      const initial = this.currentPage * 40 - 40
-      const final = initial + 40
+      const initial = this.currentPage * 40 - 40;
+      const final = initial + 40;
       return this.Fullproducts.filter(
         product => product.categoria == this.select
-      ).slice(initial, final)
+      ).slice(initial, final);
     },
     filterProduct() {
-      const initial = this.currentPage * 40 - 40
-      const final = initial + 40
-      return this.products.slice(initial, final)
+      const initial = this.currentPage * 40 - 40;
+      const final = initial + 40;
+      return this.products.slice(initial, final);
     },
-    selectedCategory () {
-      return this.$store.state.products.payload
+    selectedCategory() {
+      return this.$store.state.products.payload;
     },
-    selectedType () {
-      return this.$store.state.products.type
+    selectedType() {
+      return this.$store.state.products.type;
     }
   },
   methods: {
     selected(name) {
-      this.addClass()
-      this.$store.dispatch('products/FILTER_BY', {type:'category', data: name.nombre_categoria_producto})
-      this.currentPage = 1
+      // this.addClass();
+      // this.$store.dispatch("products/FILTER_BY", {
+      //   type: "category",
+      //   data: name.nombre_categoria_producto
+      // });
+      // this.currentPage = 1;
     },
     Allcategories() {
-      this.$store.dispatch('products/FILTER_BY', {type:'all', data: ''})
-      this.currentPage = 1
+      this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
+      this.currentPage = 1;
     },
     Searchproduct(search) {
       if (search.length) {
-        this.$store.dispatch('products/FILTER_BY', {type:'search', data: search})
+        this.$store.dispatch("products/FILTER_BY", {
+          type: "search",
+          data: search
+        });
       } else {
-        this.$store.dispatch('products/FILTER_BY', {type:'all', data: ''})
+        this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
       }
-      this.currentPage = 1
+      this.currentPage = 1;
     },
     addClass() {
-      this.add = !this.add
+      this.add = !this.add;
+    },
+    mouseOver(index) {
+      this.sub = index;
+      this.show = true;
+    },
+    mouseLeave() {
+      this.sub = -1;
+      this.show = false;
+    },
+    Sendsubcategory(value) {
+      console.log(value);
+      this.selectSubcategory = value;
+      this.$store.dispatch("products/FILTER_BY", {
+        type: "subcategory",
+        data: value
+      });
+    },
+    sendCategory(value) {
+      this.$store.dispatch("products/FILTER_BY", {
+        type: "category",
+        data: value
+      });
+    },
+    clear() {
+      this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
+      this.$emit("clear");
     }
   }
-}
+};
 </script>
 
 <style scoped>
-@import 'https://unpkg.com/komercia-fuentes@1.0.1/styles.css';
+@import "https://unpkg.com/komercia-fuentes@1.0.1/styles.css";
 .header {
   background-color: var(--main_color);
   color: var(--button_text_color);
@@ -170,7 +280,7 @@ export default {
   text-transform: uppercase;
 }
 .container-grid {
-  margin-top: 120px;
+  margin-top: 60px;
   margin-bottom: 80px;
 }
 .left {
@@ -202,16 +312,33 @@ export default {
 .item-categorie {
   letter-spacing: 1px;
   text-transform: uppercase;
-  padding: 10px 0;
+  padding: 10px 0 10px 5px;
   font-size: 14px;
   line-height: 1.5;
   color: #555;
   font-weight: 400;
   cursor: pointer;
   user-select: none;
+  position: relative;
+}
+.item-subcategorie {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 15px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #555;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+}
+.item-subcategorie:hover {
+  color: #000;
+  background-color: rgba(85, 85, 85, 0.062);
 }
 .item-categorie:hover {
   color: #000;
+  background-color: rgba(85, 85, 85, 0.062);
 }
 .grid-products {
   width: 100%;
@@ -235,7 +362,7 @@ export default {
   justify-content: flex-end;
   grid-row-gap: 5px;
   margin: 20px;
-   /*width: 250px;*/
+  /*width: 250px;*/
 }
 .ko-input input {
   width: 100%;
@@ -281,6 +408,17 @@ export default {
 }
 .pagination-small {
   display: none;
+}
+.popover {
+  width: 300px;
+  background-color: #fff;
+  /* border: 1px solid #eee; */
+  position: absolute;
+  right: -240px;
+  top: 0;
+  z-index: 99;
+  box-sizing: border-box;
+  /* padding: 15px 0; */
 }
 @media (max-width: 1290px) {
   .grid-products {
