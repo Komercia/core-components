@@ -1,14 +1,24 @@
 <template>
   <div class="slider">
     <div class="content-swiper">
-      <swiper :options="swiperOption" ref="mySwiper" @slideChange="activeBtn">
-        <swiper-slide v-for="(item, index) in setting.data.banners" :key="index">
+      <swiper
+        :options="swiperOption"
+        ref="mySwiper"
+        @slideChange="activeBtn"
+      >
+        <swiper-slide
+          v-for="(item, index) in setting.data.banners"
+          :key="index"
+        >
           <router-link
             :to="`/productos/${item.redirect_to.value}`"
             v-if="item.redirect_to.type == 1"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
           <router-link
@@ -16,7 +26,10 @@
             v-if="item.redirect_to.type == 2"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
           <router-link
@@ -24,21 +37,41 @@
             v-if="item.redirect_to.type == 3"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
-          <router-link :to="item.redirect_to.value" v-if="item.redirect_to.type == 4">
+          <router-link
+            :to="item.redirect_to.value"
+            v-if="item.redirect_to.type == 4"
+          >
             <div class="slide">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
-          <a :href="item.redirect_to.value" v-else-if="item.redirect_to.type == 5" :key="index">
+          <a
+            :href="item.redirect_to.value"
+            v-else-if="item.redirect_to.type == 5"
+            :key="index"
+          >
             <div class="slide">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </a>
         </swiper-slide>
-        <div class="pagination" slot="pagination" v-if="setting.data.banners.length > 1">
+        <div
+          class="pagination"
+          slot="pagination"
+          v-if="setting.data.banners.length > 1"
+        >
           <div
             class="btn"
             :class="{selected: index == indexBtn}"
@@ -51,14 +84,24 @@
       </swiper>
     </div>
     <div class="content-swiper-responsive">
-      <swiper :options="swiperOption2" ref="mySwiper2" @slideChange="activeBtn2">
-        <swiper-slide v-for="(item, index) in banners" :key="index">
+      <swiper
+        :options="swiperOption2"
+        ref="mySwiper2"
+        @slideChange="activeBtn2"
+      >
+        <swiper-slide
+          v-for="(item, index) in banners"
+          :key="index"
+        >
           <router-link
             :to="`/productos/${item.redirect_to.value}`"
             v-if="item.redirect_to.type == 1"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
           <router-link
@@ -66,7 +109,10 @@
             v-if="item.redirect_to.type == 2"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
           <router-link
@@ -74,21 +120,41 @@
             v-if="item.redirect_to.type == 3"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
-          <router-link :to="item.redirect_to.value" v-if="item.redirect_to.type == 4">
+          <router-link
+            :to="item.redirect_to.value"
+            v-if="item.redirect_to.type == 4"
+          >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
-          <a :href="item.redirect_to.value" v-else-if="item.redirect_to.type == 5" :key="index">
+          <a
+            :href="item.redirect_to.value"
+            v-else-if="item.redirect_to.type == 5"
+            :key="index"
+          >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo"/>
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </a>
         </swiper-slide>
-        <div class="pagination2" slot="pagination">
+        <div
+          class="pagination2"
+          slot="pagination"
+          v-if="banners.length"
+        >
           <div
             class="btn2"
             :class="{selected: index == indexBtn2}"
