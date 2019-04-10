@@ -1,6 +1,9 @@
 <template>
   <div class="form_list">
-    <el-tabs type="border-card" :stretch="true">
+    <el-tabs
+      type="border-card"
+      :stretch="true"
+    >
       <el-tab-pane label="Banners">
         <div
           class="btn-newbanner"
@@ -13,7 +16,10 @@
           :key="index"
         >
           <div class="row">
-            <i class="el-icon-close" @click="deleteBanner(banner, index)"></i>
+            <i
+              class="el-icon-close"
+              @click="deleteBanner(banner, index)"
+            ></i>
             <!-- <el-button-group>
               <el-button
                 icon="el-icon-delete"
@@ -21,17 +27,32 @@
               ></el-button>
             </el-button-group>-->
             <div class="banner_photo">
-              <image-cloudinary :src="banner.photo"/>
-              <label :for="`banner${index}`" class="upload_hover">
-                <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
-                  <cloud-up/>
+              <image-cloudinary
+                :src="banner.photo"
+                :width="300"
+              />
+              <label
+                :for="`banner${index}`"
+                class="upload_hover"
+              >
+                <icon-base
+                  icon-name="cloud-up"
+                  width="30px"
+                  heigth="30px"
+                  icon-color="#FFF"
+                >
+                  <cloud-up />
                 </icon-base>
                 <p>Subir banner</p>
               </label>
             </div>
-            <input type="file" :id="`banner${index}`" @change="uploadBanner($event, banner)">
+            <input
+              type="file"
+              :id="`banner${index}`"
+              @change="uploadBanner($event, banner)"
+            >
           </div>
-          <RedirectTo v-model="banner.redirect_to"/>
+          <RedirectTo v-model="banner.redirect_to" />
         </section>
         <div class="settingBanner">
           <p class="title">Elige el color del botón:</p>
@@ -54,14 +75,28 @@
           :key="index"
         >
           <div class="row">
-            <i class="el-icon-close" @click="deleteBannerResponsive(banner, index)"></i>
+            <i
+              class="el-icon-close"
+              @click="deleteBannerResponsive(banner, index)"
+            ></i>
             <div class="banner_photo_responsive">
-              <image-cloudinary :src="banner.photo"/>
-              <label :for="`banner_responsive${index}`" class="upload_hover">
-                <icon-base icon-name="cloud-up" width="30px" heigth="30px" icon-color="#FFF">
-                  <cloud-up/>
+              <image-cloudinary
+                :src="banner.photo"
+                :width="300"
+              />
+              <label
+                :for="`banner_responsive${index}`"
+                class="upload_hover"
+              >
+                <icon-base
+                  icon-name="cloud-up"
+                  width="30px"
+                  heigth="30px"
+                  icon-color="#FFF"
+                >
+                  <cloud-up />
                 </icon-base>
-                <p>Subir banner</p>
+                <p>Subir banner 700 x 500</p>
               </label>
             </div>
             <input
@@ -70,7 +105,7 @@
               @change="uploadBannerResponsive($event, banner)"
             >
           </div>
-          <RedirectTo v-model="banner.redirect_to"/>
+          <RedirectTo v-model="banner.redirect_to" />
         </section>
       </el-tab-pane>
     </el-tabs>

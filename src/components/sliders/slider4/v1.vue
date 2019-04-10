@@ -15,7 +15,10 @@
             v-if="item.redirect_to.type == 1"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
           <router-link
@@ -23,7 +26,10 @@
             v-if="item.redirect_to.type == 2"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
           <router-link
@@ -31,7 +37,10 @@
             v-if="item.redirect_to.type == 3"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
           <router-link
@@ -39,7 +48,10 @@
             v-if="item.redirect_to.type == 4"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </router-link>
           <a
@@ -48,7 +60,10 @@
             :key="index"
           >
             <div class="slide">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="1600"
+              />
             </div>
           </a>
         </swiper-slide>
@@ -83,7 +98,10 @@
             v-if="item.redirect_to.type == 1"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
           <router-link
@@ -91,7 +109,10 @@
             v-if="item.redirect_to.type == 2"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
           <router-link
@@ -99,7 +120,10 @@
             v-if="item.redirect_to.type == 3"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
           <router-link
@@ -107,7 +131,10 @@
             v-if="item.redirect_to.type == 4"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </router-link>
           <a
@@ -116,7 +143,10 @@
             :key="index"
           >
             <div class="slide-responsive">
-              <image-cloudinary :src="item.photo" />
+              <image-cloudinary
+                :src="item.photo"
+                :width="600"
+              />
             </div>
           </a>
         </swiper-slide>

@@ -142,7 +142,7 @@ export default {
         max: 0
       },
       currentPage: 1,
-      sub: 0,
+      sub: -1,
       show: false,
       value: "",
       valuesub: "",

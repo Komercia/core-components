@@ -1,16 +1,32 @@
 <template>
   <div class="header">
-    <ko-order1/>
-    <div class="container-nav" v-if="setting">
+    <ko-order1 />
+    <div
+      class="container-nav"
+      v-if="setting"
+    >
       <div class="wrapper-logo">
-        <img class="logo" :src="`https://api2.komercia.co/logos/${info.logo}`" :alt="info.nomre">
+        <img
+          class="logo"
+          :src="`https://api2.komercia.co/logos/${info.logo}`"
+          :alt="info.nomre"
+        >
       </div>
       <div class="wrapper-nav">
         <transition name="downMenu">
-          <nav class="nav" v-show="toggleMenu">
+          <nav
+            class="nav"
+            v-show="toggleMenu"
+          >
             <transition name="downList">
-              <ul class="main-menu-list menu-toggle-list" v-show="toggleMenu">
-                <li v-for="(item, index) in setting.data.tabs" :key="index">
+              <ul
+                class="main-menu-list menu-toggle-list"
+                v-show="toggleMenu"
+              >
+                <li
+                  v-for="(item, index) in setting.data.tabs"
+                  :key="index"
+                >
                   <router-link
                     :to="`/productos/${item.redirect_to.value}`"
                     v-if="item.redirect_to.type == 1"
@@ -56,7 +72,10 @@
             </transition>
           </nav>
         </transition>
-        <div class="wrapper" v-if="userData.id">
+        <div
+          class="wrapper"
+          v-if="userData.id"
+        >
           <div
             class="content-user"
             @mouseover="popoverUser = true"
@@ -68,7 +87,10 @@
               alt
               class="imagen-user"
             >
-            <user-icon v-else class="icon-login"/>
+            <user-icon
+              v-else
+              class="icon-login"
+            />
           </div>
           <!-- @click="toggleMenu" -->
           <transition name="down">
@@ -85,29 +107,58 @@
                     :src="`https://api2.komercia.co/users/${userData.foto}`"
                     class="imagen-user"
                   >
-                  <user-icon v-else class="icon-login-big"/>
+                  <user-icon
+                    v-else
+                    class="icon-login-big"
+                  />
                 </div>
                 <div class="left">
                   <p>{{userData.nombre}}</p>
                   <p>{{userData.email}}</p>
                 </div>
               </div>
-              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
+              <el-button
+                class="btn-logout"
+                type="info"
+                @click="logout"
+                plain
+              >Salir</el-button>
             </div>
           </transition>
         </div>
-        <div class="wrapper-user" v-else>
-          <i class="icon-user-circle" @click="mouseOver"></i>
+        <div
+          class="wrapper-user"
+          v-else
+        >
+          <i
+            class="icon-user-circle"
+            @click="mouseOver"
+          ></i>
           <transition name="down">
-            <div class="popover" v-if="popover">
-              <login v-show="popover" @authenticated="fadeOf"/>
+            <div
+              class="popover"
+              v-if="popover"
+            >
+              <login
+                v-show="popover"
+                @authenticated="fadeOf"
+              />
             </div>
           </transition>
         </div>
-        <el-badge :value="productsCart" class="item">
-          <i class="icon-shopping-basket" @click="openOrder"></i>
+        <el-badge
+          :value="productsCart"
+          class="item"
+        >
+          <i
+            class="icon-shopping-basket"
+            @click="openOrder"
+          ></i>
         </el-badge>
-        <div class="content-icon-menu" @click="toggleMenuAction">
+        <div
+          class="content-icon-menu"
+          @click="toggleMenuAction"
+        >
           <i class="icon-menu"></i>
         </div>
       </div>
@@ -406,7 +457,7 @@ export default {
     position: absolute;
     top: 76px;
     left: 0;
-    height: 200px;
+    max-height: 900px;
     width: 100%;
     z-index: 99999999999;
     background-color: #fff;
@@ -418,7 +469,7 @@ export default {
 } */
   .downMenu-enter-active {
     transition: all 0.6s;
-    height: 200px;
+    max-height: 900px;
     z-index: 99999999999;
   }
   .downMenu-leave-active {
