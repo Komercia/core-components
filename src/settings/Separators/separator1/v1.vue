@@ -24,6 +24,38 @@
         </template>
       </el-input>
     </div>
+    <div class="input-area">
+      <p class="title">Espaciado de arriba:</p>
+      <el-input-number
+        v-model="settingData.styleObject.top"
+        :min="0"
+        :max="100"
+        :step="10"
+      ></el-input-number>
+    </div>
+    <div class="input-area">
+      <p class="title">Espaciado de abajo:</p>
+      <el-input-number
+        v-model="settingData.styleObject.bottom"
+        :min="0"
+        :max="100"
+        :step="10"
+      ></el-input-number>
+    </div>
+    <div class="block">
+      <p class="title">Elige el color del Título:</p>
+      <el-color-picker
+        v-model="settingData.styleObject.titleColor"
+        @active-change="handleTitleColor"
+      ></el-color-picker>
+    </div>
+    <div class="block">
+      <p class="title">Elige el color de la descripción:</p>
+      <el-color-picker
+        v-model="settingData.styleObject.descriptionColor"
+        @active-change="handleDescriptionColor"
+      ></el-color-picker>
+    </div>
     <div class="settingBanner_actions">
       <!-- <el-button @click="updateBanner(banner)">Guardar</el-button> -->
     </div>
@@ -42,6 +74,14 @@ export default {
   computed: {
     settingData() {
       return this.$store.state.settingData;
+    }
+  },
+  methods: {
+    handleTitleColor(color) {
+      this.settingData.styleObject.titleColor = color;
+    },
+    handleDescriptionColor(color) {
+      this.settingData.styleObject.descriptionColor = color;
     }
   }
 };
@@ -77,13 +117,16 @@ export default {
   overflow: auto;
 }
 .settingBanner {
-  padding: 20px 0;
+  padding: 20px;
+
+  box-sizing: border-box;
+  background-color: #fff;
 }
 .input-area {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 5px 0;
+  margin: 5px 0 20px;
 }
 .input-area p {
   margin-bottom: 5px;
@@ -102,5 +145,8 @@ export default {
   color: #909399;
   margin-top: 10px;
   font-size: 14px;
+}
+.title {
+  margin-bottom: 10px;
 }
 </style>
