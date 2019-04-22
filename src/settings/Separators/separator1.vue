@@ -1,15 +1,22 @@
 <template>
   <div class="settingBanner">
     <div class="input-area">
-      <el-input placeholder="Titulo" v-model="settingData.title">
+      <el-input
+        placeholder="Titulo"
+        v-model="settingData.title"
+      >
         <template slot="prepend">
           <icon-base icon-name="text">
-            <icon-text /></icon-base>
+            <icon-text />
+          </icon-base>
         </template>
       </el-input>
     </div>
     <div class="input-area">
-      <el-input placeholder="Descripción" v-model="settingData.description">
+      <el-input
+        placeholder="Descripción"
+        v-model="settingData.description"
+      >
         <template slot="prepend">
           <icon-base icon-name="align-justify">
             <align-justify />

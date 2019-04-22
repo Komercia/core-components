@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 const Testing = () => import('@/Views/Testing')
 const Stage = () => import('@/Views/Stage')
+const Form = () => import('@/Views/Form')
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/testing',
       name: 'Testing',
       component: Testing
+    },
+    {
+      path: '/form',
+      name: 'Form',
+      component: Form
     }
   ]
 })

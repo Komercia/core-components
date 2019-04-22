@@ -63,6 +63,7 @@ const components = [
   Slider11,
   Slider1v3,
   Separator,
+  Separator1V1,
   Grid1,
   Grid2,
   ProductList1,
