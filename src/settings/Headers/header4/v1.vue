@@ -2,35 +2,19 @@
   <div class="header">
     <draggable v-model="settingData.data.tabs">
       <transition-group name="list-complete">
-        <div
-          class="tab"
-          v-for="(item, index) in settingData.data.tabs"
-          :key="index"
-        >
+        <div class="tab" v-for="(item, index) in settingData.data.tabs" :key="index">
           <div class="row">
-            <el-input
-              placeholder="Titulo"
-              v-model="item.name"
-            ></el-input>
+            <el-input placeholder="Titulo" v-model="item.name"></el-input>
             <el-button-group>
-              <el-button
-                icon="el-icon-delete"
-                @click="removeBrand(index)"
-              ></el-button>
+              <el-button icon="el-icon-delete" @click="removeBrand(index)"></el-button>
               <el-button icon="el-icon-rank"></el-button>
             </el-button-group>
           </div>
-          <RedirectTo v-model="item.redirect_to" />
+          <RedirectTo v-model="item.redirect_to"/>
         </div>
       </transition-group>
     </draggable>
-    <div
-      v-if="show"
-      class="btn-newtab"
-      @click="createTab()"
-    >
-      Nuevo Link
-    </div>
+    <div v-if="show" class="btn-newtab" @click="createTab()">Nuevo Link</div>
   </div>
 </template>
 
@@ -39,7 +23,7 @@ import RedirectTo from "../../_components/RedirectTo";
 import draggable from "vuedraggable";
 import { mapState } from "vuex";
 export default {
-  name: "koHeaderSetting4",
+  name: "koHeaderSetting4_v1",
   components: { RedirectTo, draggable },
   data() {
     return {

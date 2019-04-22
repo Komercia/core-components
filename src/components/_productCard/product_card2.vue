@@ -1,7 +1,7 @@
 <template>
   <router-link :to="`/productos/${data.slug}`" class="card product-card">
     <div class="img-product">
-      <image-cloudinary :src="data.foto_cloudinary" width="300"/>
+      <image-cloudinary :src="data.foto_cloudinary" :width="300"/>
     </div>
     <div class="description-product">
       <p class="name-product">{{data.nombre.slice(0,25).toLowerCase()}}</p>
