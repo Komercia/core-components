@@ -21,6 +21,7 @@ const components = [
   SliderSetting4,
   SliderSetting5,
   SeparatorSetting1,
+  SeparatorSetting1V1,
   ContentSetting1,
   koContent2Setting,
   VideoSetting1,
