@@ -22,9 +22,7 @@ import Meta from 'vue-meta';
 import VueCarousel from 'vue-carousel';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
-import test from '../../test.js';
 
-test();
 Vue.prototype.$firebase = firebase;
 
 Vue.component('icon-base', IconBase);
