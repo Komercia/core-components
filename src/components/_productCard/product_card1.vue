@@ -1,7 +1,7 @@
 <template>
   <router-link :to="`/productos/${data.slug}`" class="container-product">
     <div class="img-grid-item">
-      <image-cloudinary :src="data.foto_cloudinary" width="300"/>
+      <image-cloudinary :src="data.foto_cloudinary" :width="300"/>
     </div>
     <div class="grid-item-description">
       <div class="price">{{data.precio | currency}}</div>
