@@ -266,7 +266,7 @@ export default {
   justify-content: center;
   box-sizing: border-box;
   margin-top: 40px;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 }
 .container {
   width: 100%;
