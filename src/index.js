@@ -23,6 +23,7 @@ import Slider11 from './components/sliders/slider1/v2';
 import Slider1v3 from './components/sliders/slider1/v3';
 import Slider5v1 from './components/sliders/slider5/v1';
 import Separator from './components/separators/separator1';
+import Separator1V1 from './components/separators/separator1/v1';
 import Grid1 from './components/grids/grid1';
 import Grid2 from './components/grids/grid2';
 import ProductList1 from './components/product_lists/product_list1';

@@ -12,6 +12,7 @@ import GridSetting2 from './Grids/grid2';
 import HeaderSetting1 from './Headers/thomas/v1';
 import HeaderSetting2 from './Headers/header6/v1';
 import HeaderSetting4v1 from './Headers/header4/v1';
+import SeparatorSetting1V1 from './Separators/separator1/v1';
 
 const components = [
   SliderSetting1,
