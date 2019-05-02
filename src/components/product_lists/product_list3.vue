@@ -1,21 +1,13 @@
 <template>
   <div class="product-list">
-    <div class="header">
-      {{ selectedType == 'category' ? selectedCategory : 'productos' }}
-    </div>
+    <div class="header">{{ selectedType == 'category' ? selectedCategory : 'productos' }}</div>
     <div class="container-grid">
       <div class="products">
-        <div
-          class="left"
-          :class="{ 'left-categories': true, hidden: add}"
-        >
+        <div class="left" :class="{ 'left-categories': true, hidden: add}">
           <div class="categories">
             <h3 class="title-categories">Categorias</h3>
             <ul class="list-categories">
-              <li
-                class="item-categorie"
-                @click="clear"
-              >
+              <li class="item-categorie" @click="clear">
                 <span>Todos los Productos</span>
               </li>
               <li
@@ -26,11 +18,10 @@
                 v-for="(categoria, index) in categorias"
                 :key="categoria.id"
               >
-                <p @click="sendCategory(categoria.nombre_categoria_producto)">{{categoria.nombre_categoria_producto}}</p>
-                <div
-                  :class="{ popover: sub == index}"
-                  v-if="sub == index"
-                >
+                <p
+                  @click="sendCategory(categoria.nombre_categoria_producto)"
+                >{{categoria.nombre_categoria_producto}}</p>
+                <div :class="{ popover: sub == index}" v-if="sub == index">
                   <ul>
                     <li
                       class="item-subcategorie"
@@ -39,8 +30,8 @@
                       @click="Sendsubcategory(subcategory.id)"
                       :key="subcategory.id"
                     >
-
-                      <span>{{subcategory.nombre_subcategoria}}</span></li>
+                      <span>{{subcategory.nombre_subcategoria}}</span>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -50,11 +41,7 @@
         <div class="right">
           <!-- input -->
           <div class="ko-input">
-            <input
-              v-model="search"
-              type="email"
-              placeholder="Buscar"
-            >
+            <input v-model="search" type="email" placeholder="Buscar">
             <i class="icon-search"></i>
           </div>
           <!-- end input -->
@@ -65,33 +52,25 @@
                 v-for="product in filterProduct"
                 :key="product.id"
                 :data="product"
-              >
-              </div>
+              ></div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="pagination-medium">
-      <div
-        class="product_pagination"
-        v-if="products.length > 40"
-      >
+      <div class="product_pagination" v-if="products.length > 40">
         <el-pagination
           layout="prev, pager, next"
           :total="products.length"
           :page-size="40"
           :current-page.sync="currentPage"
           class="pagination"
-        >
-        </el-pagination>
+        ></el-pagination>
       </div>
     </div>
     <div class="pagination-small">
-      <div
-        class="product_pagination"
-        v-if="products.length > 40"
-      >
+      <div class="product_pagination" v-if="products.length > 40">
         <el-pagination
           layout="prev, pager, next"
           :total="products.length"
@@ -99,14 +78,10 @@
           :current-page.sync="currentPage"
           class="pagination"
           :small="true"
-        >
-        </el-pagination>
+        ></el-pagination>
       </div>
     </div>
-    <div
-      class="btn-categories"
-      @click="addClass()"
-    >
+    <div class="btn-categories" @click="addClass()">
       <i class="icon-filter"></i>
     </div>
   </div>
@@ -305,6 +280,7 @@ export default {
   text-transform: uppercase;
   padding: 30px 0;
   border-bottom: 1px solid rgba(218, 218, 218, 0.644);
+  color: var(--text_color);
 }
 .list-categories {
   margin-top: 20px;
@@ -315,7 +291,7 @@ export default {
   padding: 10px 0 10px 5px;
   font-size: 14px;
   line-height: 1.5;
-  color: #555;
+  color: var(--text_color);
   font-weight: 400;
   cursor: pointer;
   user-select: none;
@@ -336,8 +312,9 @@ export default {
   color: #000;
   background-color: rgba(85, 85, 85, 0.062);
 }
-.item-categorie:hover {
-  color: #000;
+.item-categorie:hover p {
+  color: var(--text_color);
+  opacity: 0.5;
   background-color: rgba(85, 85, 85, 0.062);
 }
 .grid-products {

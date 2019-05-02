@@ -16,7 +16,7 @@
           <li v-if="mediospago.payco == 1">
             <h4>• Pasarela de pagos epayco</h4>
             <p>Paga con tu tarjeta hasta 24 cuotas o en efectivo en mas de 14.000 puntos en todo el país</p>
-            <img src="../../assets/logospasarela.png" alt="">
+            <img src="../../assets/logospasarela.png" alt>
           </li>
           <li v-if="mediospago.contraentrega == 1">
             <h4>• Pago contra entrega</h4>
@@ -50,9 +50,9 @@
 </template>
 
 <script>
-import koPay from '../../Icons/pay'
-import koDelivery from '../../Icons/Delivery'
-import koRelated from '../_components/related-products'
+import koPay from "../../Icons/pay";
+import koDelivery from "../../Icons/Delivery";
+import koRelated from "../_components/related-products";
 export default {
   components: { koPay, koDelivery, koRelated },
   props: {
@@ -62,21 +62,21 @@ export default {
   data() {
     return {
       // custom: [[710, 3], [1200, 4]]
-    }
+    };
   },
   computed: {
     mediospago() {
-      return this.$store.state.mediospago
+      return this.$store.state.mediospago;
     },
     activeClass() {
-      if (this.data.info.descripcion == '') {
-        return true
+      if (this.data.info.descripcion == "") {
+        return true;
       } else {
-        return false
+        return false;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -87,7 +87,7 @@ export default {
   border-top: 1px solid #eee;
 }
 .description div {
-  color: #555;
+  color: var(--text_color);
   line-height: 1.5;
 }
 .left {
@@ -103,11 +103,11 @@ export default {
   text-transform: uppercase;
   /* font-weight: 400; */
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text_color);
   font-size: 18px;
 }
 .title-section {
-  color: #333;
+  color: var(--text_color);
   font-size: 16px;
   text-transform: uppercase;
   align-self: flex-start;
@@ -124,7 +124,7 @@ export default {
 h4 {
   margin-top: 15px;
   font-weight: 300;
-  color: #333;
+  color: var(--text_color);
   margin-bottom: 5px;
 }
 li p {

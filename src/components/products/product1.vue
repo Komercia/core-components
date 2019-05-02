@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="product"
-    v-if="data.detalle"
-  >
+  <div class="product" v-if="data.detalle">
     <ko-modal v-show="modalPayment"></ko-modal>
     <div class="wrapper">
       <div class="section">
@@ -32,11 +29,7 @@
               v-show="!existYoutube"
               :photo="selectPhotoUrl"
             ></zoomed>
-            <img
-              :src="selectPhotoUrl"
-              v-else
-              class="photo_main_placeholder"
-            >
+            <img :src="selectPhotoUrl" v-else class="photo_main_placeholder">
             <iframe
               v-show="existYoutube"
               width="400"
@@ -57,69 +50,39 @@
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
           <div class="content_buy_price">
-            <h3
-              class="colorTexto"
-              v-show="salesData.precio"
-            >${{ salesData.precio | currency }}</h3>
-            <p
-              class="colorTexto"
-              v-show="salesData.precio"
-            >COP</p>
+            <h3 class="colorTexto" v-show="salesData.precio">${{ salesData.precio | currency }}</h3>
+            <p class="colorTexto" v-show="salesData.precio">COP</p>
           </div>
           <p>
             <strong>{{ data.info.marca }}</strong>
           </p>
           <!-- <p>{{beforeCombination}}</p> -->
           <div class="content_variant">
-            <div
-              class="content_variant_item"
-              v-for="(variant, index) in data.variantes"
-            >
+            <div class="content_variant_item" v-for="(variant, index) in data.variantes">
               <label>{{ variant.nombre }}:</label>
-              <ko-radio-group
-                :options="variant.valores"
-                :index="index"
-              ></ko-radio-group>
+              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
           <div :class="{content_buy: true, disabled: !salesData.estado}">
-            <button
-              type="button"
-              name="button"
-            >No esta disponible</button>
+            <button type="button" name="button">No esta disponible</button>
             <div>
-              <div
-                class="quantity"
-                v-show="!spent"
-              >
+              <div class="quantity" v-show="!spent">
                 <em>Cantidad:</em>
-                <button
-                  class="quantity_remove"
-                  v-on:click="removeQuantity()"
-                >
+                <button class="quantity_remove" v-on:click="removeQuantity()">
                   <i class="material-icons">remove</i>
                 </button>
                 <p class="quantity_value">{{ quantityValue }}</p>
-                <button
-                  class="quantity_add"
-                  v-on:click="addQuantity()"
-                >
+                <button class="quantity_add" v-on:click="addQuantity()">
                   <i class="material-icons">add</i>
                 </button>
                 <!-- <p class="quantity_available" v-if="evalStock(maxQuantityValue, quantityValue)">{{ maxQuantityValue - quantityValue }} disponibles</p> -->
               </div>
               <div class="content_buy_action">
-                <button
-                  v-if="spent"
-                  class="spent"
-                >
+                <button v-if="spent" class="spent">
                   Producto agotado
                   <i class="material-icons">add_shopping_cart</i>
                 </button>
-                <button
-                  v-else
-                  v-on:click="addShoppingCart"
-                >
+                <button v-else v-on:click="addShoppingCart">
                   Agregar
                   <i class="material-icons">add_shopping_cart</i>
                 </button>
@@ -129,10 +92,7 @@
         </div>
       </div>
       <div class="section">
-        <div
-          class="content_desc"
-          v-if="data.info.descripcion && data.info.descripcion.length > 12"
-        >
+        <div class="content_desc" v-if="data.info.descripcion && data.info.descripcion.length > 12">
           <h3>Descripción del producto</h3>
           <div v-html="data.info.descripcion"></div>
         </div>
@@ -145,16 +105,10 @@
             <div class="features_item_info">
               <h3>Pagos online</h3>
               <p>Contamos con diferentes medios de pago para que realices tus compras por internet</p>
-              <button
-                v-show="existPayments"
-                v-on:click="togglePayment"
-              >VER MEDIOS DE PAGOS</button>
+              <button v-show="existPayments" v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
             </div>
           </div>
-          <div
-            class="features_item"
-            v-show="envios.estado"
-          >
+          <div class="features_item" v-show="envios.estado">
             <img
               src="http://res.cloudinary.com/komercia-store/image/upload/v1536696043/komercia/mensajero.png"
               alt
@@ -424,7 +378,7 @@ export default {
         this.validVideo = true;
         let id = url.match(myregexp);
         if (id) {
-          return id[1];
+          this.idYoutube = id[1];
         }
       }
     },

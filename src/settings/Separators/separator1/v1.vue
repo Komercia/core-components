@@ -1,46 +1,30 @@
 <template>
   <div class="settingBanner">
     <div class="input-area">
-      <el-input
-        placeholder="Titulo"
-        v-model="settingData.title"
-      >
+      <el-input placeholder="Titulo" v-model="settingData.title">
         <template slot="prepend">
           <icon-base icon-name="text">
-            <icon-text />
+            <icon-text/>
           </icon-base>
         </template>
       </el-input>
     </div>
     <div class="input-area">
-      <el-input
-        placeholder="Descripción"
-        v-model="settingData.description"
-      >
+      <el-input placeholder="Descripción" v-model="settingData.description">
         <template slot="prepend">
           <icon-base icon-name="align-justify">
-            <align-justify />
+            <align-justify/>
           </icon-base>
         </template>
       </el-input>
     </div>
     <div class="input-area">
       <p class="title">Espaciado de arriba:</p>
-      <el-input-number
-        v-model="settingData.styleObject.top"
-        :min="0"
-        :max="100"
-        :step="10"
-      ></el-input-number>
+      <el-input-number v-model="settingData.styleObject.top" :min="0" :max="100" :step="10"></el-input-number>
     </div>
     <div class="input-area">
       <p class="title">Espaciado de abajo:</p>
-      <el-input-number
-        v-model="settingData.styleObject.bottom"
-        :min="0"
-        :max="100"
-        :step="10"
-      ></el-input-number>
+      <el-input-number v-model="settingData.styleObject.bottom" :min="0" :max="100" :step="10"></el-input-number>
     </div>
     <div class="block">
       <p class="title">Elige el color del Título:</p>
@@ -63,10 +47,10 @@
 </template>
 
 <script>
-import AngleLeft from "@/Icons/AngleLeft.vue";
-import IconText from "@/Icons/Text.vue";
-import AlignJustify from "@/Icons/AlignJustify.vue";
-import IconLinks from "@/Icons/Links.vue";
+import AngleLeft from "../../../Icons/AngleLeft.vue";
+import IconText from "../../../Icons/Text.vue";
+import AlignJustify from "../../../Icons/AlignJustify.vue";
+import IconLinks from "../../../Icons/Links.vue";
 
 export default {
   name: "koSeparatorSetting1_v1",

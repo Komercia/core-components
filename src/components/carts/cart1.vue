@@ -43,9 +43,7 @@
           <p>Total:</p>
           <p>{{ (totalCart + shipping) | currency }}</p>
         </span>
-        <button class="cart-action" @click="next">
-          CONTINUAR AL PAGO
-        </button>
+        <button class="cart-action" @click="next">CONTINUAR AL PAGO</button>
       </div>
     </div>
   </div>
@@ -53,74 +51,74 @@
 
 <script>
 export default {
-  name: 'koCart1',
+  name: "koCart1",
   computed: {
     products() {
-      return this.$store.state.productsCart || []
+      return this.$store.state.productsCart || [];
     },
     totalCart() {
-      return this.$store.state.totalCart
+      return this.$store.state.totalCart;
     },
     orderComponent() {
-      return this.$store.state.orderComponent
+      return this.$store.state.orderComponent;
     },
     shipping() {
-      let shipping = this.$store.state.envios.valores
+      let shipping = this.$store.state.envios.valores;
       switch (shipping.envio_metodo) {
-        case 'gratis':
-          return 0
-          break
-        case 'tarifa_plana':
-          return shipping.valor
-          break
-        case 'precio':
+        case "gratis":
+          return 0;
+          break;
+        case "tarifa_plana":
+          return shipping.valor;
+          break;
+        case "precio":
           let result = shipping.rangos.filter(rango => {
             if (
               this.totalCart >= rango.inicial &&
               this.totalCart <= rango.final
             ) {
-              return rango
+              return rango;
             }
-          })[0]
-          return result.precio
-          break
+          })[0];
+          return result.precio;
+          break;
         default:
       }
     }
   },
   methods: {
     show() {
-      this.$store.commit('UPDATE_CONTENTCART')
-      this.$store.commit('CALCULATE_TOTALCART')
+      this.$store.commit("UPDATE_CONTENTCART");
+      this.$store.commit("CALCULATE_TOTALCART");
     },
     addQuantity(product, index) {
       if (product.limitQuantity > product.cantidad) {
-        product.cantidad += 1
-        this.products.splice(index, 1, product)
-        this.$store.commit('UPDATE_CONTENTCART')
+        product.cantidad += 1;
+        this.products.splice(index, 1, product);
+        this.$store.commit("UPDATE_CONTENTCART");
       }
     },
     removeQuantity(product, index) {
       if (this.products[index].cantidad >= 2) {
-        product.cantidad -= 1
-        this.products.splice(index, 1, product)
-        this.$store.commit('UPDATE_CONTENTCART')
+        product.cantidad -= 1;
+        this.products.splice(index, 1, product);
+        this.$store.commit("UPDATE_CONTENTCART");
       }
     },
     setFoto(product) {
       if (product.placeholder) {
-        return require(`../../assets/${product.foto}`)
+        return require(`../../assets/${product.foto}`);
       } else {
-        return product.foto_cloudinary
+        return product.foto_cloudinary;
       }
     },
     deleteItemCart(i) {
-      this.$store.state.productsCart.splice(i, 1)
-      this.$store.commit('UPDATE_CONTENTCART')
+      this.$store.state.productsCart.splice(i, 1);
+      this.$store.commit("UPDATE_CONTENTCART");
     },
     backPage(e) {
-      if (e.target.id == 'order' || e.target.id == 'closeOrder') {
-        this.$store.state.orderComponent = false
+      if (e.target.id == "order" || e.target.id == "closeOrder") {
+        this.$store.state.orderComponent = false;
       }
     },
     next() {
@@ -138,21 +136,21 @@ export default {
         total: this.$store.state.totalCart,
         estado: 0,
         direccion_entrega: 1
-      }
-      json = JSON.stringify(json)
+      };
+      json = JSON.stringify(json);
       if (this.$store.state.productsCart.length != 0) {
-        location.href = `https://checkout.komercia.co/?params=${json}`
+        location.href = `https://checkout.komercia.co/?params=${json}`;
       }
     }
   },
   filters: {
     currency(value) {
       if (value) {
-        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
+        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -219,22 +217,22 @@ export default {
 }
 .item_info_name {
   font-weight: 600;
-  color: var(--text_color);
+  color: #333;
 }
 .item_info_price {
-  color: var(--text_color);
+  color: #333;
 }
 .item_info_quantity {
   display: flex;
   align-items: center;
-  color: var(--text_color);
+  color: #333;
 }
 .item_info_quantity input {
   width: 40px;
   margin-left: 10px;
   text-align: center;
 }
-.item_info_quantity input[type='number'] {
+.item_info_quantity input[type="number"] {
   -moz-appearance: textfield;
 }
 .item_info_quantity input::-webkit-outer-spin-button,
@@ -242,7 +240,7 @@ export default {
   -webkit-appearance: none;
 }
 .item_info_variant {
-  color: var(--text_color);
+  color: #333;
 }
 .item_info_combinations {
   display: flex;
@@ -257,7 +255,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  color: var(--text_color);
+  color: #333;
 }
 .products_item_right .delete {
   text-decoration: underline;
@@ -265,7 +263,7 @@ export default {
   text-align: right;
   font-weight: 600;
   cursor: pointer;
-  color: var(--text_color);
+  color: #333;
 }
 .cart_summary {
   border: 1px solid rgba(0, 0, 0, 0.0975);
@@ -279,13 +277,13 @@ export default {
 }
 .cart_summary header h2 {
   font-weight: 600;
-  color: var(--text_color);
+  color: #333;
 }
 .cart_summary_body {
   display: grid;
   justify-content: center;
   padding: 10px 40px;
-  color: var(--text_color);
+  color: #333;
 }
 .cart_summary_body hr {
   width: 100%;
@@ -299,7 +297,7 @@ export default {
 }
 .cart_summary_body > span p:nth-child(2) {
   font-weight: 600;
-  color: var(--text_color);
+  color: #333;
 }
 .cart-action {
   margin: 15px 0;

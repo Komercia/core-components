@@ -3,26 +3,37 @@
     <h3 class="title">Productos relacionados</h3>
     <div class="grid-products">
       <!-- <div is="ko-product-card2" :data="product" v-for="product in productsData.slice(0,5)" :key="product.id"></div> -->
-      <carousel ref="carousel" :spacePadding="0" :autoplay="autoplay" :paginationEnabled="paginationEnabled" :scrollPerPage="scrollPerPage" :perPageCustom="custom">
-        <slide @click.native="redirecToStore(product.id)" v-for="product in productsData.slice(0,10)" :key="product.id">
-          <div class="card" is="ko-product-card2" :data="product">
-
-          </div>
+      <carousel
+        ref="carousel"
+        :spacePadding="0"
+        :autoplay="autoplay"
+        :paginationEnabled="paginationEnabled"
+        :scrollPerPage="scrollPerPage"
+        :perPageCustom="custom"
+      >
+        <slide
+          @click.native="redirecToStore(product.id)"
+          v-for="product in productsData.slice(0,10)"
+          :key="product.id"
+        >
+          <div class="card" is="ko-product-card2" :data="product"></div>
         </slide>
       </carousel>
       <div class="container-arrows">
         <a class="left link-arrow" @click.prevent="prevSlide" v-show="currentPage">
-          <left-arrow class="icon-arrow" /> </a>
+          <left-arrow class="icon-arrow"/>
+        </a>
         <a class="right link-arrow" @click.prevent="nextSlide" v-show="maxPage">
-          <right-arrow class="icon-arrow" /> </a>
+          <right-arrow class="icon-arrow"/>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import leftArrow from '../../Icons/left-arrow'
-import rightArrow from '../../Icons/right-arrow'
+import leftArrow from "../../Icons/left-arrow";
+import rightArrow from "../../Icons/right-arrow";
 export default {
   components: {
     leftArrow,
@@ -46,7 +57,7 @@ export default {
       currentPage: 0,
       maxPage: true,
       loading: true
-    }
+    };
   },
   computed: {
     productsData() {
@@ -55,36 +66,36 @@ export default {
           product.categoria ==
             this.data.detalle.categoria_producto.nombre_categoria_producto &&
           product.id !== this.data.detalle.id
-      )
+      );
     }
   },
   methods: {
     nextSlide() {
-      this.$refs.carousel.goToPage(this.$refs.carousel.getNextPage())
-      this.handleSlide()
-      console.log(this.$refs.carousel)
+      this.$refs.carousel.goToPage(this.$refs.carousel.getNextPage());
+      this.handleSlide();
+      console.log(this.$refs.carousel);
     },
     prevSlide() {
-      this.$refs.carousel.goToPage(this.$refs.carousel.getPreviousPage())
-      this.handleSlide()
-      console.log(this.$refs.carousel)
+      this.$refs.carousel.goToPage(this.$refs.carousel.getPreviousPage());
+      this.handleSlide();
+      console.log(this.$refs.carousel);
     },
     handleSlide() {
-      this.currentPage = this.$refs.carousel.currentPage
-      this.widthPage()
+      this.currentPage = this.$refs.carousel.currentPage;
+      this.widthPage();
     },
     widthPage() {
       if (this.currentPage == this.$refs.carousel.pageCount - 1) {
-        this.maxPage = false
+        this.maxPage = false;
       } else {
-        this.maxPage = true
+        this.maxPage = true;
       }
     },
     redirecToStore(id) {
-      this.$router.push(`/producto/${id}`)
+      this.$router.push(`/producto/${id}`);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -97,6 +108,7 @@ export default {
   font-weight: 300;
   text-transform: uppercase;
   margin-bottom: 20px;
+  color: var(--text_color);
 }
 .grid-products {
   position: relative;
@@ -139,11 +151,11 @@ export default {
   box-shadow: none;
 }
 .icon-arrow {
-  fill: var(--button_color);
+  fill: var(--text_color);
   transition: all 0.6s ease 0s;
 }
 .link-arrow:hover .icon-arrow {
-  fill: var(--background_color);
+  fill: var(--text_color);
 }
 .grid-products:hover .container-arrows {
   opacity: 1;

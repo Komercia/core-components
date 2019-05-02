@@ -240,6 +240,7 @@ a.effect_text {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 40px;
 }
 a.effect_text .text {
   content: attr(data-title);

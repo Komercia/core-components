@@ -303,6 +303,7 @@ header {
   box-sizing: border-box;
   padding: 0px 16px;
   margin: 0 10px;
+  color: #333;
 }
 .form input,
 .form textarea {
@@ -370,9 +371,12 @@ header {
   font-size: 15px;
   color: #656565;
 }
+.section-contact{
+  color: var(--text_color);
+}
 .info {
   background-color: var(--main_color);
-  color: var(--background_color);
+  color: var(--text_color);
   box-sizing: border-box;
   padding: 45px;
   max-width: 350px;
@@ -465,7 +469,10 @@ label {
   line-height: 1.5;
 }
 .text-secundary {
-  color: #656565;
+  color: var(--text_color);
+}
+.form .text-secundary{
+  color: #333;
 }
 .row {
   display: flex;
@@ -543,7 +550,7 @@ a > i {
 .whatsapp {
   fill: #27d367;
   width: 40px;
-  background: #fff;
+  background: var(--background_color);
 }
 @media (max-width: 1260px) {
   .contacto_content {
