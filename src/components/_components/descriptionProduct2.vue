@@ -88,7 +88,7 @@
         >
           <h4 class="capitalize">{{envios.valores.envio_metodo.replace('_', ' ')}}</h4>
           <p class="description-method">El costo del envío es el mismo sin importar el lugar de entrega</p>
-          <p class="price">Precio: {{envios.valores.valor | currency}}</p>
+          <p class="price">Precio: {{envios.valores.valor | currency}} COP</p>
         </div>
         <div
           v-if="envios.valores.envio_metodo === 'precio'"
