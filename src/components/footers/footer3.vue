@@ -6,25 +6,40 @@
           <li>
             <p class="title">Contacto</p>
           </li>
-          <li class="item-col1" v-if="info[0].direccion">
-            <p v-for="(item, index) in info" :key="index">
+          <li
+            class="item-col1"
+            v-if="info[0].direccion"
+          >
+            <p
+              v-for="(item, index) in info"
+              :key="index"
+            >
               <span>Dirección:</span>
               {{item.direccion}}
             </p>
           </li>
-          <li class="item-col1" v-if="storeData.telefono">
+          <li
+            class="item-col1"
+            v-if="storeData.telefono"
+          >
             <p>
               <span>Teléfonos:</span>
               {{storeData.telefono}}
             </p>
           </li>
-          <li class="item-col1" v-if="storeData.email_tienda">
+          <li
+            class="item-col1"
+            v-if="storeData.email_tienda"
+          >
             <p>
               <span>Email:</span>
               {{storeData.email_tienda}}
             </p>
           </li>
-          <li class="item-col1" v-if="info[0].horario">
+          <li
+            class="item-col1"
+            v-if="info[0].horario"
+          >
             <p>
               <span>Horario:</span>
               {{info[0].horario}}
@@ -43,7 +58,10 @@
             class="navigation-item"
             v-show="activeRoute(item)"
           >
-            <router-link :to="item.route" class="navigation-link">{{item.name}}</router-link>
+            <router-link
+              :to="item.route"
+              class="navigation-link"
+            >{{item.name}}</router-link>
           </li>
         </ul>
       </div>
@@ -52,21 +70,33 @@
           <li>
             <p class="title">Siguenos</p>
           </li>
-          <li v-show="storeData.red_facebook !== ''">
-            <i class="icon-facebook-official"/>
-            <a :href="storeData.red_facebook" target="_blank">Facebook</a>
+          <li v-if="storeData.red_facebook">
+            <i class="icon-facebook-official" />
+            <a
+              :href="storeData.red_facebook"
+              target="_blank"
+            >Facebook</a>
           </li>
-          <li v-show="storeData.red_instagram !== ''">
-            <i class="icon-instagram"/>
-            <a :href="storeData.red_instagram" target="_blank">Instagram</a>
+          <li v-if="storeData.red_instagram">
+            <i class="icon-instagram" />
+            <a
+              :href="storeData.red_instagram"
+              target="_blank"
+            >Instagram</a>
           </li>
-          <li v-show="storeData.red_twitter !== ''">
-            <i class="icon-twitter"/>
-            <a :href="storeData.red_twitter" target="_blank">Twitter</a>
+          <li v-if="storeData.red_twitter">
+            <i class="icon-twitter" />
+            <a
+              :href="storeData.red_twitter"
+              target="_blank"
+            >Twitter</a>
           </li>
-          <li v-show="storeData.red_youtube !== ''">
-            <i class="icon-youtube"/>
-            <a :href="storeData.red_youtube" target="_blank">Youtube</a>
+          <li v-if="storeData.red_youtube">
+            <i class="icon-youtube" />
+            <a
+              :href="storeData.red_youtube"
+              target="_blank"
+            >Youtube</a>
           </li>
         </ul>
       </div>
@@ -86,15 +116,24 @@
                 v-model="email"
                 @keyup.enter="toSubscribe"
               >
-              <i class="icon-paper-plane-2" @click="toSubscribe"></i>
+              <i
+                class="icon-paper-plane-2"
+                @click="toSubscribe"
+              ></i>
               <transition name="slide-fade">
-                <span class="response" v-show="toSubscribeResponse">Ya estas suscrito!</span>
+                <span
+                  class="response"
+                  v-show="toSubscribeResponse"
+                >Ya estas suscrito!</span>
               </transition>
             </div>
           </li>
           <li>
             <p>Copyright © {{new Date().getFullYear()}} by komercia. All Rights Reserved.</p>
-            <a class="link-komercia" href="http://komercia.co">Powered by Komercia</a>
+            <a
+              class="link-komercia"
+              href="http://komercia.co"
+            >Powered by Komercia</a>
           </li>
         </ul>
       </div>
