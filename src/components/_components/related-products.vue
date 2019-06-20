@@ -2,7 +2,6 @@
   <div class="related">
     <h3 class="title">Productos relacionados</h3>
     <div class="grid-products">
-      <!-- <div is="ko-product-card2" :data="product" v-for="product in productsData.slice(0,5)" :key="product.id"></div> -->
       <carousel
         ref="carousel"
         :spacePadding="0"
@@ -12,19 +11,31 @@
         :perPageCustom="custom"
       >
         <slide
-          @click.native="redirecToStore(product.id)"
+          @click.native="redirecToStore(product.slug)"
           v-for="product in productsData.slice(0,10)"
           :key="product.id"
         >
-          <div class="card" is="ko-product-card2" :data="product"></div>
+          <div
+            class="card"
+            is="ko-product-card2"
+            :data="product"
+          ></div>
         </slide>
       </carousel>
       <div class="container-arrows">
-        <a class="left link-arrow" @click.prevent="prevSlide" v-show="currentPage">
-          <left-arrow class="icon-arrow"/>
+        <a
+          class="left link-arrow"
+          @click.prevent="prevSlide"
+          v-show="currentPage"
+        >
+          <left-arrow class="icon-arrow" />
         </a>
-        <a class="right link-arrow" @click.prevent="nextSlide" v-show="maxPage">
-          <right-arrow class="icon-arrow"/>
+        <a
+          class="right link-arrow"
+          @click.prevent="nextSlide"
+          v-show="maxPage"
+        >
+          <right-arrow class="icon-arrow" />
         </a>
       </div>
     </div>
@@ -73,12 +84,10 @@ export default {
     nextSlide() {
       this.$refs.carousel.goToPage(this.$refs.carousel.getNextPage());
       this.handleSlide();
-      console.log(this.$refs.carousel);
     },
     prevSlide() {
       this.$refs.carousel.goToPage(this.$refs.carousel.getPreviousPage());
       this.handleSlide();
-      console.log(this.$refs.carousel);
     },
     handleSlide() {
       this.currentPage = this.$refs.carousel.currentPage;
@@ -91,8 +100,8 @@ export default {
         this.maxPage = true;
       }
     },
-    redirecToStore(id) {
-      this.$router.push(`/producto/${id}`);
+    redirecToStore(slug) {
+      this.$router.push(`/productos/${slug}`);
     }
   }
 };

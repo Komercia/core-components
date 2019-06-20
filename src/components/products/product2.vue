@@ -187,7 +187,10 @@
               ></ko-radio-group>
             </div>
           </div>
-          <div class="warranty item-product">
+          <div
+            v-if="data.info.garantia"
+            class="warranty item-product"
+          >
             <p class="name-item">Garantía:</p>
             <span>{{ data.info.garantia | toLowerCase }}</span>
           </div>
@@ -272,7 +275,10 @@
         :data="data"
         :envio="envio"
       ></ko-description>
-      <ko-related :data="data" />
+      <ko-related
+        v-if="category.length"
+        :data="data"
+      />
     </div>
   </div>
 </template>
@@ -438,6 +444,14 @@ export default {
     },
     whatsapp() {
       return this.$store.state.whatsapp;
+    },
+    category() {
+      return this.productsData.filter(
+        product =>
+          product.categoria ==
+            this.data.detalle.categoria_producto.nombre_categoria_producto &&
+          product.id !== this.data.detalle.id
+      );
     }
   },
   methods: {
