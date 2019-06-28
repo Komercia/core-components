@@ -5,23 +5,26 @@
       class="container-nav"
       v-if="setting"
     >
-      <div class="wrapper-logo">
+      <router-link
+        to="/"
+        class="wrapper-logo"
+      >
         <img
           class="logo"
           :src="`https://api2.komercia.co/logos/${info.logo}`"
           :alt="info.nomre"
         >
-      </div>
+      </router-link>
       <div class="wrapper-nav">
         <transition name="downMenu">
           <nav
             class="nav"
-            v-show="toggleMenu"
+            :class="toggleMenu ? 'ocultar' : ''"
           >
             <transition name="downList">
               <ul
                 class="main-menu-list menu-toggle-list"
-                v-show="toggleMenu"
+                :class="toggleMenu ? 'ocultar' : ''"
               >
                 <li
                   v-for="(item, index) in setting.data.tabs"
@@ -185,7 +188,7 @@ export default {
     return {
       popover: false,
       popoverUser: false,
-      toggleMenu: true
+      toggleMenu: false
     };
   },
   computed: {
@@ -436,8 +439,8 @@ export default {
     opacity: 1;
   }
   .main-menu-list li {
-    width: calc(100% - 80px);
-    border-bottom: 1px solid #aaa;
+    width: calc(100% - 40px);
+    border-bottom: 1px solid rgb(228, 228, 228);
     padding-left: 0;
     padding-bottom: 15px;
   }
@@ -454,6 +457,7 @@ export default {
     color: #fff;
   }
   .nav {
+    display: none;
     position: absolute;
     top: 76px;
     left: 0;
@@ -462,6 +466,8 @@ export default {
     z-index: 99999999999;
     background-color: #fff;
     opacity: 1;
+    box-sizing: border-box;
+    padding: 40px 20px 40px 40px;
   }
   /* .fade-enter-active,
 .fade-leave-active {
@@ -480,6 +486,12 @@ export default {
   .downMenu-enter {
     z-index: 1;
     height: 0;
+  }
+  .ocultar {
+    display: initial;
+  }
+  ul > li:first-child {
+    border-top: 1px solid rgb(228, 228, 228);
   }
   /* .downList-enter-active {
     transition: all 0.1s;

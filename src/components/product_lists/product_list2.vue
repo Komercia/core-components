@@ -3,12 +3,24 @@
     <div class="filter_column g-card">
       <koSearcher @searcher="Searchproduct" />
       <div class="lateral">
-        <koCategories @selectionSubcategory="selectedSubCategory" @selectionCategory="selectedCategory" @clear="Allcategories" />
+        <koCategories
+          @selectionSubcategory="selectedSubCategory"
+          @selectionCategory="selectedCategory"
+          @clear="Allcategories"
+        />
       </div>
-      <div class="price_range" v-if="range.max">
+      <div
+        class="price_range"
+        v-if="range.max"
+      >
         <h4>Filtro por precio</h4>
         <p>Elija un rango de precios para buscar</p>
-        <el-slider v-model="price" range :step="50" :max="range.max">
+        <el-slider
+          v-model="price"
+          range
+          :step="50"
+          :max="range.max"
+        >
         </el-slider>
         <div class="price_range_label">
           <p>Precio:
@@ -18,19 +30,42 @@
         </div>
       </div>
       <el-select v-model="HigherOrLower">
-        <el-option label="Mayor precio" value="higher">
+        <el-option
+          label="Mayor precio"
+          value="higher"
+        >
         </el-option>
-        <el-option label="Menor precio" value="lower">
+        <el-option
+          label="Menor precio"
+          value="lower"
+        >
         </el-option>
       </el-select>
     </div>
     <div class="products">
-      <div class="product_list_wrapper" v-if="products.length">
+      <div
+        class="product_list_wrapper"
+        v-if="products.length"
+      >
         <div class="products_list">
-          <div :is="selectedCard" v-for="product in filterProduct" :key="product.id" :data="product"></div>
+          <div
+            :is="selectedCard"
+            v-for="product in filterProduct"
+            :key="product.id"
+            :data="product"
+          ></div>
         </div>
-        <div class="product_pagination" v-if="products.length > 40">
-          <el-pagination background layout="prev, pager, next" :page-size="40" :total="products.length" :current-page.sync="currentPage">
+        <div
+          class="product_pagination"
+          v-if="products.length > 40"
+        >
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :page-size="40"
+            :total="products.length"
+            :current-page.sync="currentPage"
+          >
           </el-pagination>
         </div>
       </div>
@@ -39,25 +74,25 @@
 </template>
 
 <script>
-import koCategories from '../_categories/categories_1'
-import koSearcher from '../_components/searcher'
+import koCategories from "../_categories/categories_1";
+import koSearcher from "../_components/searcher";
 export default {
-  name: 'koProductList2',
+  name: "koProductList2",
   components: { koCategories, koSearcher },
-  created () {
-    this.$store.dispatch('products/SET_FILTER', this.$route.query)
+  created() {
+    this.$store.dispatch("products/SET_FILTER", this.$route.query);
   },
-  mounted () {
-    if (this.$store.getters['products/filterProducts']) {
-      this.products = this.$store.getters['products/filterProducts']
-      let maxTMP = 0
+  mounted() {
+    if (this.$store.getters["products/filterProducts"]) {
+      this.products = this.$store.getters["products/filterProducts"];
+      let maxTMP = 0;
       this.products.forEach(product => {
         if (maxTMP <= product.precio) {
-          this.price[1] = product.precio
-          this.range.max = parseInt(product.precio)
-          maxTMP = product.precio
+          this.price[1] = product.precio;
+          this.range.max = parseInt(product.precio);
+          maxTMP = product.precio;
         }
-      })
+      });
     }
   },
   data() {
@@ -68,62 +103,62 @@ export default {
         max: 0
       },
       currentPage: 1,
-      HigherOrLower: ''
-    }
+      HigherOrLower: ""
+    };
   },
   watch: {
     Fullproducts(value) {
-      this.products = value
-      let maxTMP = 0
+      this.products = value;
+      let maxTMP = 0;
       value.forEach(product => {
         if (maxTMP <= product.precio) {
-          this.price[1] = product.precio
-          this.range.max = parseInt(product.precio)
-          maxTMP = product.precio
+          this.price[1] = product.precio;
+          this.range.max = parseInt(product.precio);
+          maxTMP = product.precio;
         }
-      })
+      });
     },
     currentPage() {
       setTimeout(() => {
-        window.scrollTo(0, 0)
-      }, 250)
+        window.scrollTo(0, 0);
+      }, 250);
     },
     HigherOrLower(value) {
-      if (value === 'higher') {
-        this.products = this.Fullproducts.sort((a, b) => b.precio - a.precio)
+      if (value === "higher") {
+        this.products = this.Fullproducts.sort((a, b) => b.precio - a.precio);
       } else {
-        this.products = this.Fullproducts.sort((a, b) => a.precio - b.precio)
+        this.products = this.Fullproducts.sort((a, b) => a.precio - b.precio);
       }
     },
     price() {
-      this.filterRange()
+      this.filterRange();
     }
   },
   computed: {
-    selectedCard () {
-      return this.$store.state.selectedCard
+    selectedCard() {
+      return this.$store.state.selectedCard;
     },
     Fullproducts() {
-      return this.$store.getters['products/filterProducts']
+      return this.$store.getters["products/filterProducts"];
     },
     filterProduct() {
-      const initial = this.currentPage * 40 - 40
-      const final = initial + 40
-      return this.products.slice(initial, final)
+      const initial = this.currentPage * 40 - 40;
+      const final = initial + 40;
+      return this.products.slice(initial, final);
     }
   },
   methods: {
     Allcategories() {
-      this.currentPage = 1
+      this.currentPage = 1;
     },
     Searchproduct(search) {
-      this.currentPage = 1
+      this.currentPage = 1;
     },
-    selectedCategory (value) {
-      this.currentPage = 1
+    selectedCategory(value) {
+      this.currentPage = 1;
     },
     selectedSubCategory(value) {
-      this.currentPage = 1
+      this.currentPage = 1;
     },
     filterRange() {
       this.products = this.Fullproducts.filter(producto => {
@@ -131,20 +166,20 @@ export default {
           producto.precio >= this.price[0] &&
           producto.precio <= this.price[1]
         ) {
-          return producto
+          return producto;
         }
-      })
+      });
     }
   },
   filters: {
     currency(value) {
       if (value) {
-        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
+        return `$${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
       }
-      return '$0'
+      return "$0";
     }
   }
-}
+};
 </script>
 <style scoped>
 .product_list {

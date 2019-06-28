@@ -1,17 +1,27 @@
 <template>
   <transition name="fade">
-    <div class="order" @click="closeOrder" v-show="openOrder">
+    <div
+      class="order"
+      @click="closeOrder"
+      v-show="openOrder"
+    >
       <div class="order_content">
         <div class="order_header">
           <h3>Tu Orden</h3>
-          <button @click="closeOrder" class="order_header_close">Cerrar</button>
+          <button
+            @click="closeOrder"
+            class="order_header_close"
+          >Cerrar</button>
         </div>
         <transition name="slide">
           <template v-if="layoutLogin">
             <div class="order--wrapper">
               <div class="order_products">
                 <ul class="order_products_list">
-                  <li class="order_products_list_item" v-for="(product, index) in productsCart">
+                  <li
+                    class="order_products_list_item"
+                    v-for="(product, index) in productsCart"
+                  >
                     <div class="photo">
                       <img :src="product.foto_cloudinary">
                     </div>
@@ -23,7 +33,10 @@
                     <div>
                       <p>{{ (product.precio * product.cantidad) | currency }}</p>
                     </div>
-                    <i class="material-icons delete" v-on:click="deleteItemCart(index)">clear</i>
+                    <i
+                      class="material-icons delete"
+                      v-on:click="deleteItemCart(index)"
+                    >clear</i>
                   </li>
                 </ul>
               </div>
@@ -48,19 +61,32 @@
                   @click="toggleLayout"
                   v-else-if="isQuotation()"
                 >Iniciar sesión</button>
-                <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
+                <button
+                  class="p_button"
+                  @click="GoPayments"
+                  v-else
+                >Finalizar compra</button>
               </template>
               <br>
-              <button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
+              <button
+                class="continue_shopping"
+                @click="closeOrder"
+              >Seguir comprando</button>
             </div>
           </template>
           <template v-else>
             <div class="order__login">
-              <button @click="toggleLayout" class>
+              <button
+                @click="toggleLayout"
+                class
+              >
                 <i class="material-icons">arrow_back</i>
                 <p>Ver Resumen de la orden</p>
               </button>
-              <login style="position: absolute; top: 51px;" @authenticated="toggleLayout"/>
+              <login
+                style="position: absolute; top: 51px;"
+                @authenticated="toggleLayout"
+              />
             </div>
           </template>
         </transition>
@@ -172,7 +198,8 @@ export default {
         estado: 0,
         direccion_entrega: 1,
         metodo_pago: "7",
-        costo_envio: this.shipping
+        costo_envio: this.shipping,
+        usuario: this.userData.id
       };
       const response = await axios.post(
         `https://api2.komercia.co/api/usuario/orden`,
@@ -253,11 +280,16 @@ export default {
 }
 .order_header_close {
   padding: 5px 12px;
-  border-radius: 3px;
   border: 1px solid #333;
+  background-color: #333;
   cursor: pointer;
   outline: none;
   flex: none;
+  color: #fff;
+  transition: all ease 0.3s;
+}
+.order_header_close:hover {
+  background-color: #000;
 }
 .order--wrapper {
   display: grid;
@@ -366,20 +398,17 @@ export default {
 .continue_shopping {
   justify-self: center;
   width: 80%;
-  height: 30px;
+  height: 36px;
   border-style: none;
   background-color: transparent;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
   padding: 0 20px;
-  border: 1px solid black;
-  font-size: 12px;
+  border: 1px solid var(--button_color);
+  font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
   outline: none;
   flex: none;
-  transition: 0.3s;
+  transition: all ease 0.3s;
 }
 .order__login > button {
   display: flex;
@@ -392,7 +421,7 @@ export default {
   font-size: 13px;
   padding: 0;
   z-index: 2;
-  color: #333;
+  color: var(--button_color);
   cursor: pointer;
   outline: none;
 }
@@ -402,9 +431,12 @@ export default {
 .order__login > button i {
   font-size: 16px;
 }
-.p_button:hover,
 .continue_shopping:hover {
-  transform: scale(0.95);
+  background-color: var(--button_color);
+  color: var(--button_text_color);
+}
+.p_button:hover {
+  opacity: 0.9;
 }
 .fade-enter-active,
 .fade-leave-active {

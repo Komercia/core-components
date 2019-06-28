@@ -2,7 +2,13 @@
   <div class="grid-categories">
     <nav>
       <ul class="list-categories">
-        <li class="tab" v-for="(item, index) in setting.data" :key="index" @click="selected(item)" :class="{tab: true, selected: select == item}">
+        <li
+          class="tab"
+          v-for="(item, index) in setting.data"
+          :key="index"
+          @click="selected(item)"
+          :class="{tab: true, selected: select == item}"
+        >
           {{ item }}
         </li>
       </ul>
@@ -13,7 +19,8 @@
         :data="product"
         v-for="(product, index) in productsData.slice(0,5)"
         :key="index"
-        class="card">
+        class="card"
+      >
       </div>
     </div>
     <router-link to="/productos">
@@ -24,61 +31,62 @@
 
 <script>
 export default {
-  name: 'koGrid2',
+  name: "koGrid2",
   props: {
     setting: {
       type: Object,
       default: function() {
         return {
           data: []
-        }
+        };
       }
     }
   },
-  created () {
-    this.select = this.setting.data[0]
+  created() {
+    this.select = this.setting.data[0];
   },
   data() {
     return {
-      select: ''
-    }
+      select: ""
+    };
   },
   computed: {
-    selectedCard () {
-      return this.$store.state.selectedCard
+    selectedCard() {
+      return this.$store.state.selectedCard;
     },
     productsData() {
       return this.$store.state.productsData.filter(
         product => product.categoria == this.select
-      )
+      );
     },
     categories() {
-      return this.$store.state.categorias
+      return this.$store.state.categorias;
     }
   },
   watch: {
-    'setting.data': function (value) {
-      this.select = value[0]
+    "setting.data": function(value) {
+      this.select = value[0];
     }
   },
   methods: {
     selected(name) {
-      this.select = name
+      this.select = name;
     }
   }
-}
+};
 </script>
 
 <style scoped>
 .grid-categories {
   width: 100%;
   height: auto;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 nav {
   max-width: 700px;
   width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 .list-categories {
   height: 100px;
@@ -112,6 +120,9 @@ nav {
   cursor: pointer;
   color: #333;
   margin: 0 auto;
+  flex: 1 0 auto;
+  text-align: center;
+  margin: 0.2rem;
 }
 .selected {
   border: 1px solid #333;
@@ -160,6 +171,9 @@ nav {
   }
 }
 @media (max-width: 620px) {
+  .grid-categories {
+    margin-top: 10px;
+  }
   .tab {
     font-size: 14px;
   }

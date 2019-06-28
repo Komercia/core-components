@@ -1,12 +1,28 @@
 <template>
-  <carousel :perPage="1" :paginationEnabled="true" :autoplay="true" :loop="true" :autoplayTimeout="4000">
-    <slide v-for="(banner, index) in setting.data" :key="index">
+  <carousel
+    :perPage="1"
+    :paginationEnabled="true"
+    :autoplay="true"
+    :loop="true"
+    :autoplayTimeout="4000"
+  >
+    <slide
+      v-for="(banner, index) in setting.data"
+      :key="index"
+    >
       <div :class="`${banner.posicion} slide_content`">
-        <image-cloudinary :src="banner.foto_cloudinary" class="slide_photo" :alt="banner.titulo" />
+        <image-cloudinary
+          :src="banner.foto_cloudinary"
+          class="slide_photo"
+          :alt="banner.titulo"
+        />
         <div class="slide_texts">
           <h1 v-if="banner.titulo">{{ banner.titulo }}</h1>
           <p v-if="banner.descripcion">{{ banner.descripcion }}</p>
-          <a href="" v-if="banner.redireccion">
+          <a
+            href=""
+            v-if="banner.redireccion"
+          >
             <button type="button">Ir a la pagina</button>
           </a>
         </div>
@@ -16,23 +32,23 @@
 </template>
 
 <script>
-import { Carousel, Slide } from 'vue-carousel'
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
-  name: 'koSlider1',
+  name: "koSlider1",
   props: {
     setting: {
       type: Object,
       default: function() {
         return {
-          name: '',
+          name: "",
           data: [
             {
               foto_cloudinary:
-                'https://cdn.shopify.com/s/files/1/0011/8423/5583/files/slideshow1_776d460a-9623-4173-a569-66e3ed4966ef.png?v=1529577793'
+                "https://cdn.shopify.com/s/files/1/0011/8423/5583/files/slideshow1_776d460a-9623-4173-a569-66e3ed4966ef.png?v=1529577793"
             }
           ]
-        }
+        };
       }
     }
   },
@@ -45,10 +61,10 @@ export default {
       swipe: {
         activeIndex: 0
       }
-    }
+    };
   },
   methods: {}
-}
+};
 </script>
 
 <style scoped>
