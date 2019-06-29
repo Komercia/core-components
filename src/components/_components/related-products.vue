@@ -12,12 +12,12 @@
       >
         <slide
           @click.native="redirecToStore(product.slug)"
-          v-for="product in productsData.slice(0,10)"
+          v-for="product in productsData.slice(0,5)"
           :key="product.id"
         >
           <div
             class="card"
-            is="ko-product-card2"
+            :is="selectedCard"
             :data="product"
           ></div>
         </slide>
@@ -54,14 +54,14 @@ export default {
     data: {},
     custom: {
       type: Array,
-      default: [[520, 3], [930, 4], [1200, 4]]
+      default: [[250, 1], [550, 1], [850, 2], [1100, 3], [1200, 4]]
     }
   },
   data() {
     return {
       // URL: 'https://api2.komerci.co/api/front/tienda/364',
       scrollPerPage: true,
-      perPageCustom: [[520, 3], [930, 4], [1200, 4]],
+      perPageCustom: [[250, 1], [550, 1], [1100, 3], [1200, 4]],
       paginationEnabled: false,
       autoplay: false,
       products: [],
@@ -78,6 +78,9 @@ export default {
             this.data.detalle.categoria_producto.nombre_categoria_producto &&
           product.id !== this.data.detalle.id
       );
+    },
+    selectedCard() {
+      return this.$store.state.selectedCard;
     }
   },
   methods: {

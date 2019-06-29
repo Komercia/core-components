@@ -249,13 +249,35 @@ li p {
   margin-top: 10px;
   font-size: 14px;
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+  .description {
+    display: grid;
+  }
+  .right {
+    border-left: 0;
+  }
+  .left {
+    padding: 0;
+  }
+  .left > h3 {
+    margin-top: 15px;
+    text-transform: uppercase;
+  }
+  .left > div > p {
+    line-height: 1.4;
+  }
+  .content {
+    padding: 0;
+  }
   .section {
-    padding: 5px;
+    padding: 0;
+    margin-top: 20px;
   }
   .deliverys {
-    padding: 5px;
+    padding: 0;
   }
+}
+@media (max-width: 600px) {
   .stage {
     flex-wrap: wrap;
   }

@@ -70,7 +70,10 @@
             <div class="section-contact">
               <p class="title-section">Contáctanos</p>
               <div class="row">
-                <div class="item">
+                <div
+                  v-if="storeData.email_tienda && storeData.telefono"
+                  class="item"
+                >
                   <i class="icon-mail-5"></i>
                   <div class="info-item">
                     <p
@@ -89,6 +92,7 @@
                 <div
                   class="item"
                   v-if="geolocalizacion[0] && geolocalizacion[0].horario"
+                  :style="storeData.email_tienda && storeData.telefono ? '': 'padding:0'"
                 >
                   <i class="icon-clock-1-1"></i>
                   <div class="info-item">
@@ -100,6 +104,7 @@
                 <div
                   class="item"
                   v-else
+                  :style="storeData.email_tienda && storeData.telefono ? '': 'padding:0'"
                 >
                   <i class="icon-030-24-hours"></i>
                   <div class="info-item">
@@ -110,7 +115,10 @@
                 </div>
               </div>
               <div class="row">
-                <div class="item">
+                <div
+                  v-if="geolocalizacion[0]"
+                  class="item"
+                >
                   <i class="icon-129-placeholder"></i>
                   <div class="info-item">
                     <p
@@ -440,6 +448,9 @@ header {
 .section-contact {
   color: var(--text_color);
 }
+.section-about {
+  color: var(--text_color);
+}
 .info {
   background-color: var(--main_color);
   color: var(--text_color);
@@ -491,6 +502,7 @@ header {
 }
 .contact {
   display: flex;
+  flex-wrap: wrap;
 }
 .information {
   flex: 1;
@@ -522,6 +534,7 @@ header {
 }
 label {
   font-size: 14px;
+  line-height: 1;
 }
 .content-inputs {
   display: flex;
@@ -625,6 +638,61 @@ a > i {
     grid-row-gap: 20px;
   }
 }
-@media (max-width: 920px) {
+@media (max-width: 850px) {
+  .info {
+    padding: 45px 25px;
+    box-sizing: border-box;
+    height: auto;
+    max-width: 300px;
+  }
+  .description {
+    font-size: 16px;
+  }
+  .address {
+    font-size: 12px;
+    margin: 20px 0;
+  }
+  .section {
+    width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  .info {
+    display: none;
+  }
+  .content-inputs p:first-child {
+    margin-right: 10px;
+  }
+  .form input {
+    margin: 0px 0 10px;
+  }
+  .form textarea {
+    margin: 0px 0 20px;
+  }
+  .section-contact {
+    margin-top: 20px;
+  }
+  .title-section {
+    font-size: 16px;
+    margin: 0 0 20px;
+  }
+  .row i {
+    font-size: 32px;
+  }
+  .row {
+    display: grid;
+    margin: 0;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .row .item:last-child {
+    padding-left: 0px;
+  }
+  .section-about {
+    font-size: 14px;
+  }
+  .information {
+    margin-top: 30px;
+  }
 }
 </style>

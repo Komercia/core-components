@@ -275,10 +275,10 @@
         :data="data"
         :envio="envio"
       ></ko-description>
-      <ko-related
+      <!-- <ko-related
         v-if="category.length"
         :data="data"
-      />
+      /> -->
     </div>
   </div>
 </template>
@@ -1136,6 +1136,7 @@ input[type="text"]:disabled {
     width: 100%;
     height: initial;
     padding-top: 20px;
+    padding-left: 0;
   }
 }
 @media (max-width: 710px) {
@@ -1147,13 +1148,16 @@ input[type="text"]:disabled {
     flex-direction: column;
     align-items: center;
   }
+  .section {
+    /* padding: 10px; */
+  }
   i.close {
     position: absolute;
     top: 10px;
     right: 10px;
   }
   .wrapper {
-    padding: 5px;
+    padding: 15px;
   }
 }
 @media (max-width: 600px) {

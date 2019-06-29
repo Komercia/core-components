@@ -1,13 +1,19 @@
 <template>
   <div class="product-list">
-    <div class="header">{{ selectedType == 'category' ? selectedCategory : 'productos' }}</div>
+    <!-- <div class="header">{{ selectedType == 'category' ? selectedCategory : 'productos' }}</div> -->
     <div class="container-grid">
       <div class="products">
-        <div class="left" :class="{ 'left-categories': true, hidden: add}">
+        <div
+          class="left"
+          :class="{ 'left-categories': true, hidden: add}"
+        >
           <div class="categories">
             <h3 class="title-categories">Categorias</h3>
             <ul class="list-categories">
-              <li class="item-categorie" @click="clear">
+              <li
+                class="item-categorie"
+                @click="clear"
+              >
                 <span>Todos los Productos</span>
               </li>
               <li
@@ -18,10 +24,11 @@
                 v-for="(categoria, index) in categorias"
                 :key="categoria.id"
               >
-                <p
-                  @click="sendCategory(categoria.nombre_categoria_producto)"
-                >{{categoria.nombre_categoria_producto}}</p>
-                <div :class="{ popover: sub == index}" v-if="sub == index">
+                <p @click="sendCategory(categoria.nombre_categoria_producto)">{{categoria.nombre_categoria_producto}}</p>
+                <div
+                  :class="{ popover: sub == index}"
+                  v-if="sub == index"
+                >
                   <ul>
                     <li
                       class="item-subcategorie"
@@ -41,7 +48,11 @@
         <div class="right">
           <!-- input -->
           <div class="ko-input">
-            <input v-model="search" type="email" placeholder="Buscar">
+            <input
+              v-model="search"
+              type="email"
+              placeholder="Buscar"
+            >
             <i class="icon-search"></i>
           </div>
           <!-- end input -->
@@ -59,7 +70,10 @@
       </div>
     </div>
     <div class="pagination-medium">
-      <div class="product_pagination" v-if="products.length > 40">
+      <div
+        class="product_pagination"
+        v-if="products.length > 40"
+      >
         <el-pagination
           layout="prev, pager, next"
           :total="products.length"
@@ -70,7 +84,10 @@
       </div>
     </div>
     <div class="pagination-small">
-      <div class="product_pagination" v-if="products.length > 40">
+      <div
+        class="product_pagination"
+        v-if="products.length > 40"
+      >
         <el-pagination
           layout="prev, pager, next"
           :total="products.length"
@@ -81,7 +98,10 @@
         ></el-pagination>
       </div>
     </div>
-    <div class="btn-categories" @click="addClass()">
+    <div
+      class="btn-categories"
+      @click="addClass()"
+    >
       <i class="icon-filter"></i>
     </div>
   </div>
@@ -219,7 +239,6 @@ export default {
       this.show = false;
     },
     Sendsubcategory(value) {
-      console.log(value);
       this.selectSubcategory = value;
       this.$store.dispatch("products/FILTER_BY", {
         type: "subcategory",
@@ -263,6 +282,8 @@ export default {
   flex: 0.2;
   padding: 0 20px;
   box-sizing: border-box;
+  position: sticky;
+  top: 0;
 }
 .right {
   flex: 1;

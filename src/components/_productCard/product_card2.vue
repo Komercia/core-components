@@ -1,7 +1,13 @@
 <template>
-  <router-link :to="`/productos/${data.slug}`" class="card product-card">
+  <router-link
+    :to="`/productos/${data.slug}`"
+    class="card product-card"
+  >
     <div class="img-product">
-      <image-cloudinary :src="data.foto_cloudinary" :width="300"/>
+      <image-cloudinary
+        :src="data.foto_cloudinary"
+        :width="300"
+      />
     </div>
     <div class="description-product">
       <p class="name-product">{{data.nombre.slice(0,25).toLowerCase()}}</p>
@@ -31,13 +37,16 @@ export default {
 .card {
   background-color: #fff;
   box-sizing: border-box;
-  border: 1px solid var(--button_color);
+  border: 1px solid #eee;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+.card:hover {
+  box-shadow: 0 0 18px 6px rgba(0, 0, 0, 0.082);
+}
 .description-product {
-  background-color: var(--button_color);
+  background-color: rgb(245, 245, 245);
   text-align: left;
 }
 .img-product {
@@ -64,12 +73,7 @@ export default {
   font-size: 15px;
   letter-spacing: 1.5;
   display: inline-block;
-  color: var(--button_text_color);
-}
-.name-product:hover {
-  color: var(--button_text_color);
-  cursor: pointer;
-  opacity: 0.7;
+  color: #333;
 }
 .price {
   margin-left: 20px;
@@ -77,7 +81,7 @@ export default {
   font-weight: 400;
   font-size: 13px;
   letter-spacing: 1.5;
-  color: var(--button_text_color);
+  color: #333;
   padding-bottom: 10px;
 }
 s {
