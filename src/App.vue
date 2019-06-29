@@ -1,9 +1,12 @@
 <template>
-  <div id="app" :class="`container ${selectStyle}`">
+  <div
+    id="app"
+    :class="`container ${selectStyle}`"
+  >
     <!-- <button @click="handle_style('defaultstyle')">Default</button>
     <button @click="handle_style('materialstyle')">Material Design</button>
     <button @click="handle_style('borderstyle')">Borderless</button>-->
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -38,11 +41,11 @@ export default {
   font-family: "Open Sans", sans-serif;
 }
 :root {
-  --main_color: #333;
-  --text_color: #fff;
-  --button_color: #333;
-  --button_text_color: #fff;
-  --background_color: #333;
+  --main_color: rgb(51, 51, 51);
+  --text_color: rgb(255, 255, 255);
+  --button_color: rgb(51, 51, 51);
+  --button_text_color: rgb(255, 255, 255);
+  --background_color: rgb(51, 51, 51);
 }
 #app {
   background-color: var(--background_color);

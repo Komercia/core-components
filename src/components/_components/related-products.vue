@@ -2,7 +2,6 @@
   <div class="related">
     <h3 class="title">Productos relacionados</h3>
     <div class="grid-products">
-      <!-- <div is="ko-product-card2" :data="product" v-for="product in productsData.slice(0,5)" :key="product.id"></div> -->
       <carousel
         ref="carousel"
         :spacePadding="0"
@@ -12,19 +11,31 @@
         :perPageCustom="custom"
       >
         <slide
-          @click.native="redirecToStore(product.id)"
-          v-for="product in productsData.slice(0,10)"
+          @click.native="redirecToStore(product.slug)"
+          v-for="product in productsData.slice(0,5)"
           :key="product.id"
         >
-          <div class="card" is="ko-product-card2" :data="product"></div>
+          <div
+            class="card"
+            :is="selectedCard"
+            :data="product"
+          ></div>
         </slide>
       </carousel>
       <div class="container-arrows">
-        <a class="left link-arrow" @click.prevent="prevSlide" v-show="currentPage">
-          <left-arrow class="icon-arrow"/>
+        <a
+          class="left link-arrow"
+          @click.prevent="prevSlide"
+          v-show="currentPage"
+        >
+          <left-arrow class="icon-arrow" />
         </a>
-        <a class="right link-arrow" @click.prevent="nextSlide" v-show="maxPage">
-          <right-arrow class="icon-arrow"/>
+        <a
+          class="right link-arrow"
+          @click.prevent="nextSlide"
+          v-show="maxPage"
+        >
+          <right-arrow class="icon-arrow" />
         </a>
       </div>
     </div>
@@ -43,14 +54,14 @@ export default {
     data: {},
     custom: {
       type: Array,
-      default: [[520, 3], [930, 4], [1200, 4]]
+      default: [[250, 1], [550, 1], [850, 2], [1100, 3], [1200, 4]]
     }
   },
   data() {
     return {
       // URL: 'https://api2.komerci.co/api/front/tienda/364',
       scrollPerPage: true,
-      perPageCustom: [[520, 3], [930, 4], [1200, 4]],
+      perPageCustom: [[250, 1], [550, 1], [1100, 3], [1200, 4]],
       paginationEnabled: false,
       autoplay: false,
       products: [],
@@ -67,18 +78,19 @@ export default {
             this.data.detalle.categoria_producto.nombre_categoria_producto &&
           product.id !== this.data.detalle.id
       );
+    },
+    selectedCard() {
+      return this.$store.state.selectedCard;
     }
   },
   methods: {
     nextSlide() {
       this.$refs.carousel.goToPage(this.$refs.carousel.getNextPage());
       this.handleSlide();
-      console.log(this.$refs.carousel);
     },
     prevSlide() {
       this.$refs.carousel.goToPage(this.$refs.carousel.getPreviousPage());
       this.handleSlide();
-      console.log(this.$refs.carousel);
     },
     handleSlide() {
       this.currentPage = this.$refs.carousel.currentPage;
@@ -91,8 +103,8 @@ export default {
         this.maxPage = true;
       }
     },
-    redirecToStore(id) {
-      this.$router.push(`/producto/${id}`);
+    redirecToStore(slug) {
+      this.$router.push(`/productos/${slug}`);
     }
   }
 };

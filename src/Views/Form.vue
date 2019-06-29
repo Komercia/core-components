@@ -123,12 +123,6 @@ export default {
     };
   },
   methods: {
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-    },
-    handlePreview(file) {
-      console.log(file);
-    },
     handleExceed(files, fileList) {
       this.$message.warning(
         `El límite es 3, haz seleccionado ${

@@ -1,15 +1,21 @@
 <template>
   <div class="contacto">
     <div class="contacto_content">
-      <div class="maps" v-show="geolocalizacion.length">
+      <div
+        class="maps"
+        v-show="geolocalizacion.length"
+      >
         <div id="map"></div>
         <div class="info">
           <p class="description">Visita nuestra tienda más cercana</p>
           <div class="block">
             <i class="icon-facebook-places"></i>
-            <p class="address" v-if="geolocalizacion[0]">{{geolocalizacion[0].direccion}}</p>
+            <p
+              class="address"
+              v-if="geolocalizacion[0]"
+            >{{geolocalizacion[0].direccion}}</p>
           </div>
-          <p class="invite">Te Esperamos</p>
+          <p class="invite">¿Como llegar?</p>
         </div>
       </div>
       <div class="container-contact">
@@ -19,42 +25,75 @@
             <div class="content-inputs">
               <p class="text-secundary">
                 <label>Nombre</label>
-                <input type="text" v-model="nombre">
+                <input
+                  type="text"
+                  v-model="nombre"
+                >
               </p>
               <p class="text-secundary">
                 <label>Celular</label>
-                <input type="text" v-model="numberphone">
+                <input
+                  type="text"
+                  v-model="numberphone"
+                >
               </p>
             </div>
             <p class="text-secundary">
               <label>Correo</label>
-              <input type="text" v-model="email">
+              <input
+                type="text"
+                v-model="email"
+              >
             </p>
             <p class="text-secundary">
               <label>Comentario</label>
-              <textarea rows="8" v-model="comment"></textarea>
-              <button class="submitContact" v-on:click="submitContact">Enviar</button>
+              <textarea
+                rows="8"
+                v-model="comment"
+              ></textarea>
+              <button
+                class="submitContact"
+                v-on:click="submitContact"
+              >Enviar</button>
             </p>
           </div>
           <div class="information section">
-            <div class="section-about" v-if="storeData.descripcion">
+            <div
+              class="section-about"
+              v-if="storeData.descripcion"
+            >
               <p class="title-section">Información sobre nosotros</p>
-              <p class="description-store text-secundary"><div v-html="storeData.descripcion"></div></p>
+              <p class="description-store text-secundary">
+                <div v-html="storeData.descripcion"></div>
+              </p>
             </div>
             <div class="section-contact">
               <p class="title-section">Contáctanos</p>
               <div class="row">
-                <div class="item">
+                <div
+                  v-if="storeData.email_tienda && storeData.telefono"
+                  class="item"
+                >
                   <i class="icon-mail-5"></i>
                   <div class="info-item">
-                    <p class="text-item text-secundary" v-if="storeData.telefono">
+                    <p
+                      class="text-item text-secundary"
+                      v-if="storeData.telefono"
+                    >
                       <span>Tel:</span> {{storeData.telefono}}</p>
-                    <p class="text-item text-secundary" v-if="storeData.email_tienda">
+                    <p
+                      class="text-item text-secundary"
+                      v-if="storeData.email_tienda"
+                    >
                       <span>Correo:</span> {{storeData.email_tienda}}
                     </p>
                   </div>
                 </div>
-                <div class="item" v-if="geolocalizacion[0] && geolocalizacion[0].horario">
+                <div
+                  class="item"
+                  v-if="geolocalizacion[0] && geolocalizacion[0].horario"
+                  :style="storeData.email_tienda && storeData.telefono ? '': 'padding:0'"
+                >
                   <i class="icon-clock-1-1"></i>
                   <div class="info-item">
                     <p class="text-item text-secundary">
@@ -62,7 +101,11 @@
                     </p>
                   </div>
                 </div>
-                <div class="item" v-else>
+                <div
+                  class="item"
+                  v-else
+                  :style="storeData.email_tienda && storeData.telefono ? '': 'padding:0'"
+                >
                   <i class="icon-030-24-hours"></i>
                   <div class="info-item">
                     <p class="text-item text-secundary">
@@ -72,17 +115,29 @@
                 </div>
               </div>
               <div class="row">
-                <div class="item">
+                <div
+                  v-if="geolocalizacion[0]"
+                  class="item"
+                >
                   <i class="icon-129-placeholder"></i>
                   <div class="info-item">
-                    <p class="text-item text-secundary" v-if="geolocalizacion[0]">
+                    <p
+                      class="text-item text-secundary"
+                      v-if="geolocalizacion[0]"
+                    >
                       <span>Dirección:</span> {{geolocalizacion[0].direccion}}</p>
                     <!-- <p class="text-item text-secundary" v-if="storeData">Correo: {{storeData.email_tienda}}</p> -->
                   </div>
                 </div>
                 <div class="item">
-                  <i class="icon-019-fast-delivery" v-if="envios.estado"></i>
-                  <div class="info-item" v-if="envios.estado">
+                  <i
+                    class="icon-019-fast-delivery"
+                    v-if="envios.estado"
+                  ></i>
+                  <div
+                    class="info-item"
+                    v-if="envios.estado"
+                  >
                     <p class="text-item text-secundary">
                       <span>{{envio.titulo}}:</span>
                     </p>
@@ -94,28 +149,47 @@
             <div class="social">
               <ul class="list-social">
                 <li v-show="storeData.red_facebook">
-                  <a class="color_facebook" :href="storeData.red_facebook" target="_blank">
+                  <a
+                    class="color_facebook"
+                    :href="storeData.red_facebook"
+                    target="_blank"
+                  >
                     <i class="icon-facebook" />
                   </a>
                 </li>
                 <li v-show="storeData.red_instagram">
-                  <a class="color_instagram" :href="storeData.red_instagram" target="_blank">
+                  <a
+                    class="color_instagram"
+                    :href="storeData.red_instagram"
+                    target="_blank"
+                  >
                     <i class="icon-instagram-1" />
                   </a>
                 </li>
                 <li v-show="storeData.red_twitter">
 
-                  <a class="color_twitter" :href="storeData.red_twitter" target="_blank">
+                  <a
+                    class="color_twitter"
+                    :href="storeData.red_twitter"
+                    target="_blank"
+                  >
                     <i class="icon-twitter" />
                   </a>
                 </li>
                 <li v-show="storeData.red_youtube">
-                  <a class="color_youtube" :href="storeData.red_youtube" target="_blank">
+                  <a
+                    class="color_youtube"
+                    :href="storeData.red_youtube"
+                    target="_blank"
+                  >
                     <i class="icon-youtube-play" />
                   </a>
                 </li>
                 <li v-show="storeData.telefono.startsWith('3') && storeData.telefono.length > 8">
-                  <a :href="`https://api.whatsapp.com/send?phone=57${storeData.telefono.replace(/\s/g, '').slice(0,10)}`" target="_blank">
+                  <a
+                    :href="`https://api.whatsapp.com/send?phone=57${storeData.telefono.replace(/\s/g, '').slice(0,10)}`"
+                    target="_blank"
+                  >
                     <ko-whatsapp class="whatsapp" />
                   </a>
                 </li>
@@ -129,53 +203,53 @@
 </template>
 
 <script>
-import axios from 'axios'
-import koWhatsapp from '../../Icons/whatsapp'
+import axios from "axios";
+import koWhatsapp from "../../Icons/whatsapp";
 
 export default {
-  name: 'koContact2',
+  name: "koContact2",
   components: {
     koWhatsapp
   },
   mounted() {
-    this.makeMap()
+    this.makeMap();
     if (Object.keys(this.$store.state.envios).length) {
-      this.setOptionEnvio()
+      this.setOptionEnvio();
     }
   },
   watch: {
     geolocalizacion() {
-      this.makeMap()
+      this.makeMap();
     },
     envios() {
-      this.setOptionEnvio()
+      this.setOptionEnvio();
     }
   },
   data() {
     return {
-      nombre: '',
-      email: '',
-      numberphone: '',
-      comment: '',
+      nombre: "",
+      email: "",
+      numberphone: "",
+      comment: "",
       message: {
-        text: '',
+        text: "",
         open: false
       },
       envio: {
-        titulo: '',
-        desc: ''
+        titulo: "",
+        desc: ""
       }
-    }
+    };
   },
   computed: {
     geolocalizacion() {
-      return this.$store.state.geolocalizacion
+      return this.$store.state.geolocalizacion;
     },
     storeData() {
-      return this.$store.state.tienda
+      return this.$store.state.tienda;
     },
     envios() {
-      return this.$store.state.envios
+      return this.$store.state.envios;
     }
   },
   methods: {
@@ -186,79 +260,79 @@ export default {
         celular: this.numberphone,
         comentario: this.comment,
         tienda: this.$store.state.id
-      }
+      };
       axios
         .post(`https://templates.komercia.co/api/mensaje-contacto`, json)
         .then(response => {
-          this.nombre = ''
-          this.email = ''
-          this.numberphone = ''
-          this.comment = ''
-          this.$store.state.id = ''
-        })
+          this.nombre = "";
+          this.email = "";
+          this.numberphone = "";
+          this.comment = "";
+          this.$store.state.id = "";
+        });
     },
     makeMap() {
-      let place = { latitud: 4.14, longitud: -73.63 }
+      let place = { latitud: 4.14, longitud: -73.63 };
       if (this.geolocalizacion && this.geolocalizacion.length != 0) {
-        place = this.geolocalizacion[0]
+        place = this.geolocalizacion[0];
       }
-      const firstPlace = { lat: place.latitud, lng: place.longitud }
-      const map = new google.maps.Map(document.getElementById('map'), {
+      const firstPlace = { lat: place.latitud, lng: place.longitud };
+      const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 15,
         center: firstPlace
-      })
+      });
       if (this.geolocalizacion) {
         for (const place of this.geolocalizacion) {
           const marker = new google.maps.Marker({
             position: { lat: place.latitud, lng: place.longitud },
             map
-          })
+          });
         }
       }
     },
     setOptionEnvio() {
       if (this.envios.estado) {
         switch (this.envios.valores.envio_metodo) {
-          case 'gratis':
+          case "gratis":
             this.envio = {
-              titulo: 'Envío gratis',
-              desc: 'Disfruta de este obsequio por parte de la tienda.'
-            }
-            break
-          case 'tarifa_plana':
+              titulo: "Envío gratis",
+              desc: "Disfruta de este obsequio por parte de la tienda."
+            };
+            break;
+          case "tarifa_plana":
             this.envio = {
-              titulo: 'Tarifa plana',
-              desc: 'Este costo de envio no varia'
-            }
-            break
-          case 'precio':
+              titulo: "Tarifa plana",
+              desc: "Este costo de envio no varia"
+            };
+            break;
+          case "precio":
             this.envio = {
-              titulo: 'Tarifa por precio',
+              titulo: "Tarifa por precio",
               desc:
-                'Segun la suma del costo de tus productos te cobraran el envio'
-            }
-            break
-          case 'peso':
+                "Segun la suma del costo de tus productos te cobraran el envio"
+            };
+            break;
+          case "peso":
             this.envio = {
-              titulo: 'Tarifa por peso',
-              desc: ''
-            }
-            break
+              titulo: "Tarifa por peso",
+              desc: ""
+            };
+            break;
           default:
         }
       } else {
         this.envio = {
-          titulo: '',
-          desc: ''
-        }
+          titulo: "",
+          desc: ""
+        };
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
-@import 'https://unpkg.com/komercia-fuentes@1.0.5/styles.css';
+@import "https://unpkg.com/komercia-fuentes@1.0.5/styles.css";
 .contacto {
   width: 100%;
   display: flex;
@@ -371,7 +445,10 @@ header {
   font-size: 15px;
   color: #656565;
 }
-.section-contact{
+.section-contact {
+  color: var(--text_color);
+}
+.section-about {
   color: var(--text_color);
 }
 .info {
@@ -425,6 +502,7 @@ header {
 }
 .contact {
   display: flex;
+  flex-wrap: wrap;
 }
 .information {
   flex: 1;
@@ -442,7 +520,7 @@ header {
   margin: 20px 0;
 }
 .title-section::after {
-  content: '';
+  content: "";
   border-bottom: 1px solid #eee;
   width: 150px;
   height: 1px;
@@ -456,6 +534,7 @@ header {
 }
 label {
   font-size: 14px;
+  line-height: 1;
 }
 .content-inputs {
   display: flex;
@@ -471,7 +550,7 @@ label {
 .text-secundary {
   color: var(--text_color);
 }
-.form .text-secundary{
+.form .text-secundary {
   color: #333;
 }
 .row {
@@ -559,6 +638,61 @@ a > i {
     grid-row-gap: 20px;
   }
 }
-@media (max-width: 920px) {
+@media (max-width: 850px) {
+  .info {
+    padding: 45px 25px;
+    box-sizing: border-box;
+    height: auto;
+    max-width: 300px;
+  }
+  .description {
+    font-size: 16px;
+  }
+  .address {
+    font-size: 12px;
+    margin: 20px 0;
+  }
+  .section {
+    width: 100%;
+  }
+}
+@media (max-width: 700px) {
+  .info {
+    display: none;
+  }
+  .content-inputs p:first-child {
+    margin-right: 10px;
+  }
+  .form input {
+    margin: 0px 0 10px;
+  }
+  .form textarea {
+    margin: 0px 0 20px;
+  }
+  .section-contact {
+    margin-top: 20px;
+  }
+  .title-section {
+    font-size: 16px;
+    margin: 0 0 20px;
+  }
+  .row i {
+    font-size: 32px;
+  }
+  .row {
+    display: grid;
+    margin: 0;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .row .item:last-child {
+    padding-left: 0px;
+  }
+  .section-about {
+    font-size: 14px;
+  }
+  .information {
+    margin-top: 30px;
+  }
 }
 </style>

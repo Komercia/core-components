@@ -1,30 +1,78 @@
 <template>
   <div class="settingBanner">
-    <div class="input-area">
-      <el-input placeholder="Titulo" v-model="settingData.title">
-        <template slot="prepend">
-          <icon-base icon-name="text">
-            <icon-text/>
-          </icon-base>
+    <el-collapse accordion>
+      <el-collapse-item name="1">
+        <template slot="title">
+          Texto<i class="header-icon el-icon-information"></i>
         </template>
-      </el-input>
+        <el-input
+          placeholder="Titulo"
+          v-model="settingData.title"
+        >
+          <template slot="prepend">
+            <icon-base icon-name="text">
+              <icon-text />
+            </icon-base>
+          </template>
+        </el-input>
+        <el-input
+          placeholder="Descripción"
+          v-model="settingData.description"
+        >
+          <template slot="prepend">
+            <icon-base icon-name="align-justify">
+              <align-justify />
+            </icon-base>
+          </template>
+        </el-input>
+      </el-collapse-item>
+      <el-collapse-item
+        title="Espaciados"
+        name="2"
+      >
+        <div>Operation feedback: enable the users to clearly perceive their operations by style updates and interactive effects;</div>
+        <div>Visual feedback: reflect current state by updating or rearranging elements of the page.</div>
+      </el-collapse-item>
+      <el-collapse-item
+        title="Color"
+        name="3"
+      >
+        <div>Simplify the process: keep operating process simple and intuitive;</div>
+        <div>Definite and clear: enunciate your intentions clearly so that the users can quickly understand and make decisions;</div>
+        <div>Easy to identify: the interface should be straightforward, which helps the users to identify and frees them from memorizing and recalling.</div>
+      </el-collapse-item>
+      <el-collapse-item
+        title="Controllability"
+        name="4"
+      >
+        <div>Decision making: giving advices about operations is acceptable, but do not make decisions for the users;</div>
+        <div>Controlled consequences: users should be granted the freedom to operate, including canceling, aborting or terminating current operation.</div>
+      </el-collapse-item>
+    </el-collapse>
+
+    <div class="input-area">
+
     </div>
     <div class="input-area">
-      <el-input placeholder="Descripción" v-model="settingData.description">
-        <template slot="prepend">
-          <icon-base icon-name="align-justify">
-            <align-justify/>
-          </icon-base>
-        </template>
-      </el-input>
+
     </div>
     <div class="input-area">
       <p class="title">Espaciado de arriba:</p>
-      <el-input-number v-model="settingData.styleObject.top" :min="0" :max="100" :step="10"></el-input-number>
+      <el-input-number
+        v-model="settingData.styleObject.top"
+        :min="0"
+        :max="100"
+        :step="10"
+      ></el-input-number>
     </div>
     <div class="input-area">
       <p class="title">Espaciado de abajo:</p>
-      <el-input-number v-model="settingData.styleObject.bottom" :min="0" :max="100" :step="10"></el-input-number>
+      <el-input-number
+        v-model="settingData.styleObject.bottom"
+        :min="0"
+        :max="100"
+        :step="10"
+      ></el-input-number>
     </div>
     <div class="block">
       <p class="title">Elige el color del Título:</p>
