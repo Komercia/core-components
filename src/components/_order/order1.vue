@@ -191,8 +191,8 @@ export default {
       this.$store.state.productsCart = [];
       this.$store.commit("UPDATE_CONTENTCART");
       this.$notify.success({
-        title: "Cotización enviada!",
-        message: "Pronto te enviaremos un correo con los precios."
+        title: "Hemos recibido tu cotización!",
+        message: "Pronto te enviaremos la información a tu correo electrónico."
       });
     },
     toggleLayout() {
