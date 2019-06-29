@@ -1,17 +1,11 @@
 <template>
   <div class="description">
-    <div
-      class="left"
-      v-if="!activeClass"
-    >
+    <div class="left" v-if="!activeClass">
       <h3>Descripción</h3>
       <div v-html="data.info.descripcion"></div>
       <!-- <ko-related :data="data" :custom="custom" /> -->
     </div>
-    <div
-      class="right"
-      :class="{'stage': activeClass }"
-    >
+    <div class="right" :class="{'stage': activeClass }">
       <div class="payments section">
         <div class="content">
           <!-- <ko-pay class="icon"></ko-pay> -->
@@ -22,31 +16,23 @@
           <li v-if="mediospago.payco == 1">
             <h4>Pasarela de pagos epayco</h4>
             <p>Paga con tu tarjeta hasta 24 cuotas o en efectivo en mas de 14.000 puntos en todo el país</p>
-            <img
-              src="../../assets/logospasarela.png"
-              alt
-            >
+            <img src="../../assets/logospasarela.png" alt />
           </li>
           <li v-if="mediospago.payu == 1">
             <h4>Pasarela de pagos payu</h4>
             <p>Miles de comercios alrededor del mundo confían en nosotros para recibir pagos online</p>
-            <a
-              href="http://www.payulatam.com/co/"
-              target="_blank"
-            ><img
-                src="https://ecommerce.payulatam.com/logos/PayU_CO.png"
-                alt="PayU"
-                border="0"
-              /></a>
+            <a href="http://www.payulatam.com/co/" target="_blank">
+              <img src="https://ecommerce.payulatam.com/logos/PayU_CO.png" alt="PayU" border="0" />
+            </a>
           </li>
           <li v-if="mediospago.mercado_pago == 1">
             <h4>Pasarela de pagos mercadopago</h4>
             <p>Difiere tu compra hasta 36 cuotas con tarjeta de crédito, más de 90 millones de personas en Latinoamérica lo están usando.</p>
             <img
               class="logo-pasarela"
-              src="../../assets/mercadopago.png"
+              src="http://template.komercia.co/template3/img/mercadopago.png"
               alt="logo mercado pago"
-            >
+            />
           </li>
           <li v-if="mediospago.contraentrega == 1">
             <h4>Pago contra entrega</h4>
@@ -66,41 +52,30 @@
           </li>
         </ul>
       </div>
-      <div
-        class="line"
-        v-if="!activeClass"
-      ></div>
+      <div class="line" v-if="!activeClass"></div>
       <div class="deliverys section">
         <div class="content">
           <!-- <ko-delivery class="icon"></ko-delivery> -->
           <h3 class="title-section">Opciones de Envio</h3>
         </div>
-        <div
-          v-if="envios.valores.envio_metodo === 'precio_ciudad'"
-          class="wrapper-method"
-        >
+        <div v-if="envios.valores.envio_metodo === 'precio_ciudad'" class="wrapper-method">
           <h4 class="capitalize">• {{envios.valores.envio_metodo.replace('_', ' por ')}}</h4>
-          <p class="description-method">El valor del envío se calcula al momento de hacer la compra de acuerdo a la ciudad de entrega</p>
+          <p
+            class="description-method"
+          >El valor del envío se calcula al momento de hacer la compra de acuerdo a la ciudad de entrega</p>
         </div>
-        <div
-          v-if="envios.valores.envio_metodo === 'tarifa_plana'"
-          class="wrapper-method"
-        >
+        <div v-if="envios.valores.envio_metodo === 'tarifa_plana'" class="wrapper-method">
           <h4 class="capitalize">{{envios.valores.envio_metodo.replace('_', ' ')}}</h4>
-          <p class="description-method">El costo del envío es el mismo sin importar el lugar de entrega</p>
+          <p
+            class="description-method"
+          >El costo del envío es el mismo sin importar el lugar de entrega</p>
           <p class="price">Precio: {{envios.valores.valor | currency}} COP</p>
         </div>
-        <div
-          v-if="envios.valores.envio_metodo === 'precio'"
-          class="wrapper-method"
-        >
+        <div v-if="envios.valores.envio_metodo === 'precio'" class="wrapper-method">
           <h4>Precio por Total de Compra</h4>
           <p class="description-method">El valor del envío se calcula de acuerdo al total de compra</p>
         </div>
-        <div
-          v-if="envios.valores.envio_metodo === 'gratis'"
-          class="wrapper-method"
-        >
+        <div v-if="envios.valores.envio_metodo === 'gratis'" class="wrapper-method">
           <h4>Gratis</h4>
           <p class="description-method">El valor del envío no tiene costo</p>
         </div>
