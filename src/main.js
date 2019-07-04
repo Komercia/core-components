@@ -71,6 +71,7 @@ const config = {
     'Access-Control-Allow-Origin': '*'
   }
 };
+store.state.configHttp = config
 Vue.prototype.$configHttp = config;
 if (authData) {
   axios.get('https://api2.komercia.co/api/user', config).then(response => {

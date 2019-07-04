@@ -45,6 +45,7 @@
                 <div class="order_total">
                   <span class="order_total_domicile">
                     <p>Costo domicilio</p>
+
                     <details v-if="rangosByCiudad.envio_metodo === 'precio_ciudad'">
                       <summary>
                         Valor por Ciudad:
@@ -56,7 +57,12 @@
                         ><b>{{shippingCities[index].nombre_ciu === 'Sin especificar' ? 'Resto del país': shippingCities[index].nombre_ciu}}:</b> {{ciudad.price | currency}}</li>
                       </ol>
                     </details>
-                    <p v-else>{{ shipping | currency }}</p>
+                    <p v-else-if="shipping">{{ shipping | currency }}</p>
+                    <p
+                      class="without_shipping_cost"
+                      v-else
+                    >No tiene costo de envió</p>
+
                   </span>
                   <span class="order_total_net">
                     <p>Total a pagar</p>
@@ -124,6 +130,9 @@ export default {
     };
   },
   computed: {
+    configHttp() {
+      return this.$store.state.configHttp;
+    },
     userData() {
       return this.$store.state.userData;
     },
@@ -144,30 +153,34 @@ export default {
     },
 
     shipping() {
-      let shipping = this.$store.state.envios.valores;
-      switch (shipping.envio_metodo) {
-        case "gratis":
-          return 0;
-          break;
-        case "tarifa_plana":
-          return shipping.valor;
-          break;
-        case "precio":
-          let result = shipping.rangos.find(rango => {
-            if (
-              this.totalCart >= rango.inicial &&
-              this.totalCart <= rango.final
-            ) {
-              return rango;
-            }
-          });
-          if (result) {
-            return result.precio;
-          } else {
+      if (this.$store.state.envios.estado) {
+        let shipping = this.$store.state.envios.valores;
+        switch (shipping.envio_metodo) {
+          case "gratis":
             return 0;
-          }
-          break;
-        default:
+            break;
+          case "tarifa_plana":
+            return shipping.valor;
+            break;
+          case "precio":
+            let result = shipping.rangos.find(rango => {
+              if (
+                this.totalCart >= rango.inicial &&
+                this.totalCart <= rango.final
+              ) {
+                return rango;
+              }
+            });
+            if (result) {
+              return result.precio;
+            } else {
+              return 0;
+            }
+            break;
+          default:
+        }
+      } else {
+        return 0;
       }
     }
   },
@@ -231,11 +244,16 @@ export default {
       };
       const response = await axios.post(
         `https://api2.komercia.co/api/usuario/orden`,
-        quotation
+        quotation,
+        this.configHttp
       );
       this.$store.state.openOrder = false;
       this.$store.state.productsCart = [];
       this.$store.commit("UPDATE_CONTENTCART");
+      this.$notify.success({
+        title: "Hemos recibido tu cotización!",
+        message: "Pronto te enviaremos la información a tu correo electrónico."
+      });
     },
     toggleLayout() {
       this.layoutLogin = !this.layoutLogin;
@@ -278,7 +296,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 2;
+  z-index: 3;
 }
 .order_content {
   position: absolute;
@@ -412,6 +430,10 @@ export default {
 .order_total_domicile p {
   font-weight: 300;
   font-size: 14px;
+}
+.without_shipping_cost {
+  color: var(--main_color);
+  font-size: 13px;
 }
 .order_total_net p {
   font-weight: bold;

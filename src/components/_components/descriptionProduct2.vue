@@ -25,7 +25,7 @@
             <img
               src="../../assets/logospasarela.png"
               alt
-            >
+            />
           </li>
           <li v-if="mediospago.payu == 1">
             <h4>Pasarela de pagos payu</h4>
@@ -44,9 +44,9 @@
             <p>Difiere tu compra hasta 36 cuotas con tarjeta de crédito, más de 90 millones de personas en Latinoamérica lo están usando.</p>
             <img
               class="logo-pasarela"
-              src="../../assets/mercadopago.png"
+              src="http://template.komercia.co/template3/img/mercadopago.png"
               alt="logo mercado pago"
-            >
+            />
           </li>
           <li v-if="mediospago.contraentrega == 1">
             <h4>Pago contra entrega</h4>
