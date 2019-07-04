@@ -214,7 +214,7 @@ export default {
       swiperOption: {
         slidesPerView: 1,
         // spaceBetween: 30,
-        mousewheel: true,
+        mousewheel: false,
         // width: "1600",
         pagination: {
           el: ".swiper-pagination",

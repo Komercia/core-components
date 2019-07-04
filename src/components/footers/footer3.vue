@@ -132,7 +132,7 @@
             <p>Copyright © {{new Date().getFullYear()}} by komercia. All Rights Reserved.</p>
             <a
               class="link-komercia"
-              href="http://komercia.co"
+              href="https://komercia.co"
             >Powered by Komercia</a>
           </li>
         </ul>
