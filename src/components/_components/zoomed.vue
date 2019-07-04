@@ -7,7 +7,7 @@
     <image-cloudinary
       :src="photo"
       class="photo_main"
-      :width="500"
+      :width="1000"
     />
   </figure>
 </template>
@@ -31,7 +31,7 @@ export default {
     },
     setBackground(p) {
       return `background-image: url('${this.$ImageCloudinary(p, {
-        width: 700
+        width: 1000
       })}')`;
     }
   }
@@ -54,7 +54,7 @@ figure.zoom {
 }
 figure.zoom img {
   max-width: 100%;
-  max-height: 400px;
+  max-height: 576px;
   background-color: #fff;
   transition: opacity 0.3s;
 }
