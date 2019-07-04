@@ -1,15 +1,30 @@
 <template>
-  <swiper :options="swiperOption" ref="mySwiper">
+  <swiper
+    :options="swiperOption"
+    ref="mySwiper"
+  >
     <!-- slides -->
     <swiper-slide>
-      <image-cloudinary class="photo" :src="setPhoto(photo)"/>
+      <image-cloudinary
+        class="photo"
+        :src="setPhoto(photo)"
+      />
     </swiper-slide>
-    <swiper-slide v-for="photo in photos" :key="photo.id">
-      <img class="photo" :src="setPhoto(photo.foto_cloudinary)">
+    <swiper-slide
+      v-for="photo in photos"
+      :key="photo.id"
+    >
+      <img
+        class="photo"
+        :src="setPhoto(photo.foto_cloudinary)"
+      >
     </swiper-slide>
     <swiper-slide v-if="idYoutube && idYoutube !== ''">
       <div class="youtube">
-        <button class="youtube__action_back" @click="changeSlide()">
+        <button
+          class="youtube__action_back"
+          @click="changeSlide()"
+        >
           <i class="material-icons">keyboard_backspace</i>
         </button>
         <iframe
@@ -22,7 +37,10 @@
       </div>
     </swiper-slide>
     <!-- Optional controls -->
-    <div class="swiper-pagination" slot="pagination"></div>
+    <div
+      class="swiper-pagination"
+      slot="pagination"
+    ></div>
   </swiper>
 </template>
 
@@ -37,7 +55,9 @@ export default {
     return {
       swiperOption: {
         direction: "horizontal",
-        pagination: ".swiper-pagination",
+        pagination: {
+          el: ".swiper-pagination"
+        },
         setWrapperSize: true,
         paginationClickable: true,
         grabCursor: true,

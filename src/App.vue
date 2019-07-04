@@ -56,4 +56,11 @@ export default {
 .jsoneditor {
   height: 300px !important;
 }
+/* estilos de imagen en descripcion del producto en descriptionProduct2 */
+.description .left > div p {
+  width: 100%;
+}
+.description .left > div img {
+  width: calc(100%);
+}
 </style>

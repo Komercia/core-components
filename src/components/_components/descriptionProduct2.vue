@@ -31,7 +31,7 @@
             <h4>Pasarela de pagos payu</h4>
             <p>Miles de comercios alrededor del mundo confían en nosotros para recibir pagos online</p>
             <a
-              href="http://www.payulatam.com/co/"
+              href="https://www.payulatam.com/co/"
               target="_blank"
             ><img
                 src="https://ecommerce.payulatam.com/logos/PayU_CO.png"
