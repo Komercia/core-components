@@ -43,6 +43,7 @@ export default new Vuex.Store({
       nombre: ''
     },
     banners: [],
+    cities: [],
     selectedCard: 'koProductCard1',
     productsData: [
       {
@@ -247,10 +248,15 @@ export default new Vuex.Store({
     },
     GET_PAYMENTS(state) {
       axios
-        .get(`${state.configKomercia.url}/api/bancos`, state.configAxios)
+        .get(`https://api2.komercia.co/api/bancos`, state.configAxios)
         .then(response => {
           state.banksData = response.data.data;
         });
+    },
+    GET_CITIES(state) {
+      axios.get(`https://api2.komercia.co/api/ciudades`).then(response => {
+        state.cities = response.data.data;
+      });
     }
   },
   actions: {
