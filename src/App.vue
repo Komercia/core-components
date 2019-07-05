@@ -43,9 +43,10 @@ export default {
 :root {
   --main_color: rgb(51, 51, 51);
   --text_color: rgb(255, 255, 255);
-  --button_color: rgb(51, 51, 51);
+  --button_color: #333333;
   --button_text_color: rgb(255, 255, 255);
   --background_color: rgb(51, 51, 51);
+  --opacity: #33333320;
 }
 #app {
   background-color: var(--background_color);

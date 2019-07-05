@@ -46,7 +46,7 @@
                   <span class="order_total_domicile">
                     <p>Costo domicilio</p>
 
-                    <details v-if="rangosByCiudad.envio_metodo === 'precio_ciudad'">
+                    <details v-if="rangosByCiudad.envio_metodo === 'precio_ciudad' && shippingCities.length > 0">
                       <summary>
                         Valor por Ciudad:
                       </summary>
@@ -122,6 +122,9 @@ export default {
   components: { login },
   created() {
     this.$store.commit("GET_CITIES");
+    if (this.rangosByCiudad.envio_metodo === "precio_ciudad") {
+      this.filterCities();
+    }
   },
   data() {
     return {
@@ -186,6 +189,9 @@ export default {
   },
   watch: {
     rangosByCiudad() {
+      this.filterCities();
+    },
+    cities() {
       this.filterCities();
     }
   },
@@ -259,7 +265,10 @@ export default {
       this.layoutLogin = !this.layoutLogin;
     },
     filterCities() {
-      if (this.rangosByCiudad.envio_metodo === "precio_ciudad") {
+      if (
+        this.rangosByCiudad.envio_metodo === "precio_ciudad" &&
+        this.cities.length > 0
+      ) {
         this.rangosByCiudad.rangos.forEach((rango, index) => {
           this.cities.filter(city => {
             if (city.id === this.rangosByCiudad.rangos[index].id) {
@@ -491,8 +500,7 @@ export default {
   font-size: 16px;
 }
 .continue_shopping:hover {
-  background-color: var(--button_color);
-  color: var(--button_text_color);
+  background-color: var(--opacity);
 }
 .p_button:hover {
   opacity: 0.9;
