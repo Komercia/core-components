@@ -10,8 +10,7 @@
           allow="autoplay; encrypted-media"
           allowfullscreen
           v-if="setting.type === 'Youtube'"
-        >
-        </iframe>
+        ></iframe>
         <iframe
           :src="`https://player.vimeo.com/video/${setting.url}`"
           width="560"
@@ -21,27 +20,17 @@
           mozallowfullscreen
           allowfullscreen
           v-else
-        >
-        </iframe>
+        ></iframe>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Video from "./index";
 export default {
   name: "koVideo1",
-  props: {
-    setting: {
-      type: Object,
-      default: function() {
-        return {
-          url: "",
-          type: "Youtube"
-        };
-      }
-    }
-  }
+  mixins: [Video]
 };
 </script>
 
