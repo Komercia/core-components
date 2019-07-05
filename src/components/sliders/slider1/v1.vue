@@ -23,7 +23,7 @@
 
 <script>
 import { Carousel, Slide } from "vue-carousel";
-import Sliders from "./index.js";
+import Sliders from "../index.js";
 
 export default {
   name: "koSlider1",
