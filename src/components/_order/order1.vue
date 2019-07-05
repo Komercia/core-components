@@ -21,6 +21,7 @@
                   <li
                     class="order_products_list_item"
                     v-for="(product, index) in productsCart"
+                    :key="index"
                   >
                     <div class="photo">
                       <img :src="product.foto_cloudinary">
@@ -44,8 +45,24 @@
                 <div class="order_total">
                   <span class="order_total_domicile">
                     <p>Costo domicilio</p>
-                    <p v-if="shipping">{{ shipping | currency }}</p>
-                    <p class="without_shipping_cost" v-else>No tiene costo de envió</p>
+
+                    <details v-if="rangosByCiudad.envio_metodo === 'precio_ciudad'">
+                      <summary>
+                        Valor por Ciudad:
+                      </summary>
+                      <ol>
+                        <li
+                          v-for="(ciudad, index) in rangosByCiudad.rangos"
+                          :key="ciudad.id"
+                        ><b>{{shippingCities[index].nombre_ciu === 'Sin especificar' ? 'Resto del país': shippingCities[index].nombre_ciu}}:</b> {{ciudad.price | currency}}</li>
+                      </ol>
+                    </details>
+                    <p v-else-if="shipping">{{ shipping | currency }}</p>
+                    <p
+                      class="without_shipping_cost"
+                      v-else
+                    >No tiene costo de envió</p>
+
                   </span>
                   <span class="order_total_net">
                     <p>Total a pagar</p>
@@ -103,9 +120,13 @@ import login from "../_components/login.vue";
 export default {
   name: "koOrder1",
   components: { login },
+  created() {
+    this.$store.commit("GET_CITIES");
+  },
   data() {
     return {
-      layoutLogin: true
+      layoutLogin: true,
+      shippingCities: []
     };
   },
   computed: {
@@ -124,6 +145,13 @@ export default {
     productsCart() {
       return this.$store.state.productsCart;
     },
+    rangosByCiudad() {
+      return this.$store.state.envios.valores;
+    },
+    cities() {
+      return this.$store.state.cities;
+    },
+
     shipping() {
       if (this.$store.state.envios.estado) {
         let shipping = this.$store.state.envios.valores;
@@ -154,6 +182,11 @@ export default {
       } else {
         return 0;
       }
+    }
+  },
+  watch: {
+    rangosByCiudad() {
+      this.filterCities();
     }
   },
   methods: {
@@ -224,6 +257,17 @@ export default {
     },
     toggleLayout() {
       this.layoutLogin = !this.layoutLogin;
+    },
+    filterCities() {
+      if (this.rangosByCiudad.envio_metodo === "precio_ciudad") {
+        this.rangosByCiudad.rangos.forEach((rango, index) => {
+          this.cities.filter(city => {
+            if (city.id === this.rangosByCiudad.rangos[index].id) {
+              this.shippingCities.push(city);
+            }
+          });
+        });
+      }
     }
   },
   filters: {
@@ -242,7 +286,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .order {
   position: fixed;
   top: 0;
@@ -384,7 +428,8 @@ export default {
   margin: 5px 0;
 }
 .order_total_domicile p {
-  font-weight: lighter;
+  font-weight: 300;
+  font-size: 14px;
 }
 .without_shipping_cost {
   color: var(--main_color);
@@ -400,12 +445,9 @@ export default {
   border-style: none;
   background: var(--button_color);
   display: inline-block;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
   padding: 0 20px;
   color: var(--button_text_color);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: 1px;
   cursor: pointer;
   outline: none;
@@ -443,7 +485,7 @@ export default {
   outline: none;
 }
 .order__login > button:hover {
-  color: #000;
+  color: rgb(0, 0, 0);
 }
 .order__login > button i {
   font-size: 16px;
@@ -469,10 +511,51 @@ export default {
 .slide-leave-active {
   transition: all 0.3s ease;
 }
-.slide-enter, .slide-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
+.slide-enter,
+.slide-leave-to {
   /* transform: translateX(200px); */
   margin-left: 150px;
   opacity: 0;
+}
+details {
+  color: #333;
+  font-size: 13px;
+  align-self: center;
+  flex: 1;
+  margin-left: 30px;
+  summary {
+    outline: none;
+    cursor: pointer;
+    color: rgba(61, 61, 61, 0.847);
+    text-align: right;
+  }
+  ol {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+
+    li {
+      padding: 2px 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+    li:nth-child(even) {
+      background-color: rgba(102, 102, 102, 0.1);
+    }
+  }
+}
+details[open] summary ~ * {
+  animation: sweep 0.5s ease-in-out;
+}
+
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    // margin-left: -10px;
+  }
+  100% {
+    opacity: 1;
+    // margin-left: 0px;
+  }
 }
 </style>

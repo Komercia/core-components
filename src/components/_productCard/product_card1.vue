@@ -6,7 +6,7 @@
     <div class="img-grid-item">
       <image-cloudinary
         :src="data.foto_cloudinary"
-        :width="300"
+        :width="900"
       />
     </div>
     <div class="grid-item-description">
@@ -68,7 +68,7 @@ export default {
 }
 .container-product:hover {
   box-shadow: 0 0 18px 6px rgba(0, 0, 0, 0.112);
-  transform: scale(1.03);
+  transform: translateY(-5px);
 }
 .img-grid-item {
   /* max-width: 250px; */

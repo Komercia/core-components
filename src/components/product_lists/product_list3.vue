@@ -343,7 +343,7 @@ export default {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(4, minmax(250px, 1fr));
-  grid-gap: 20px;
+  grid-gap: 30px;
   padding: 0 20px;
   box-sizing: border-box;
 }

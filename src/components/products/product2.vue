@@ -8,23 +8,47 @@
       <div class="section">
         <div class="photos">
           <div class="photos_selected">
-            <image-cloudinary
-              :src="setMiniPhoto(data.detalle.foto_cloudinary)"
-              v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)"
-              :width="100"
-            />
-            <image-cloudinary
-              :src="setMiniPhoto(foto.foto_cloudinary)"
-              v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)"
-              v-for="foto in data.fotos"
-              :width="100"
-            />
-            <image-cloudinary
-              v-if="idYoutube"
-              :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
-              v-show="idYoutube"
-              v-on:mouseover.native="existYoutube = true"
-            />
+            <swiper
+              :options="swiperOption"
+              ref="mySwiper"
+            >
+              <swiper-slide>
+                <!-- <image-cloudinary
+                  :src="setMiniPhoto(data.detalle.foto_cloudinary)"
+                  :width="300"
+                /> -->
+                <image-cloudinary
+                  :src="setMiniPhoto(data.detalle.foto_cloudinary)"
+                  v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)"
+                  :width="300"
+                />
+              </swiper-slide>
+              <swiper-slide
+                v-for="(foto, index) in data.fotos"
+                :key="index"
+              >
+                <image-cloudinary
+                  :src="setMiniPhoto(foto.foto_cloudinary)"
+                  v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)"
+                  :width="300"
+                />
+                <!-- <image-cloudinary
+                  :src="setMiniPhoto(foto.foto_cloudinary)"
+                  :width="300"
+                /> -->
+              </swiper-slide>
+              <swiper-slide v-if="idYoutube">
+                <image-cloudinary
+                  :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
+                  v-show="idYoutube"
+                  v-on:mouseover.native="existYoutube = true"
+                />
+                <!-- <image-cloudinary
+                  :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
+                  v-show="idYoutube"
+                /> -->
+              </swiper-slide>
+            </swiper>
           </div>
           <div class="photo_main">
             <zoomed
@@ -194,25 +218,6 @@
             <p class="name-item">Garantía:</p>
             <span>{{ data.info.garantia | toLowerCase }}</span>
           </div>
-          <!-- <div class="content_variant">
-            <p class="name-item">Compartir:</p>
-            <social-sharing :url="url" :title="data.detalle.nombre" :description="data.info.descripcion" :quote="data.info.descripcion" :hashtags="`${data.info.marca}, ${data.detalle.categoria_producto.nombre_categoria_producto}, ${data.detalle.subcategoria_producto.nombre_subcategoria}`" inline-template v-cloak>
-              <div>
-                <network network="facebook">
-                  <i class="fa fa-fw fa-facebook"></i>
-                </network>
-                <network network="pinterest">
-                  <i class="fa fa-fw fa-pinterest"></i>
-                </network>
-                <network network="twitter">
-                  <i class="fa fa-fw fa-twitter"></i>
-                </network>
-                <network network="whatsapp">
-                  <i class="fa fa-fw fa-whatsapp"></i>
-                </network>
-              </div>
-            </social-sharing>
-          </div>-->
           <div
             class="item-product"
             :class="{content_buy: true, disabled: !salesData.estado}"
@@ -248,29 +253,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="section">
-        <div class="content_desc" v-if="data.info.descripcion && data.info.descripcion.length > 12">
-          <h3>Descripción del producto</h3>
-          <div v-html="data.info.descripcion"></div>
-        </div>
-        <div class="features">
-          <div class="features_item">
-            <img src="../../assets/cards.png" alt="">
-            <div class="features_item_info">
-              <h3>Pagos online</h3>
-              <p>Contamos con diferentes medios de pago para que realices tus compras por internet </p>
-              <button v-show="existPayments" v-on:click="togglePayment">VER MEDIOS DE PAGOS</button>
-            </div>
-          </div>
-          <div class="features_item" v-show="envios.estado">
-            <img src="../../assets/mensajero.png" alt="">
-            <div class="features_item_info">
-              <h3>{{ envio.titulo }}</h3>
-              <p>{{ envio.desc }}</p>
-            </div>
-          </div>
-        </div>
-      </div>-->
       <ko-description
         :data="data"
         :envio="envio"
@@ -279,6 +261,54 @@
         v-if="category.length"
         :data="data"
       /> -->
+    </div>
+    <div class="purchase">
+      <div class="ko-input">
+        <input
+          type="text"
+          value="1"
+          v-model="quantityValue"
+          :min="1"
+          :max="maxQuantityValue"
+        >
+        <div class="icons-arrows">
+          <i
+            class="el-icon-arrow-up"
+            v-on:click="addQuantity()"
+          ></i>
+          <i
+            class="el-icon-arrow-down"
+            v-on:click="removeQuantity()"
+          ></i>
+        </div>
+        <transition name="slide-fade">
+          <div
+            class="container-alert"
+            v-show="quantityValue == maxQuantityValue"
+          >
+            <span class="alert">
+              última Unidad!
+              <div class="arrow"></div>
+            </span>
+          </div>
+        </transition>
+      </div>
+      <div class="content_buy_action">
+        <button
+          v-if="spent"
+          class="spent"
+        >
+          <i class="icon-shopping-basket"></i>
+          Producto agotado
+        </button>
+        <button
+          v-else
+          v-on:click="addShoppingCart"
+        >
+          <i class="icon-shopping-basket"></i>
+          Añadir al carrito
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -316,6 +346,15 @@ export default {
   },
   data() {
     return {
+      swiperOption: {
+        direction: "vertical",
+        pagination: ".swiper-pagination",
+        setWrapperSize: true,
+        slidesPerView: 4,
+        freeMode: true,
+        paginationClickable: true,
+        grabCursor: true
+      },
       data: {},
       num1: 1,
       selectPhotoUrl: "",
@@ -485,18 +524,12 @@ export default {
     redirectWhatsapp() {
       if (this.mobileCheck()) {
         window.open(
-          `https://wa.me/57${
-            this.whatsapp
-          }/?text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
+          `https://wa.me/57${this.whatsapp}/?text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
           "_blank"
         );
       } else {
         window.open(
-          `https://web.whatsapp.com/send?phone=57${
-            this.whatsapp
-          }&text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información%20de%20este%20producto%20${
-            window.location
-          }`,
+          `https://web.whatsapp.com/send?phone=57${this.whatsapp}&text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información%20de%20este%20producto%20${window.location}`,
           "_blank"
         );
       }
@@ -568,9 +601,7 @@ export default {
           case "tarifa_plana":
             this.envio = {
               titulo: "Tarifa plana",
-              desc: `Compra todo lo que quieras en nuestra tienda, el valor del envio siempre sera el mismo: Valor envio $${
-                this.envios.valores.valor
-              }`
+              desc: `Compra todo lo que quieras en nuestra tienda, el valor del envio siempre sera el mismo: Valor envio $${this.envios.valores.valor}`
             };
             break;
           case "precio":
@@ -687,7 +718,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 /*@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';*/
 .wrapper {
   max-width: 1200px;
@@ -1041,11 +1072,11 @@ i.close {
   padding: 2px 6px;
   cursor: pointer;
   font-size: 12px;
-  color: var(--text_color);
+  color: #333;
   opacity: 0.5;
 }
 .icons-arrows i:hover {
-  color: var(--text_color);
+  color: #333;
   opacity: 1;
 }
 .item-product {
@@ -1066,12 +1097,14 @@ i.close {
   top: -60px;
   right: 0;
   width: 80px;
-  background-color: var(--background_color);
+  background-color: #fff;
   border: 1px solid #eee;
   border-radius: 6px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
+  color: #333;
 }
 .alert {
   text-align: center;
@@ -1116,6 +1149,30 @@ input[type="text"]:disabled {
   color: rgb(0, 162, 255);
   padding-right: 5px;
 }
+.purchase {
+  display: none;
+}
+.swiper-container {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+.swiper-wrapper {
+  height: 100%;
+}
+.swiper-slide:nth-child(1) {
+  padding-top: 0;
+}
+.swiper-slide {
+  box-sizing: border-box;
+  padding: 4px 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
 @media (max-width: 1150px) {
   .section:nth-child(2) {
     flex-direction: column;
@@ -1147,6 +1204,7 @@ input[type="text"]:disabled {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 70px;
   }
   .section {
     /* padding: 10px; */
@@ -1158,6 +1216,39 @@ input[type="text"]:disabled {
   }
   .wrapper {
     padding: 15px;
+  }
+  .quantity {
+    display: none;
+  }
+  .purchase {
+    display: flex;
+    background-color: #fff;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 8px 16px;
+    align-items: center;
+    box-shadow: 0 0 36px 8px rgba(96, 125, 139, 0.169);
+    z-index: 99999999;
+  }
+  .content_buy {
+    margin: 0;
+  }
+  .wrapper-buttons {
+    margin: 0;
+    justify-content: flex-end;
+  }
+  .wrapper-buttons button {
+    display: none;
+  }
+  .content_buy .quotation {
+    display: none;
+  }
+  .section {
+    margin: 0;
   }
 }
 @media (max-width: 600px) {
