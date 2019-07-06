@@ -4,7 +4,10 @@
     :style="`background:${setting.styleObject.colorHeader}; margin-top:${setting.styleObject.top}px`"
   >
     <ko-order1 />
-    <div class="container">
+    <div
+      ref="colorResponsive"
+      class="container"
+    >
       <div
         class="content-header"
         :style="`background-color:${setting.styleObject.colorNav}`"
@@ -51,19 +54,19 @@
             class="wrapper"
             v-else
           >
-            <div
+            <!-- <div
               @click="mouseOver"
               class="name"
               :style="`color:${setting.styleObject.colorText}`"
             >
               <p>Ingresar</p>
               <i class="el-icon-arrow-down"></i>
-            </div>
+            </div> -->
             <i
               class="icon-menu"
               @click="toggleMenu"
             ></i>
-            <transition name="down">
+            <!-- <transition name="down">
               <div
                 class="popover"
                 v-if="popover"
@@ -73,7 +76,7 @@
                   @authenticated="fadeOf"
                 />
               </div>
-            </transition>
+            </transition> -->
           </div>
           <nav class="nav">
             <ul class="main-menu-list">
@@ -178,6 +181,13 @@ export default {
       }
     }
   },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   data() {
     return {
       show: false,
@@ -200,7 +210,11 @@ export default {
         }
       ],
       popover: false,
-      popoverUser: false
+      popoverUser: false,
+      window: {
+        width: 0,
+        height: 0
+      }
     };
   },
   computed: {
@@ -215,18 +229,14 @@ export default {
         tienda: this.storeData.id_tienda,
         logo: this.storeData.logo
       });
-      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${
-        this.$route.path
-      }&params=${params}`;
+      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`;
     },
     urlSignup() {
       const params = JSON.stringify({
         tienda: this.storeData.id_tienda,
         logo: this.storeData.logo
       });
-      return `https://login.komercia.co/registrar-cliente/?from=${
-        this.storeData.subdominio
-      }&path=${this.$route.path}&params=${params}`;
+      return `https://login.komercia.co/registrar-cliente/?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`;
     },
     productsCart() {
       return this.$store.state.productsCart.length;
@@ -254,6 +264,19 @@ export default {
     },
     toggleMenu() {
       this.show = !this.show;
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    }
+  },
+  watch: {
+    "window.width"(newValue) {
+      if (newValue < 700) {
+        this.$refs.colorResponsive.style.backgroundColor = this.setting.styleObject.colorNav;
+      } else {
+        this.$refs.colorResponsive.style.backgroundColor = "transparent";
+      }
     }
   }
 };
