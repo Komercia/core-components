@@ -47,6 +47,11 @@
               src="http://template.komercia.co/template3/img/mercadopago.png"
               alt="logo mercado pago"
             />
+            <img
+              class="medios-mercadopago"
+              src="https://api2.komercia.co/img/mercadopagoopciones.png"
+              alt="medio mercadopago"
+            />
           </li>
           <li v-if="mediospago.contraentrega == 1">
             <h4>Pago contra entrega</h4>
@@ -248,6 +253,10 @@ li p {
 .price {
   margin-top: 10px;
   font-size: 14px;
+}
+.medios-mercadopago {
+  width: 100%;
+  display: block;
 }
 @media (max-width: 800px) {
   .description {
