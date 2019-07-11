@@ -34,11 +34,14 @@ export default {
     return {};
   },
   computed: {
+    url() {
+      return this.$store.state.urlHttp;
+    },
     foto() {
       if (this.data.placeholder) {
         return require(`../../assets/${this.data.foto}`);
       } else {
-        return `${this.$urlHttp}/productos/${this.data.foto}`;
+        return `${this.url}/productos/${this.data.foto}`;
       }
     }
   },

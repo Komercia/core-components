@@ -8,47 +8,53 @@
       <div class="section">
         <div class="photos">
           <div class="photos_selected">
-            <swiper
-              :options="swiperOption"
+            <div
+              v-swiper:mySwiper="swiperOption"
               ref="mySwiper"
             >
-              <swiper-slide>
-                <!-- <image-cloudinary
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <!-- <image-cloudinary
                   :src="setMiniPhoto(data.detalle.foto_cloudinary)"
                   :width="300"
                 /> -->
-                <image-cloudinary
-                  :src="setMiniPhoto(data.detalle.foto_cloudinary)"
-                  v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)"
-                  :width="300"
-                />
-              </swiper-slide>
-              <swiper-slide
-                v-for="(foto, index) in data.fotos"
-                :key="index"
-              >
-                <image-cloudinary
-                  :src="setMiniPhoto(foto.foto_cloudinary)"
-                  v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)"
-                  :width="300"
-                />
-                <!-- <image-cloudinary
+                  <image-cloudinary
+                    :src="setMiniPhoto(data.detalle.foto_cloudinary)"
+                    v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)"
+                    :width="300"
+                  />
+                </div>
+                <div
+                  class="swiper-slide"
+                  v-for="(foto, index) in data.fotos"
+                  :key="index"
+                >
+                  <image-cloudinary
+                    :src="setMiniPhoto(foto.foto_cloudinary)"
+                    v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)"
+                    :width="300"
+                  />
+                  <!-- <image-cloudinary
                   :src="setMiniPhoto(foto.foto_cloudinary)"
                   :width="300"
                 /> -->
-              </swiper-slide>
-              <swiper-slide v-if="idYoutube">
-                <image-cloudinary
-                  :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
-                  v-show="idYoutube"
-                  v-on:mouseover.native="existYoutube = true"
-                />
-                <!-- <image-cloudinary
+                </div>
+                <div
+                  class="swiper-slide"
+                  v-if="idYoutube"
+                >
+                  <image-cloudinary
+                    :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
+                    v-show="idYoutube"
+                    v-on:mouseover.native="existYoutube = true"
+                  />
+                  <!-- <image-cloudinary
                   :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
                   v-show="idYoutube"
                 /> -->
-              </swiper-slide>
-            </swiper>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="photo_main">
             <zoomed

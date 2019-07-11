@@ -120,8 +120,8 @@ import login from "../_components/login.vue";
 export default {
   name: "koOrder1",
   components: { login },
-  created() {
-    this.$store.commit("GET_CITIES");
+  mounted() {
+    this.$store.dispatch("GET_CITIES");
     if (this.rangosByCiudad.envio_metodo === "precio_ciudad") {
       this.filterCities();
     }
@@ -152,7 +152,7 @@ export default {
       return this.$store.state.envios.valores;
     },
     cities() {
-      return this.$store.state.cities;
+      return this.$store.state.cities.cities;
     },
 
     shipping() {
@@ -204,7 +204,7 @@ export default {
       return result;
     },
     deleteItemCart(i) {
-      this.$store.state.productsCart.splice(i, 1);
+      this.$store.commit("DELETEITEMCART", i);
       this.$store.commit("UPDATE_CONTENTCART");
     },
     closeOrder(event) {
@@ -214,7 +214,7 @@ export default {
         element === "order_header_close" ||
         element === "continue_shopping"
       ) {
-        this.$store.state.openOrder = false;
+        this.$store.commit("SET_OPENORDER", false);
       }
     },
     GoPayments() {

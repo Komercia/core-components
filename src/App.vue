@@ -16,7 +16,7 @@ export default {
   created() {
     this.$store.dispatch("GET_COMPONENTS");
     this.$store.dispatch("GET_SECTIONS");
-    this.$store.commit("GET_DATA");
+    this.$store.dispatch("GET_DATA");
   },
   data() {
     return {

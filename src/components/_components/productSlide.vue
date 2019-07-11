@@ -1,54 +1,57 @@
 <template>
-  <swiper
-    :options="swiperOption"
+  <div
+    v-swiper:mySwiper="swiperOption"
     ref="mySwiper"
   >
-    <!-- slides -->
-    <swiper-slide>
-      <image-cloudinary
-        class="photo"
-        :src="setPhoto(photo)"
-      />
-    </swiper-slide>
-    <swiper-slide
-      v-for="photo in photos"
-      :key="photo.id"
-    >
-      <img
-        class="photo"
-        :src="setPhoto(photo.foto_cloudinary)"
-      >
-    </swiper-slide>
-    <swiper-slide v-if="idYoutube && idYoutube !== ''">
-      <div class="youtube">
-        <button
-          class="youtube__action_back"
-          @click="changeSlide()"
-        >
-          <i class="material-icons">keyboard_backspace</i>
-        </button>
-        <iframe
-          style="max-width: 400px; width: 100%"
-          height="250"
-          :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`"
-          frameborder="0"
-          allowfullscreen
-        ></iframe>
+    <div class="swiper-wrapper">
+      <!-- slides -->
+      <div class="swiper-slide">
+        <image-cloudinary
+          class="photo"
+          :src="setPhoto(photo)"
+        />
       </div>
-    </swiper-slide>
+      <div
+        class="swiper-slide"
+        v-for="photo in photos"
+        :key="photo.id"
+      >
+        <img
+          class="photo"
+          :src="setPhoto(photo.foto_cloudinary)"
+        >
+      </div>
+      <div
+        class="swiper-slide"
+        v-if="idYoutube && idYoutube !== ''"
+      >
+        <div class="youtube">
+          <button
+            class="youtube__action_back"
+            @click="changeSlide()"
+          >
+            <i class="material-icons">keyboard_backspace</i>
+          </button>
+          <iframe
+            style="max-width: 400px; width: 100%"
+            height="250"
+            :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
     <!-- Optional controls -->
     <div
       class="swiper-pagination"
       slot="pagination"
     ></div>
-  </swiper>
+  </div>
 </template>
 
 <script>
-import { swiper, swiperSlide } from "vue-awesome-swiper";
-
 export default {
-  components: { swiper, swiperSlide },
   name: "carrousel",
   props: ["photos", "photo", "idYoutube"],
   data() {

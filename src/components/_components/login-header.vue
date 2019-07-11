@@ -93,6 +93,11 @@ export default {
       typePassword: "password"
     };
   },
+  components: {
+    url() {
+      return this.$store.state.urlHttp;
+    }
+  },
   methods: {
     getUIDWithFacebook() {
       let provider = new firebase.auth.FacebookAuthProvider();
@@ -110,10 +115,8 @@ export default {
       params.name = providerData.displayName;
       params.email = providerData.email;
       params.token = "";
-      axios.post(`${this.$urlHttp}/login/facebook`, params).then(response => {
-        document.cookie = `authData = ${
-          response.data.accessToken
-        }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
+      axios.post(`${this.url}/login/facebook`, params).then(response => {
+        document.cookie = `authData = ${response.data.accessToken}; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
         this.authentication(response.data.accessToken);
       });
     },
@@ -128,9 +131,7 @@ export default {
       axios
         .post(`https://api2.komercia.co/oauth/token`, params)
         .then(response => {
-          document.cookie = `authData = ${
-            response.data.access_token
-          }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
+          document.cookie = `authData = ${response.data.access_token}; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
           axios.defaults.headers.common = {
             "content-type": "application/json",
             Authorization: `Bearer ${response.data.access_token}`,
@@ -152,7 +153,7 @@ export default {
           "Access-Control-Allow-Origin": "*"
         }
       };
-      axios.get(`${this.$urlHttp}/api/user`, config).then(response => {
+      axios.get(`${this.url}/api/user`, config).then(response => {
         this.$store.state.userData = response.data.data;
         this.$emit("authenticated");
       });
