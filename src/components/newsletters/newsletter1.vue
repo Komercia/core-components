@@ -25,7 +25,7 @@
 import axios from "axios";
 
 export default {
-  name: "KoNewsletter",
+  name: "koNewsletter1",
   data() {
     return {
       description: {

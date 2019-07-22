@@ -17,9 +17,9 @@ export default {
   watch:{
     search(value) {
       if (value.length) {
-        this.$store.dispatch('products/FILTER_BY', {type:'search', data: value})
+        this.$store.commit('modules/products/FILTER_BY', {type:'search', data: value})
       } else {
-        this.$store.dispatch('products/FILTER_BY', {type:'all', data: ''})
+        this.$store.commit('modules/products/FILTER_BY', {type:'all', data: ''})
       }
       // this.$emit("searcher", value)
     },

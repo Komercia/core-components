@@ -42,7 +42,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
     this.select = this.setting.data[0];
   },
   data() {
@@ -105,7 +105,7 @@ nav {
   /* grid-template-rows: 20vw; */
   grid-gap: 20px;
   grid-auto-flow: column;
-  padding: 0 20px;
+  /* padding: 0 20px; */
   box-sizing: border-box;
   justify-content: center;
 }

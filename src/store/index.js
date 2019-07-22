@@ -6,8 +6,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
 const firestore = firebase.firestore();
-const settings = { /* your settings... */ timestampsInSnapshots: true };
-firestore.settings(settings);
+// firestore.settings();
 
 let cart = [];
 if (localStorage.getItem('ShoppingCart')) {
@@ -94,7 +93,10 @@ export const state = () => ({
     garantia: '',
     datos: ''
   },
-  whatsapp: ''
+  whatsapp: '',
+  totalCart: 0,
+  sections: null,
+  components: null,
 });
 
 export const getters = {
@@ -193,6 +195,9 @@ export const mutations = {
       state.totalCart += product.precio * product.cantidad;
     });
   },
+  SET_SETTING(state, setting) {
+    state.settingData = setting;
+  },
   LOGOUT: () => {
     window.location.href = 'https://perfil.komercia.co/logout';
   },
@@ -219,7 +224,7 @@ export const actions = {
     state.idTienda = newValue;
     dispatch('GET_DATA');
   },
-  GET_WHATSAPP({ state }) {},
+  GET_WHATSAPP({ state }) { },
   GET_SECTIONS({ state }) {
     axios
       .get(

@@ -147,7 +147,7 @@
               </div>
             </div>
             <div class="social">
-              <ul class="list-social">
+              <ul v-if="storeData.telefono" class="list-social">
                 <li v-show="storeData.red_facebook">
                   <a
                     class="color_facebook"
@@ -452,8 +452,8 @@ header {
   color: var(--text_color);
 }
 .info {
-  background-color: var(--main_color);
-  color: var(--text_color);
+  background-color: var(--button_color);
+  color: var(--button_text_color);
   box-sizing: border-box;
   padding: 45px;
   max-width: 350px;

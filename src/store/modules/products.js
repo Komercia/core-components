@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js';
+
 
 export const state = () => ({
   type: '',
@@ -30,9 +30,8 @@ export const getters = {
     return state.fullProducts;
   }
 };
-export const mutations = {};
-export const actions = {
-  SET_FILTER({ state }, query) {
+export const mutations = {
+  SET_FILTER:( state , query) => {
     const { search, category, subcategory } = query;
     if (search && search.length) {
       state.type = 'search';
@@ -45,10 +44,13 @@ export const actions = {
       state.payload = category;
     }
   },
-  FILTER_BY({ state }, { type, data }) {
+  FILTER_BY:( state , { type, data }) => {
     state.type = type;
     state.payload = data;
   }
+};
+export const actions = {
+  
 };
 
 export default {

@@ -206,7 +206,7 @@ export default {
         { value: 824, label: "Ticbu - 824" },
         { value: 715, label: "Frenos Colombia - 715" },
         { value: 889, label: "Perfecta - 889" },
-        { value: 605, label: "Origen SP" },
+        { value: 605, label: "Origen SP - 605" },
         { value: 431, label: "Demo 3" }
       ]
     };

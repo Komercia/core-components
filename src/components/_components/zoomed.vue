@@ -30,7 +30,7 @@ export default {
       zoomer.style.backgroundPosition = `${x}% ${y}%`;
     },
     setBackground(p) {
-      return `background-image: url('${this.$ImageCloudinary(p, {
+      return `background-image: url('${this.ImageCloudinary(p, {
         width: 1000
       })}')`;
     }

@@ -14,7 +14,7 @@ import HeaderSetting2 from './Headers/header6/v1';
 import HeaderSetting4v1 from './Headers/header4/v1';
 import SeparatorSetting1V1 from './Separators/separator1/v1';
 
-const components = [
+const components = {
   SliderSetting1,
   SliderSetting11,
   SliderSetting1v3,
@@ -30,6 +30,6 @@ const components = [
   HeaderSetting1,
   HeaderSetting2,
   HeaderSetting4v1
-];
+};
 
 export default components;

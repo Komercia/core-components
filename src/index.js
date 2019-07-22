@@ -1,19 +1,54 @@
 import Vue from 'vue';
 import koHeader4 from './components/headers/header4';
-import koSlider1 from './components/sliders/slider1/v1';
+import koSlider4 from './components/sliders/slider4/v1';
+// import koSlider3 from './components/sliders/slider3';
+import koHeader1 from './components/headers/header1';
+import koHeader2 from './components/headers/header2';
 import koSeparator1 from './components/separators/separator1';
-import koNewsletter from './components/newsletters/newsletter1';
+import koNewsletter1 from './components/newsletters/newsletter1';
 import koFooter3 from './components/footers/footer3';
 import koOrder1 from './components/_order/order1';
+import koGrid1 from './components/grids/grid1';
+import koGrid2 from './components/grids/grid2';
+import koProductCard1 from './components/_productCard/product_card1';
+import koProductCard2 from './components/_productCard/product_card2';
+import koProductList2 from './components/product_lists/product_list2';
+import koProductList3 from './components/product_lists/product_list3';
+import koVideo1 from './components/videos/video1';
+import koContent2 from './components/contents/content2/v1';
+import koContent1 from './components/contents/content1';
+import koProduct2 from './components/products/product2';
+import koContact2 from './components/contacts/contact2';
+import koCart1 from './components/carts/cart1';
+import setting from './settings';
 
-const Components = {
-  koHeader4,
-  koSlider1,
-  koSeparator1,
-  koNewsletter,
-  koFooter3,
-  koOrder1
-};
+const Components = Object.assign(
+  {
+    koHeader4,
+    koSlider4,
+    koHeader1,
+    koSeparator1,
+    koNewsletter1,
+    koFooter3,
+    koOrder1,
+    koGrid1,
+    koGrid2,
+    koProductCard1,
+    koProductCard2,
+    koHeader2,
+    koProductList2,
+    koProductList3,
+    koVideo1,
+    koContent2,
+    koContent1,
+    koProduct2,
+    koContact2,
+    koCart1
+    
+    // koSlider3
+  },
+  setting,
+)
 
 Object.keys(Components).forEach(name => {
   Vue.component(name, Components[name]);

@@ -79,12 +79,11 @@ import koSearcher from "../_components/searcher";
 export default {
   name: "koProductList2",
   components: { koCategories, koSearcher },
-  created() {
-    this.$store.dispatch("products/SET_FILTER", this.$route.query);
-  },
+
   mounted() {
-    if (this.$store.getters["products/filterProducts"]) {
-      this.products = this.$store.getters["products/filterProducts"];
+    this.$store.commit("modules/products/SET_FILTER", this.$route.query);
+    if (this.$store.getters["modules/products/filterProducts"]) {
+      this.products = this.$store.getters["modules/products/filterProducts"];
       let maxTMP = 0;
       this.products.forEach(product => {
         if (maxTMP <= product.precio) {
@@ -119,7 +118,9 @@ export default {
       });
     },
     currentPage() {
-      setTimeout(() => {
+      let timerTimeout = null
+      timerTimeout = setTimeout(() => {
+        timerTimeout = null
         window.scrollTo(0, 0);
       }, 250);
     },
@@ -139,7 +140,7 @@ export default {
       return this.$store.state.selectedCard;
     },
     Fullproducts() {
-      return this.$store.getters["products/filterProducts"];
+      return this.$store.getters["modules/products/filterProducts"];
     },
     filterProduct() {
       const initial = this.currentPage * 40 - 40;

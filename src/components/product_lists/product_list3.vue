@@ -111,20 +111,20 @@
 export default {
   name: "koProductList3",
   created() {
-    this.$store.dispatch("products/SET_FILTER", this.$route.query);
-  },
+    },
   mounted() {
-    if (this.$store.getters["products/filterProducts"]) {
-      this.products = this.$store.getters["products/filterProducts"];
-      let maxTMP = 0;
-      this.products.forEach(product => {
-        if (maxTMP <= product.precio) {
-          this.price[1] = product.precio;
-          this.range.max = parseInt(product.precio);
-          maxTMP = product.precio;
-        }
-      });
-    }
+      this.$store.commit("modules/products/SET_FILTER", this.$route.query);
+      if (this.$store.getters["modules/products/filterProducts"]) {
+        this.products = this.$store.getters["modules/products/filterProducts"];
+        let maxTMP = 0;
+        this.products.forEach(product => {
+          if (maxTMP <= product.precio) {
+            this.price[1] = product.precio;
+            this.range.max = parseInt(product.precio);
+            maxTMP = product.precio;
+          }
+        });
+      }
   },
   data() {
     return {
@@ -160,7 +160,9 @@ export default {
       this.Searchproduct(value);
     },
     currentPage() {
-      setTimeout(() => {
+      let timerTimeout = null
+      timerTimeout = setTimeout(() => {
+        timerTimeout = null
         window.scrollTo(0, 0);
       }, 250);
     },
@@ -176,7 +178,7 @@ export default {
       return this.$store.state.selectedCard;
     },
     Fullproducts() {
-      return this.$store.getters["products/filterProducts"];
+      return this.$store.getters["modules/products/filterProducts"];
     },
     categorias() {
       return this.$store.state.categorias;
@@ -206,24 +208,24 @@ export default {
   methods: {
     selected(name) {
       // this.addClass();
-      // this.$store.dispatch("products/FILTER_BY", {
+      // this.$store.dispatch("modules/products/FILTER_BY", {
       //   type: "category",
       //   data: name.nombre_categoria_producto
       // });
       // this.currentPage = 1;
     },
     Allcategories() {
-      this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
+      this.$store.commit("modules/products/FILTER_BY", { type: "all", data: "" });
       this.currentPage = 1;
     },
     Searchproduct(search) {
       if (search.length) {
-        this.$store.dispatch("products/FILTER_BY", {
+        this.$store.commit("modules/products/FILTER_BY", {
           type: "search",
           data: search
         });
       } else {
-        this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
+        this.$store.commit("modules/products/FILTER_BY", { type: "all", data: "" });
       }
       this.currentPage = 1;
     },
@@ -240,19 +242,19 @@ export default {
     },
     Sendsubcategory(value) {
       this.selectSubcategory = value;
-      this.$store.dispatch("products/FILTER_BY", {
+      this.$store.commit("modules/products/FILTER_BY", {
         type: "subcategory",
         data: value
       });
     },
     sendCategory(value) {
-      this.$store.dispatch("products/FILTER_BY", {
+      this.$store.commit("modules/products/FILTER_BY", {
         type: "category",
         data: value
       });
     },
     clear() {
-      this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
+      this.$store.commit("modules/products/FILTER_BY", { type: "all", data: "" });
       this.$emit("clear");
     }
   }

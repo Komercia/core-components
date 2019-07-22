@@ -5,7 +5,7 @@
       v-if="src"
     >
       <img
-        src="../../assets/baner.png"
+        src="https://res.cloudinary.com/komercia/image/upload/w_600,q_auto:best,f_auto/v1548777225/ikkxahfa6ogcwrlbd487.png"
         alt=""
       >
       <!-- <image-cloudinary

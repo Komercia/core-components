@@ -35,7 +35,9 @@ export default {
   name: 'KoChat',
   created() {
     window.onload = () => {
-      setTimeout(() => {
+      let timerTimeout = null
+      timerTimeout = setTimeout(() => {
+        timerTimeout = null
         this.loadMessages()
         this.loading = true;
       }, 3000)
@@ -148,7 +150,9 @@ export default {
       this.noChat = false
     },
     scrollDown () {
-      setTimeout(() => {
+      let timerTimeout = null
+      timerTimeout = setTimeout(() => {
+        timerTimeout = null
         const KomerciaMessages = document.getElementById('KomerciaMessages')
         KomerciaMessages.scrollTop = KomerciaMessages.scrollHeight
       }, 100)

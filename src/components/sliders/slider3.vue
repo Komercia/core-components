@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="setting.data[0]" class="container">
     <a :href="setting.data[0].redirect_to" class="img-principal left">
       <image-cloudinary :src="setting.data[0].photo" class="slide_photo"/>
     </a>

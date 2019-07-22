@@ -210,7 +210,10 @@ export default {
   mounted() {
     window.addEventListener("resize", this.getWindowsWidth);
     this.getWindowsWidth();
-  }
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
 };
 </script>
 

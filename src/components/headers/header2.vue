@@ -178,10 +178,6 @@ export default {
       this.$store.commit("LOGOUT");
     }
   },
-  mounted() {
-    // window.addEventListener('resize', this.getWindowsWidth);
-    // this.getWindowsWidth();
-  }
 };
 </script>
 
