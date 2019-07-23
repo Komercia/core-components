@@ -3,44 +3,47 @@
     <!-- <div class="header">{{ selectedType == 'category' ? selectedCategory : 'productos' }}</div> -->
     <div class="container-grid">
       <div class="products">
-        <div
-          class="left"
-          :class="{ 'left-categories': true, hidden: add}"
-        >
+        <div class="left" :class="{ 'left-categories': true, hidden: add}">
           <div class="categories">
-            <h3 class="title-categories">Categorias</h3>
-            <ul class="list-categories">
-              <li
-                class="item-categorie"
-                @click="clear"
-              >
+            <h3 class="title-categories">
+              <i
+                @click="back()"
+                class="el-icon-arrow-left"
+                :style="nameCategory === 'Categorías' ? 'display:none' : ''"
+              ></i>
+              {{nameCategory}}
+            </h3>
+            <ul v-if="toggleCategories" class="list-categories">
+              <li class="item-categorie" @click="clear">
                 <span>Todos los Productos</span>
               </li>
               <li
                 class="item-categorie"
                 @mouseover="mouseOver(index)"
                 @mouseleave="mouseLeave"
-                @click="selected(categoria)"
                 v-for="(categoria, index) in categorias"
                 :key="categoria.id"
               >
-                <p @click="sendCategory(categoria.nombre_categoria_producto)">{{categoria.nombre_categoria_producto}}</p>
-                <div
-                  :class="{ popover: sub == index}"
-                  v-if="sub == index"
-                >
-                  <ul>
-                    <li
-                      class="item-subcategorie"
-                      v-for="subcategory in subcategories"
-                      v-if="categoria.id===subcategory.categoria"
-                      @click="Sendsubcategory(subcategory.id)"
-                      :key="subcategory.id"
-                    >
-                      <span>{{subcategory.nombre_subcategoria}}</span>
-                    </li>
-                  </ul>
-                </div>
+                <p
+                  @click="sendCategory(categoria, categoria.id, index, ref=false)"
+                >{{categoria.nombre_categoria_producto}}</p>
+                <div :class="{ popover: sub == index}" v-if="sub == index"></div>
+              </li>
+            </ul>
+            <ul v-else>
+              <li
+                class="item-categorie"
+                v-for="subcategory in selectedSubcategories"
+                @click="Sendsubcategory(subcategory.id)"
+                :key="subcategory.id"
+              >
+                <span>{{subcategory.nombre_subcategoria}}</span>
+              </li>
+              <li
+                class="item-categorie"
+                @click="sendCategory(categorias[indexCategory], categorias[indexCategory].id, indexCategory, ref=true)"
+              >
+                <span>Mostrar todos</span>
               </li>
             </ul>
           </div>
@@ -48,11 +51,7 @@
         <div class="right">
           <!-- input -->
           <div class="ko-input">
-            <input
-              v-model="search"
-              type="email"
-              placeholder="Buscar"
-            >
+            <input v-model="search" type="email" placeholder="Buscar" />
             <i class="icon-search"></i>
           </div>
           <!-- end input -->
@@ -70,10 +69,7 @@
       </div>
     </div>
     <div class="pagination-medium">
-      <div
-        class="product_pagination"
-        v-if="products.length > 40"
-      >
+      <div class="product_pagination" v-if="products.length > 40">
         <el-pagination
           layout="prev, pager, next"
           :total="products.length"
@@ -84,10 +80,7 @@
       </div>
     </div>
     <div class="pagination-small">
-      <div
-        class="product_pagination"
-        v-if="products.length > 40"
-      >
+      <div class="product_pagination" v-if="products.length > 40">
         <el-pagination
           layout="prev, pager, next"
           :total="products.length"
@@ -98,10 +91,7 @@
         ></el-pagination>
       </div>
     </div>
-    <div
-      class="btn-categories"
-      @click="addClass()"
-    >
+    <div class="btn-categories" @click="addClass()">
       <i class="icon-filter"></i>
     </div>
   </div>
@@ -139,9 +129,11 @@ export default {
       currentPage: 1,
       sub: -1,
       show: false,
-      value: "",
-      valuesub: "",
-      selectSubcategory: ""
+      selectSubcategory: "",
+      nameCategory: "Categorías",
+      selectedSubcategories: [],
+      toggleCategories: true,
+      indexCategory: 0
     };
   },
   watch: {
@@ -163,12 +155,6 @@ export default {
       setTimeout(() => {
         window.scrollTo(0, 0);
       }, 250);
-    },
-    value(value) {
-      this.sendCategory(value);
-    },
-    valuesub(value) {
-      this.Sendsubcategory(value);
     }
   },
   computed: {
@@ -204,13 +190,10 @@ export default {
     }
   },
   methods: {
-    selected(name) {
-      // this.addClass();
-      // this.$store.dispatch("products/FILTER_BY", {
-      //   type: "category",
-      //   data: name.nombre_categoria_producto
-      // });
-      // this.currentPage = 1;
+    back() {
+      this.clear();
+      this.toggleCategories = true;
+      this.nameCategory = "Categorías";
     },
     Allcategories() {
       this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
@@ -239,21 +222,40 @@ export default {
       this.show = false;
     },
     Sendsubcategory(value) {
+      this.addClass();
       this.selectSubcategory = value;
       this.$store.dispatch("products/FILTER_BY", {
         type: "subcategory",
         data: value
       });
     },
-    sendCategory(value) {
+    sendCategory(value, categoria, index, ref) {
+      this.currentPage = 1;
+      this.nameCategory = value.nombre_categoria_producto;
+      this.indexCategory = index;
+      this.selectedSubcategories = [];
+      this.subcategories.find(subcategoria => {
+        if (subcategoria.categoria === categoria) {
+          this.toggleCategories = false;
+          this.selectedSubcategories.push(subcategoria);
+        }
+      });
+      if (this.selectedSubcategories.length === 0) {
+        this.addClass();
+      }
+      if (ref) {
+        this.addClass();
+      }
       this.$store.dispatch("products/FILTER_BY", {
         type: "category",
-        data: value
+        data: value.nombre_categoria_producto
       });
     },
     clear() {
       this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
       this.$emit("clear");
+      this.addClass()
+      this.nameCategory = "Categorías";
     }
   }
 };
@@ -278,12 +280,11 @@ export default {
   margin-bottom: 80px;
 }
 .left {
-  /* background-color: aqua; */
-  flex: 0.2;
   padding: 0 20px;
   box-sizing: border-box;
   position: sticky;
   top: 0;
+  min-width: 237px;
 }
 .right {
   flex: 1;
@@ -302,6 +303,15 @@ export default {
   padding: 30px 0;
   border-bottom: 1px solid rgba(218, 218, 218, 0.644);
   color: var(--text_color);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+.title-categories i {
+  vertical-align: -1px;
+  cursor: pointer;
+  /* filter: drop-shadow(0px 0px 5px rgb(0, 0, 0)); */
 }
 .list-categories {
   margin-top: 20px;
@@ -360,7 +370,6 @@ export default {
   justify-content: flex-end;
   grid-row-gap: 5px;
   margin: 20px;
-  /*width: 250px;*/
 }
 .ko-input input {
   width: 100%;

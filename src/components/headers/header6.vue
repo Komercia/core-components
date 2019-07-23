@@ -75,7 +75,7 @@
             </transition>
           </nav>
         </transition>
-        <div
+        <!-- <div
           class="wrapper"
           v-if="userData.id"
         >
@@ -95,7 +95,6 @@
               class="icon-login"
             />
           </div>
-          <!-- @click="toggleMenu" -->
           <transition name="down">
             <div
               class="popover-user"
@@ -148,7 +147,7 @@
               />
             </div>
           </transition>
-        </div>
+        </div> -->
         <el-badge
           :value="productsCart"
           class="item"
