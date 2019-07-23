@@ -9,7 +9,7 @@
         <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>
       </ul>
       <div class="login-cart_top-menu container-icons">
-        <div class="user" v-popover:popover2 v-if="userData.id">
+        <!-- <div class="user" v-popover:popover2 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>
           <el-popover
             ref="popover2"
@@ -29,7 +29,7 @@
             </ul>
           </el-popover>
         </div>
-        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a>
+        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a> -->
         <a class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></a>
         <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>

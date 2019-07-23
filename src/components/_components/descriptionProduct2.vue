@@ -63,7 +63,7 @@
           </li>
           <li v-if="mediospago.consignacion == 1">
             <h4>Consignación Bancaria</h4>
-            <p>Transferencia o conginacón a nuestra cuenta</p>
+            <p>Transferencia o consignación a nuestra cuenta</p>
           </li>
           <li v-if="mediospago.efecty == 1">
             <h4>Consignación Efecty</h4>

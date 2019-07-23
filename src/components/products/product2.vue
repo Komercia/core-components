@@ -21,18 +21,6 @@
               v-on:mouseover.native="selectedPhoto(foto.foto_cloudinary)"
               :width="300"
             />
-            <!-- <image-cloudinary
-                  :src="setMiniPhoto(foto.foto_cloudinary)"
-                  :width="300"
-                <image-cloudinary
-                  :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
-                  v-show="idYoutube"
-                  v-on:mouseover.native="existYoutube = true"
-                />
-                <!-- <image-cloudinary
-                  :src="`https://img.youtube.com/vi/${idYoutube}/0.jpg`"
-                  v-show="idYoutube"
-            />-->
           </div>
           <div class="photo_main">
             <zoomed

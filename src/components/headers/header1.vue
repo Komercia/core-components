@@ -11,7 +11,7 @@
       </div>
       <router-link to="/" class="logo-top-menu"><img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo"></router-link>
       <div class="login-cart_top-menu container-icons">
-        <div class="user" v-popover:popover1 v-if="userData.id">
+        <!-- <div class="user" v-popover:popover1 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>
           <el-popover
             ref="popover1"
@@ -31,7 +31,7 @@
             </ul>
           </el-popover>
         </div>
-        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a>
+        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a> -->
         <div class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></div>
         <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
