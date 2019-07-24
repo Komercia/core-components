@@ -9,9 +9,9 @@
               <i
                 @click="back()"
                 class="el-icon-arrow-left"
-                :style="nameCategory === 'Categorías' ? 'display:none' : ''"
+                :style="nameCategory === '' ? 'display:none' : ''"
               ></i>
-              {{nameCategory}}
+              <span  @click="back()">Categorías</span> / {{nameCategory}}
             </h3>
             <ul v-if="toggleCategories" class="list-categories">
               <li class="item-categorie" @click="clear">
@@ -130,7 +130,7 @@ export default {
       sub: -1,
       show: false,
       selectSubcategory: "",
-      nameCategory: "Categorías",
+      nameCategory: "",
       selectedSubcategories: [],
       toggleCategories: true,
       indexCategory: 0
@@ -193,7 +193,7 @@ export default {
     back() {
       this.clear();
       this.toggleCategories = true;
-      this.nameCategory = "Categorías";
+      this.nameCategory = "";
     },
     Allcategories() {
       this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
@@ -255,7 +255,7 @@ export default {
       this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
       this.$emit("clear");
       this.addClass()
-      this.nameCategory = "Categorías";
+      this.nameCategory = "";
     }
   }
 };
@@ -296,7 +296,7 @@ export default {
   align-items: flex-start;
 }
 .title-categories {
-  font-size: 19px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -312,6 +312,9 @@ export default {
   vertical-align: -1px;
   cursor: pointer;
   /* filter: drop-shadow(0px 0px 5px rgb(0, 0, 0)); */
+}
+.title-categories span {
+  cursor: pointer;
 }
 .list-categories {
   margin-top: 20px;

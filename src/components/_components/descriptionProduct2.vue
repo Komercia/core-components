@@ -134,7 +134,7 @@ export default {
       return this.$store.state.mediospago;
     },
     activeClass() {
-      if (this.data.info.descripcion == "") {
+      if (this.data.info.descripcion == "" || this.data.info.descripcion == null) {
         return true;
       } else {
         return false;
@@ -257,6 +257,7 @@ li p {
 .medios-mercadopago {
   width: 100%;
   display: block;
+  border-radius: 4px;
 }
 @media (max-width: 800px) {
   .description {

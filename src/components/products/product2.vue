@@ -599,7 +599,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-/*@import 'https://unpkg.com/komercia-fuentes@1.0.2/styles.css';*/
 .wrapper {
   max-width: 1200px;
   width: 100%;
@@ -619,7 +618,6 @@ export default {
   flex: 1.4;
   display: flex;
   justify-content: flex-start;
-  /* align-items: center; */
 }
 .photos.responsive {
   display: none;
@@ -635,7 +633,6 @@ export default {
 .photos_selected img {
   width: 100%;
   box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1);
-  /* border-radius: 4px; */
   cursor: pointer;
   margin-bottom: 5px;
 }
@@ -650,8 +647,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  /* margin-right: 10px; */
-  /* border: 1px solid #eee; */
 }
 .photo_main_placeholder {
   width: 100%;
@@ -661,7 +656,6 @@ export default {
 .content {
   max-width: 550px;
   width: 100%;
-  min-height: 350px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -670,7 +664,6 @@ export default {
   color: var(--text_color);
   font-size: 14px;
   flex: 0.6;
-  /* box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.05); */
 }
 i.close {
   color: black;
@@ -699,8 +692,6 @@ i.close {
   width: 100%;
   flex: none;
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
   align-items: center;
   margin: 7px 0;
 }
@@ -722,11 +713,6 @@ i.close {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 3px 10px rgba(0, 0, 0, 0.07);
   z-index: 2;
 }
-/* .content_buy.disabled > div {
-  pointer-events: none;
-  filter: blur(5px);
-  opacity: 0.2;
-} */
 .content_buy_price {
   display: grid;
   align-items: flex-end;
@@ -763,7 +749,6 @@ i.close {
   transition: all 0.2s ease;
 }
 .content_buy_action button:hover {
-  /* box-shadow: 3px 4px 10px -2px rgba(0, 0, 0, 0.288); */
   transform: scale(1.02);
 }
 .content_buy_action button.spent {
@@ -774,8 +759,6 @@ i.close {
 .content_buy_action button i {
   font-size: 19px;
   margin-right: 10px;
-  /* padding: 4px 0px; */
-  /* padding-left: 10px; */
   vertical-align: middle;
 }
 .content_desc {
@@ -795,14 +778,12 @@ i.close {
 .content_variant {
   display: flex;
   flex-direction: column;
-  /* margin: 5px 0; */
 }
 .content_variant_item {
   display: flex;
   align-items: center;
 }
 .content_variant_item label {
-  /* margin-right: 10px; */
   color: var(--text_color);
   width: 150px;
 }
@@ -810,14 +791,9 @@ i.close {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  /*justify-content: center;*/
   align-items: center;
-  /* margin: 5px; */
 }
 .quantity p {
-  /* text-align: center; */
-  /* margin-right: 10px; */
-  /* font-size: 13px; */
   font-style: normal;
 }
 .quantity_remove,
@@ -1119,7 +1095,7 @@ input[type="text"]:disabled {
   }
   .wrapper-buttons {
     margin: 0;
-    justify-content: flex-end;
+    // justify-content: flex-end;
   }
   .wrapper-buttons button {
     display: none;
