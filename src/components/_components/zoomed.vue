@@ -7,7 +7,7 @@
     <image-cloudinary
       :src="photo"
       class="photo_main"
-      :width="1000"
+      :width="900"
     />
   </figure>
 </template>
@@ -31,7 +31,7 @@ export default {
     },
     setBackground(p) {
       return `background-image: url('${this.ImageCloudinary(p, {
-        width: 1000
+        width: 900
       })}')`;
     }
   }

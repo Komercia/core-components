@@ -79,6 +79,7 @@ export const state = () => ({
     }
   },
   tienda: {},
+  detalleProducto: {},
   banners: [],
   cities: [],
   productsData: [],
@@ -108,6 +109,9 @@ export const getters = {
 export const mutations = {
   SET_OPENORDER: (state, value) => {
     state.openOrder = value;
+  },
+  SET_DETALLEPRODUCTO: (state, payload) => {
+    state.detalleProducto = payload
   },
   SET_TOKEN: (state, value) => {
     state.configHttp = {

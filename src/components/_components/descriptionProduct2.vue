@@ -63,7 +63,7 @@
           </li>
           <li v-if="mediospago.consignacion == 1">
             <h4>Consignación Bancaria</h4>
-            <p>Transferencia o conginacón a nuestra cuenta</p>
+            <p>Transferencia o consignación a nuestra cuenta</p>
           </li>
           <li v-if="mediospago.efecty == 1">
             <h4>Consignación Efecty</h4>
@@ -134,7 +134,7 @@ export default {
       return this.$store.state.mediospago;
     },
     activeClass() {
-      if (this.data.info.descripcion == "") {
+      if (this.data.info.descripcion == "" || this.data.info.descripcion == null) {
         return true;
       } else {
         return false;
@@ -257,6 +257,7 @@ li p {
 .medios-mercadopago {
   width: 100%;
   display: block;
+  border-radius: 4px;
 }
 @media (max-width: 800px) {
   .description {

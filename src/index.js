@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import koHeader4 from './components/headers/header4';
+import koHeader4 from './components/headers/header4/v1.vue';
 import koSlider4 from './components/sliders/slider4/v1';
 // import koSlider3 from './components/sliders/slider3';
 import koHeader1 from './components/headers/header1';

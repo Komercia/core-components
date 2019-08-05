@@ -44,16 +44,15 @@ export default {
   },
   mounted() {
     this.select = this.setting.data[0];
+    this.selectedCard = this.$store.state.selectedCard;
   },
   data() {
     return {
-      select: ""
+      select: "",
+      selectedCard: ''
     };
   },
   computed: {
-    selectedCard() {
-      return this.$store.state.selectedCard;
-    },
     productsData() {
       return this.$store.state.productsData.filter(
         product => product.categoria == this.select
@@ -66,6 +65,9 @@ export default {
   watch: {
     "setting.data": function(value) {
       this.select = value[0];
+    },
+    selectedCard(){
+      this.selectedCard = this.$store.state.selectedCard;
     }
   },
   methods: {

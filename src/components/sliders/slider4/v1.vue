@@ -1,6 +1,6 @@
 <template>
   <div class="slider">
-    <div class="content-swiper">
+    <div v-show="showSwiper" class="content-swiper">
       <div
         v-swiper:mySwiper="swiperOption"
         ref="mySwiper"
@@ -187,12 +187,12 @@ export default {
             banners: [
               {
                 photo:
-                  "https://lh3.googleusercontent.com/RjgDMs-pimIHX-BVgssw1xlXOydfu6fvW42SVywW0ykZhmwV0aUTVSoODyrX-qWbF5CnaHjhP563CXTIiQg3=w1920-h969-rw",
+                  "https://res.cloudinary.com/komercia/image/upload/v1548879392/xt7bugfrnpmdpym096kz.png",
                 redirect_to: "https://komercia.co"
               },
               {
                 photo:
-                  "https://lh3.googleusercontent.com/zmAuDgr5Dt4oDuw02nFkYuBKjQPtNz4TevAZEE8_M7uVCcdq1CqKvgDyw55HXJ_xwTWgBUIYVLJclzBykE70I3BiER5soLvZNRL0rdxOkWcQNRYLn81-ePGcjaVjRknrsptblzTnhlC6OwanU1fCCgfeKTw33gRd1pLzcuQhHpAafkMQboRydOjwh7cha5Ey_iUwlPlV1d7s12iO6eE8zQO54PlSbV7YGQSXN3lDPw4ue4WNqIiscajJsnFIdQs2klN57__Ayuk6HieVTiTKatN-9zpeAFK1krTDy8DyF0MAmu6NTa_N_LQ736SMtiGphub-YvqY2p_gqlZJDIxBvu3vFpnAlHRxQRQzIne8l5HE5Xn7rKeg8uROFwefYgHoEwnezu-yXeRuw5s-E9HzQnRIG5jm8A3u-dO2jB6E7zOOV9J9Yb3MVRZz9mmsIOoIkU9V0S2rVT-td3Jj0cGXVS5444YuYgpRuswHfed26RlDukq3svH0VVUzP-xK1XtkUzSaWOG2jNyk0w2gmKLAk2Zq7YReYdDTPfszixtN6zfrx9PXFsakqYIoqip6uxqiRzoDrUoAYP_byAZCObAN4PkGgLC5KaQN=w1920-h969",
+                  "https://res.cloudinary.com/komercia/image/upload/v1548888097/fyu1rbego6hwmtrwpbqx.png",
                 redirect_to: ""
               }
             ],
@@ -212,8 +212,12 @@ export default {
       }
     }
   },
+  mounted() {
+    this.showSwiper = true
+  },
   data() {
     return {
+      showSwiper:false,
       indexBtn: 0,
       indexBtn2: 0,
       swiperOption: {

@@ -2,94 +2,45 @@
   <div class="header2">
     <koOrder1 />
     <div class="top-menu">
-      <div
-        v-if='info.logo'
-        class="logo-top-menu"
-      >
-        <img
-          :src="`${url}/logos/${info.logo}`"
-          alt="logo"
-        >
+      <div v-if='info.logo' class="logo-top-menu">
+        <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
       </div>
       <ul class="main-menu-list">
-        <li
-          v-for='(item, index) in routes'
-          :key='index'
-          class="main-menu-item"
-        >
-          <router-link
-            :to="item.route"
-            class="main-menu-link"
-          >{{item.name}}</router-link>
-        </li>
+        <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>
       </ul>
       <div class="login-cart_top-menu container-icons">
-        <div
-          class="user"
-          v-popover:popover2
-          v-if="userData.id"
-        >
+        <!-- <div class="user" v-popover:popover2 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>
           <el-popover
             ref="popover2"
             placement="bottom"
-            trigger="click"
-          >
+            trigger="click">
             <ul class="user_options_list">
               <li class="user_options_item">
                 <figure class="user_photo">
-                  <img
-                    :src="`https://api2.komercia.co/users/${userData.foto}`"
-                    :alt="userData.nombre"
-                  >
+                  <img :src="`https://api2.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
                 </figure>
                 <div class="">
-                  <strong>Hola {{ userData.nombre }}</strong>
-                  <p>{{ userData.email }}</p>
+                  <strong>Hola {{ userData.nombre }}</strong><p>{{ userData.email }}</p>
                 </div>
               </li>
               <li class="user_options_item"><i class="material-icons">assignment</i><a href="https://perfil.komercia.co/compras">Mis Compras</a></li>
-              <li
-                class="user_options_item"
-                @click="logout"
-              ><i class="material-icons">exit_to_app</i>Cerrar session</li>
+              <li class="user_options_item" @click="logout"><i class="material-icons">exit_to_app</i>Cerrar session</li>
             </ul>
           </el-popover>
         </div>
-        <a
-          :href="urlLogin"
-          v-else
-        ><i class="icon-top-menu material-icons">exit_to_app</i></a>
-        <a
-          class="cart_top-icon"
-          @click="openOrder"
-        ><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></a>
-        <a @click="toggleMenu"><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
+        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a> -->
+        <a class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></a>
+        <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
     </div>
     <transition name="slide-fade">
-      <nav
-        v-show="show"
-        class="main-menu"
-      >
+      <nav v-show="show" class="main-menu">
         <div class="top-menu">
-          <a
-            @click="toggleMenu"
-            class="icon-top-menu icon-top-menu-close"
-          ><i
-              class="icon-cancel icon-menu"
-              aria-hidden="true"
-            ></i></a>
+          <a @click="toggleMenu" class="icon-top-menu icon-top-menu-close"><i class="icon-cancel icon-menu" aria-hidden="true"></i></a>
         </div>
         <ul class="main-menu-list">
-          <li
-            v-for='(item, index) in routes'
-            :key='index'
-            class="main-menu-item"
-          ><a
-              @click="redirectTo(item.route)"
-              class="main-menu-link"
-            >{{item.name}}</a></li>
+          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a @click="redirectTo(item.route)" class="main-menu-link">{{item.name}}</a></li>
         </ul>
       </nav>
     </transition>

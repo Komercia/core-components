@@ -1,106 +1,48 @@
 <template>
   <div class="header1">
     <ko-order-1 />
-    <div
-      v-if='info.logo'
-      class="top-menu"
-    >
+    <div v-if='info.logo' class="top-menu">
       <div class="social-networks_top-menu container-icons">
-        <a
-          v-show="info.red_instagram"
-          :href="info.red_instagram"
-          target="_blank"
-        ><i class="icon-top-menu icon-instagrem"></i></a>
-        <a
-          v-show="info.red_twitter"
-          :href="info.red_twitter"
-          target="_blank"
-        ><i class="icon-top-menu icon-twitter"></i></a>
-        <a
-          v-show="info.red_facebook"
-          :href="info.red_facebook"
-          target="_blank"
-        ><i class="icon-top-menu icon-facebook-square"></i></a>
-        <a
-          v-show="info.red_youtube"
-          :href="info.red_youtube"
-          target="_blank"
-        ><i class="icon-top-menu icon-youtube"></i></a>
+        <a v-show="info.red_instagram" :href="info.red_instagram" target="_blank"><i class="icon-top-menu icon-instagrem"></i></a>
+        <a v-show="info.red_twitter" :href="info.red_twitter" target="_blank"><i class="icon-top-menu icon-twitter" ></i></a>
+        <a v-show="info.red_facebook" :href="info.red_facebook" target="_blank"><i class="icon-top-menu icon-facebook-square" ></i></a>
+        <a v-show="info.red_youtube" :href="info.red_youtube" target="_blank"><i class="icon-top-menu icon-youtube"></i></a>
+        <!-- <a v-show="info.red_youtube" :href="info.red_youtube" class="icon-top-menu icon-social-networks"><i class="fa fa-youtube-play" aria-hidden="true"></i></a> -->
       </div>
-      <router-link
-        to="/"
-        class="logo-top-menu"
-      ><img
-          :src="`${url}/logos/${info.logo}`"
-          alt="logo"
-        ></router-link>
+      <router-link to="/" class="logo-top-menu"><img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo"></router-link>
       <div class="login-cart_top-menu container-icons">
-        <div
-          class="user"
-          v-popover:popover1
-          v-if="userData.id"
-        >
+        <!-- <div class="user" v-popover:popover1 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>
           <el-popover
             ref="popover1"
             placement="bottom"
-            trigger="click"
-          >
+            trigger="click">
             <ul class="user_options_list">
               <li class="user_options_item">
                 <figure class="user_photo">
-                  <img
-                    :src="`https://api2.komercia.co/users/${userData.foto}`"
-                    :alt="userData.nombre"
-                  >
+                  <img :src="`https://api2.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
                 </figure>
                 <div class="">
-                  <strong>Hola {{ userData.nombre }}</strong>
-                  <p>{{ userData.email }}</p>
+                  <strong>Hola {{ userData.nombre }}</strong><p>{{ userData.email }}</p>
                 </div>
               </li>
               <li class="user_options_item"><i class="material-icons">assignment</i><a href="https://perfil.komercia.co/compras">Mis Compras</a></li>
-              <li
-                class="user_options_item"
-                @click="logout"
-              ><i class="material-icons">exit_to_app</i>Cerrar session</li>
+              <li class="user_options_item" @click="logout"><i class="material-icons">exit_to_app</i>Cerrar session</li>
             </ul>
           </el-popover>
         </div>
-        <a
-          :href="urlLogin"
-          v-else
-        ><i class="icon-top-menu material-icons">exit_to_app</i></a>
-        <div
-          class="cart_top-icon"
-          @click="openOrder"
-        ><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></div>
-        <a @click="toggleMenu"><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
+        <a :href="urlLogin" v-else><i class="icon-top-menu material-icons" >exit_to_app</i></a> -->
+        <div class="cart_top-icon" @click="openOrder"><i class="icon-top-menu icon-shopping-cart"></i><span>{{ productsCart }}</span></div>
+        <a @click="toggleMenu" ><i class="icon-top-menu icon-bars icon-menu-show"></i></a>
       </div>
     </div>
     <transition name="slide-fade">
-      <nav
-        v-show="show"
-        class="main-menu"
-      >
+      <nav v-show="show" class="main-menu">
         <div class="top-menu">
-          <a
-            @click="toggleMenu"
-            class="icon-top-menu icon-top-menu-close"
-          ><i
-              class="icon-cancel icon-menu"
-              aria-hidden="true"
-            ></i></a>
+          <a @click="toggleMenu" class="icon-top-menu icon-top-menu-close"><i class="icon-cancel icon-menu" aria-hidden="true"></i></a>
         </div>
         <ul class="main-menu-list">
-          <li
-            v-for='(item, index) in routes'
-            :key='index'
-            class="main-menu-item"
-          ><a
-              class="main-menu-link"
-              @click="redirectTo(item.route)"
-            >{{item.name}}</a></li>
+          <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><a class="main-menu-link" @click="redirectTo(item.route)">{{item.name}}</a></li>
         </ul>
       </nav>
     </transition>

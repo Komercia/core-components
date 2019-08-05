@@ -1,53 +1,25 @@
 <template>
   <div class="main-header">
-    <ko-order1 />
+    <ko-order1/>
     <div class="main-top-menu">
       <div class="icons-left">
-        <el-popover
-          placement="bottom-end"
-          width="280"
-          trigger="hover"
-          v-if="userData.id"
-        >
+        <!-- <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData.id">
           <div class="container-data-user">
-            <div
-              class="img-user"
-              slot="reference"
-            >
-              <img
-                :src="`https://api2.komercia.co/users/${userData.foto}`"
-                alt
-              >
+            <div class="img-user" slot="reference">
+              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
             </div>
             <div class="data-user">
               <p class="name-user">{{userData.nombre}}</p>
               <p class="email-user">{{userData.email}}</p>
-              <el-button
-                class="btn-logout"
-                type="info"
-                @click="logout"
-                plain
-              >Salir</el-button>
+              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
             </div>
           </div>
-          <div
-            class="prueba"
-            slot="reference"
-          >
-            <img
-              class="img-usuario"
-              :src="`https://api2.komercia.co/users/${userData.foto}`"
-              alt
-            >
+          <div class="prueba" slot="reference">
+            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
           </div>
-        </el-popover>
+        </el-popover> -->
 
-        <el-popover
-          placement="bottom-end"
-          width="280"
-          trigger="hover"
-          v-else
-        >
+        <!-- <el-popover placement="bottom-end" width="280" trigger="hover" v-else>
           <ul>
             <li class="pop-item">
               <a
@@ -62,50 +34,23 @@
               >Registrar</a>
             </li>
           </ul>
-          <i
-            class="icon-user-circle"
-            slot="reference"
-          ></i>
-        </el-popover>
+          <i class="icon-user-circle" slot="reference"></i>
+        </el-popover> -->
 
-        <i
-          @click="openOrder"
-          class="icon-shopping-basket"
-        >
+        <i @click="openOrder" class="icon-shopping-basket">
           <em class="num-products">{{ productsCart }}</em>
         </i>
       </div>
       <!-- *********************** Buscador **************************** -->
-      <!-- <div class="icons-right">
-        <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
-        <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>
-        <transition name="custom-classes-transition" enter-active-class="animated fadeInDown" leave-active-class="animated fadeOutUp">
-          <el-input v-if="showIcon" class="search-top" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
-          </el-input>
-        </transition>
-      </div>-->
     </div>
     <div class="line"></div>
-    <div
-      class="container"
-      v-if="setting"
-    >
-      <router-link
-        to="/"
-        class="container-logo"
-      >
-        <img
-          :src="`${url}/logos/${info.logo}`"
-          alt="logo"
-        >
+    <div class="container" v-if="setting">
+      <router-link to="/" class="container-logo">
+        <img :src="`${url}/logos/${info.logo}`" alt="logo">
       </router-link>
       <nav class="header-navigation">
         <ul class="navigation-list">
-          <li
-            v-for="(item, index) in setting.data.tabs"
-            :key="index"
-            class="navigation-item"
-          >
+          <li v-for="(item, index) in setting.data.tabs" :key="index" class="navigation-item">
             <router-link
               :to="`/productos/${item.redirect_to.value}`"
               class="navigation-link"
@@ -139,74 +84,33 @@
         <!-- <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
         <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>-->
 
-        <el-popover
-          placement="bottom-end"
-          width="300"
-          trigger="hover"
-          v-if="userData.id"
-        >
+        <!-- <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData.id">
           <div class="container-data-user">
-            <div
-              class="img-user"
-              slot="reference"
-            >
-              <img
-                :src="`https://api2.komercia.co/users/${userData.foto}`"
-                alt
-              >
+            <div class="img-user" slot="reference">
+              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
             </div>
             <div class="data-user">
               <p class="name-user">{{userData.nombre}}</p>
               <p class="email-user">{{userData.email}}</p>
-              <el-button
-                class="btn-logout"
-                type="info"
-                @click="logout"
-                plain
-              >Salir</el-button>
+              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
             </div>
           </div>
-          <div
-            class="prueba"
-            slot="reference"
-          >
-            <img
-              class="img-usuario"
-              :src="`https://api2.komercia.co/users/${userData.foto}`"
-              alt
-            >
+          <div class="prueba" slot="reference">
+            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
           </div>
         </el-popover>
-
-        <el-popover
-          placement="bottom-end"
-          width="250"
-          trigger="hover"
-          v-else
-        >
+        <el-popover placement="bottom-end" width="250" trigger="hover" v-else>
           <ul>
             <li class="pop-item">
-              <a
-                class="pop-item-link"
-                :href="urlLogin"
-              >Iniciar Sesión</a>
+              <a class="pop-item-link" :href="urlLogin">Iniciar Sesión</a>
             </li>
             <li class="pop-item">
-              <a
-                class="pop-item-link"
-                :href="urlSignup"
-              >Registrar</a>
+              <a class="pop-item-link" :href="urlSignup">Registrar</a>
             </li>
           </ul>
-          <i
-            class="icon-user-circle"
-            slot="reference"
-          ></i>
-        </el-popover>
-        <i
-          @click="openOrder"
-          class="icon-shopping-basket"
-        >
+          <i class="icon-user-circle" slot="reference"></i>
+        </el-popover> -->
+        <i @click="openOrder" class="icon-shopping-basket">
           <em class="num-products">{{ productsCart }}</em>
         </i>
         <!-- *****************************Input Buscador ********************************** -->
@@ -215,21 +119,12 @@
           </el-input>
         </transition>-->
       </div>
-      <i
-        @click="toggleMenu"
-        class="icon-menu"
-      ></i>
+      <i @click="toggleMenu" class="icon-menu"></i>
     </div>
     <transition name="slide-fade">
-      <nav
-        v-show="show"
-        class="main-menu"
-      >
+      <nav v-show="show" class="main-menu">
         <ul class="main-menu-list">
-          <li
-            @click="toggleMenu"
-            class="main-menu-item item-close"
-          >
+          <li @click="toggleMenu" class="main-menu-item item-close">
             <i class="icon-close"></i>
           </li>
           <!-- <li
@@ -243,11 +138,7 @@
             >{{item.name}}</a>
           </li>-->
 
-          <li
-            v-for="(item, index) in setting.data.tabs"
-            :key="index"
-            class="navigation-item"
-          >
+          <li v-for="(item, index) in setting.data.tabs" :key="index" class="navigation-item">
             <router-link
               :to="`/productos/${item.redirect_to.value}`"
               tag="li"
@@ -297,8 +188,12 @@ export default {
       }
     }
   },
+  head(){
+    this.url = this.$store.state.urlHttp
+  },
   data() {
     return {
+      url: '',
       showIcon: false,
       visible2: false,
       show: false,
@@ -324,9 +219,9 @@ export default {
     };
   },
   computed: {
-    url() {
-      return this.$store.state.urlHttp;
-    },
+    // url() {
+    //   return this.$store.state.urlHttp;
+    // },
     storeData() {
       return this.$store.state.tienda;
     },
@@ -438,6 +333,7 @@ export default {
   height: 100%;
   width: 100%;
   object-fit: contain;
+  object-position: left;
 }
 .line {
   width: 100%;

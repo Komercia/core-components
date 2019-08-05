@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 @import "./assets/css/main.css";
 @import "./styles/material.css";
 @import "./styles/default.css";

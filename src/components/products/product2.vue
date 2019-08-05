@@ -1,5 +1,5 @@
 <template>
-  <div class="product" v-if="data.detalle">
+  <div class="product" v-show="data.detalle">
     <!-- <ko-modal v-show="modalPayment"></ko-modal> -->
     <div class="wrapper">
       <div class="section">
@@ -26,7 +26,7 @@
             ></zoomed>
             <img :src="selectPhotoUrl" v-else class="photo_main_placeholder" />
             <iframe
-              v-show="existYoutube"
+              v-if="existYoutube"
               width="400"
               height="250"
               :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`"
@@ -127,7 +127,7 @@
               <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
-          <div v-if="data.info.garantia" class="warranty item-product">
+          <div v-show="data.info.garantia" class="warranty item-product">
             <p class="name-item">Garantía:</p>
             <span>{{ data.info.garantia | toLowerCase }}</span>
           </div>
@@ -143,10 +143,10 @@
                   Añadir al carrito
                 </button>
               </div>
-              <ko-whatsapp v-if="whatsapp" class="whatsapp" @click.native="redirectWhatsapp()" />
+              <ko-whatsapp v-show="whatsapp" class="whatsapp" @click.native="redirectWhatsapp()" />
             </div>
             <p
-              v-if="precio == 0 || !precio"
+              v-show="precio == 0 || !precio"
               class="quotation"
             >Añada al carrito para agregar a la lista y recibir tu cotización</p>
           </div>
@@ -207,8 +207,6 @@ export default {
     if (this.$store.state.productsData.length) {
       this.getDataProduct()
     }
-  },
-  mounted() {
     if (Object.keys(this.$store.state.envios).length) {
       this.setOptionEnvio()
     }
@@ -433,6 +431,7 @@ export default {
         axios
           .get(`https://templates.komercia.co/api/producto/${idOfSlug}`)
           .then(response => {
+            this.$store.commit('SET_DETALLEPRODUCTO', response.data.detalle)
             this.selectedPhoto(response.data.detalle.foto_cloudinary)
             this.videoYoutube(response.data.info.video)
             this.data = response.data
@@ -671,7 +670,6 @@ export default {
 .content {
   max-width: 550px;
   width: 100%;
-  min-height: 350px;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -1107,7 +1105,7 @@ input[type='text']:disabled {
   }
   .wrapper-buttons {
     margin: 0;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
   }
   .wrapper-buttons button {
     display: none;

@@ -6,7 +6,7 @@
     <div class="img-grid-item">
       <image-cloudinary
         :src="data.foto_cloudinary"
-        :width="900"
+        :width="700"
       />
     </div>
     <div class="grid-item-description">

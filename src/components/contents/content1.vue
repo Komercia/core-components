@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="item item_image">
-      <img :src="setting.data[1].photo" />
+      <img :src="fitImage(setting.data[1].photo)" />
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
           data: [
             {
               photo:
-                "https://res.cloudinary.com/komercia-store/image/upload/v1550852556/placeholder/product-image-placeholder.jpg",
+                "https://res.cloudinary.com/komercia-store/image/upload/w_600,q_auto:best,f_auto/v1550852556/placeholder/product-image-placeholder.jpg",
               title: "SUMMER",
               description:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
@@ -48,7 +48,7 @@ export default {
             },
             {
               photo:
-                "https://res.cloudinary.com/komercia-store/image/upload/v1550852556/placeholder/product-image-placeholder.jpg",
+                "https://res.cloudinary.com/komercia-store/image/upload/w_600,q_auto:best,f_auto/v1550852556/placeholder/product-image-placeholder.jpg",
               title: "SPRING",
               description:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
