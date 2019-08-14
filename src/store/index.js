@@ -90,6 +90,7 @@ export const state = () => ({
   mediospago: {
     epayco: false
   },
+  settingData:{},
   politicas: {
     garantia: '',
     datos: ''

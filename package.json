@@ -1,6 +1,6 @@
 {
   "name": "komercia-core-components",
-  "version": "4.3.43",
+  "version": "4.3.50",
   "description": "A Vue.js project",
   "author": "Camilo <titanmar15@gmail.com>",
   "private": false,
@@ -28,7 +28,7 @@
     "element-ui": "^2.4.2",
     "firebase": "^5.11.1",
     "fuse.js": "^3.2.1",
-    "image-cloudinary": "^1.2.2",
+    "image-cloudinary": "^1.2.4",
     "js-cookie": "^2.2.0",
     "komercia-cropper": "^1.0.2",
     "vue": "^2.5.2",

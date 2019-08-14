@@ -9,7 +9,7 @@
         <a v-show="info.red_youtube" :href="info.red_youtube" target="_blank"><i class="icon-top-menu icon-youtube"></i></a>
         <!-- <a v-show="info.red_youtube" :href="info.red_youtube" class="icon-top-menu icon-social-networks"><i class="fa fa-youtube-play" aria-hidden="true"></i></a> -->
       </div>
-      <router-link to="/" class="logo-top-menu"><img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo"></router-link>
+      <router-link to="/" class="logo-top-menu"><img :src="`${url}/logos/${info.logo}`" alt="logo"></router-link>
       <div class="login-cart_top-menu container-icons">
         <!-- <div class="user" v-popover:popover1 v-if="userData.id">
           <i class="icon-top-menu icon-user"></i>

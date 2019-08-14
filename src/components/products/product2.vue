@@ -41,6 +41,7 @@
             :photo="data.detalle.foto_cloudinary"
             :idYoutube="idYoutube"
           ></product-slide>
+          <span @click="share()" class="sharing-phone"><i class="material-icons">share</i></span>
         </div>
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
@@ -127,6 +128,14 @@
               <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
+          <div class="item-product sharing-desktop">
+            <p class="name-item">Compartir:</p>
+            <div class="wrapper-social-network">
+              <a :href="`https://www.facebook.com/sharer.php?u=${this.currentUrl}`" target="_blank" @click="open('facebook')"><i class="fa fa-fw fa-facebook"></i></a>
+              <a :href="`https://twitter.com/share?url=${this.currentUrl}&text=${this.data.detalle.nombre}&via=${this.currentUrl}`" target="_blank" @click="open('twitter')"><i class="fa fa-fw fa-twitter"></i></a>
+              <a :href="`https://wa.me/?text=${this.data.detalle.nombre} ${this.currentUrl}`" target="_blank"><i class="fa fa-fw fa-whatsapp"></i></a>
+            </div>
+          </div>
           <div v-show="data.info.garantia" class="warranty item-product">
             <p class="name-item">Garantía:</p>
             <span>{{ data.info.garantia | toLowerCase }}</span>
@@ -143,7 +152,7 @@
                   Añadir al carrito
                 </button>
               </div>
-              <ko-whatsapp v-show="whatsapp" class="whatsapp" @click.native="redirectWhatsapp()" />
+              <!-- <ko-whatsapp v-show="whatsapp" class="whatsapp" @click.native="redirectWhatsapp()" /> -->
             </div>
             <p
               v-show="precio == 0 || !precio"
@@ -211,6 +220,9 @@ export default {
       this.setOptionEnvio()
     }
   },
+  mounted() {
+    this.currentUrl = window.location
+  },
   data() {
     return {
       swiperOption: {
@@ -255,7 +267,8 @@ export default {
       envio: {
         titulo: '',
         desc: ''
-      }
+      },
+      currentUrl:''
     }
   },
   watch: {
@@ -313,9 +326,12 @@ export default {
     }
   },
   computed: {
-    url() {
-      return window.location.href
-    },
+    // url() {
+    //   return window.location.href
+    // },
+    // currentUrl() {
+    //   return window.location
+    // },
     productsData() {
       return this.$store.state.productsData
     },
@@ -379,6 +395,44 @@ export default {
     }
   },
   methods: {
+    share() {
+      navigator.share({
+        title: this.data.detalle.nombre,
+        url: `${this.currentUrl}/`
+      })
+    },
+    open(networt) {
+      switch (networt) {
+        case 'facebook':
+          this.PopupCenter(`https://www.facebook.com/sharer.php?u=${this.currentUrl}`, this.data.detalle.nombre, 600, 500)
+          break;
+        case 'whatsapp':
+          this.PopupCenter(`https://wa.me/?text=${this.data.detalle.nombre} ${this.currentUrl}`)       
+          break;
+        case 'twitter':
+          this.PopupCenter(`https://twitter.com/share?url=${this.currentUrl}&text=${this.data.detalle.nombre}`, this.data.detalle.nombre, 600, 500)     
+          break;
+      
+        default:
+          break;
+      }
+    },
+    PopupCenter(url, title, w, h) {
+    // Fixes dual-screen position                         Most browsers      Firefox
+    let dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+    let dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+    let width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    let height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    let systemZoom = width / window.screen.availWidth;
+    let left = (width - w) / 2 / systemZoom + dualScreenLeft
+    let top = (height - h) / 2 / systemZoom + dualScreenTop
+    let newWindow = window.open(url, title, 'scrollbars=yes, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+
+    // Puts focus on the newWindow
+    if (window.focus) newWindow.focus();
+},
     searchIdForSlug() {
       const product = this.productsData.filter(
         product => product.slug === this.$route.params.slug
@@ -635,6 +689,7 @@ export default {
 }
 .photos.responsive {
   display: none;
+  position: relative;
 }
 .photos_selected {
   width: 90px;
@@ -730,6 +785,7 @@ i.close {
 .content_buy_price {
   display: grid;
   align-items: flex-end;
+  position: relative;
 }
 .content_buy_price h3 {
   font-weight: 300;
@@ -961,6 +1017,8 @@ i.close {
 .name-item {
   width: 150px;
   display: inline-block;
+  display: flex;
+  align-items: center;
 }
 .container-alert {
   position: absolute;
@@ -1042,6 +1100,54 @@ input[type='text']:disabled {
   height: 100%;
   object-fit: cover;
 }
+.icons-share {
+  cursor: pointer !important;
+}
+.wrapper-social-network {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+.wrapper-social-network a{
+  text-decoration: none;
+  padding: 2px 3px;
+  transition: all ease .3s;
+}
+.wrapper-social-network a:nth-child(1){
+  background-color: transparent;
+  border: 1px solid #3b5998;
+  color: #3b5998;
+}
+.wrapper-social-network a:nth-child(1):hover{
+  background-color: #3b5998;
+  border: 1px solid #3b5998;
+  color: #fff;
+}
+.wrapper-social-network a:nth-child(2){
+  background-color: transparent;
+  border: 1px solid #1da1f2;
+  color: #1da1f2;
+}
+.wrapper-social-network a:nth-child(2):hover{
+  background-color: #1da1f2;
+  border: 1px solid #1da1f2;
+  color: #fff;
+}
+.wrapper-social-network a:nth-child(3){
+  background-color: transparent;
+  border: 1px solid #08c65b;
+  font-size: 18px;
+  padding: 0 1px;
+  color: #08c65b;
+}
+.wrapper-social-network a:nth-child(3):hover{
+  background-color: #08c65b;
+  border: 1px solid #08c65b;
+  color: #fff;
+}
+.sharing-phone {
+  display: none;
+}
 @media (max-width: 1150px) {
   .section:nth-child(2) {
     flex-direction: column;
@@ -1066,6 +1172,35 @@ input[type='text']:disabled {
   }
 }
 @media (max-width: 710px) {
+  .sharing-desktop {
+    display: none;
+  }
+  .sharing-phone {
+    position: absolute;
+    font-size: 12px;
+    right: 5px;
+    top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    padding: 6px;
+    background: rgba(238, 238, 238, 0.441);
+    cursor: pointer;
+    z-index: 9;
+    border: 1px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sharing-phone i {
+  font-size: 16px;
+  z-index: 9;
+  color: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
   .product {
     position: relative;
     width: 100%;

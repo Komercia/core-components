@@ -3,7 +3,7 @@
     <koOrder1 />
     <div class="top-menu">
       <div v-if='info.logo' class="logo-top-menu">
-        <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
+        <img :src="`${url}/logos/${info.logo}`" alt="logo">
       </div>
       <ul class="main-menu-list">
         <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>

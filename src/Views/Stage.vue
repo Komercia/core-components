@@ -229,6 +229,7 @@ export default {
           for (let option of component.options) {
             if (value === option.name) {
               const setting = option.setting || null;
+              console.log(setting)
               this.$store.commit("SET_SETTING", setting);
             }
           }
