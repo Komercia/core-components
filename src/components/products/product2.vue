@@ -553,7 +553,8 @@ export default {
         cantidad: this.data.cantidad,
         foto_cloudinary: this.data.detalle.foto_cloudinary,
         nombre: this.data.detalle.nombre,
-        combinacion: this.salesData.combinacion
+        combinacion: this.salesData.combinacion,
+        envio_gratis: this.data.detalle.envio_gratis
       };
       if (this.salesData) {
         product.limitQuantity = this.salesData.unidades;

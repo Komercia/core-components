@@ -81,14 +81,14 @@
           <h3 class="title-section">Opciones de Envio</h3>
         </div>
         <div
-          v-if="envios.valores.envio_metodo === 'precio_ciudad'"
+          v-if="envios.valores.envio_metodo === 'precio_ciudad' && data.detalle.envio_gratis == 0"
           class="wrapper-method"
         >
           <h4 class="capitalize">• {{envios.valores.envio_metodo.replace('_', ' por ')}}</h4>
           <p class="description-method">El valor del envío se calcula al momento de hacer la compra de acuerdo a la ciudad de entrega</p>
         </div>
         <div
-          v-if="envios.valores.envio_metodo === 'tarifa_plana'"
+          v-if="envios.valores.envio_metodo === 'tarifa_plana' && data.detalle.envio_gratis == 0"
           class="wrapper-method"
         >
           <h4 class="capitalize">{{envios.valores.envio_metodo.replace('_', ' ')}}</h4>
@@ -96,14 +96,14 @@
           <p class="price">Precio: {{envios.valores.valor | currency}} COP</p>
         </div>
         <div
-          v-if="envios.valores.envio_metodo === 'precio'"
+          v-if="envios.valores.envio_metodo === 'precio' && data.detalle.envio_gratis == 0"
           class="wrapper-method"
         >
           <h4>Precio por Total de Compra</h4>
           <p class="description-method">El valor del envío se calcula de acuerdo al total de compra</p>
         </div>
         <div
-          v-if="envios.valores.envio_metodo === 'gratis'"
+          v-if="envios.valores.envio_metodo === 'gratis' || data.detalle.envio_gratis == 1"
           class="wrapper-method"
         >
           <h4>Gratis</h4>
