@@ -124,7 +124,6 @@ export default {
     productsCart() {
       return this.$store.state.productsCart;
     },
-    isFreeShipping() {},
     getFreeShipping() {
       let free = true;
       this.productsCart.filter(product => {
