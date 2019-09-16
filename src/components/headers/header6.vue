@@ -244,7 +244,7 @@ export default {
         : (event.target.style.color = this.setting.styleObject.colorText);
     },
     toggleMenuAction() {
-      if (window.innerWidth <= 770) {
+      if (window && window.innerWidth <= 770) {
         this.toggleMenu = !this.toggleMenu;
       }
     }

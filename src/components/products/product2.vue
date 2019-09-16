@@ -125,7 +125,7 @@
               :key="index"
             >
               <label>{{ variant.nombre }}:</label>
-              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
+              <ko-radio-group v-if="variant && variant.valores.length" :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
           <div class="item-product sharing-desktop">
@@ -621,7 +621,8 @@ export default {
         cantidad: this.data.cantidad,
         foto_cloudinary: this.data.detalle.foto_cloudinary,
         nombre: this.data.detalle.nombre,
-        combinacion: this.salesData.combinacion
+        combinacion: this.salesData.combinacion,
+        envio_gratis: this.data.detalle.envio_gratis
       }
       if (this.salesData) {
         product.limitQuantity = this.salesData.unidades

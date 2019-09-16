@@ -15,9 +15,11 @@
     </nav>
     <div class="grid-products">
       <div
-        :is="selectedCard"
+        :is="$store.state.selectedCard"
         :data="product"
-        v-for="(product, index) in productsData.slice(0,5)"
+        v-for="(product, index) in this.$store.state.productsData.filter(
+        product => product.categoria == this.select
+      ).slice(0,5)"
         :key="index"
         class="card"
       >
@@ -42,7 +44,7 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.select = this.setting.data[0];
     this.selectedCard = this.$store.state.selectedCard;
   },

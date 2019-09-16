@@ -100,8 +100,6 @@
 <script>
 export default {
   name: "koProductList3",
-  created() {
-    },
   mounted() {
       this.$store.commit("modules/products/SET_FILTER", this.$route.query);
       if (this.$store.getters["modules/products/filterProducts"]) {
@@ -121,7 +119,7 @@ export default {
       add: true,
       search: "",
       productsCategory: [],
-      products: [],
+      // products: [],
       price: [0, 1000000],
       range: {
         max: 0
@@ -173,6 +171,14 @@ export default {
     },
     Fullproducts() {
       return this.$store.getters["modules/products/filterProducts"];
+    },
+    products: {
+      get() {
+        return this.Fullproducts
+      },
+      set(value) {
+        this.$store.state.fullProducts = value
+      }
     },
     categorias() {
       return this.$store.state.categorias;

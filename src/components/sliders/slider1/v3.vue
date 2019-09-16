@@ -1,4 +1,5 @@
 <template>
+<no-ssr>
   <carousel :perPage="1" :paginationEnabled="true" :autoplay="true" :loop="true" :autoplayTimeout="4000">
     <slide v-for="(banner, index) in setting.data" :key="index">
       <div :class="`${banner.posicion} slide_content`">
@@ -27,6 +28,7 @@
       </div>
     </slide>
   </carousel>
+  </no-ssr>
 </template>
 
 <script>

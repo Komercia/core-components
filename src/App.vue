@@ -41,11 +41,11 @@ export default {
   font-family: "Open Sans", sans-serif;
 }
 :root {
-  --main_color: rgb(51, 51, 51);
-  --text_color: rgb(255, 255, 255);
+  --main_color: rgb(181, 51, 51);
+  --text_color: rgb(51, 51, 51);
   --button_color: #333333;
   --button_text_color: rgb(255, 255, 255);
-  --background_color: rgb(51, 51, 51);
+  --background_color: rgb(255, 255, 255);
   --opacity: #33333320;
 }
 #app {

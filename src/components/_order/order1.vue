@@ -1,17 +1,10 @@
 <template>
   <transition name="fade">
-    <div
-      class="order"
-      @click="closeOrder"
-      v-show="openOrder"
-    >
+    <div class="order" @click="closeOrder" v-show="openOrder">
       <div class="order_content">
         <div class="order_header">
           <h3>Tu Orden</h3>
-          <button
-            @click="closeOrder"
-            class="order_header_close"
-          >Cerrar</button>
+          <button @click="closeOrder" class="order_header_close">Cerrar</button>
         </div>
         <transition name="slide">
           <template v-if="layoutLogin">
@@ -24,7 +17,7 @@
                     :key="index"
                   >
                     <div class="photo">
-                      <img :src="product.foto_cloudinary">
+                      <img :src="product.foto_cloudinary" />
                     </div>
                     <div class="name">
                       <p>{{ product.nombre | capitalize }}</p>
@@ -34,10 +27,7 @@
                     <div>
                       <p>{{ (product.precio * product.cantidad) | currency }}</p>
                     </div>
-                    <i
-                      class="material-icons delete"
-                      v-on:click="deleteItemCart(index)"
-                    >clear</i>
+                    <i class="material-icons delete" v-on:click="deleteItemCart(index)">clear</i>
                   </li>
                 </ul>
               </div>
@@ -45,28 +35,26 @@
                 <div class="order_total">
                   <span class="order_total_domicile">
                     <p>Costo domicilio</p>
-
-                    <details v-if="rangosByCiudad.envio_metodo === 'precio_ciudad' && shippingCities.length > 0">
-                      <summary>
-                        Valor por Ciudad:
-                      </summary>
+                    <details
+                      v-if="rangosByCiudad.envio_metodo === 'precio_ciudad' && shippingCities.length > 0 && getFreeShipping == false"
+                    >
+                      <summary>Valor por Ciudad:</summary>
                       <ol>
-                        <li
-                          v-for="(ciudad, index) in rangosByCiudad.rangos"
-                          :key="ciudad.id"
-                        ><b>{{shippingCities[index].nombre_ciu === 'Sin especificar' ? 'Resto del país': shippingCities[index].nombre_ciu}}:</b> {{ciudad.price | currency}}</li>
+                        <li v-for="(ciudad, index) in rangosByCiudad.rangos" :key="ciudad.id">
+                          <b>{{shippingCities[index].nombre_ciu === 'Sin especificar' ? 'Resto del país': shippingCities[index].nombre_ciu}}:</b>
+                          {{ciudad.price | currency}}
+                        </li>
                       </ol>
                     </details>
-                    <p v-else-if="shipping">{{ shipping | currency }}</p>
+                    <p v-else-if="shipping && getFreeShipping == false">{{ shipping | currency }}</p>
                     <p
                       class="without_shipping_cost"
-                      v-else
+                      v-if="rangosByCiudad.envio_metodo === 'gratis' || getFreeShipping == true"
                     >No tiene costo de envió</p>
-
                   </span>
                   <span class="order_total_net">
                     <p>Total a pagar</p>
-                    <p>{{ (totalCart + shipping) | currency }}</p>
+                    <p>{{ (totalCart + (getFreeShipping? 0 : shipping)) | currency }}</p>
                   </span>
                 </div>
                 <button
@@ -79,32 +67,19 @@
                   @click="toggleLayout"
                   v-else-if="isQuotation()"
                 >Iniciar sesión</button>
-                <button
-                  class="p_button"
-                  @click="GoPayments"
-                  v-else
-                >Finalizar compra</button>
+                <button class="p_button" @click="GoPayments" v-else>Finalizar compra</button>
               </template>
-              <br>
-              <button
-                class="continue_shopping"
-                @click="closeOrder"
-              >Seguir comprando</button>
+              <br />
+              <button class="continue_shopping" @click="closeOrder">Seguir comprando</button>
             </div>
           </template>
           <template v-else>
             <div class="order__login">
-              <button
-                @click="toggleLayout"
-                class
-              >
+              <button @click="toggleLayout" class>
                 <i class="material-icons">arrow_back</i>
                 <p>Ver Resumen de la orden</p>
               </button>
-              <login
-                style="position: absolute; top: 51px;"
-                @authenticated="toggleLayout"
-              />
+              <login style="position: absolute; top: 51px;" @authenticated="toggleLayout" />
             </div>
           </template>
         </transition>
@@ -121,6 +96,7 @@ export default {
   name: "koOrder1",
   components: { login },
   mounted() {
+    this.$store.commit("UPDATE_CONTENTCART");
     this.$store.dispatch("GET_CITIES");
     if (this.rangosByCiudad.envio_metodo === "precio_ciudad") {
       this.filterCities();
@@ -148,13 +124,21 @@ export default {
     productsCart() {
       return this.$store.state.productsCart;
     },
+    getFreeShipping() {
+      let free = true;
+      this.productsCart.filter(product => {
+        if (product.envio_gratis == 0) {
+          free = false;
+        }
+      });
+      return free;
+    },
     rangosByCiudad() {
       return this.$store.state.envios.valores;
     },
     cities() {
       return this.$store.state.cities.cities;
     },
-
     shipping() {
       if (this.$store.state.envios.estado) {
         let shipping = this.$store.state.envios.valores;

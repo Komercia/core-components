@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: "koSeparator1_v1",
+  name: "koSeparator1V1",
   props: {
     setting: {
       type: Object,

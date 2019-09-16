@@ -3,45 +3,11 @@
     <ko-order1/>
     <div class="main-top-menu">
       <div class="icons-left">
-        <!-- <el-popover placement="bottom-end" width="280" trigger="hover" v-if="userData.id">
-          <div class="container-data-user">
-            <div class="img-user" slot="reference">
-              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
-            </div>
-            <div class="data-user">
-              <p class="name-user">{{userData.nombre}}</p>
-              <p class="email-user">{{userData.email}}</p>
-              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
-            </div>
-          </div>
-          <div class="prueba" slot="reference">
-            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
-          </div>
-        </el-popover> -->
-
-        <!-- <el-popover placement="bottom-end" width="280" trigger="hover" v-else>
-          <ul>
-            <li class="pop-item">
-              <a
-                class="pop-item-link"
-                :href="`https://login.komercia.co/?from=store&path=${$route.path}&params={'tienda':${storeData.id_tienda},logo:${storeData.logo}}`"
-              >Iniciar Sesión</a>
-            </li>
-            <li class="pop-item">
-              <a
-                class="pop-item-link"
-                :href="`https://login.komercia.co/registrar-cliente/?from=store&path=${$route.path}`"
-              >Registrar</a>
-            </li>
-          </ul>
-          <i class="icon-user-circle" slot="reference"></i>
-        </el-popover> -->
-
         <i @click="openOrder" class="icon-shopping-basket">
           <em class="num-products">{{ productsCart }}</em>
         </i>
       </div>
-      <!-- *********************** Buscador **************************** -->
+
     </div>
     <div class="line"></div>
     <div class="container" v-if="setting">
@@ -80,63 +46,20 @@
         </ul>
       </nav>
       <div class="icons">
-        <!-- *********************************Iconos del buscador ******************************** -->
-        <!-- <i @click="getShowIcon" v-if="showIcon" class="icon-close"></i>
-        <i @click="getShowIcon" v-if="!showIcon" class="icon-search"></i>-->
 
-        <!-- <el-popover placement="bottom-end" width="300" trigger="hover" v-if="userData.id">
-          <div class="container-data-user">
-            <div class="img-user" slot="reference">
-              <img :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
-            </div>
-            <div class="data-user">
-              <p class="name-user">{{userData.nombre}}</p>
-              <p class="email-user">{{userData.email}}</p>
-              <el-button class="btn-logout" type="info" @click="logout" plain>Salir</el-button>
-            </div>
-          </div>
-          <div class="prueba" slot="reference">
-            <img class="img-usuario" :src="`https://api2.komercia.co/users/${userData.foto}`" alt>
-          </div>
-        </el-popover>
-        <el-popover placement="bottom-end" width="250" trigger="hover" v-else>
-          <ul>
-            <li class="pop-item">
-              <a class="pop-item-link" :href="urlLogin">Iniciar Sesión</a>
-            </li>
-            <li class="pop-item">
-              <a class="pop-item-link" :href="urlSignup">Registrar</a>
-            </li>
-          </ul>
-          <i class="icon-user-circle" slot="reference"></i>
-        </el-popover> -->
         <i @click="openOrder" class="icon-shopping-basket">
           <em class="num-products">{{ productsCart }}</em>
         </i>
-        <!-- *****************************Input Buscador ********************************** -->
-        <!-- <transition name="custom-classes-transition" enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-          <el-input v-if="showIcon" class="search" placeholder="Buscar" suffix-icon="el-icon-search" v-model="input2">
-          </el-input>
-        </transition>-->
+
       </div>
       <i @click="toggleMenu" class="icon-menu"></i>
     </div>
-    <transition name="slide-fade">
+    <!-- <transition name="slide-fade">
       <nav v-show="show" class="main-menu">
         <ul class="main-menu-list">
           <li @click="toggleMenu" class="main-menu-item item-close">
             <i class="icon-close"></i>
           </li>
-          <!-- <li
-            v-for='(item, index) in routes'
-            :key='index'
-            class="main-menu-item"
-          >
-            <a
-              @click="redirectTo(item.route)"
-              class="main-menu-link"
-            >{{item.name}}</a>
-          </li>-->
 
           <li v-for="(item, index) in setting.data.tabs" :key="index" class="navigation-item">
             <router-link
@@ -171,7 +94,7 @@
           </li>
         </ul>
       </nav>
-    </transition>
+    </transition> -->
   </div>
 </template>
 
@@ -190,6 +113,10 @@ export default {
   },
   head(){
     this.url = this.$store.state.urlHttp
+  },
+  created(){
+    this.url = this.$store.state.urlHttp;
+    console.log(this.setting.data.tabs)
   },
   data() {
     return {

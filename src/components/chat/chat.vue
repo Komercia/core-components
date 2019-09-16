@@ -33,7 +33,7 @@ import chatHeader from './header'
 export default {
   components: { Login, chatHeader},
   name: 'KoChat',
-  created() {
+  mounted() {
     window.onload = () => {
       let timerTimeout = null
       timerTimeout = setTimeout(() => {

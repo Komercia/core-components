@@ -29,42 +29,8 @@ export default {
       const y = (offsetY / zoomer.offsetHeight) * 100;
       zoomer.style.backgroundPosition = `${x}% ${y}%`;
     },
-	// 	ImageCloudinary(src, { width, height }) {
-	// 		if (src.includes("https://res.cloudinary.com/komercia-store/image/upload")) {
-	// 			let urlFirst = "https://res.cloudinary.com/komercia-store/image/upload/";
-	// 			let urlLast = src.replace(
-	// 				"https://res.cloudinary.com/komercia-store/image/upload",
-	// 				""
-	// 			);
-	// 			let w = "";
-	// 			let h = "";
-	// 			if (width) {
-	// 				w = `,w_${width}`;
-	// 			}
-	// 			if (height) {
-	// 				h = `,h_${height}`;
-	// 			}
-	// 			return `${urlFirst}q_auto,c_scale,f_auto${w}${h}${urlLast}`;
-	// 		} else if (src.includes("https://res.cloudinary.com/komercia/image/upload")) {
-	// 			let urlFirst = "https://res.cloudinary.com/komercia/image/upload/";
-	// 			let urlLast = src.replace(
-	// 				"https://res.cloudinary.com/komercia/image/upload",
-	// 				""
-	// 			);
-	// 			let w = "";
-	// 			let h = "";
-	// 			if (width) {
-	// 				w = `,w_${width}`;
-	// 			}
-	// 			if (height) {
-	// 				h = `,h_${height}`;
-	// 			}
-	// 			return `${urlFirst}q_auto,c_scale,f_auto${w}${h}${urlLast}`;
-	// 		} else {
-	// 			return src;
-	// 		}
-	// },
     setBackground(p) {
+      //este metodo esta en utils/mixins.js
       return `background-image: url('${this.ImageCloudinary(p, {
         width: 900
       })}')`;
