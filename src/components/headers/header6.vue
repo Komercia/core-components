@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <ko-order1 />
+    <koOrder1 />
     <div
       class="container-nav"
       v-if="setting"

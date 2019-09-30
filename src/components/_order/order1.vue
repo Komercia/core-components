@@ -279,7 +279,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .order {
   position: fixed;
   top: 0;
@@ -515,26 +515,25 @@ details {
   align-self: center;
   flex: 1;
   margin-left: 30px;
-  summary {
-    outline: none;
-    cursor: pointer;
-    color: rgba(61, 61, 61, 0.847);
-    text-align: right;
-  }
-  ol {
-    display: flex;
-    flex-direction: column;
-    padding: 5px 0;
-
-    li {
-      padding: 2px 4px;
-      display: flex;
-      justify-content: space-between;
-    }
-    li:nth-child(even) {
-      background-color: rgba(102, 102, 102, 0.1);
-    }
-  }
+}
+details summary {
+  outline: none;
+  cursor: pointer;
+  color: rgba(61, 61, 61, 0.847);
+  text-align: right;
+}
+details ol {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+details ol li {
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+}
+details ol li:nth-child(even) {
+  background-color: rgba(102, 102, 102, 0.1);
 }
 details[open] summary ~ * {
   animation: sweep 0.5s ease-in-out;
@@ -543,11 +542,9 @@ details[open] summary ~ * {
 @keyframes sweep {
   0% {
     opacity: 0;
-    // margin-left: -10px;
   }
   100% {
     opacity: 1;
-    // margin-left: 0px;
   }
 }
 </style>
