@@ -181,7 +181,7 @@ export default {
     submitNewsletter() {
       let json = {
         correo: this.email,
-        tienda: this.$store.state.id
+        tienda: this.$store.state.id_tienda
       };
       axios.post(`${this.$urlHttp}/api/front/suscriptores`, json);
     },

@@ -52,7 +52,7 @@ export default {
         correo: this.email,
         celular: this.numberphone,
         comentario: this.comment,
-        tienda: this.$store.state.id
+        tienda: this.$store.state.id_tienda
       };
       axios
         .post(`https://templates.komercia.co/api/mensaje-contacto`, json)
@@ -61,7 +61,7 @@ export default {
           this.email = "";
           this.numberphone = "";
           this.comment = "";
-          this.$store.state.id = "";
+          this.$store.state.id_tienda = "";
         });
     },
     makeMap() {

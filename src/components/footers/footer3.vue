@@ -6,40 +6,25 @@
           <li>
             <p class="title">Contacto</p>
           </li>
-          <li
-            class="item-col1"
-            v-if="info[0].direccion"
-          >
-            <p
-              v-for="(item, index) in info"
-              :key="index"
-            >
+          <li class="item-col1" v-if="info[0].direccion">
+            <p v-for="(item, index) in info" :key="index">
               <span>Dirección:</span>
               {{item.direccion}}
             </p>
           </li>
-          <li
-            class="item-col1"
-            v-if="storeData.telefono"
-          >
+          <li class="item-col1" v-if="storeData.telefono">
             <p>
               <span>Teléfonos:</span>
               {{storeData.telefono}}
             </p>
           </li>
-          <li
-            class="item-col1"
-            v-if="storeData.email_tienda"
-          >
+          <li class="item-col1" v-if="storeData.email_tienda">
             <p>
               <span>Email:</span>
               {{storeData.email_tienda}}
             </p>
           </li>
-          <li
-            class="item-col1"
-            v-if="info[0].horario"
-          >
+          <li class="item-col1" v-if="info[0].horario">
             <p>
               <span>Horario:</span>
               {{info[0].horario}}
@@ -58,10 +43,7 @@
             class="navigation-item"
             v-show="activeRoute(item)"
           >
-            <router-link
-              :to="item.route"
-              class="navigation-link"
-            >{{item.name}}</router-link>
+            <router-link :to="item.route" class="navigation-link">{{item.name}}</router-link>
           </li>
         </ul>
       </div>
@@ -72,31 +54,19 @@
           </li>
           <li v-if="storeData.red_facebook">
             <i class="icon-facebook-official" />
-            <a
-              :href="storeData.red_facebook"
-              target="_blank"
-            >Facebook</a>
+            <a :href="storeData.red_facebook" target="_blank">Facebook</a>
           </li>
           <li v-if="storeData.red_instagram">
             <i class="icon-instagram" />
-            <a
-              :href="storeData.red_instagram"
-              target="_blank"
-            >Instagram</a>
+            <a :href="storeData.red_instagram" target="_blank">Instagram</a>
           </li>
           <li v-if="storeData.red_twitter">
             <i class="icon-twitter" />
-            <a
-              :href="storeData.red_twitter"
-              target="_blank"
-            >Twitter</a>
+            <a :href="storeData.red_twitter" target="_blank">Twitter</a>
           </li>
           <li v-if="storeData.red_youtube">
             <i class="icon-youtube" />
-            <a
-              :href="storeData.red_youtube"
-              target="_blank"
-            >Youtube</a>
+            <a :href="storeData.red_youtube" target="_blank">Youtube</a>
           </li>
         </ul>
       </div>
@@ -110,30 +80,28 @@
           </li>
           <li>
             <div class="ko-input">
-              <input
-                type="email"
-                placeholder="Escribe tu email"
-                v-model="email"
-                @keyup.enter="toSubscribe"
-              >
-              <i
-                class="icon-paper-plane-2"
-                @click="toSubscribe"
-              ></i>
-              <transition name="slide-fade">
-                <span
-                  class="response"
-                  v-show="toSubscribeResponse"
-                >Ya estas suscrito!</span>
-              </transition>
+              <ValidationObserver ref="validate" >
+              <validation-provider name="email" rules="required|email">
+                <template slot-scope="{errors}">
+                  <input
+                    name="email"
+                    type="email"
+                    placeholder="Escribe tu email"
+                    v-model="email"
+                    @keyup.enter="toSubscribe"
+                  />
+                <i class="icon-paper-plane-2" @click="toSubscribe"></i>
+                  <transition name="slide-fade">
+                    <span v-show="errors[0] || register" class="response">{{errors[0] || register}}</span>
+                  </transition>
+                </template>
+              </validation-provider>
+              </ValidationObserver>
             </div>
           </li>
           <li>
             <p>Copyright © {{new Date().getFullYear()}} by komercia. All Rights Reserved.</p>
-            <a
-              class="link-komercia"
-              href="https://komercia.co"
-            >Powered by Komercia</a>
+            <a class="link-komercia" href="https://komercia.co">Powered by Komercia</a>
           </li>
         </ul>
       </div>
@@ -149,9 +117,14 @@
 
 <script>
 import axios from "axios";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 
 export default {
   name: "koFooter3",
+  components: {
+    ValidationObserver,
+    ValidationProvider
+  },
   data() {
     return {
       routes: [
@@ -177,10 +150,14 @@ export default {
         }
       ],
       email: "",
-      toSubscribeResponse: false
+      toSubscribeResponse: false,
+      register: ''
     };
   },
   computed: {
+    messages() {
+      return this.errors[0];
+    },
     info() {
       return this.$store.state.geolocalizacion;
     },
@@ -200,18 +177,26 @@ export default {
       );
     },
     toSubscribe() {
-      this.toSubscribeResponse = false;
-      const params = {
-        correo: this.email,
-        tienda: this.storeData.id_tienda
-      };
-      axios
-        .post("https://templates.komercia.co/api/suscriptores", params)
-        .then(() => {
-          this.email = "";
-          this.toSubscribeResponse = true;
-        });
-    }
+      this.$refs.validate.validate().then(response => {
+        if (response) {
+          this.toSubscribeResponse = false;
+          const params = {
+            correo: this.email,
+            tienda: this.storeData.id_tienda
+          };
+          axios
+            .post("https://templates.komercia.co/api/suscriptores", params)
+            .then(result => {
+              this.register = "Tu correo ha sido registrado"
+              this.email = "";
+              this.toSubscribeResponse = true;
+            }).catch(result => this.register = "Tu correo ha sido registrado");
+        }
+      }).catch(e => {
+        console.log(e);
+        
+      })
+    },
   }
 };
 </script>
@@ -359,6 +344,7 @@ i {
   border-radius: 2px;
   outline-color: #fff;
   color: #fff;
+  margin-bottom: 5px;
 }
 .ko-input i.icon-paper-plane-2 {
   position: absolute;
@@ -369,12 +355,12 @@ i {
 .ko-input .response {
   justify-self: start;
   background-color: rgba(255, 255, 255, 0.1);
-  padding: 0 10px;
+  padding: 5px 10px;
   height: 32px;
   line-height: 30px;
   font-size: 12px;
   color: #fff;
-  border-radius: 4px;
+  border-radius: 2px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border: 1px solid rgba(255, 255, 255, 0.2);

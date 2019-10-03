@@ -197,7 +197,7 @@ export default {
       stores: [
         { value: 1, label: "Topalxe - 1" },
         { value: 790, label: "mammanonna - 790" },
-        { value: 452, label: "EngelShoes - 452" },
+        { value: 1100, label: "Macrobrand - 1100" },
         { value: 364, label: "Ace Delivery's - 364" },
         { value: 178, label: "sgs.shopping - 178" },
         { value: 847, label: "Bigoaventura - 847" },
@@ -208,7 +208,7 @@ export default {
         { value: 889, label: "Perfecta - 889" },
         { value: 605, label: "Origen SP" },
         { value: 431, label: "Demo 3" },
-        { value: 349, label: "Demo 1" },
+        { value: 582, label: "Tu Tienda - 582" },
       ]
     };
   },

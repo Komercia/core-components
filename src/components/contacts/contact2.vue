@@ -21,41 +21,67 @@
       <div class="container-contact">
         <div class="contact">
           <div class="form section">
-            <p class="title-section">Pónte en contacto con nosotros</p>
-            <div class="content-inputs">
+            <ValidationObserver ref="observer" tag="form">
+              <p class="title-section">Pónte en contacto con nosotros</p>
+              <div class="content-inputs">
+                <p class="text-secundary">
+                  <label>Nombre</label>
+                  <validation-provider name="nombre" rules="required">
+                    <template slot-scope="{errors}">
+                    <input
+                      name="nombre"
+                      type="text"
+                      v-model="nombre"
+                    >
+                    <span class="text-error" v-show="errors[0]">{{errors[0]}}</span>
+                    </template>
+                  </validation-provider>
+                </p>
+                <p class="text-secundary">
+                  <label>Celular</label>
+                  <validation-provider name="celular" rules="required|num">
+                    <template slot-scope="{errors}">
+                      <input
+                        name="celular"
+                        type="text"
+                        v-model="numberphone"
+                      >
+                        <span class="text-error" v-show="errors[0]">{{errors[0]}}</span>
+                    </template>
+                  </validation-provider>
+                </p>
+              </div>
               <p class="text-secundary">
-                <label>Nombre</label>
-                <input
-                  type="text"
-                  v-model="nombre"
-                >
+                <label>Correo</label>
+                  <validation-provider name="email" rules="required|email">
+                    <template slot-scope="{errors}">
+                      <input
+                        name="email"
+                        type="text"
+                        v-model="email"
+                      >
+                      <span class="text-error" v-show="errors[0]">{{errors[0]}}</span>
+                    </template>
+                  </validation-provider>
               </p>
               <p class="text-secundary">
-                <label>Celular</label>
-                <input
-                  type="text"
-                  v-model="numberphone"
-                >
+                <label>Comentario</label>
+                <validation-provider name="comentario" rules="required">
+                  <template slot-scope="{errors}">
+                    <textarea
+                      name="comentario"
+                      rows="8"
+                      v-model="comment"
+                    ></textarea>
+                    <span class="text-error" v-show="errors[0]">{{errors[0]}}</span>
+                  </template>
+                </validation-provider>
               </p>
-            </div>
-            <p class="text-secundary">
-              <label>Correo</label>
-              <input
-                type="text"
-                v-model="email"
-              >
-            </p>
-            <p class="text-secundary">
-              <label>Comentario</label>
-              <textarea
-                rows="8"
-                v-model="comment"
-              ></textarea>
-              <button
-                class="submitContact"
-                v-on:click="submitContact"
-              >Enviar</button>
-            </p>
+                <button
+                  class="submitContact"
+                  v-on:click.prevent="submitContact"
+                >Enviar</button>
+            </ValidationObserver>
           </div>
           <div class="information section">
             <div
@@ -205,17 +231,26 @@
 <script>
 import axios from "axios";
 import koWhatsapp from "../../Icons/whatsapp";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 
 export default {
   name: "koContact2",
   components: {
-    koWhatsapp
+    koWhatsapp,
+    ValidationObserver,
+    ValidationProvider
   },
   mounted() {
     this.makeMap();
     if (Object.keys(this.$store.state.envios).length) {
       this.setOptionEnvio();
     }
+  },
+  destroyed() {
+    this.nombre = "";
+    this.email = "";
+    this.numberphone = "";
+    this.comment = "";
   },
   watch: {
     geolocalizacion() {
@@ -227,6 +262,7 @@ export default {
   },
   data() {
     return {
+      messageFull: '',
       nombre: "",
       email: "",
       numberphone: "",
@@ -254,22 +290,25 @@ export default {
   },
   methods: {
     submitContact() {
-      const json = {
-        nombre: this.nombre,
-        correo: this.email,
-        celular: this.numberphone,
-        comentario: this.comment,
-        tienda: this.$store.state.id
-      };
-      axios
-        .post(`https://templates.komercia.co/api/mensaje-contacto`, json)
-        .then(response => {
-          this.nombre = "";
-          this.email = "";
-          this.numberphone = "";
-          this.comment = "";
-          this.$store.state.id = "";
-        });
+      this.$refs.observer.validate().then(response => {
+        if (response) {
+          const json = {
+            nombre: this.nombre,
+            correo: this.email,
+            celular: this.numberphone,
+            comentario: this.comment,
+            tienda: this.storeData.id_tienda
+          };
+          axios
+            .post(`https://templates.komercia.co/api/mensaje-contacto`, json)
+            .then(response => {
+              this.$message.success('Comentario enviado!');
+            });
+        }    
+      }).catch(e => {
+        console.log('e');
+      })
+      
     },
     makeMap() {
       let place = { latitud: 4.14, longitud: -73.63 };
@@ -552,6 +591,10 @@ label {
 }
 .form .text-secundary {
   color: #333;
+  position: relative;
+}
+form > .text-secundary {
+  padding-bottom: 0.1px;
 }
 .row {
   display: flex;
@@ -630,6 +673,12 @@ a > i {
   fill: #27d367;
   width: 40px;
   background: var(--background_color);
+}
+.text-error {
+  font-size: 12px;
+  color: #cb2027;
+  position: absolute;
+  bottom: 0;
 }
 @media (max-width: 1260px) {
   .contacto_content {
