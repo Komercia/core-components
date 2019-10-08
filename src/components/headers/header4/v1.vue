@@ -7,7 +7,6 @@
           <em class="num-products">{{ productsCart }}</em>
         </i>
       </div>
-
     </div>
     <div class="line"></div>
     <div class="container" v-if="setting">

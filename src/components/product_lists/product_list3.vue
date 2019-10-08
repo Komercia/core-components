@@ -157,12 +157,6 @@ export default {
         timerTimeout = null
         window.scrollTo(0, 0);
       }, 250);
-    },
-    value(value) {
-      this.sendCategory(value);
-    },
-    valuesub(value) {
-      this.Sendsubcategory(value);
     }
   },
   computed: {

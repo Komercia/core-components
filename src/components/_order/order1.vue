@@ -165,6 +165,7 @@ export default {
             }
             break;
           default:
+            return 0;
         }
       } else {
         return 0;
@@ -213,7 +214,7 @@ export default {
         tipo: 0,
         total: this.$store.state.totalCart,
         estado: 0,
-        direccion_entrega: 1
+        direccion_entrega: 0
       };
       json = JSON.stringify(json);
       if (this.$store.state.productsCart.length != 0) {
@@ -227,9 +228,9 @@ export default {
         tipo: 1,
         total: this.$store.state.totalCart,
         estado: 0,
-        direccion_entrega: 1,
+        direccion_entrega: 0,
         metodo_pago: "7",
-        costo_envio: this.shipping,
+        costo_envio: this.shipping || 0,
         usuario: this.userData.id
       };
       const response = await axios.post(
