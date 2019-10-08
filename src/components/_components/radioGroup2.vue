@@ -4,6 +4,7 @@
       :class="{'ko-radio_group_option': true, 'option-selected': option.selected}"
       v-for="(option, index) in optionsData"
       v-on:click="selectOption(option, index)"
+      :key="index"
     >{{ option.option.toLowerCase() }}</li>
   </ul>
 </template>
@@ -35,7 +36,7 @@ export default {
       this.saveOption(option);
     },
     saveOption(option) {
-      this.$store.state.beforeCombination.splice(this.index, 1, option.option);
+      this.$store.commit('SET_SAVEOPTION', {index:this.index, option: option})
     }
   }
 };

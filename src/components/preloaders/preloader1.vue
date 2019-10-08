@@ -14,6 +14,11 @@ export default {
     this.repeatLoad();
     this.load();
   },
+  destroyed() {
+    window.removeEventListener("load", () => {
+        this.loader = true;
+      });
+  },
   data() {
     return {
       loader: false

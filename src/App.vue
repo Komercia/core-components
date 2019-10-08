@@ -16,7 +16,7 @@ export default {
   created() {
     this.$store.dispatch("GET_COMPONENTS");
     this.$store.dispatch("GET_SECTIONS");
-    this.$store.commit("GET_DATA");
+    this.$store.dispatch("GET_DATA");
   },
   data() {
     return {
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 @import "./assets/css/main.css";
 @import "./styles/material.css";
 @import "./styles/default.css";
@@ -41,8 +41,8 @@ export default {
   font-family: "Open Sans", sans-serif;
 }
 :root {
-  --main_color: rgb(51, 51, 51);
-  --text_color: rgb(0, 0, 0);
+  --main_color: rgb(181, 51, 51);
+  --text_color: rgb(51, 51, 51);
   --button_color: #333333;
   --button_text_color: rgb(255, 255, 255);
   --background_color: rgb(255, 255, 255);

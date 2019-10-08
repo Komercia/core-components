@@ -1,74 +1,88 @@
 <template>
-<div class="container">
-  <div class="item item_image">
-    <img :src="setting.data[0].photo">
-  </div>
-  <div class="item item_content">
-    <div class="item texto">
-      <h2>{{ setting.data[0].title }}</h2>
-      <p>{{ setting.data[0].description }}</p>
-      <a :href="setting.data[0].redirect_url">
-        <button class="button">{{setting.data[0].button_text}}</button>
-      </a>
+  <div class="container">
+    <div class="item item_image">
+      <img :src="fitImage(setting.data[0].photo)" />
+    </div>
+    <div class="item item_content">
+      <div class="item texto">
+        <h2>{{ setting.data[0].title }}</h2>
+        <p>{{ setting.data[0].description }}</p>
+        <a :href="setting.data[0].redirect_url">
+          <button class="button">{{setting.data[0].button_text}}</button>
+        </a>
+      </div>
+    </div>
+    <div class="item item_content item_last">
+      <div class="item texto">
+        <h2>{{ setting.data[1].title }}</h2>
+        <p>{{ setting.data[1].description }}</p>
+        <a :href="setting.data[1].redirect_url">
+          <button class="button">{{setting.data[1].button_text}}</button>
+        </a>
+      </div>
+    </div>
+    <div class="item item_image">
+      <img :src="fitImage(setting.data[1].photo)" />
     </div>
   </div>
-  <div class="item item_content item_last">
-    <div class="item texto">
-      <h2>{{ setting.data[1].title }}</h2>
-      <p>{{ setting.data[1].description }}</p>
-      <a :href="setting.data[1].redirect_url">
-        <button class="button">{{setting.data[1].button_text}}</button>
-      </a>
-    </div>
-  </div>
-  <div class="item item_image">
-    <img :src="setting.data[1].photo">
-  </div>
-</div>
 </template>
 
 <script>
-
 export default {
-  name: 'koContent1',
+  name: "koContent1",
   props: {
     setting: {
       type: Object,
-      default: function () {
+      default: function() {
         return {
-          name: '',
-          data: [{
-            photo: 'https://images.pexels.com/photos/910329/pexels-photo-910329.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            title: 'SUMMER',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            redirect_url: '',
-            button_text: 'SHOP NOW'
-          },
-          {
-            photo: 'https://images.pexels.com/photos/1153838/pexels-photo-1153838.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-            title: 'SPRING',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            redirect_url: '',
-            button_text: 'SELL IT',
-          }]
-        }
+          name: "",
+          data: [
+            {
+              photo:
+                "https://res.cloudinary.com/komercia-store/image/upload/w_600,q_auto:best,f_auto/v1550852556/placeholder/product-image-placeholder.jpg",
+              title: "SUMMER",
+              description:
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              redirect_url: "",
+              button_text: "SHOP NOW"
+            },
+            {
+              photo:
+                "https://res.cloudinary.com/komercia-store/image/upload/w_600,q_auto:best,f_auto/v1550852556/placeholder/product-image-placeholder.jpg",
+              title: "SPRING",
+              description:
+                "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+              redirect_url: "",
+              button_text: "SELL IT"
+            }
+          ]
+        };
       }
     }
   },
-}
+  methods: {
+    fitImage(image) {
+      let fitImage = image.split("/upload/");
+      return (
+        "https://res.cloudinary.com/komercia-store/image/upload/w_600,q_auto:best,f_auto/" +
+        fitImage[1]
+      );
+    }
+  }
+};
 </script>
 
 <style scoped>
-.container{
+.container {
   display: grid;
-  grid-template: repeat(2, 1fr)/repeat(2, 1fr);
+  grid-template: repeat(2, 1fr) / repeat(2, 1fr);
   max-width: 1366px;
   margin: 0 auto;
 }
-.item{
+.item {
   font-size: 12px;
 }
-.item .texto{
+.item .texto {
   max-width: 400px;
   width: 100%;
   text-align: justify;
@@ -78,11 +92,11 @@ export default {
   box-sizing: border-box;
   color: var(--text_color);
 }
-.item .button{
+.item .button {
   font-weight: bold;
   background-color: var(--button_color);
   border: none;
-  color:var(--button_text_color);
+  color: var(--button_text_color);
   height: 30px;
   width: 150px;
   text-align: center;
@@ -90,45 +104,44 @@ export default {
   cursor: pointer;
   margin-top: 10px;
 }
-.item .button:hover{
+.item .button:hover {
   transform: scale(1.1);
 }
-.item_image{
+.item_image {
   overflow: hidden;
 }
-.item_image img{
+.item_image img {
   max-height: 500px;
   height: 100%;
   object-fit: cover;
   width: 100%;
   z-index: 1;
 }
-h2{
+h2 {
   margin-top: 0px;
   margin-bottom: 10px;
   font-size: 20px;
 }
-.item_content{
+.item_content {
   display: grid;
   align-items: center;
   justify-items: center;
   overflow: hidden;
-
 }
 @media screen and (max-width: 800px) {
-  .container{
-    grid-template: repeat(4, 1fr)/ 1fr;
+  .container {
+    grid-template: repeat(4, 1fr) / 1fr;
     max-height: 50%;
   }
-  .item_last{
+  .item_last {
     order: 3;
   }
-  .item .texto{
+  .item .texto {
     width: initial;
   }
 }
 @media screen and (max-width: 600px) {
-  .item .texto{
+  .item .texto {
     font-size: 14px;
   }
 }

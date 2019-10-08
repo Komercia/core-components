@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+import 'swiper/dist/css/swiper.css';
 import Vue from 'vue';
 import Vuex from 'vuex';
 import App from './App';
@@ -7,7 +8,7 @@ import router from './router';
 import store from './store';
 import axios from 'axios';
 import locale from 'element-ui/lib/locale/lang/es';
-import '../static/index.css';
+import '../public/index.css';
 import elementUI from 'element-ui';
 import VuePaginate from 'vue-paginate';
 import ImageCloudinary from 'image-cloudinary';
@@ -20,8 +21,8 @@ import KomerciaCropper from 'komercia-cropper';
 import SocialSharing from 'vue-social-sharing';
 import Meta from 'vue-meta';
 import VueCarousel from 'vue-carousel';
-import VueAwesomeSwiper from 'vue-awesome-swiper';
-import 'swiper/dist/css/swiper.css';
+import VueAwesomeSwiper from 'vue-awesome-swiper/dist/ssr';
+import "./vee-validate";
 
 Vue.prototype.$firebase = firebase;
 
@@ -42,9 +43,6 @@ Vue.use(elementUI, { locale });
 Vue.use(VueAwesomeSwiper);
 
 Vue.use(VueCarousel);
-
-Vue.prototype.$urlHttp = 'https://api2.komercia.co';
-store.state.urlHttp = Vue.prototype.$urlHttp;
 
 const getCookie = cname => {
   const name = `${cname}=`;
@@ -71,11 +69,11 @@ const config = {
     'Access-Control-Allow-Origin': '*'
   }
 };
-store.state.configHttp = config
+store.state.configHttp = config;
 Vue.prototype.$configHttp = config;
 if (authData) {
   axios.get('https://api2.komercia.co/api/user', config).then(response => {
-    store.state.userData = response.data.data;
+    // store.state.userData = response.data.data;
   });
 }
 

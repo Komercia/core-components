@@ -139,6 +139,9 @@ export default {
     };
   },
   computed: {
+    url() {
+      return this.$store.state.urlHttp;
+    },
     tienda() {
       return this.$store.state.tienda;
     },
@@ -183,7 +186,7 @@ export default {
         correo: this.email,
         tienda: this.$store.state.id
       };
-      axios.post(`${this.$urlHttp}/api/front/suscriptores`, json);
+      axios.post(`${this.url}/api/front/suscriptores`, json);
     },
     activeRoute() {
       return !!(

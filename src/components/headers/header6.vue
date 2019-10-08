@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <ko-order1 />
+    <koOrder1 />
     <div
       class="container-nav"
       v-if="setting"
@@ -244,7 +244,7 @@ export default {
         : (event.target.style.color = this.setting.styleObject.colorText);
     },
     toggleMenuAction() {
-      if (window.innerWidth <= 770) {
+      if (window && window.innerWidth <= 770) {
         this.toggleMenu = !this.toggleMenu;
       }
     }

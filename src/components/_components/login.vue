@@ -1,6 +1,9 @@
 <template>
   <div class="komercia_chat_login">
-    <button class="btn btn-facebook" v-on:click="getUIDWithFacebook">
+    <button
+      class="btn btn-facebook"
+      v-on:click="getUIDWithFacebook"
+    >
       <i class="fa fa-facebook-square"></i>Ingresar con Facebook
     </button>
 
@@ -9,12 +12,18 @@
       <p>ó</p>
       <div class="line-horizontal"></div>
     </div>
-    <form v-on:submit.prevent class="form">
+    <form
+      v-on:submit.prevent
+      class="form"
+    >
       <p class="action-signup">Ingresa con email y contraseña</p>
 
       <div class="input-area first">
         <p class="nameItem">Correo electrónico</p>
-        <div id="emailFocus" class="container-inputs">
+        <div
+          id="emailFocus"
+          class="container-inputs"
+        >
           <input
             class="input-email"
             type="email"
@@ -28,14 +37,23 @@
         <!-- <p class="text-error">{{ errors.first('email') }}</p> -->
       </div>
       <div class="input-area">
-        <span v-if="typePassword == 'password'" @click="showPassword">
+        <span
+          v-if="typePassword == 'password'"
+          @click="showPassword"
+        >
           <i class="fa fa-eye"></i>Mostrar
         </span>
-        <span v-else @click="hiddenPassword">
+        <span
+          v-else
+          @click="hiddenPassword"
+        >
           <i class="fa fa-eye-slash"></i>Ocultar
         </span>
         <p class="nameItem">Contraseña</p>
-        <div id="passwordFocus" class="container-inputs">
+        <div
+          id="passwordFocus"
+          class="container-inputs"
+        >
           <input
             class="input-password"
             :type="typePassword"
@@ -44,9 +62,17 @@
           >
         </div>
       </div>
-      <el-alert :title="messageInvalid" v-show="showInvalid" type="error" :closable="false"></el-alert>
+      <el-alert
+        :title="messageInvalid"
+        v-show="showInvalid"
+        type="error"
+        :closable="false"
+      ></el-alert>
       <div class="container-button">
-        <button class="btn btn-login btn-fill" v-on:click="login">
+        <button
+          class="btn btn-login btn-fill"
+          v-on:click="login"
+        >
           <p>Inicia Sesión</p>
         </button>
       </div>
@@ -77,6 +103,11 @@ export default {
       typePassword: "password"
     };
   },
+  computed: {
+    url() {
+      return this.$store.state.urlHttp;
+    }
+  },
   methods: {
     getUIDWithFacebook() {
       let provider = new firebase.auth.FacebookAuthProvider();
@@ -94,7 +125,7 @@ export default {
       params.name = providerData.displayName;
       params.email = providerData.email;
       params.token = "";
-      axios.post(`${this.$urlHttp}/login/facebook`, params).then(response => {
+      axios.post(`${this.url}/login/facebook`, params).then(response => {
         Cookies.set("authData", response.data.accessToken, {
           domain: "komercia.co"
         });
@@ -112,9 +143,7 @@ export default {
       axios
         .post(`https://api2.komercia.co/oauth/token`, params)
         .then(response => {
-          document.cookie = `authData = ${
-            response.data.access_token
-          }; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
+          document.cookie = `authData = ${response.data.access_token}; domain = komercia.co; expires=Thu, 01 Dec 2050 00:00:00 UTC;`;
           axios.defaults.headers.common = {
             "content-type": "application/json",
             Authorization: `Bearer ${response.data.access_token}`,
@@ -136,7 +165,7 @@ export default {
           "Access-Control-Allow-Origin": "*"
         }
       };
-      axios.get(`${this.$urlHttp}/api/user`, config).then(response => {
+      axios.get(`${this.url}/api/user`, config).then(response => {
         this.$store.state.userData = response.data.data;
         this.$emit("authenticated");
       });

@@ -7,7 +7,7 @@
     <image-cloudinary
       :src="photo"
       class="photo_main"
-      :width="1000"
+      :width="900"
     />
   </figure>
 </template>
@@ -30,8 +30,9 @@ export default {
       zoomer.style.backgroundPosition = `${x}% ${y}%`;
     },
     setBackground(p) {
-      return `background-image: url('${this.$ImageCloudinary(p, {
-        width: 1000
+      //este metodo esta en utils/mixins.js
+      return `background-image: url('${this.ImageCloudinary(p, {
+        width: 900
       })}')`;
     }
   }

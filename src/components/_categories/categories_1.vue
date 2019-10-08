@@ -64,19 +64,19 @@ export default {
   methods: {
     Sendsubcategory(value) {
       this.selectSubcategory = value;
-      this.$store.dispatch("products/FILTER_BY", {
+      this.$store.commit("modules/products/FILTER_BY", {
         type: "subcategory",
         data: value
       });
     },
     sendCategory(value) {
-      this.$store.dispatch("products/FILTER_BY", {
+      this.$store.commit("modules/products/FILTER_BY", {
         type: "category",
         data: value
       });
     },
     clear() {
-      this.$store.dispatch("products/FILTER_BY", { type: "all", data: "" });
+      this.$store.commit("modules/products/FILTER_BY", { type: "all", data: "" });
       this.$emit("clear");
     }
   },

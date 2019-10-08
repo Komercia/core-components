@@ -1,72 +1,75 @@
 <template>
   <div class="slider">
-    <div class="content-swiper">
-      <swiper
-        :options="swiperOption"
+    <div v-show="showSwiper" class="content-swiper">
+      <div
+        v-swiper:mySwiper="swiperOption"
         ref="mySwiper"
         @slideChange="activeBtn"
       >
-        <swiper-slide
-          v-for="(item, index) in setting.data.banners"
-          :key="index"
-        >
-          <router-link
-            :to="`/productos/${item.redirect_to.value}`"
-            v-if="item.redirect_to.type == 1"
-          >
-            <div class="slide">
-              <image-cloudinary
-                :src="item.photo"
-                :width="1600"
-              />
-            </div>
-          </router-link>
-          <router-link
-            :to="`/productos?category=${item.redirect_to.value}`"
-            v-if="item.redirect_to.type == 2"
-          >
-            <div class="slide">
-              <image-cloudinary
-                :src="item.photo"
-                :width="1600"
-              />
-            </div>
-          </router-link>
-          <router-link
-            :to="`/productos?search=${item.redirect_to.value}`"
-            v-if="item.redirect_to.type == 3"
-          >
-            <div class="slide">
-              <image-cloudinary
-                :src="item.photo"
-                :width="1600"
-              />
-            </div>
-          </router-link>
-          <router-link
-            :to="item.redirect_to.value"
-            v-if="item.redirect_to.type == 4"
-          >
-            <div class="slide">
-              <image-cloudinary
-                :src="item.photo"
-                :width="1600"
-              />
-            </div>
-          </router-link>
-          <a
-            :href="item.redirect_to.value"
-            v-else-if="item.redirect_to.type == 5"
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide"
+            v-for="(item, index) in setting.data.banners"
             :key="index"
           >
-            <div class="slide">
-              <image-cloudinary
-                :src="item.photo"
-                :width="1600"
-              />
-            </div>
-          </a>
-        </swiper-slide>
+            <router-link
+              :to="`/productos/${item.redirect_to.value}`"
+              v-if="item.redirect_to.type == 1"
+            >
+              <div class="slide">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="1600"
+                />
+              </div>
+            </router-link>
+            <router-link
+              :to="`/productos?category=${item.redirect_to.value}`"
+              v-if="item.redirect_to.type == 2"
+            >
+              <div class="slide">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="1600"
+                />
+              </div>
+            </router-link>
+            <router-link
+              :to="`/productos?search=${item.redirect_to.value}`"
+              v-if="item.redirect_to.type == 3"
+            >
+              <div class="slide">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="1600"
+                />
+              </div>
+            </router-link>
+            <router-link
+              :to="item.redirect_to.value"
+              v-if="item.redirect_to.type == 4"
+            >
+              <div class="slide">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="1600"
+                />
+              </div>
+            </router-link>
+            <a
+              :href="item.redirect_to.value"
+              v-else-if="item.redirect_to.type == 5"
+              :key="index"
+            >
+              <div class="slide">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="1600"
+                />
+              </div>
+            </a>
+          </div>
+        </div>
         <div
           class="pagination"
           slot="pagination"
@@ -81,75 +84,77 @@
             :key="index"
           ></div>
         </div>
-      </swiper>
+      </div>
     </div>
     <div class="content-swiper-responsive">
-      <swiper
-        :options="swiperOption2"
+      <div
+        v-swiper:mySwiper="swiperOption2"
         ref="mySwiper2"
         @slideChange="activeBtn2"
       >
-        <swiper-slide
-          v-for="(item, index) in banners"
-          :key="index"
-        >
-          <router-link
-            :to="`/productos/${item.redirect_to.value}`"
-            v-if="item.redirect_to.type == 1"
-          >
-            <div class="slide-responsive">
-              <image-cloudinary
-                :src="item.photo"
-                :width="600"
-              />
-            </div>
-          </router-link>
-          <router-link
-            :to="`/productos?category=${item.redirect_to.value}`"
-            v-if="item.redirect_to.type == 2"
-          >
-            <div class="slide-responsive">
-              <image-cloudinary
-                :src="item.photo"
-                :width="600"
-              />
-            </div>
-          </router-link>
-          <router-link
-            :to="`/productos?search=${item.redirect_to.value}`"
-            v-if="item.redirect_to.type == 3"
-          >
-            <div class="slide-responsive">
-              <image-cloudinary
-                :src="item.photo"
-                :width="600"
-              />
-            </div>
-          </router-link>
-          <router-link
-            :to="item.redirect_to.value"
-            v-if="item.redirect_to.type == 4"
-          >
-            <div class="slide-responsive">
-              <image-cloudinary
-                :src="item.photo"
-                :width="600"
-              />
-            </div>
-          </router-link>
-          <a
-            :href="item.redirect_to.value"
-            v-else-if="item.redirect_to.type == 5"
+        <div class="swiper-wrapper">
+          <div
+            v-for="(item, index) in banners"
             :key="index"
           >
-            <div class="slide-responsive">
-              <image-cloudinary
-                :src="item.photo"
-                :width="600"
-              />
-            </div>
-          </a>
-        </swiper-slide>
+            <router-link
+              :to="`/productos/${item.redirect_to.value}`"
+              v-if="item.redirect_to.type == 1"
+            >
+              <div class="slide-responsive">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="600"
+                />
+              </div>
+            </router-link>
+            <router-link
+              :to="`/productos?category=${item.redirect_to.value}`"
+              v-if="item.redirect_to.type == 2"
+            >
+              <div class="slide-responsive">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="600"
+                />
+              </div>
+            </router-link>
+            <router-link
+              :to="`/productos?search=${item.redirect_to.value}`"
+              v-if="item.redirect_to.type == 3"
+            >
+              <div class="slide-responsive">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="600"
+                />
+              </div>
+            </router-link>
+            <router-link
+              :to="item.redirect_to.value"
+              v-if="item.redirect_to.type == 4"
+            >
+              <div class="slide-responsive">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="600"
+                />
+              </div>
+            </router-link>
+            <a
+              :href="item.redirect_to.value"
+              v-else-if="item.redirect_to.type == 5"
+              :key="index"
+            >
+              <div class="slide-responsive">
+                <image-cloudinary
+                  :src="item.photo"
+                  :width="600"
+                />
+              </div>
+            </a>
+          </div>
+        </div>
         <div
           class="pagination2"
           slot="pagination"
@@ -164,7 +169,7 @@
             :key="index"
           ></div>
         </div>
-      </swiper>
+      </div>
     </div>
   </div>
 </template>
@@ -182,12 +187,12 @@ export default {
             banners: [
               {
                 photo:
-                  "https://lh3.googleusercontent.com/RjgDMs-pimIHX-BVgssw1xlXOydfu6fvW42SVywW0ykZhmwV0aUTVSoODyrX-qWbF5CnaHjhP563CXTIiQg3=w1920-h969-rw",
+                  "https://res.cloudinary.com/komercia/image/upload/v1548879392/xt7bugfrnpmdpym096kz.png",
                 redirect_to: "https://komercia.co"
               },
               {
                 photo:
-                  "https://lh3.googleusercontent.com/zmAuDgr5Dt4oDuw02nFkYuBKjQPtNz4TevAZEE8_M7uVCcdq1CqKvgDyw55HXJ_xwTWgBUIYVLJclzBykE70I3BiER5soLvZNRL0rdxOkWcQNRYLn81-ePGcjaVjRknrsptblzTnhlC6OwanU1fCCgfeKTw33gRd1pLzcuQhHpAafkMQboRydOjwh7cha5Ey_iUwlPlV1d7s12iO6eE8zQO54PlSbV7YGQSXN3lDPw4ue4WNqIiscajJsnFIdQs2klN57__Ayuk6HieVTiTKatN-9zpeAFK1krTDy8DyF0MAmu6NTa_N_LQ736SMtiGphub-YvqY2p_gqlZJDIxBvu3vFpnAlHRxQRQzIne8l5HE5Xn7rKeg8uROFwefYgHoEwnezu-yXeRuw5s-E9HzQnRIG5jm8A3u-dO2jB6E7zOOV9J9Yb3MVRZz9mmsIOoIkU9V0S2rVT-td3Jj0cGXVS5444YuYgpRuswHfed26RlDukq3svH0VVUzP-xK1XtkUzSaWOG2jNyk0w2gmKLAk2Zq7YReYdDTPfszixtN6zfrx9PXFsakqYIoqip6uxqiRzoDrUoAYP_byAZCObAN4PkGgLC5KaQN=w1920-h969",
+                  "https://res.cloudinary.com/komercia/image/upload/v1548888097/fyu1rbego6hwmtrwpbqx.png",
                 redirect_to: ""
               }
             ],
@@ -207,8 +212,12 @@ export default {
       }
     }
   },
+  mounted() {
+    this.showSwiper = true
+  },
   data() {
     return {
+      showSwiper:false,
       indexBtn: 0,
       indexBtn2: 0,
       swiperOption: {

@@ -147,7 +147,7 @@
               </div>
             </div>
             <div class="social">
-              <ul class="list-social">
+              <ul v-if="storeData.telefono" class="list-social">
                 <li v-show="storeData.red_facebook">
                   <a
                     class="color_facebook"
@@ -205,17 +205,27 @@
 <script>
 import axios from "axios";
 import koWhatsapp from "../../Icons/whatsapp";
+import { ValidationObserver, ValidationProvider } from "vee-validate";
 
 export default {
   name: "koContact2",
   components: {
-    koWhatsapp
+    koWhatsapp,
+    ValidationObserver,
+    ValidationProvider
+
   },
   mounted() {
     this.makeMap();
     if (Object.keys(this.$store.state.envios).length) {
       this.setOptionEnvio();
     }
+  },
+  destroyed() {
+    this.nombre = "";
+    this.email = "";
+    this.numberphone = "";
+    this.comment = "";
   },
   watch: {
     geolocalizacion() {
@@ -264,11 +274,7 @@ export default {
       axios
         .post(`https://templates.komercia.co/api/mensaje-contacto`, json)
         .then(response => {
-          this.nombre = "";
-          this.email = "";
-          this.numberphone = "";
-          this.comment = "";
-          this.$store.state.id = "";
+          this.$message.success('Comentario enviado!');
         });
     },
     makeMap() {
@@ -452,8 +458,8 @@ header {
   color: var(--text_color);
 }
 .info {
-  background-color: var(--main_color);
-  color: var(--text_color);
+  background-color: var(--button_color);
+  color: var(--button_text_color);
   box-sizing: border-box;
   padding: 45px;
   max-width: 350px;

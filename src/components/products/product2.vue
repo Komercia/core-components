@@ -1,14 +1,10 @@
 <template>
-  <div class="product" v-if="data.detalle">
-    <ko-modal v-show="modalPayment"></ko-modal>
+  <div class="product" v-show="data.detalle">
+    <!-- <ko-modal v-show="modalPayment"></ko-modal> -->
     <div class="wrapper">
       <div class="section">
         <div class="photos">
           <div class="photos_selected">
-            <!-- <image-cloudinary
-                  :src="setMiniPhoto(data.detalle.foto_cloudinary)"
-                  :width="300"
-            />-->
             <image-cloudinary
               :src="setMiniPhoto(data.detalle.foto_cloudinary)"
               v-on:mouseover.native="selectedPhoto(data.detalle.foto_cloudinary)"
@@ -30,7 +26,7 @@
             ></zoomed>
             <img :src="selectPhotoUrl" v-else class="photo_main_placeholder" />
             <iframe
-              v-show="existYoutube"
+              v-if="existYoutube"
               width="400"
               height="250"
               :src="`https://www.youtube.com/embed/${idYoutube}?rel=0&amp;controls=0&amp;showinfo=0`"
@@ -45,6 +41,7 @@
             :photo="data.detalle.foto_cloudinary"
             :idYoutube="idYoutube"
           ></product-slide>
+          <span @click="share()" class="sharing-phone"><i class="material-icons">share</i></span>
         </div>
         <div class="content">
           <h2 class="content_name">{{data.detalle.nombre}}</h2>
@@ -128,15 +125,22 @@
               :key="index"
             >
               <label>{{ variant.nombre }}:</label>
-              <ko-radio-group :options="variant.valores" :index="index"></ko-radio-group>
+              <ko-radio-group v-if="variant && variant.valores.length" :options="variant.valores" :index="index"></ko-radio-group>
             </div>
           </div>
-          <div v-if="data.info.garantia" class="warranty item-product">
+          <div class="item-product sharing-desktop">
+            <p class="name-item">Compartir:</p>
+            <div class="wrapper-social-network">
+              <a :href="`https://www.facebook.com/sharer.php?u=${this.currentUrl}`" target="_blank" @click="open('facebook')"><i class="fa fa-fw fa-facebook"></i></a>
+              <a :href="`https://twitter.com/share?url=${this.currentUrl}&text=${this.data.detalle.nombre}&via=${this.currentUrl}`" target="_blank" @click="open('twitter')"><i class="fa fa-fw fa-twitter"></i></a>
+              <a :href="`https://wa.me/?text=${this.data.detalle.nombre} ${this.currentUrl}`" target="_blank"><i class="fa fa-fw fa-whatsapp"></i></a>
+            </div>
+          </div>
+          <div v-show="data.info.garantia" class="warranty item-product">
             <p class="name-item">Garantía:</p>
             <span>{{ data.info.garantia | toLowerCase }}</span>
           </div>
           <div class="item-product" :class="{content_buy: true, disabled: !salesData.estado}">
-            <!-- <button type="button" name="button">No esta disponible</button> -->
             <div class="wrapper-buttons">
               <div class="content_buy_action">
                 <button v-if="spent" class="spent">
@@ -148,20 +152,16 @@
                   Añadir al carrito
                 </button>
               </div>
-              <ko-whatsapp v-if="whatsapp" class="whatsapp" @click.native="redirectWhatsapp()" />
+              <!-- <ko-whatsapp v-show="whatsapp" class="whatsapp" @click.native="redirectWhatsapp()" /> -->
             </div>
             <p
-              v-if="precio == 0 || !precio"
+              v-show="precio == 0 || !precio"
               class="quotation"
             >Añada al carrito para agregar a la lista y recibir tu cotización</p>
           </div>
         </div>
       </div>
       <ko-description :data="data" :envio="envio"></ko-description>
-      <!-- <ko-related
-        v-if="category.length"
-        :data="data"
-      />-->
     </div>
     <div class="purchase">
       <div class="ko-input">
@@ -193,87 +193,107 @@
   </div>
 </template>
 <script>
-import axios from "axios";
-import zoomed from "../_components/zoomed.vue";
-import productSlide from "../_components/productSlide.vue";
-import koModal from "../_components/modal.vue";
-import koRadioGroup from "../_components/radioGroup2";
-import koDescription from "../_components/descriptionProduct2";
-import koRelated from "../_components/related-products";
-import koWhatsapp from "../../Icons/whatsapp";
+import axios from 'axios'
+import zoomed from '../_components/zoomed'
+import productSlide from '../_components/productSlide.vue'
+// import koModal from "../_components/modal.vue";
+import koRadioGroup from '../_components/radioGroup2'
+import koDescription from '../_components/descriptionProduct2'
+import koWhatsapp from '../../Icons/whatsapp'
 
 export default {
-  name: "koProduct2",
+  name: 'koProduct2',
   components: {
     zoomed,
     productSlide,
-    koModal,
+    // koModal,
     koRadioGroup,
     koDescription,
-    koRelated,
     koWhatsapp
   },
   created() {
-    this.$store.state.beforeCombination = [];
+    this.$store.commit('SET_BEFORECOMBINATION')
     if (this.$store.state.productsData.length) {
-      this.getDataProduct();
+      this.getDataProduct()
+    }
+    if (Object.keys(this.$store.state.envios).length) {
+      this.setOptionEnvio()
     }
   },
   mounted() {
-    if (Object.keys(this.$store.state.envios).length) {
-      this.setOptionEnvio();
-    }
+    this.currentUrl = window.location
   },
   data() {
     return {
       swiperOption: {
-        direction: "vertical",
-        pagination: ".swiper-pagination",
+        direction: 'vertical',
+        pagination: '.swiper-pagination',
         setWrapperSize: true,
         slidesPerView: 4,
         freeMode: true,
         paginationClickable: true,
         grabCursor: true
       },
-      data: {},
+      data: {
+        combinaciones: {
+          combinaciones: '[{}]'
+        },
+        detalle: {
+          id: 0,
+          envio_gratis: 0,
+          precio: 0,
+          categoria_producto: {
+            nombre_categoria_producto: ''
+          }
+        },
+        info: {
+          marca: ''
+        },
+        cantidad: 0
+      },
       num1: 1,
-      selectPhotoUrl: "",
-      idYoutube: "",
+      selectPhotoUrl: '',
+      idYoutube: '',
       existYoutube: false,
       maxQuantityValue: 1,
       quantityValue: 1,
       productIndexCart: null,
-      warranty: "",
+      warranty: '',
       productCart: {},
-      salesData: null,
+      salesData: {
+        precio: 0
+      },
       spent: false,
       envio: {
-        titulo: "",
-        desc: ""
-      }
-    };
+        titulo: '',
+        desc: ''
+      },
+      currentUrl:''
+    }
   },
   watch: {
     productsData(value) {
-      this.getDataProduct();
+      this.getDataProduct()
     },
     envios(value) {
-      this.setOptionEnvio();
+      this.setOptionEnvio()
     },
     quantityValue(value) {
       if (value > this.maxQuantityValue) {
-        this.quantityValue = this.maxQuantityValue;
+        this.quantityValue = this.maxQuantityValue
       }
     },
     beforeCombination(value) {
-      const combinationSelected = JSON.stringify(value);
-      const combinaciones = JSON.parse(this.data.combinaciones.combinaciones);
+      const combinationSelected = JSON.stringify(value)
+
+      const combinaciones = JSON.parse(this.data.combinaciones.combinaciones)
+
       const result = combinaciones.filter(
         (combinacion, index) =>
           JSON.stringify(combinacion.combinacion) == combinationSelected
-      )[0];
-      this.productCart = [];
-      this.productIndexCart = null;
+      )[0]
+      this.productCart = []
+      this.productIndexCart = null
       for (const [
         index,
         productCart
@@ -283,37 +303,40 @@ export default {
           JSON.stringify(productCart.combinacion) ==
             JSON.stringify(result.combinacion)
         ) {
-          this.productIndexCart = index;
-          this.productCart = productCart;
+          this.productIndexCart = index
+          this.productCart = productCart
         }
       }
       if (result) {
-        this.spent = false;
-        this.maxQuantityValue = result.unidades;
+        this.spent = false
+        this.maxQuantityValue = result.unidades
         if (result.unidades == 0) {
-          this.spent = true;
+          this.spent = true
         }
         if (this.productCart.cantidad) {
           this.maxQuantityValue =
-            parseInt(result.unidades) - this.productCart.cantidad;
+            parseInt(result.unidades) - this.productCart.cantidad
           if (this.maxQuantityValue <= 0) {
-            this.spent = true;
+            this.spent = true
           }
         }
-        this.salesData = result;
-        this.quantityValue = 1;
+        this.salesData = result
+        this.quantityValue = 1
       }
     }
   },
   computed: {
-    url() {
-      return window.location.href;
-    },
+    // url() {
+    //   return window.location.href
+    // },
+    // currentUrl() {
+    //   return window.location
+    // },
     productsData() {
-      return this.$store.state.productsData;
+      return this.$store.state.productsData
     },
     existPayments() {
-      const mediospago = this.$store.state.mediospago;
+      const mediospago = this.$store.state.mediospago
       if (
         mediospago.consignacion ||
         mediospago.convenir ||
@@ -321,48 +344,46 @@ export default {
         mediospago.tienda ||
         mediospago.efecty
       ) {
-        return true;
+        return true
       }
-      return false;
+      return false
     },
     modalPayment() {
-      return this.$store.state.togglePayment;
+      return this.$store.state.togglePayment
     },
     beforeCombination() {
-      return this.$store.state.beforeCombination;
+      return this.$store.state.beforeCombination
     },
     envios() {
-      return this.$store.state.envios;
+      return this.$store.state.envios
     },
     precio() {
       if (this.data.detalle.precio) {
         return `$${this.data.detalle.precio
           .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+          .replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
     },
     priceShipping() {
-      let value = 0;
+      let value = 0
       if (this.envios.valores.envio_metodo != null) {
-        if (this.envios.valores.envio_metodo == "precio") {
+        if (this.envios.valores.envio_metodo == 'precio') {
           let rangos = this.envios.valores.rangos.filter(
             r =>
               r.inicial <= this.salesData.precio &&
               r.final >= this.salesData.precio
-          );
-          // si no exiten rangos
+          )
           if (rangos.length == 0) {
-            value = 0;
-            // Existen rangos
+            value = 0
           } else {
-            value = rangos[0].precio;
+            value = rangos[0].precio
           }
         }
       }
-      return value;
+      return value
     },
     whatsapp() {
-      return this.$store.state.whatsapp;
+      return this.$store.state.whatsapp
     },
     category() {
       return this.productsData.filter(
@@ -370,23 +391,61 @@ export default {
           product.categoria ==
             this.data.detalle.categoria_producto.nombre_categoria_producto &&
           product.id !== this.data.detalle.id
-      );
+      )
     }
   },
   methods: {
+    share() {
+      navigator.share({
+        title: this.data.detalle.nombre,
+        url: `${this.currentUrl}/`
+      })
+    },
+    open(networt) {
+      switch (networt) {
+        case 'facebook':
+          this.PopupCenter(`https://www.facebook.com/sharer.php?u=${this.currentUrl}`, this.data.detalle.nombre, 600, 500)
+          break;
+        case 'whatsapp':
+          this.PopupCenter(`https://wa.me/?text=${this.data.detalle.nombre} ${this.currentUrl}`)       
+          break;
+        case 'twitter':
+          this.PopupCenter(`https://twitter.com/share?url=${this.currentUrl}&text=${this.data.detalle.nombre}`, this.data.detalle.nombre, 600, 500)     
+          break;
+      
+        default:
+          break;
+      }
+    },
+    PopupCenter(url, title, w, h) {
+    // Fixes dual-screen position                         Most browsers      Firefox
+    let dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+    let dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+    let width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    let height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    let systemZoom = width / window.screen.availWidth;
+    let left = (width - w) / 2 / systemZoom + dualScreenLeft
+    let top = (height - h) / 2 / systemZoom + dualScreenTop
+    let newWindow = window.open(url, title, 'scrollbars=yes, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+
+    // Puts focus on the newWindow
+    if (window.focus) newWindow.focus();
+},
     searchIdForSlug() {
       const product = this.productsData.filter(
         product => product.slug === this.$route.params.slug
-      );
+      )
       if (product.length) {
-        return product[0].id;
+        return product[0].id
       }
-      return this.productsData[0].id;
+      return this.productsData[0].id
     },
     mobileCheck() {
       window.mobilecheck = function() {
-        var check = false;
-        (function(a) {
+        var check = false
+        ;(function(a) {
           if (
             /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(
               a
@@ -395,157 +454,166 @@ export default {
               a.substr(0, 4)
             )
           )
-            check = true;
-        })(navigator.userAgent || navigator.vendor || window.opera);
-        return check;
-      };
-      return window.mobilecheck();
+            check = true
+        })(navigator.userAgent || navigator.vendor || window.opera)
+        return check
+      }
+      return window.mobilecheck()
     },
     redirectWhatsapp() {
       if (this.mobileCheck()) {
         window.open(
-          `https://wa.me/57${this.whatsapp}/?text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
-          "_blank"
-        );
+          `https://wa.me/57${
+            this.whatsapp
+          }/?text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
+          '_blank'
+        )
       } else {
         window.open(
-          `https://web.whatsapp.com/send?phone=57${this.whatsapp}&text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información%20de%20este%20producto%20${window.location}`,
-          "_blank"
-        );
+          `https://web.whatsapp.com/send?phone=57${
+            this.whatsapp
+          }&text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información%20de%20este%20producto%20${
+            window.location
+          }`,
+          '_blank'
+        )
       }
     },
     getDataProduct() {
-      const idOfSlug = this.searchIdForSlug();
+      const idOfSlug = this.searchIdForSlug()
       if (idOfSlug) {
         axios
           .get(`https://templates.komercia.co/api/producto/${idOfSlug}`)
           .then(response => {
-            this.selectedPhoto(response.data.detalle.foto_cloudinary);
-            this.videoYoutube(response.data.info.video);
-            this.data = response.data;
-            this.setOptionEnvio();
+            this.$store.commit('SET_DETALLEPRODUCTO', response.data.detalle)
+            this.selectedPhoto(response.data.detalle.foto_cloudinary)
+            this.videoYoutube(response.data.info.video)
+            this.data = response.data
+            this.setOptionEnvio()
             this.salesData = {
               precio: this.data.detalle.precio,
               unidades: this.data.info.inventario,
               sku: this.data.info.sku,
               estado: true
-            };
-            this.maxQuantityValue = this.data.info.inventario;
+            }
+            this.maxQuantityValue = this.data.info.inventario
             for (const [
               index,
               productCart
             ] of this.$store.state.productsCart.entries()) {
               if (this.data.detalle.id == productCart.id) {
-                this.productIndexCart = index;
-                this.productCart = productCart;
+                this.productIndexCart = index
+                this.productCart = productCart
                 this.maxQuantityValue =
-                  this.data.info.inventario - productCart.cantidad;
+                  this.data.info.inventario - productCart.cantidad
               }
             }
             if (this.salesData.unidades == 0 || this.maxQuantityValue <= 0) {
-              this.spent = true;
+              this.spent = true
             }
-          });
+          })
       } else {
-        this.selectedPhoto(this.productsData[0].foto_cloudinary);
+        this.selectedPhoto(this.productsData[0].foto_cloudinary)
         // this.videoYoutube(this.productsData[0].foto);
         this.data.detalle = {
           foto_cloudinary: this.productsData[0].foto_cloudinary,
           nombre: this.productsData[0].nombre,
           precio: this.productsData[0].precio
-        };
+        }
         this.data.info = {
-          marca: "",
-          descripcion: ""
-        };
-        this.maxQuantityValue = 0;
+          marca: '',
+          descripcion: ''
+        }
+        this.maxQuantityValue = 0
         this.salesData = {
           precio: 29998,
           unidades: 0,
-          sku: "4a00"
-        };
-        this.spent = true;
+          sku: '4a00'
+        }
+        this.spent = true
       }
     },
     togglePayment() {
-      this.$store.state.togglePayment = !this.$store.state.togglePayment;
+      this.$store.state.togglePayment = !this.$store.state.togglePayment
     },
     setOptionEnvio() {
       if (this.data.detalle.envio_gratis) {
         this.envio = {
-          titulo: "Envío gratis",
-          desc: "Disfruta de este obsequio por parte de la tienda."
-        };
+          titulo: 'Envío gratis',
+          desc: 'Disfruta de este obsequio por parte de la tienda.'
+        }
       } else {
         switch (this.envios.valores.envio_metodo) {
-          case "tarifa_plana":
+          case 'tarifa_plana':
             this.envio = {
-              titulo: "Tarifa plana",
-              desc: `Compra todo lo que quieras en nuestra tienda, el valor del envio siempre sera el mismo: Valor envio $${this.envios.valores.valor}`
-            };
-            break;
-          case "precio":
+              titulo: 'Tarifa plana',
+              desc: `Compra todo lo que quieras en nuestra tienda, el valor del envio siempre sera el mismo: Valor envio $${
+                this.envios.valores.valor
+              }`
+            }
+            break
+          case 'precio':
             this.envio = {
-              titulo: "Tarifa por precio",
+              titulo: 'Tarifa por precio',
               desc:
-                "Segun la suma del costo de tus productos te cobraran el envio"
-            };
-            break;
-          case "peso":
+                'Segun la suma del costo de tus productos te cobraran el envio'
+            }
+            break
+          case 'peso':
             this.envio = {
-              titulo: "Tarifa por peso",
-              desc: ""
-            };
-            break;
+              titulo: 'Tarifa por peso',
+              desc: ''
+            }
+            break
           default:
         }
       }
     },
     quantity(productCart) {
-      this.quantityValue = productCart.cantidad;
+      this.quantityValue = productCart.cantidad
     },
     addQuantity() {
       if (this.maxQuantityValue > this.quantityValue) {
-        this.quantityValue++;
-        this.data.cantidad = this.quantityValue;
+        this.quantityValue++
+        this.data.cantidad = this.quantityValue
       } else {
         // Alerta de limite de sku
       }
     },
     removeQuantity() {
       if (this.data.cantidad >= 2) {
-        this.quantityValue--;
-        this.data.cantidad = this.quantityValue;
+        this.quantityValue--
+        this.data.cantidad = this.quantityValue
       }
     },
     setMiniPhoto(photo) {
-      if (photo === "placeholder1.svg") {
-        return require(`../../assets/${photo}`);
+      if (photo === 'placeholder1.svg') {
+        return require(`../../assets/${photo}`)
       }
-      return photo;
+      return photo
     },
     selectedPhoto(photo) {
-      if (photo === "placeholder1.svg") {
-        this.selectPhotoUrl = require(`../../assets/${photo}`);
+      if (photo === 'placeholder1.svg') {
+        this.selectPhotoUrl = require(`../../assets/${photo}`)
       } else {
-        this.selectPhotoUrl = photo;
+        this.selectPhotoUrl = photo
       }
-      this.existYoutube = false;
+      this.existYoutube = false
     },
     videoYoutube(url) {
-      let myregexp = /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/;
-      let id = "";
-      if (url && url !== "" && url !== "null") {
-        this.validVideo = true;
-        let id = url.match(myregexp);
+      let myregexp = /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/
+      let id = ''
+      if (url && url !== '' && url !== 'null') {
+        this.validVideo = true
+        let id = url.match(myregexp)
         if (id) {
-          this.idYoutube = id[1];
+          this.idYoutube = id[1]
         }
       }
     },
     addShoppingCart() {
       if (!this.data.cantidad) {
-        this.data.cantidad = this.quantityValue;
+        this.data.cantidad = this.quantityValue
       }
       const product = {
         id: this.data.detalle.id,
@@ -553,52 +621,53 @@ export default {
         cantidad: this.data.cantidad,
         foto_cloudinary: this.data.detalle.foto_cloudinary,
         nombre: this.data.detalle.nombre,
-        combinacion: this.salesData.combinacion
-      };
-      if (this.salesData) {
-        product.limitQuantity = this.salesData.unidades;
-      } else {
-        product.limitQuantity = this.data.info.inventario;
+        combinacion: this.salesData.combinacion,
+        envio_gratis: this.data.detalle.envio_gratis
       }
-      if (typeof this.productIndexCart === "number") {
+      if (this.salesData) {
+        product.limitQuantity = this.salesData.unidades
+      } else {
+        product.limitQuantity = this.data.info.inventario
+      }
+      if (typeof this.productIndexCart === 'number') {
         const mutableProduct = this.$store.state.productsCart[
           this.productIndexCart
-        ];
-        mutableProduct.cantidad += this.data.cantidad;
+        ]
+        mutableProduct.cantidad += this.data.cantidad
         this.$store.state.productsCart.splice(
           this.productIndexCart,
           1,
           mutableProduct
-        );
+        )
       } else {
-        this.$store.state.productsCart.push(product);
+        this.$store.state.productsCart.push(product)
       }
-      this.$store.commit("UPDATE_CONTENTCART");
-      this.$router.push("/productos");
-      this.$store.state.openOrder = true;
-      this.$store.state.orderComponent = true;
+      this.$store.commit('UPDATE_CONTENTCART')
+      this.$router.push('/productos')
+      this.$store.state.openOrder = true
+      this.$store.state.orderComponent = true
     },
     evalStock(mq, qv) {
-      return !(mq - qv < 0);
+      return !(mq - qv < 0)
     }
   },
   filters: {
     currency(value) {
       if (value) {
-        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+        return `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}`
       }
-      return 0;
+      return 0
     },
     toLowerCase(value) {
       if (value) {
-        return value.toLowerCase();
+        return value.toLowerCase()
       }
-      return "";
+      return ''
     }
   }
-};
+}
 </script>
-<style lang="scss" scoped>
+<style scoped>
 .wrapper {
   max-width: 1200px;
   width: 100%;
@@ -621,6 +690,7 @@ export default {
 }
 .photos.responsive {
   display: none;
+  position: relative;
 }
 .photos_selected {
   width: 90px;
@@ -716,6 +786,7 @@ i.close {
 .content_buy_price {
   display: grid;
   align-items: flex-end;
+  position: relative;
 }
 .content_buy_price h3 {
   font-weight: 300;
@@ -947,6 +1018,8 @@ i.close {
 .name-item {
   width: 150px;
   display: inline-block;
+  display: flex;
+  align-items: center;
 }
 .container-alert {
   position: absolute;
@@ -976,7 +1049,7 @@ i.close {
   position: absolute;
   bottom: -10px;
 }
-input[type="text"]:disabled {
+input[type='text']:disabled {
   background: #eee;
 }
 .not-available {
@@ -1022,12 +1095,59 @@ input[type="text"]:disabled {
 .swiper-slide {
   box-sizing: border-box;
   padding: 4px 0;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+}
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.icons-share {
+  cursor: pointer !important;
+}
+.wrapper-social-network {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+.wrapper-social-network a{
+  text-decoration: none;
+  padding: 2px 3px;
+  transition: all ease .3s;
+}
+.wrapper-social-network a:nth-child(1){
+  background-color: transparent;
+  border: 1px solid #3b5998;
+  color: #3b5998;
+}
+.wrapper-social-network a:nth-child(1):hover{
+  background-color: #3b5998;
+  border: 1px solid #3b5998;
+  color: #fff;
+}
+.wrapper-social-network a:nth-child(2){
+  background-color: transparent;
+  border: 1px solid #1da1f2;
+  color: #1da1f2;
+}
+.wrapper-social-network a:nth-child(2):hover{
+  background-color: #1da1f2;
+  border: 1px solid #1da1f2;
+  color: #fff;
+}
+.wrapper-social-network a:nth-child(3){
+  background-color: transparent;
+  border: 1px solid #08c65b;
+  font-size: 18px;
+  padding: 0 1px;
+  color: #08c65b;
+}
+.wrapper-social-network a:nth-child(3):hover{
+  background-color: #08c65b;
+  border: 1px solid #08c65b;
+  color: #fff;
+}
+.sharing-phone {
+  display: none;
 }
 @media (max-width: 1150px) {
   .section:nth-child(2) {
@@ -1053,6 +1173,35 @@ input[type="text"]:disabled {
   }
 }
 @media (max-width: 710px) {
+  .sharing-desktop {
+    display: none;
+  }
+  .sharing-phone {
+    position: absolute;
+    font-size: 12px;
+    right: 5px;
+    top: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    padding: 6px;
+    background: rgba(238, 238, 238, 0.441);
+    cursor: pointer;
+    z-index: 9;
+    border: 1px solid #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sharing-phone i {
+  font-size: 16px;
+  z-index: 9;
+  color: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
   .product {
     position: relative;
     width: 100%;
@@ -1061,9 +1210,6 @@ input[type="text"]:disabled {
     flex-direction: column;
     align-items: center;
     margin-bottom: 70px;
-  }
-  .section {
-    /* padding: 10px; */
   }
   i.close {
     position: absolute;
@@ -1095,7 +1241,7 @@ input[type="text"]:disabled {
   }
   .wrapper-buttons {
     margin: 0;
-    // justify-content: flex-end;
+    /* justify-content: flex-end; */
   }
   .wrapper-buttons button {
     display: none;

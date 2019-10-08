@@ -1,18 +1,37 @@
 <template>
   <header class="header_main">
-    <router-link to="/" class="header_brand">
-        <figure class="header__logo">
-          <img v-if="info.logo" :src="`${$urlHttp}/logos/${info.logo}`" alt="">
-        </figure>
-        <h1 class="header__title">{{ info.nombre }}</h1>
+    <router-link
+      to="/"
+      class="header_brand"
+    >
+      <figure class="header__logo">
+        <img
+          v-if="info.logo"
+          :src="`${url}/logos/${info.logo}`"
+          alt=""
+        >
+      </figure>
+      <h1 class="header__title">{{ info.nombre }}</h1>
     </router-link>
     <nav class="header_navigation">
       <ul class="header_navigation_list">
-        <li class="header_navigation__item"><router-link to="/">Inicio</router-link></li>
-        <li class="header_navigation__item"><router-link to="/productos">Productos</router-link></li>
-        <li class="header_navigation__item"><router-link to="/contacto">Contacto</router-link></li>
-        <li v-if="!userData.id" class="header_navigation__item"><a @click="login">Iniciar Sesión</a></li>
-        <div @click="openOrder" class="header__cart">
+        <li class="header_navigation__item">
+          <router-link to="/">Inicio</router-link>
+        </li>
+        <li class="header_navigation__item">
+          <router-link to="/productos">Productos</router-link>
+        </li>
+        <li class="header_navigation__item">
+          <router-link to="/contacto">Contacto</router-link>
+        </li>
+        <li
+          v-if="!userData.id"
+          class="header_navigation__item"
+        ><a @click="login">Iniciar Sesión</a></li>
+        <div
+          @click="openOrder"
+          class="header__cart"
+        >
           <i class="material-icons">shopping_cart</i>
           <p>{{ productsCart }}</p>
         </div>
@@ -20,71 +39,90 @@
           <el-popover
             ref="popover3"
             placement="bottom"
-            trigger="click">
+            trigger="click"
+          >
             <ul class="user_options_list">
               <li class="user_options_item">
                 <i class="material-icons">account_circle</i>
                 <div class="">
-                  <strong>Hola {{ userData.nombre }}</strong><p>{{ userData.email }}</p>
+                  <strong>Hola {{ userData.nombre }}</strong>
+                  <p>{{ userData.email }}</p>
                 </div>
               </li>
               <li class="user_options_item"><i class="material-icons">assignment</i><a href="https://perfil.komercia.co/compras">Mis Compras</a></li>
-              <li class="user_options_item" @click="logout"><i class="material-icons">exit_to_app</i>Cerrar session</li>
+              <li
+                class="user_options_item"
+                @click="logout"
+              ><i class="material-icons">exit_to_app</i>Cerrar session</li>
             </ul>
           </el-popover>
-          <figure class="user_photo" v-popover:popover3>
-            <img :src="`https://api2.komercia.co/users/${userData.foto}`" :alt="userData.nombre">
+          <figure
+            class="user_photo"
+            v-popover:popover3
+          >
+            <img
+              :src="`https://api2.komercia.co/users/${userData.foto}`"
+              :alt="userData.nombre"
+            >
           </figure>
         </template>
       </ul>
     </nav>
-    <i class="material-icons icon_menu" v-on:click="openMenuComponent">menu</i>
-    <Sidebar/>
+    <i
+      class="material-icons icon_menu"
+      v-on:click="openMenuComponent"
+    >menu</i>
+    <Sidebar />
     <koOrder1 />
   </header>
 </template>
 
 <script>
-  import Sidebar from '../sidebars/sidebar1.vue';
-  import koOrder1 from '../_order/order1.vue'
+import Sidebar from "../sidebars/sidebar1.vue";
+import koOrder1 from "../_order/order1.vue";
 
-	export default {
-    name: 'koHeader3',
-    components: { Sidebar, koOrder1 },
-		data(){
-			return {
-			}
-		},
-		computed: {
-      userData() {
-        return this.$store.state.userData
-      },
-      productsCart(){
-        return	this.$store.state.productsCart.length;
-      },
-			info() {
-				return this.$store.state.tienda;
-			},
-      storeData() {
-        return this.$store.state.tienda;
-      }
-		},
-    methods: {
-      openMenuComponent(){
-        this.$store.state.menuComponent = true;
-      },
-      openOrder(){
-          this.$store.state.openOrder = true;
-      },
-      login() {
-        const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
-        window.location.href = `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
-      },
-      logout() {
-        this.$store.commit('LOGOUT');
-      }
+export default {
+  name: "koHeader3",
+  components: { Sidebar, koOrder1 },
+  data() {
+    return {};
+  },
+  computed: {
+    url() {
+      return this.$store.state.urlHttp;
+    },
+    userData() {
+      return this.$store.state.userData;
+    },
+    productsCart() {
+      return this.$store.state.productsCart.length;
+    },
+    info() {
+      return this.$store.state.tienda;
+    },
+    storeData() {
+      return this.$store.state.tienda;
     }
-	}
+  },
+  methods: {
+    openMenuComponent() {
+      this.$store.state.menuComponent = true;
+    },
+    openOrder() {
+      this.$store.state.openOrder = true;
+    },
+    login() {
+      const params = JSON.stringify({
+        tienda: this.storeData.id_tienda,
+        logo: this.storeData.logo
+      });
+      window.location.href = `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`;
+    },
+    logout() {
+      this.$store.commit("LOGOUT");
+    }
+  }
+};
 </script>
 
 <style scoped>

@@ -3,7 +3,7 @@
     <koOrder1 />
     <div class="top-menu">
       <div v-if='info.logo' class="logo-top-menu">
-        <img :src="`${$urlHttp}/logos/${info.logo}`" alt="logo">
+        <img :src="`${url}/logos/${info.logo}`" alt="logo">
       </div>
       <ul class="main-menu-list">
         <li v-for='(item, index) in routes' :key='index' class="main-menu-item"><router-link :to="item.route" class="main-menu-link">{{item.name}}</router-link></li>
@@ -48,11 +48,11 @@
 </template>
 
 <script>
-import Hammer from 'hammerjs';
-import koOrder1 from '../_order/order1.vue'
+// import Hammer from 'hammerjs';
+import koOrder1 from "../_order/order1.vue";
 
 export default {
-  name: 'koHeader2',
+  name: "koHeader2",
   components: { koOrder1 },
   data() {
     return {
@@ -60,46 +60,52 @@ export default {
       windowsWidth: 0,
       routes: [
         {
-          name: 'Inicio',
-          route: '/',
+          name: "Inicio",
+          route: "/"
         },
         {
-          name: 'Productos',
-          route: '/productos',
+          name: "Productos",
+          route: "/productos"
         },
         {
-          name: 'Carrito',
-          route: '/pedido',
+          name: "Carrito",
+          route: "/pedido"
         },
         {
-          name: 'Contacto',
-          route: '/contacto',
-        },
-      ],
+          name: "Contacto",
+          route: "/contacto"
+        }
+      ]
     };
   },
   computed: {
+    url() {
+      return this.$store.state.urlHttp;
+    },
     storeData() {
       return this.$store.state.tienda;
     },
     userData() {
-      return this.$store.state.userData
+      return this.$store.state.userData;
     },
     info() {
       return this.$store.state.tienda;
     },
-    productsCart () {
+    productsCart() {
       return this.$store.state.productsCart.length;
     },
-    urlLogin () {
-      const params = JSON.stringify({tienda: this.storeData.id_tienda, logo: this.storeData.logo})
-      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`
+    urlLogin() {
+      const params = JSON.stringify({
+        tienda: this.storeData.id_tienda,
+        logo: this.storeData.logo
+      });
+      return `http://login.komercia.co?from=${this.storeData.subdominio}&path=${this.$route.path}&params=${params}`;
     }
   },
   methods: {
     redirectTo(route) {
-      this.$router.push(route)
-      this.hideMenu()
+      this.$router.push(route);
+      this.hideMenu();
     },
     toggleMenu() {
       this.show = !this.show;
@@ -120,13 +126,9 @@ export default {
       this.$store.state.openOrder = true;
     },
     logout() {
-      this.$store.commit('LOGOUT');
+      this.$store.commit("LOGOUT");
     }
   },
-  mounted() {
-    // window.addEventListener('resize', this.getWindowsWidth);
-    // this.getWindowsWidth();
-  }
 };
 </script>
 

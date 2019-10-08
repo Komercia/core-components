@@ -5,8 +5,17 @@
         <p class="newsletter-description">{{description.description1}}</p>
       </div>
       <div class="container-subscription">
-        <input class="input-subscribe" type="text" placeholder="Correo electrónico" v-model="email">
-        <button class="btn-subscribe" type="text" @click="submitNewsletter">Subscríbete</button>
+        <input
+          class="input-subscribe"
+          type="text"
+          placeholder="Correo electrónico"
+          v-model="email"
+        >
+        <button
+          class="btn-subscribe"
+          type="text"
+          @click="submitNewsletter"
+        >Subscríbete</button>
       </div>
     </div>
   </div>

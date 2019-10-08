@@ -202,11 +202,11 @@ export default {
         { value: 178, label: "sgs.shopping - 178" },
         { value: 847, label: "Bigoaventura - 847" },
         { value: 574, label: "Child Clothes - 574" },
-        { value: 1013, label: "Starken - 1013" },
+        { value: 1108, label: "Familiacomepasto - 1108" },
         { value: 824, label: "Ticbu - 824" },
         { value: 715, label: "Frenos Colombia - 715" },
         { value: 889, label: "Perfecta - 889" },
-        { value: 605, label: "Origen SP" },
+        { value: 605, label: "Origen SP - 605" },
         { value: 431, label: "Demo 3" }
       ]
     };
@@ -317,7 +317,7 @@ export default {
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /* background-color: #333; */
+  background-color: var(--background_color);
 }
 .component_principal {
   overflow: auto;

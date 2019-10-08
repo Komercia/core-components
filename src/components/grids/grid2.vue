@@ -15,9 +15,11 @@
     </nav>
     <div class="grid-products">
       <div
-        :is="selectedCard"
+        :is="$store.state.selectedCard"
         :data="product"
-        v-for="(product, index) in productsData.slice(0,5)"
+        v-for="(product, index) in this.$store.state.productsData.filter(
+        product => product.categoria == this.select
+      ).slice(0,5)"
         :key="index"
         class="card"
       >
@@ -44,16 +46,15 @@ export default {
   },
   created() {
     this.select = this.setting.data[0];
+    this.selectedCard = this.$store.state.selectedCard;
   },
   data() {
     return {
-      select: ""
+      select: "",
+      selectedCard: ''
     };
   },
   computed: {
-    selectedCard() {
-      return this.$store.state.selectedCard;
-    },
     productsData() {
       return this.$store.state.productsData.filter(
         product => product.categoria == this.select
@@ -66,6 +67,9 @@ export default {
   watch: {
     "setting.data": function(value) {
       this.select = value[0];
+    },
+    selectedCard(){
+      this.selectedCard = this.$store.state.selectedCard;
     }
   },
   methods: {
@@ -105,7 +109,7 @@ nav {
   /* grid-template-rows: 20vw; */
   grid-gap: 20px;
   grid-auto-flow: column;
-  padding: 0 20px;
+  /* padding: 0 20px; */
   box-sizing: border-box;
   justify-content: center;
 }

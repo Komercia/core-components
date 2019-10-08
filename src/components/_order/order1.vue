@@ -35,9 +35,8 @@
                 <div class="order_total">
                   <span class="order_total_domicile">
                     <p>Costo domicilio</p>
-
                     <details
-                      v-if="rangosByCiudad.envio_metodo === 'precio_ciudad' && shippingCities.length > 0"
+                      v-if="rangosByCiudad.envio_metodo === 'precio_ciudad' && shippingCities.length > 0 && getFreeShipping == false"
                     >
                       <summary>Valor por Ciudad:</summary>
                       <ol>
@@ -47,12 +46,15 @@
                         </li>
                       </ol>
                     </details>
-                    <p v-else-if="shipping">{{ shipping | currency }}</p>
-                    <p class="without_shipping_cost" v-else>No tiene costo de envió</p>
+                    <p v-else-if="shipping && getFreeShipping == false">{{ shipping | currency }}</p>
+                    <p
+                      class="without_shipping_cost"
+                      v-if="rangosByCiudad.envio_metodo === 'gratis' || getFreeShipping == true"
+                    >No tiene costo de envió</p>
                   </span>
                   <span class="order_total_net">
                     <p>Total a pagar</p>
-                    <p>{{ (totalCart + shipping) | currency }}</p>
+                    <p>{{ (totalCart + (getFreeShipping? 0 : shipping)) | currency }}</p>
                   </span>
                 </div>
                 <button
@@ -93,8 +95,9 @@ import login from "../_components/login.vue";
 export default {
   name: "koOrder1",
   components: { login },
-  created() {
-    this.$store.commit("GET_CITIES");
+  mounted() {
+    this.$store.commit("UPDATE_CONTENTCART");
+    this.$store.dispatch("GET_CITIES");
     if (this.rangosByCiudad.envio_metodo === "precio_ciudad") {
       this.filterCities();
     }
@@ -121,13 +124,21 @@ export default {
     productsCart() {
       return this.$store.state.productsCart;
     },
+    getFreeShipping() {
+      let free = true;
+      this.productsCart.filter(product => {
+        if (product.envio_gratis == 0) {
+          free = false;
+        }
+      });
+      return free;
+    },
     rangosByCiudad() {
       return this.$store.state.envios.valores;
     },
     cities() {
-      return this.$store.state.cities;
+      return this.$store.state.cities.cities;
     },
-
     shipping() {
       if (this.$store.state.envios.estado) {
         let shipping = this.$store.state.envios.valores;
@@ -178,7 +189,7 @@ export default {
       return result;
     },
     deleteItemCart(i) {
-      this.$store.state.productsCart.splice(i, 1);
+      this.$store.commit("DELETEITEMCART", i);
       this.$store.commit("UPDATE_CONTENTCART");
     },
     closeOrder(event) {
@@ -188,7 +199,7 @@ export default {
         element === "order_header_close" ||
         element === "continue_shopping"
       ) {
-        this.$store.state.openOrder = false;
+        this.$store.commit("SET_OPENORDER", false);
       }
     },
     GoPayments() {
@@ -269,7 +280,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .order {
   position: fixed;
   top: 0;
@@ -505,26 +516,25 @@ details {
   align-self: center;
   flex: 1;
   margin-left: 30px;
-  summary {
-    outline: none;
-    cursor: pointer;
-    color: rgba(61, 61, 61, 0.847);
-    text-align: right;
-  }
-  ol {
-    display: flex;
-    flex-direction: column;
-    padding: 5px 0;
-
-    li {
-      padding: 2px 4px;
-      display: flex;
-      justify-content: space-between;
-    }
-    li:nth-child(even) {
-      background-color: rgba(102, 102, 102, 0.1);
-    }
-  }
+}
+details summary {
+  outline: none;
+  cursor: pointer;
+  color: rgba(61, 61, 61, 0.847);
+  text-align: right;
+}
+details ol {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 0;
+}
+details ol li {
+  padding: 2px 4px;
+  display: flex;
+  justify-content: space-between;
+}
+details ol li:nth-child(even) {
+  background-color: rgba(102, 102, 102, 0.1);
 }
 details[open] summary ~ * {
   animation: sweep 0.5s ease-in-out;
@@ -533,11 +543,9 @@ details[open] summary ~ * {
 @keyframes sweep {
   0% {
     opacity: 0;
-    // margin-left: -10px;
   }
   100% {
     opacity: 1;
-    // margin-left: 0px;
   }
 }
 </style>

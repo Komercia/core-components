@@ -9,11 +9,14 @@ export default {
   computed: {
     bannersData() {
       return this.$store.state.banners;
+    },
+    url() {
+      return this.$store.state.urlHttp;
     }
   },
   methods: {
     setBanner(banner) {
-      return `${this.$urlHttp}/banners/${banner}`;
+      return `${this.url}/banners/${banner}`;
     }
   }
 };
