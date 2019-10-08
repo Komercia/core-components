@@ -22,6 +22,7 @@ import SocialSharing from 'vue-social-sharing';
 import Meta from 'vue-meta';
 import VueCarousel from 'vue-carousel';
 import VueAwesomeSwiper from 'vue-awesome-swiper/dist/ssr';
+import "./vee-validate";
 
 Vue.prototype.$firebase = firebase;
 
