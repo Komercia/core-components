@@ -37,18 +37,25 @@ export default {
       };
       return window.mobilecheck();
     },
+    setPhoneCode(phone) {
+      if(phone.split('')[0] === "+"){
+        return phone.split('').splice(1, phone.length).join('')
+      }else {
+        return "57" + phone
+      }
+    },
     redirectWhatsapp() {
       if (this.mobileCheck()) {
         window.open(
-          `https://wa.me/57${
-            this.whatsapp
+          `https://wa.me/${
+            this.setPhoneCode(this.whatsapp)
           }/?text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
           "_blank"
         );
       } else {
         window.open(
-          `https://web.whatsapp.com/send?phone=57${
-            this.whatsapp
+          `https://web.whatsapp.com/send?phone=${
+            this.setPhoneCode(this.whatsapp)
           }&text=Hola%20vengo%20de%20tu%20tienda%20online%20y%20me%20gustaría%20recibir%20mas%20información`,
           "_blank"
         );
